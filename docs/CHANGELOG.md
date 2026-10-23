@@ -1,5 +1,14 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 1: scaffold e deploy
+
+- Vite 7 + TypeScript 5.9 + React 18, font Onest nel bundle (`@fontsource/onest`, solo latino), stile "lime" di base.
+- CSP della SPEC par. 1.1 come meta tag nella build (`src/csp.ts`); in sviluppo no, perché Vite usa script inline.
+- Test: CSP uguale al testo della SPEC; nessun file personale tracciato da git (cartelle private, PDF, `profilo*.json`, `.xls` fuori dai fixture); Playwright sulla build senza richieste esterne, con CSP attiva e font locale.
+- Workflow GitHub Actions: test su ogni pull request, deploy su GitHub Pages da `main`.
+- `.npmrc` con `legacy-peer-deps`: npm 10 si blocca (errore `edgesOut`) sulle dipendenze opzionali di Vite 8 richieste da Vitest.
+- Licenza MIT, titolare "pac-vs-fp contributors" (l'autore resta anonimo).
+
 ## 2026-10-23 · spec v2 per il passaggio a Claude Code
 
 **Interfaccia** (`design/v2/`, SPEC par. 3.0)
