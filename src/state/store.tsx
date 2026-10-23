@@ -49,6 +49,8 @@ export interface State {
   /** istantanea dell'ultimo salvataggio, per sapere se ci sono modifiche */
   savedSnap: string | null;
   storeErr: boolean;
+  /** parametri del modello modificati nella pagina "Parametri e fonti" (oltre a quelli di Inputs) */
+  overrides: Partial<ModelParams>;
   /** solo in memoria */
   file: ImportedFile | null;
 }
@@ -74,10 +76,10 @@ export const DEFAULT_INPUTS: Inputs = {
   etf_id: etfCatalog.default,
 };
 
-const PERSISTED = ['inputs', 'done', 'mine', 'source', 'lnMode'] as const;
+const PERSISTED = ['inputs', 'overrides', 'done', 'mine', 'source', 'lnMode'] as const;
 
 function snapshot(s: Pick<State, (typeof PERSISTED)[number]>): string {
-  return JSON.stringify({ inputs: s.inputs, done: s.done, mine: s.mine, source: s.source, lnMode: s.lnMode });
+  return JSON.stringify({ inputs: s.inputs, overrides: s.overrides, done: s.done, mine: s.mine, source: s.source, lnMode: s.lnMode });
 }
 
 /** Uscita almeno nel primo anno simulato. */
@@ -97,6 +99,7 @@ export function initialState(storage: Pick<Storage, 'getItem'> | null = safeStor
     savedAt: null,
     savedSnap: null,
     storeErr: false,
+    overrides: {},
     file: null,
   };
   try {
@@ -107,6 +110,7 @@ export function initialState(storage: Pick<Storage, 'getItem'> | null = safeStor
     const s: State = {
       ...base,
       inputs: normalize({ ...DEFAULT_INPUTS, ...(d.inputs ?? {}) }),
+      overrides: d.overrides && typeof d.overrides === 'object' ? d.overrides : {},
       done: Array.isArray(d.done) ? d.done : [],
       mine: d.mine ?? {},
       source: d.source === 'file' ? 'file' : 'esempio',
@@ -130,6 +134,9 @@ export function safeStorage(): Storage | null {
 
 export type Action =
   | { type: 'set'; inputs: Partial<Inputs> }
+  | { type: 'override'; key: keyof ModelParams; value: ModelParams[keyof ModelParams] | undefined }
+  | { type: 'resetParams' }
+  | { type: 'loadProfile'; inputs: Partial<Inputs>; overrides: Partial<ModelParams> }
   | { type: 'open'; section: number }
   | { type: 'confirm'; section: number; mine?: MineKey }
   | { type: 'skipToResult' }
@@ -141,8 +148,17 @@ export type Action =
 
 export function reducer(s: State, a: Action): State {
   switch (a.type) {
-    case 'set':
-      return { ...s, inputs: normalize({ ...s.inputs, ...a.inputs }) };
+    case 'set': {
+      // cambiando ETF il TER torna quello dell'ETF scelto
+      const overrides = a.inputs.etf_id && a.inputs.etf_id !== s.inputs.etf_id ? without(s.overrides, 'etf_ter') : s.overrides;
+      return { ...s, overrides, inputs: normalize({ ...s.inputs, ...a.inputs }) };
+    }
+    case 'override':
+      return { ...s, overrides: a.value === undefined ? without(s.overrides, a.key) : { ...s.overrides, [a.key]: a.value } };
+    case 'resetParams':
+      return { ...s, inputs: DEFAULT_INPUTS, overrides: {} };
+    case 'loadProfile':
+      return { ...s, inputs: normalize({ ...s.inputs, ...a.inputs }), overrides: { ...s.overrides, ...a.overrides } };
     case 'open':
       return { ...s, open: s.open === a.section ? -1 : a.section };
     case 'confirm':
@@ -170,6 +186,12 @@ export function reducer(s: State, a: Action): State {
     case 'reset':
       return { ...initialState(null), open: 0 };
   }
+}
+
+function without<T extends object>(o: T, k: keyof T): T {
+  const c = { ...o };
+  delete c[k];
+  return c;
 }
 
 /** Ci sono modifiche rispetto all'ultimo salvataggio? */
@@ -201,10 +223,11 @@ export function firstYearMaxDeduction(p: ModelParams): number {
   return yearlyFlows({ ...p, birth_year: Math.max(p.birth_year, p.start_year - p.exit_age) })[0]!.J;
 }
 
-/** Parametri del modello dai dati inseriti. */
-export function toModelParams(i: Inputs): ModelParams {
+/** Parametri del modello dai dati inseriti e dalle modifiche della pagina "Parametri e fonti". */
+export function toModelParams(i: Inputs, overrides: Partial<ModelParams> = {}): ModelParams {
   const p: ModelParams = {
     ...EXAMPLE_PARAMS,
+    ...overrides,
     birth_year: i.birth_year,
     exit_age: i.exit_age,
     first_join_year: i.first_join_year,
@@ -218,7 +241,7 @@ export function toModelParams(i: Inputs): ModelParams {
     delta: i.delta,
     etf_gross_return: i.etf_gross_return,
     exit_mode: i.exit_mode,
-    etf_ter: etfById(i.etf_id).ter,
+    etf_ter: overrides.etf_ter ?? etfById(i.etf_id).ter,
     annual_saving: null,
   };
   if (i.saving_mode === 'fix') p.annual_saving = i.saving ?? firstYearMaxDeduction(p);

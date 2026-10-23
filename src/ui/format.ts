@@ -34,3 +34,5 @@ export const int = (v: number) => fmt(Math.round(v), 0, 0);
 export const itDate = (iso: string) => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
 /** numero con `digits` decimali al massimo */
 export const num = (v: number, digits = 2) => fmt(v, 0, digits);
+/** numero con esattamente `digits` decimali */
+export const dec = (v: number, digits = 2) => fmt(v, digits, digits);
