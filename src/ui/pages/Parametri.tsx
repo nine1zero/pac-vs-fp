@@ -220,7 +220,7 @@ export function Parametri({ anchor }: { anchor?: string }) {
           .
         </p>
         <h3 className="h3">Documenti del fondo</h3>
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label="Documenti del fondo">
           <table className="tbl">
             <thead>
               <tr>

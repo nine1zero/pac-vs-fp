@@ -426,7 +426,7 @@ export function Storico() {
             Esporta CSV
           </button>
         </div>
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabella annuale">
           <table className="tbl num-tbl">
             <thead>
               <tr>
