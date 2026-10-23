@@ -91,6 +91,44 @@
       "source_kind": "user"
     },
     {
+      "id": "member_min_rate_low",
+      "label": "Contributo minimo IBM: % della retribuzione fino alla prima fascia (informativo)",
+      "group": "Fondo pensione",
+      "unit": "%",
+      "default": 0.02,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia: aderente 2% della retribuzione fino alla prima fascia pensionabile INPS",
+      "description": "Serve a stimare dalla RAL la quota minima che ti dà il contributo dell’azienda, cioè il minimo dell’importo fisso. Informativo: il simulatore usa il contributo minimo del tuo estratto.",
+      "tags": [
+        "minimo",
+        "azienda",
+        "ibm"
+      ],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "member_min_rate_high",
+      "label": "Contributo minimo IBM: % della retribuzione oltre la prima fascia (informativo)",
+      "group": "Fondo pensione",
+      "unit": "%",
+      "default": 0.07,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia: aderente 7% della retribuzione oltre la prima fascia pensionabile INPS",
+      "description": "Come sopra, per la parte di retribuzione oltre la prima fascia pensionabile. Informativo.",
+      "tags": [
+        "minimo",
+        "azienda",
+        "ibm"
+      ],
+      "source_kind": "fpddi_doc"
+    },
+    {
       "id": "employer_month",
       "label": "Contributo dell'azienda, mensile",
       "group": "Dati personali",
@@ -259,6 +297,24 @@
       "source_kind": "assumption"
     },
     {
+      "id": "base_year_real",
+      "label": "Anno base degli euro di oggi",
+      "group": "Tecnici",
+      "unit": "anno",
+      "default": 2026,
+      "min": 2020,
+      "max": 2035,
+      "step": 1,
+      "advanced": true,
+      "source": "Convenzione: i valori in euro di oggi sono espressi in euro del 2026, l'anno dei dati fiscali usati",
+      "description": "I risultati in euro di oggi si ottengono dividendo per l’inflazione cumulata da quest’anno all’anno di uscita.",
+      "tags": [
+        "inflazione",
+        "euro di oggi"
+      ],
+      "source_kind": "assumption"
+    },
+    {
       "id": "etf_gross_return",
       "label": "Rendimento atteso annuo dell'azionario globale, prima dei costi",
       "group": "Ipotesi di mercato",
@@ -328,6 +384,43 @@
       "source": "INPS: aliquota IVS a carico del lavoratore 9,19%; +1% sulla parte di retribuzione oltre la prima fascia pensionabile (L. 438/1992 art. 3-ter), fascia 2026 56.224 € (circolare INPS n. 6/2026). Non incluso lo 0,30% CIGS dovuto solo in alcuni settori",
       "description": "Contributi previdenziali del dipendente, tolti dalla RAL per ottenere il reddito su cui si calcolano IRPEF e detrazioni.",
       "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "inps_extra_rate",
+      "label": "Contributo INPS aggiuntivo oltre la prima fascia pensionabile",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.01,
+      "min": 0,
+      "max": 0.03,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "L. 438/1992 art. 3-ter: contributo aggiuntivo dell'1% a carico del lavoratore sulla parte di retribuzione annua oltre la prima fascia pensionabile",
+      "description": "Sulla parte di RAL oltre la prima fascia pensionabile il dipendente paga l’1% di contributi in più; si toglie dalla RAL come gli altri contributi INPS.",
+      "tags": [
+        "inps",
+        "contributi"
+      ],
+      "source_kind": "law"
+    },
+    {
+      "id": "inps_first_band",
+      "label": "Prima fascia pensionabile INPS, annua",
+      "group": "Fisco",
+      "unit": "€",
+      "default": 56224,
+      "min": 0,
+      "max": 200000,
+      "step": 1,
+      "advanced": true,
+      "source": "Circolare INPS n. 6 del 30/01/2026: prima fascia di retribuzione pensionabile 2026 pari a 56.224 € annui (4.685 € mensili)",
+      "description": "Soglia oltre la quale si paga l’1% INPS in più; per lo schema IBM è anche la soglia tra il 2% e il 7% del contributo minimo.",
+      "tags": [
+        "inps",
+        "fascia",
+        "minimo"
+      ],
       "source_kind": "law"
     },
     {
@@ -566,7 +659,7 @@
       "step": null,
       "advanced": true,
       "source": "Scelta tra 3 ETF: Vanguard FTSE All-World Acc (IE00BK5BQT80), SPDR MSCI ACWI IMI (IE00B3YLTY66), iShares MSCI ACWI Acc (IE00B6R52259). Dati: schede emittenti e Finanzfluss al 20–23/10/2026; copertura indici: FTSE Russell (90–95%), MSCI (85% ACWI, 99% ACWI IMI)",
-      "description": "L’ETF di riferimento: circa 2.300 aziende di 23 paesi sviluppati e 24 emergenti. Accumula i dividendi.",
+      "description": "L’ETF del PAC, scelto nel menù del simulatore: indice, titoli, patrimonio e TER di ciascuno sono nella scheda dell’ETF. Accumula i dividendi.",
       "tags": [],
       "source_kind": "issuer"
     },

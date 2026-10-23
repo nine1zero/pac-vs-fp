@@ -1,5 +1,36 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 5: pagine Versamenti, Storico, Parametri e fonti
+
+- **I miei versamenti** (`design/v2/Versamenti.dc.html`), con il file letto in memoria (anche caricandolo da qui):
+  - riquadri versato da te / azienda / TFR / posizione oggi / stessi versamenti nell'ETF;
+  - grafico mese per mese con le tre componenti cumulate, la posizione reale, l'ETF e la differenza in lime, leggibile anche con le frecce;
+  - scelta dell'ETF (MSCI ACWI, World, Europe) e "dentro il fondo" / "fuori, prima del 26%";
+  - tabella dei movimenti con filtri per anno e tipologia (con i conteggi), totali e "Azzera filtri".
+- **Storico** (`design/v2/Storico.dc.html`), tutto calcolato dai dati:
+  - benchmark 45/45/10;
+  - scelta dell'ETF (dal primo anno disponibile) e del periodo;
+  - medie; grafico "100 €" prima e dopo l'imposta; componenti del benchmark; barre annue fondo − ETF e fondo − benchmark;
+  - scomposizione del ritardo; statistiche;
+  - tabella ordinabile ed esportabile in CSV.
+- **Parametri e fonti** (`design/v2/Fonti.dc.html`):
+  - barra fissa con ricerca (Fuse.js), "Solo i principali", "Ripristina tutti (N)", gruppi con conteggi e legenda dei tipi di fonte;
+  - una riga per parametro con spiegazione, valore modificabile, fonte e "↺ default";
+  - ancoraggio `#/parametri/<id>` e "copia link";
+  - assunzioni e limiti; elenco delle fonti (SPEC par. 9).
+  - Le modifiche valgono in tutto il simulatore e si salvano con "Salva i miei dati".
+- **Profilo JSON**: esporta i parametri e importa un profilo. L'import accetta il formato della SPEC par. 7 e quello di `reference/model.py`, quindi anche il profilo privato, che resta in locale; scarta i valori fuori dai limiti o sconosciuti.
+- **Decisioni con la risposta consigliata** (regola dell'autore del 23/10/2026, modificabili):
+  - nuovi parametri in `params.json`, così ogni numero usato dal modello è nella pagina (SPEC par. 8 punto 7). Fonti già citate in `docs/FONTI.md`:
+    - `inps_extra_rate`: 1%, L. 438/1992 art. 3-ter;
+    - `inps_first_band`: 56.224 €, circolare INPS n. 6/2026;
+    - `base_year_real`: 2026, convenzione;
+    - `member_min_rate_low` e `member_min_rate_high`: 2% e 7%, Nota informativa 2026 p. 9, solo informativi;
+  - i "preset salvati con nome" in `localStorage` (SPEC par. 3.4 H) sono sostituiti da export/import di un file JSON, che copre anche l'import del profilo privato;
+  - il comparto Assicurativo (SPEC par. 3.4 F) non è nello Storico: il prototipo v2 in vigore non lo prevede. I calcoli sono già in `src/model/history.ts` e testati.
+- **Dato senza fonte rimosso**: la descrizione di `etf_name` in `params.json` diceva "circa 2.300 aziende di 23 paesi sviluppati e 24 emergenti", un numero senza fonte e in contrasto con l'ETF di default (3.755 titoli). Ora rimanda alla scheda dell'ETF.
+- Test: righe dei parametri, modifiche, ripristino, import/export (Vitest); le tre pagine con Playwright. Coperti fonte di ogni parametro accessibile da tastiera, ricerca, modifica che cambia il risultato, valori del fixture in Versamenti e medie e scomposizione nello Storico.
+
 ## 2026-10-23 · fase 4: interfaccia v2 della Landing
 
 - Landing come nel prototipo `design/v2/Landing.dc.html`: menù dell'ETF nel titolo, tre card delle strategie, navigazione delle sezioni 0-6 con stato, sezioni comprimibili con riepilogo e badge `Esempio`/`Dati tuoi`.

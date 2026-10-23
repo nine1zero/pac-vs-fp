@@ -1,11 +1,9 @@
 // Le sette sezioni della Landing (prototipo spec/design/v2/Landing.dc.html, SPEC par. 3.0).
 import { useState, type DragEvent } from 'react';
-import sampleXls from '../../../spec/tests/fixtures/sample_dettaglio_ok.xls?raw';
-import { azionario, etfMonthly, params } from '../../data';
+import { params } from '../../data';
 import { etfById, etfCatalog, paramSource } from '../../data/catalog';
-import { parseDettaglio, successMessage } from '../../import/dettaglio';
+import { successMessage } from '../../import/dettaglio';
 import { EXAMPLE_PARAMS } from '../../model';
-import { compareWithEtf, prefillFromFile } from '../../model/contributions';
 import { useStore, type Inputs } from '../../state/store';
 import { DeltaZones, ExitStrip } from '../charts/Bars';
 import { HeatMap } from '../charts/HeatMap';
@@ -14,6 +12,7 @@ import { Chips, NumField, Range, Segmented } from '../controls';
 import { euro, euroK, pct, pctShort } from '../format';
 import { HISTORY, LINE_DELTAS, MAP_DELTAS, SCENARIO_NAMES, type Results } from '../results';
 import { Src, Tip } from '../Tip';
+import { useImport } from '../useImport';
 import { NextButton, Section } from './Section';
 
 const P = EXAMPLE_PARAMS;
@@ -173,36 +172,13 @@ export function Sec1({ r }: { r: Results }) {
 
 /* 2 · IL TUO FONDO */
 export function Sec2({ r }: { r: Results }) {
-  const { state, dispatch } = useStore();
+  const { state } = useStore();
   const set = useSet();
   const i = state.inputs;
-  const [busy, setBusy] = useState(false);
   const [over, setOver] = useState(false);
   const file = state.file;
 
-  const readText = (name: string, text: string) => {
-    const result = parseDettaglio(text);
-    if (result.status === 'error') {
-      dispatch({ type: 'importFile', file: { name, result, comparison: null }, prefill: null });
-      return;
-    }
-    const comparison = compareWithEtf(result.movements, azionario, etfMonthly);
-    const pf = prefillFromFile(result.movements, comparison);
-    const prefill: Partial<Inputs> = {};
-    if (pf.first_join_year !== null) prefill.first_join_year = pf.first_join_year;
-    if (pf.min_member_month !== null) prefill.min_member_month = pf.min_member_month;
-    if (pf.employer_month !== null) prefill.employer_month = pf.employer_month;
-    if (pf.tfr_month !== null) prefill.tfr_month = pf.tfr_month;
-    if (pf.current_position !== null) prefill.current_position = Math.round(pf.current_position * 100) / 100;
-    dispatch({ type: 'importFile', file: { name, result, comparison }, prefill });
-  };
-  const readFile = (f: File | undefined) => {
-    if (!f) return;
-    setBusy(true);
-    f.text()
-      .then((t) => readText(f.name, t))
-      .finally(() => setBusy(false));
-  };
+  const { readFile, useSample, busy } = useImport();
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
     setOver(false);
@@ -264,7 +240,7 @@ export function Sec2({ r }: { r: Results }) {
           )}
           <span className="row-gap wrap">
             <span className="muted lock">Letto solo nel browser, mai salvato</span>
-            <button type="button" className="btn ghost" onClick={() => readText('sample_dettaglio_ok.xls', sampleXls)}>
+            <button type="button" className="btn ghost" onClick={useSample}>
               Usa un file d'esempio
             </button>
           </span>
