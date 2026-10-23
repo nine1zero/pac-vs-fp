@@ -1,5 +1,14 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 3: storico e import del file
+
+- `src/data/`: i dati di `public/data/` entrano nel bundle (JSON e CSV), senza richieste di rete.
+- `src/model/history.ts`: tabella annua (fondo e benchmark prima dell'imposta, ETF e componenti, benchmark ricostruito), CAGR, differenziali, statistiche dei differenziali annui (deviazione standard campionaria), scomposizione del ritardo, preset del differenziale calcolati dai dati, cumulati.
+- `src/import/dettaglio.ts`: lettura del DettaglioOperazioni con `DOMParser` e validazione del par. 6.2 (errori bloccanti, avvisi, esito verde).
+- **Decisione dell'autore (23/10/2026):** la modalità ridotta (avviso giallo, niente confronto con l'ETF) scatta solo se mancano tutte e quattro le colonne delle quote (Comparto, Numero Quote, Valore Quota, Data Valore Quota), come nei fondi solo assicurativi. Se ne mancano solo alcune è un errore rosso: è il caso di `sample_dettaglio_bad_columns.xls`.
+- `src/model/contributions.ts`: posizione reale per comparto, stessi versamenti nell'ETF dentro e fuori dal fondo (per ACWI, MSCI World, MSCI Europe), serie a fine mese per il grafico, precompilazione del simulatore. La formula "dentro il fondo" vale per qualsiasi data di valutazione: nell'anno di valutazione usa il rendimento fino al mese di valutazione. Con il fixture coincide con `reference/history.py`.
+- Test: `golden_history.json` (CAGR entro 1e-12), statistiche e scomposizione di FORMULE par. 8, preset del prototipo, cumulati dell'Assicurativo (SPEC par. 5.4), i tre fixture, `golden_fixture_ok.json`, serie mensili uguali a quelle del prototipo Versamenti, `source`/`source_kind` di ogni parametro ed `evidence` di ogni anno (par. 8 punto 10).
+
 ## 2026-10-23 · fase 2: modello in TypeScript
 
 - `src/model/`: fisco (`tax.ts`), flussi (`flows.ts`), simulazione (`simulate.ts`), forma chiusa (`closedForm.ts`), pareggi (`breakeven.ts`), mappa di convenienza (`map.ts`). Codice TypeScript puro, senza interfaccia, con gli stessi nomi di `reference/model.py`.

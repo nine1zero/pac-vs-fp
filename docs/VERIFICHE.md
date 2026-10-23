@@ -61,6 +61,10 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 
 `reference/history.py` riproduce `tests/golden_history.json` senza differenze: medie 2014-2025 fondo lordo 5,454%, benchmark lordo 6,460%, ETF 11,263%; δ = −5,808%; statistiche 2012-2025 come in docs/FORMULE.md par. 8.
 
+### Storico e import nell'app (`src/model/history.ts`, `src/import/dettaglio.ts`, `src/model/contributions.ts`)
+
+`npm test` confronta l'app con `tests/golden_history.json` (CAGR uguali entro 1e-12) e con le statistiche di FORMULE par. 8 (media −6,16%, mediana −6,82%, deviazione standard campionaria 6,96%, intervallo [−9,81%; −2,51%], 3 anni positivi su 14). Verifica anche la scomposizione −2,1 / −2,7 / −1,0, i preset del prototipo (−5,81 / −5,04 / −3,95 / −4,80) e i cumulati dell'Assicurativo 2018-2025 (+18,0%, ISTAT +20,4%, TFR +24,0%; Azionario +45,6%). Sul fixture coincidono con `tests/golden_fixture_ok.json` la posizione reale, l'ETF dentro e fuori dal fondo e la data di valutazione; le serie mensili coincidono al centesimo con quelle del prototipo `design/v2/Versamenti.dc.html` per ACWI, MSCI World e MSCI Europe.
+
 ## 6. Profilo privato
 
 Il profilo reale dell'autore (`tests/private/profilo_privato.json`, solo in locale) è stato aggiornato ai parametri fiscali v2 e i suoi valori di controllo rigenerati con il nuovo modello; quelli del Google Sheet (modello v1) restano nel file come `golden_model_v1_sheet`. Il Google Sheet va aggiornato al calcolo fiscale v2 se deve restare il riferimento.
