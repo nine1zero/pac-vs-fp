@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>I miei versamenti</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F2}
+.lp{font-family:Onest,system-ui,sans-serif;color:#0B0B0B;letter-spacing:.2px}
+.lp ::selection{background:#D4EE36;color:#0B0B0B}
+.lp a{color:inherit}
+.mark{background:linear-gradient(180deg,transparent 12%,#D4EE36 12% 88%,transparent 88%);padding:0 6px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cap{font-size:12.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:#3A3D42;display:inline-flex;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E2E2DF;border-radius:24px;padding:26px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.tile{background:#F7F7F5;border:1px solid #E6E6E3;border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.big{font-size:26px;font-weight:600;letter-spacing:-.6px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sub{font-size:13px;color:#5C6168;line-height:1.45}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;padding:14px 22px;border:none}
+.btn.dark{background:#0B0B0B;color:#FFFFFF}
+.btn.dark:hover{background:#2A2A2A}
+.btn.lime{background:#D4EE36;color:#0B0B0B}
+.btn.lime:hover{background:#C6E21F}
+.btn.ghost{background:#FFFFFF;color:#0B0B0B;border:1px solid #D6D6D4;padding:9px 14px;font-size:14px;border-radius:12px}
+.btn.ghost:hover{border-color:#0B0B0B}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:12px;height:12px;border-radius:4px;flex:none}
+.leg{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:#26282B}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.tbl th{position:sticky;top:0;background:#F7F7F5;text-align:right;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#3A3D42;padding:10px 12px;border-bottom:1px solid #E2E2DF}
+.tbl th:first-child,.tbl td:first-child,.tbl th:nth-child(2),.tbl td:nth-child(2),.tbl th:nth-child(3),.tbl td:nth-child(3){text-align:left}
+.tbl td{text-align:right;padding:9px 12px;border-bottom:1px solid #EFEFED;white-space:nowrap}
+.tbl tr:hover td{background:#FAFBEF}
+@media (max-width:900px){.g5{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.h1{font-size:36px !important}}
+</style>
+</helmet>
+<div class="lp" style="min-height: 100vh; background: #F4F4F2">
+
+  <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il file è letto solo sul tuo dispositivo
+  </div>
+
+  <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
+    <nav style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+    </nav>
+  </header>
+
+  <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
+
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
+      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
+        <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">I miei <span class="mark">versamenti</span></h1>
+        <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Quanto hai versato tu, quanto l'azienda e quanto il TFR, mese per mese, e quanto vale oggi la posizione. Accanto, gli stessi versamenti, alle stesse date, investiti nell'ETF che scegli.</p>
+      </div>
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; font-weight: 600">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+        {{ fileLine }}
+      </span>
+    </section>
+
+    <div class="g5" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+      <div class="tile"><span class="cap"><span class="sw" style="background: #6B6F75"></span>Versato da te</span><span class="big">{{ tAd }}</span><span class="sub">{{ pAd }} del totale</span></div>
+      <div class="tile"><span class="cap"><span class="sw" style="background: #A9ACB0"></span>Azienda</span><span class="big">{{ tAz }}</span><span class="sub">{{ pAz }} del totale</span></div>
+      <div class="tile"><span class="cap"><span class="sw" style="background: #D3D5D7"></span>TFR</span><span class="big">{{ tTfr }}</span><span class="sub">{{ pTfr }} del totale</span></div>
+      <div class="tile"><span class="cap">Posizione oggi</span><span class="big">{{ tReal }}</span><span class="sub">rendimento {{ tGain }} su {{ tTot }} versati</span></div>
+      <div class="tile" style="background: #0B0B0B; border-color: #0B0B0B; color: #F4F4F2"><span class="cap" style="color: #B9BCC0">Stessi versamenti nell'ETF</span><span class="big">{{ tEtf }}</span><span class="sub" style="color: #D9DBDE">{{ tEtfDiff }} rispetto al fondo</span></div>
+    </div>
+
+    <section class="card">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+          <span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Versamenti e rendimento nel tempo</span>
+          <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ headPre }}<span class="mark" style="font-weight: 600">{{ headDiff }}</span>{{ headPost }}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end">
+          <span class="chips" role="radiogroup" aria-label="ETF di confronto"><sc-for list="{{ etfChips }}" as="c" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="{{ c.style }}" title="{{ c.isin }}">{{ c.label }}</button></sc-for></span>
+          <div role="radiogroup" aria-label="Tassazione dell'ETF" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
+            <button type="button" role="radio" aria-checked="{{ isIn }}" onClick="{{ pickIn }}" style="{{ segIn }}">Dentro il fondo</button>
+            <button type="button" role="radio" aria-checked="{{ isOut }}" onClick="{{ pickOut }}" style="{{ segOut }}">Fuori, prima del 26%</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 18px">
+        <span class="leg"><span class="sw" style="background: #6B6F75"></span>Tu</span>
+        <span class="leg"><span class="sw" style="background: #A9ACB0"></span>Azienda</span>
+        <span class="leg"><span class="sw" style="background: #D3D5D7"></span>TFR</span>
+        <span class="leg"><span style="width: 22px; height: 3px; border-radius: 2px; background: #0B0B0B"></span>Posizione reale nel fondo</span>
+        <span class="leg"><span style="width: 22px; height: 3px; border-radius: 2px; background: #2563EB"></span>{{ etfLegend }}</span>
+        <span class="leg"><span class="sw" style="background: #D4EE36"></span>Differenza</span>
+      </div>
+
+      <div style="display: flex; gap: 10px">
+        <div style="position: relative; width: 56px; flex: none; height: 360px; font-size: 12px; color: #5C6168; font-variant-numeric: tabular-nums">
+          <sc-for list="{{ yTicks }}" as="t" hint-placeholder-count="6"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="position: relative; height: 360px" onMouseLeave="{{ leave }}">
+            <svg viewBox="0 0 1000 360" preserveAspectRatio="none" width="100%" height="360" role="img" aria-label="{{ chartLabel }}" style="display: block; overflow: visible">
+              <path d="{{ grid }}" fill="none" stroke="#E6E6E3" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ aTfr }}" fill="#D3D5D7"></path>
+              <path d="{{ aAz }}" fill="#A9ACB0"></path>
+              <path d="{{ aAd }}" fill="#6B6F75"></path>
+              <path d="{{ band }}" fill="#D4EE36" fill-opacity="0.6"></path>
+              <path d="{{ lReal }}" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ lEtf }}" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <sc-if value="{{ hasHover }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ hv.line }}"></span>
+              <span style="{{ hv.dotReal }}"></span>
+              <span style="{{ hv.dotEtf }}"></span>
+              <span style="{{ hv.box }}">
+                <strong style="font-size: 14px">{{ hv.month }}</strong>
+                <span style="display: flex; justify-content: space-between; gap: 16px"><span>Tu</span><span>{{ hv.ad }}</span></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px"><span>Azienda</span><span>{{ hv.az }}</span></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px"><span>TFR</span><span>{{ hv.tfr }}</span></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #3A3D42; padding-top: 6px"><span>Versato</span><span>{{ hv.tot }}</span></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px"><span>Fondo</span><strong>{{ hv.real }}</strong></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px"><span>ETF</span><strong style="color: #9DBBFB">{{ hv.etf }}</strong></span>
+                <span style="display: flex; justify-content: space-between; gap: 16px; color: #D4EE36"><span>Differenza</span><strong>{{ hv.diff }}</strong></span>
+              </span>
+            </sc-if>
+            <sc-for list="{{ hits }}" as="h" hint-placeholder-count="12"><span style="{{ h.style }}" onMouseEnter="{{ h.enter }}" onClick="{{ h.enter }}"></span></sc-for>
+          </div>
+          <div style="position: relative; height: 18px; font-size: 12.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+            <sc-for list="{{ xTicks }}" as="t" hint-placeholder-count="4"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+      <span class="sub">Fondo: quote accumulate × valore quota dell'ultimo movimento del mese. ETF: ogni versamento netto comprato al prezzo di fine mese della sua data valore. "Dentro il fondo" applica ogni anno la stessa imposta del 20% sui rendimenti; "fuori" mostra il valore prima del 26% sulle plusvalenze. Passa il mouse sul grafico per i valori di ogni mese.</span>
+    </section>
+
+    <section class="card">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Dettaglio movimenti</span>
+          <span class="sub">{{ tableNote }}</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px">
+          <span style="position: relative">
+            <button type="button" class="btn ghost" onClick="{{ ddYear.toggle }}" aria-expanded="{{ ddYear.open }}" aria-haspopup="listbox"><span style="color: #5C6168; font-weight: 500">Anno</span> {{ ddYear.cur }} <span aria-hidden="true">▾</span></button>
+            <sc-if value="{{ ddYear.open }}" hint-placeholder-val="{{ false }}"><span role="listbox" aria-label="Filtra per anno" style="{{ ddBox }}"><sc-for list="{{ ddYear.opts }}" as="o" hint-placeholder-count="5"><button type="button" role="option" aria-selected="{{ o.on }}" onClick="{{ o.pick }}" style="{{ o.style }}"><span>{{ o.label }}</span><span style="color: #5C6168">{{ o.n }}</span></button></sc-for></span></sc-if>
+          </span>
+          <span style="position: relative">
+            <button type="button" class="btn ghost" onClick="{{ ddTipo.toggle }}" aria-expanded="{{ ddTipo.open }}" aria-haspopup="listbox"><span style="color: #5C6168; font-weight: 500">Tipologia</span> {{ ddTipo.cur }} <span aria-hidden="true">▾</span></button>
+            <sc-if value="{{ ddTipo.open }}" hint-placeholder-val="{{ false }}"><span role="listbox" aria-label="Filtra per tipologia" style="{{ ddBox }}"><sc-for list="{{ ddTipo.opts }}" as="o" hint-placeholder-count="3"><button type="button" role="option" aria-selected="{{ o.on }}" onClick="{{ o.pick }}" style="{{ o.style }}"><span>{{ o.label }}</span><span style="color: #5C6168">{{ o.n }}</span></button></sc-for></span></sc-if>
+          </span>
+          <sc-if value="{{ hasFilter }}" hint-placeholder-val="{{ false }}"><button type="button" class="btn ghost" onClick="{{ clearFilter }}">Azzera filtri</button></sc-if>
+        </div>
+      </div>
+      <div style="max-height: 420px; overflow: auto; border: 1px solid #E6E6E3; border-radius: 16px">
+        <table class="tbl">
+          <thead><tr><th>Data valore</th><th>Competenza</th><th>Tipologia</th><th>Tu</th><th>Azienda</th><th>TFR</th><th>Netto</th><th>Quote</th><th>Valore quota</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8"><tr><td>{{ r.dv }}</td><td>{{ r.comp }}</td><td>{{ r.tipo }}</td><td>{{ r.ad }}</td><td>{{ r.az }}</td><td>{{ r.tfr }}</td><td><strong>{{ r.net }}</strong></td><td>{{ r.q }}</td><td>{{ r.vq }}</td></tr></sc-for>
+          </tbody>
+          <tfoot><tr><td style="font-weight: 700; text-align: left; background: #F7F7F5">Totale</td><td style="background: #F7F7F5"></td><td style="background: #F7F7F5"></td><td style="font-weight: 700; background: #F7F7F5">{{ fAd }}</td><td style="font-weight: 700; background: #F7F7F5">{{ fAz }}</td><td style="font-weight: 700; background: #F7F7F5">{{ fTfr }}</td><td style="font-weight: 700; background: #F7F7F5">{{ fNet }}</td><td style="font-weight: 700; background: #F7F7F5">{{ fQ }}</td><td style="background: #F7F7F5"></td></tr></tfoot>
+        </table>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+        <span style="font-size: 14px; color: #3A3D42">Posizione, ultimo contributo mensile e anno di prima adesione sono già nel simulatore dal momento del caricamento</span>
+        <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      </div>
+    </section>
+
+    <span class="sub">Dati d'esempio sintetici (file DettaglioOperazioni di prova): con il tuo file grafico e tabella si costruiscono dai tuoi movimenti, nel browser, senza salvarli. Prezzi ETF: Yahoo Finance, ultimo prezzo di ogni mese, in euro. I risultati passati non garantiscono quelli futuri.</span>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.D = {"months":["2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08"],"ad":[75.0,150.0,225.0,300.0,375.0,450.0,525.0,600.0,675.0,750.0,825.0,900.0,975.0,1050.0,1125.0,1200.0,1275.0,1350.0,1425.0,1500.0,1575.0,1650.0,1725.0,1800.0,1875.0,1950.0,2025.0,2100.0,2175.0,2250.0,2325.0,2400.0,2475.0,2550.0,2625.0,2700.0,2775.0,2850.0,2925.0,3000.0,3075.0,3150.0,3225.0],"az":[70.0,140.0,210.0,280.0,350.0,420.0,490.0,560.0,630.0,700.0,770.0,840.0,910.0,980.0,1050.0,1120.0,1190.0,1260.0,1330.0,1400.0,1470.0,1540.0,1610.0,1680.0,1750.0,1820.0,1890.0,1960.0,2030.0,2100.0,2170.0,2240.0,2310.0,2380.0,2450.0,2520.0,2590.0,2660.0,2730.0,2800.0,2870.0,2940.0,3010.0],"tfr":[230.0,460.0,690.0,920.0,1150.0,1380.0,1610.0,1840.0,2070.0,2300.0,2530.0,2760.0,2990.0,3220.0,3450.0,3680.0,3910.0,4140.0,4370.0,4600.0,4830.0,5060.0,5290.0,5520.0,5750.0,5980.0,6210.0,6440.0,6670.0,6900.0,7130.0,7360.0,7590.0,7820.0,8050.0,8280.0,8510.0,8740.0,8970.0,9200.0,9430.0,9660.0,9890.0],"real":[374.99,751.11,1128.32,1506.72,1886.13,2266.76,2648.36,3031.23,3415.0,3800.09,4186.03,4573.32,5373.79,5765.02,6157.03,6550.5,6944.73,7340.46,7736.88,8134.82,8533.89,8933.57,9334.33,9736.7,10609.55,11016.28,11424.13,11833.1,12243.18,12654.37,13066.66,13480.05,13894.54,14310.13,14726.81,15144.57,16194.32,16618.16,17042.31,17468.4,17894.75,18323.07,18751.61],"etf":{"acwi":{"in":[375.0,749.3,1126.69,1519.43,1947.29,2361.34,2714.3,3058.97,3331.99,3856.18,4370.78,4848.87,5356.14,5894.09,6200.2,6626.28,7267.69,7652.93,7985.06,8493.02,8924.3,9773.08,10117.58,10797.0,10975.54,10680.5,10738.0,11607.63,12080.9,12952.47,13294.2,13965.46,14799.61,15149.57,15572.46,15996.47,16721.12,16294.55,17869.53,19136.89,19698.82,19815.08,20691.45],"out":[375.0,749.12,1127.11,1524.29,1965.36,2389.17,2736.62,3073.71,3321.24,3882.72,4432.22,4937.89,5480.38,6061.53,6349.44,6788.97,7500.33,7888.26,8209.19,8751.82,9197.75,10169.69,10506.27,11276.42,11396.74,10904.17,10868.58,11882.48,12384.27,13399.37,13731.51,14487.77,15453.17,15795.99,16232.48,16671.35,17501.51,16833.99,18768.26,20301.89,20919.42,20958.95,21983.58]},"world":{"in":[375.0,750.56,1127.12,1524.12,1946.32,2358.16,2721.95,3061.48,3351.57,3882.97,4388.33,4882.14,5402.88,5939.3,6215.08,6654.75,7295.31,7682.1,8041.17,8503.37,8963.17,9881.95,10162.13,10897.35,11056.62,10729.68,10771.81,11684.49,12138.61,12979.77,13314.56,13956.14,14818.05,15153.23,15562.43,15993.68,16511.82,16247.31,17695.19,18849.41,19425.42,19705.91,20400.88],"out":[375.0,750.7,1127.65,1530.15,1964.14,2385.19,2746.19,3076.86,3345.71,3916.21,4454.16,4979.91,5539.6,6118.98,6368.45,6825.21,7535.74,7925.62,8280.51,8765.53,9247.47,10307.98,10563.48,11406.54,11501.6,10966.82,10910.95,11981.09,12458.28,13434.7,13757.88,14476.22,15477.83,15801.62,16220.57,16668.85,17230.17,16773.52,18542.5,19929.11,20564.89,20817.35,21606.89]},"europe":{"in":[375.0,750.09,1140.49,1493.11,1896.41,2300.27,2631.36,2973.86,3264.63,3807.54,4301.81,4722.58,5170.59,5718.59,6054.21,6589.39,6912.54,7352.28,7819.43,8174.77,8332.38,8772.03,9090.33,9974.6,10637.74,10657.18,10982.37,11787.0,12030.06,12487.42,12967.33,13504.9,14177.99,14656.7,15361.29,16125.88,17001.39,16320.25,17367.4,18200.32,19048.59,19578.49,19996.0],"out":[375.0,750.11,1144.36,1491.39,1901.76,2312.84,2632.95,2967.33,3237.04,3821.92,4346.01,4778.82,5245.94,5839.08,6164.45,6741.22,7050.94,7507.43,7998.36,8348.64,8450.29,8906.55,9210.29,10230.28,10970.03,10895.13,11207.13,12125.31,12333.56,12812.61,13320.12,13900.39,14651.68,15157.55,15948.4,16828.99,17853.0,16859.6,18104.77,19072.16,20058.98,20634.11,21063.98]}},"mov":[["28/08/2026","07/2026",75.0,70.0,230.0,375.0,17.916,20.93,"Contributo"],["28/07/2026","06/2026",75.0,70.0,230.0,375.0,17.969,20.869,"Contributo"],["28/06/2026","05/2026",75.0,70.0,230.0,375.0,18.022,20.807,"Contributo"],["28/05/2026","04/2026",75.0,70.0,230.0,375.0,18.076,20.746,"Contributo"],["28/04/2026","03/2026",75.0,70.0,230.0,375.0,18.13,20.684,"Contributo"],["28/03/2026","02/2026",75.0,70.0,230.0,375.0,18.184,20.623,"Contributo"],["28/02/2026","01/2026",75.0,70.0,230.0,375.0,18.238,20.561,"Contributo"],["28/01/2026","12/2025",75.0,70.0,230.0,375.0,19.051,19.684,"Contributo"],["28/12/2025","11/2025",75.0,70.0,230.0,375.0,19.106,19.627,"Contributo"],["28/11/2025","10/2025",75.0,70.0,230.0,375.0,19.162,19.57,"Contributo"],["28/10/2025","09/2025",75.0,70.0,230.0,375.0,19.218,19.513,"Contributo"],["28/09/2025","08/2025",75.0,70.0,230.0,375.0,19.274,19.456,"Contributo"],["28/08/2025","07/2025",75.0,70.0,230.0,375.0,19.331,19.399,"Contributo"],["28/07/2025","06/2025",75.0,70.0,230.0,375.0,19.388,19.342,"Contributo"],["28/06/2025","05/2025",75.0,70.0,230.0,375.0,19.445,19.285,"Contributo"],["28/05/2025","04/2025",75.0,70.0,230.0,375.0,19.503,19.228,"Contributo"],["28/04/2025","03/2025",75.0,70.0,230.0,375.0,19.561,19.171,"Contributo"],["28/03/2025","02/2025",75.0,70.0,230.0,375.0,19.619,19.114,"Contributo"],["28/02/2025","01/2025",75.0,70.0,230.0,375.0,19.678,19.057,"Contributo"],["28/01/2025","12/2024",75.0,70.0,230.0,375.0,20.684,18.13,"Contributo"],["28/12/2024","11/2024",75.0,70.0,230.0,375.0,20.744,18.077,"Contributo"],["28/11/2024","10/2024",75.0,70.0,230.0,375.0,20.804,18.025,"Contributo"],["28/10/2024","09/2024",75.0,70.0,230.0,375.0,20.865,17.973,"Contributo"],["28/09/2024","08/2024",75.0,70.0,230.0,375.0,20.926,17.92,"Contributo"],["28/08/2024","07/2024",75.0,70.0,230.0,375.0,20.988,17.867,"Contributo"],["28/07/2024","06/2024",75.0,70.0,230.0,375.0,21.05,17.815,"Contributo"],["28/06/2024","05/2024",75.0,70.0,230.0,375.0,21.112,17.762,"Contributo"],["28/05/2024","04/2024",75.0,70.0,230.0,375.0,21.174,17.71,"Contributo"],["28/04/2024","03/2024",75.0,70.0,230.0,375.0,21.237,17.657,"Contributo"],["28/03/2024","02/2024",75.0,70.0,230.0,375.0,21.301,17.605,"Contributo"],["28/02/2024","01/2024",75.0,70.0,230.0,375.0,21.364,17.552,"Contributo"],["28/01/2024","12/2023",75.0,70.0,230.0,375.0,23.353,16.058,"Contributo"],["28/12/2023","11/2023",75.0,70.0,230.0,375.0,23.421,16.011,"Contributo"],["28/11/2023","10/2023",75.0,70.0,230.0,375.0,23.489,15.965,"Contributo"],["28/10/2023","09/2023",75.0,70.0,230.0,375.0,23.557,15.918,"Contributo"],["28/09/2023","08/2023",75.0,70.0,230.0,375.0,23.627,15.872,"Contributo"],["28/08/2023","07/2023",75.0,70.0,230.0,375.0,23.696,15.825,"Contributo"],["28/07/2023","06/2023",75.0,70.0,230.0,375.0,23.766,15.779,"Contributo"],["28/06/2023","05/2023",75.0,70.0,230.0,375.0,23.836,15.732,"Contributo"],["28/05/2023","04/2023",75.0,70.0,230.0,375.0,23.907,15.686,"Contributo"],["28/04/2023","03/2023",75.0,70.0,230.0,375.0,23.978,15.639,"Contributo"],["28/03/2023","02/2023",75.0,70.0,230.0,375.0,24.049,15.593,"Contributo"],["28/02/2023","01/2023",75.0,70.0,230.0,375.0,24.121,15.546,"Contributo"]]};
+    this.state = { etf: 'acwi', mode: 'in', year: 'all', tipo: 'all', dd: null, hover: -1 };
+  }
+  fmtE(v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(Math.round(v)) + ' €'; }
+  fmt2(v, d) { return new Intl.NumberFormat('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v); }
+  signE(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + this.fmtE(Math.abs(v)); }
+  renderVals() {
+    var self = this, s = this.state, D = this.D, n = D.months.length, ink = '#0B0B0B', lime = '#D4EE36';
+    var ETFS = { acwi: ['MSCI ACWI', 'iShares MSCI ACWI UCITS ETF (Acc) · IE00B6R52259'], world: ['MSCI World', 'iShares Core MSCI World UCITS ETF (Acc) · IE00B4L5Y983'], europe: ['MSCI Europe', 'iShares Core MSCI Europe UCITS ETF (Acc) · IE00B4K48X80'] };
+    var MES = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+    var mLabel = function (m) { var p = m.split('-'); return MES[+p[1] - 1] + ' ' + p[0]; };
+    var ser = D.etf[s.etf][s.mode], real = D.real;
+    var tot = D.ad.map(function (v, i) { return v + D.az[i] + D.tfr[i]; });
+    var top = Math.max(Math.max.apply(null, ser), Math.max.apply(null, real), Math.max.apply(null, tot));
+    var steps = [500, 1000, 2000, 2500, 5000, 10000, 20000, 25000, 50000, 100000], step = steps.filter(function (v) { return v >= top / 5; })[0] || 100000;
+    var ymax = Math.ceil(top / step) * step, W = 1000, H = 360;
+    var X = function (i) { return (n > 1 ? i / (n - 1) : 0) * W; }, Y = function (v) { return H - v / ymax * H; };
+    var line = function (a) { return a.map(function (v, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' '); };
+    var area = function (lo, hi) { var f = hi.map(function (v, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' ');
+      var b = ''; for (var i = n - 1; i >= 0; i--) b += ' L' + X(i).toFixed(1) + ' ' + Y(lo[i]).toFixed(1); return f + b + ' Z'; };
+    var zero = D.ad.map(function () { return 0; }), c1 = D.ad, c2 = D.ad.map(function (v, i) { return v + D.az[i]; });
+    var grid = '', yTicks = [];
+    for (var v = 0; v <= ymax + 1e-6; v += step) { grid += 'M0 ' + Y(v).toFixed(1) + ' H1000 ';
+      yTicks.push({ label: v >= 1000 ? self.fmt2(v / 1000, v % 1000 ? 1 : 0) + 'k €' : v + ' €', style: 'position:absolute;right:0;transform:translateY(-50%);top:' + ((1 - v / ymax) * 100).toFixed(2) + '%' }); }
+    var xTicks = [];
+    D.months.forEach(function (m, i) { if (i === 0 || m.slice(5) === '01') xTicks.push({ label: i === 0 ? mLabel(m) : m.slice(0, 4), style: 'position:absolute;top:0;white-space:nowrap;left:' + (X(i) / W * 100).toFixed(2) + '%;transform:translateX(' + (i === 0 ? '0' : '-50%') + ')' }); });
+    xTicks.push({ label: mLabel(D.months[n - 1]), style: 'position:absolute;top:0;right:0;white-space:nowrap' });
+    var hits = D.months.map(function (m, i) { var w = 100 / Math.max(1, n - 1), l = Math.max(0, (i - 0.5) * w);
+      return { style: 'position:absolute;top:0;bottom:0;cursor:crosshair;left:' + l.toFixed(3) + '%;width:' + w.toFixed(3) + '%', enter: function () { if (self.state.hover !== i) self.setState({ hover: i }); } }; });
+    var h = s.hover, hv = null;
+    if (h >= 0 && h < n) { var pc = X(h) / W * 100, right = h > n * 0.6, d = ser[h] - real[h];
+      var dot = function (val, col) { return 'position:absolute;width:12px;height:12px;border-radius:50%;background:#FFFFFF;border:3px solid ' + col + ';box-sizing:border-box;transform:translate(-50%,-50%);pointer-events:none;left:' + pc.toFixed(2) + '%;top:' + ((1 - val / ymax) * 100).toFixed(2) + '%'; };
+      hv = { line: 'position:absolute;top:0;bottom:0;width:1px;background:#0B0B0B;pointer-events:none;left:' + pc.toFixed(2) + '%', dotReal: dot(real[h], ink), dotEtf: dot(ser[h], '#2563EB'),
+        box: 'position:absolute;top:8px;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:5px;min-width:200px;padding:12px 14px;border-radius:14px;background:#0B0B0B;color:#F4F4F2;font-size:13px;font-variant-numeric:tabular-nums;box-shadow:0 10px 30px rgba(11,11,11,.18);left:' + pc.toFixed(2) + '%;transform:translateX(' + (right ? 'calc(-100% - 14px)' : '14px') + ')',
+        month: mLabel(D.months[h]), ad: this.fmtE(D.ad[h]), az: this.fmtE(D.az[h]), tfr: this.fmtE(D.tfr[h]), tot: this.fmtE(tot[h]), real: this.fmtE(real[h]), etf: this.fmtE(ser[h]), diff: this.signE(d) }; }
+    var L = n - 1, T = tot[L], diff = ser[L] - real[L], modeTxt = s.mode === 'in' ? 'dentro il fondo, con la stessa imposta' : 'fuori dal fondo, prima del 26%';
+    var chip = function (on) { return 'font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;border:1px solid ' + (on ? ink : '#D6D6D4') + ';background:' + (on ? lime : '#FFFFFF') + ';color:' + ink; };
+    var seg = function (on) { return 'padding:9px 14px;border-radius:9px;border:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:' + ink + ';background:' + (on ? lime : 'transparent') + ';box-shadow:' + (on ? 'inset 0 0 0 1px ' + ink : 'none'); };
+    var etfChips = Object.keys(ETFS).map(function (k) { return { label: ETFS[k][0], isin: ETFS[k][1], on: s.etf === k, style: chip(s.etf === k), pick: function () { self.setState({ etf: k }); } }; });
+    var yOf = function (r) { return r[0].slice(6); }, okY = function (r) { return s.year === 'all' || yOf(r) === s.year; }, okT = function (r) { return s.tipo === 'all' || r[8] === s.tipo; };
+    var uniq = function (a) { return a.filter(function (v, i) { return a.indexOf(v) === i; }); };
+    var optStyle = function (on) { return 'display:flex;justify-content:space-between;gap:14px;width:100%;text-align:left;padding:9px 12px;border-radius:10px;cursor:pointer;font:inherit;font-size:14px;font-weight:600;color:' + ink + ';border:1px solid ' + (on ? ink : 'transparent') + ';background:' + (on ? lime : '#F7F7F5'); };
+    var dd = function (key, all, vals, base) { var cur = s[key];
+      return { open: s.dd === key, cur: cur === 'all' ? all : cur, toggle: function () { self.setState({ dd: self.state.dd === key ? null : key }); },
+        opts: ['all'].concat(vals).map(function (v) { var n = D.mov.filter(base).filter(function (r) { return v === 'all' || (key === 'year' ? yOf(r) : r[8]) === v; }).length;
+          return { label: v === 'all' ? all : v, n: String(n), on: cur === v, style: optStyle(cur === v), pick: function () { var o = { dd: null }; o[key] = v; self.setState(o); } }; }) }; };
+    var ddYear = dd('year', 'Tutti', uniq(D.mov.map(yOf)), okT), ddTipo = dd('tipo', 'Tutte', uniq(D.mov.map(function (r) { return r[8]; })), okY);
+    var sel = D.mov.filter(function (r) { return okY(r) && okT(r); });
+    var sum = function (k) { return sel.reduce(function (a, r) { return a + r[k]; }, 0); };
+    var first = D.mov[D.mov.length - 1], last = D.mov[0];
+    return {
+      fileLine: D.mov.length + ' movimenti importati · competenza dal ' + first[1] + ' al ' + last[1] + ' · file d’esempio',
+      tAd: this.fmtE(D.ad[L]), tAz: this.fmtE(D.az[L]), tTfr: this.fmtE(D.tfr[L]), tTot: this.fmtE(T), tReal: this.fmtE(real[L]), tGain: this.signE(real[L] - T), tEtf: this.fmtE(ser[L]), tEtfDiff: this.signE(diff),
+      pAd: this.fmt2(D.ad[L] / T * 100, 0) + '%', pAz: this.fmt2(D.az[L] / T * 100, 0) + '%', pTfr: this.fmt2(D.tfr[L] / T * 100, 0) + '%',
+      headPre: 'Hai versato ' + this.fmtE(T) + ' e oggi nel fondo hai ' + this.fmtE(real[L]) + '. Con gli stessi versamenti nell’ETF ' + ETFS[s.etf][0] + ' ' + modeTxt + ', avresti ',
+      headDiff: this.fmtE(Math.abs(diff)) + (diff >= 0 ? ' in più' : ' in meno'), headPost: ' (' + this.fmtE(ser[L]) + ').',
+      etfChips: etfChips, isIn: s.mode === 'in', isOut: s.mode === 'out', segIn: seg(s.mode === 'in'), segOut: seg(s.mode === 'out'),
+      pickIn: function () { self.setState({ mode: 'in' }); }, pickOut: function () { self.setState({ mode: 'out' }); },
+      etfLegend: 'Stessi versamenti in ETF ' + ETFS[s.etf][0],
+      chartLabel: 'Versamenti cumulati di aderente, azienda e TFR, posizione reale del fondo e stessi versamenti nell’ETF ' + ETFS[s.etf][0] + ', da ' + mLabel(D.months[0]) + ' a ' + mLabel(D.months[L]),
+      grid: grid, aAd: area(zero, c1), aAz: area(c1, c2), aTfr: area(c2, tot), band: area(real, ser), lReal: line(real), lEtf: line(ser),
+      yTicks: yTicks, xTicks: xTicks, hits: hits, hasHover: !!hv, hv: hv || {}, leave: function () { self.setState({ hover: -1 }); },
+      ddYear: ddYear, ddTipo: ddTipo, hasFilter: s.year !== 'all' || s.tipo !== 'all', clearFilter: function () { self.setState({ year: 'all', tipo: 'all', dd: null }); },
+      ddBox: 'position:absolute;right:0;top:calc(100% + 6px);z-index:30;min-width:220px;display:flex;flex-direction:column;gap:4px;padding:6px;background:#FFFFFF;border:1.5px solid #0B0B0B;border-radius:14px;box-shadow:0 16px 40px rgba(11,11,11,.16)',
+      tableNote: sel.length + ' di ' + D.mov.length + ' movimenti, dal più recente · importi lordi in euro',
+      rows: sel.map(function (r) { return { dv: r[0], comp: r[1], tipo: r[8], ad: self.fmt2(r[2], 2), az: self.fmt2(r[3], 2), tfr: self.fmt2(r[4], 2), net: self.fmt2(r[5], 2), q: self.fmt2(r[6], 3), vq: self.fmt2(r[7], 3) }; }),
+      fAd: this.fmt2(sum(2), 2), fAz: this.fmt2(sum(3), 2), fTfr: this.fmt2(sum(4), 2), fNet: this.fmt2(sum(5), 2), fQ: this.fmt2(sum(6), 3)
+    };
+  }
+}
+</script>
+</body>
+</html>
