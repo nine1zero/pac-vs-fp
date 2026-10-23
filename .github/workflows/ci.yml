@@ -27,7 +27,14 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      # browser Playwright in cache; l'immagine ubuntu-latest ha già le librerie di sistema di Chrome
+      - id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      - run: npx playwright install chromium
       - run: npm run test:e2e
         env:
           CI: 'true'
