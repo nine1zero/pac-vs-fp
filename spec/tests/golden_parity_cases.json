@@ -1,0 +1,92 @@
+{
+ "note": "Casi di tests/parity_prototype.js calcolati con reference/model.py (capitale netto [S1, S2, S3])",
+ "delta": -0.05808330715699661,
+ "cases": {
+  "pens": {
+   "params": {},
+   "delta": null,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    521784.98,
+    485459.81,
+    493509.33
+   ]
+  },
+  "d0": {
+   "params": {},
+   "delta": 0.0,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    854748.07,
+    953077.82,
+    728219.14
+   ]
+  },
+  "r10": {
+   "params": {},
+   "delta": null,
+   "horizon": 10,
+   "mode": "Riscatto",
+   "total_net": [
+    109769.22,
+    114250.99,
+    100670.12
+   ]
+  },
+  "fix": {
+   "params": {
+    "annual_saving": 3000.0
+   },
+   "delta": null,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    471621.87,
+    446412.42,
+    443346.22
+   ]
+  },
+  "fixLow": {
+   "params": {
+    "annual_saving": 200.0
+   },
+   "delta": null,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    296409.84,
+    298483.0,
+    268134.19
+   ]
+  },
+  "ral90": {
+   "params": {
+    "ral": 90000.0
+   },
+   "delta": null,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    522371.87,
+    482423.5,
+    493509.33
+   ]
+  },
+  "ral20": {
+   "params": {
+    "ral": 20000.0
+   },
+   "delta": null,
+   "horizon": null,
+   "mode": null,
+   "total_net": [
+    503894.23,
+    397310.93,
+    493509.33
+   ]
+  }
+ },
+ "tau": 0.5424025781735349
+}

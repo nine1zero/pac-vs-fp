@@ -1,5 +1,12 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 2: modello in TypeScript
+
+- `src/model/`: fisco (`tax.ts`), flussi (`flows.ts`), simulazione (`simulate.ts`), forma chiusa (`closedForm.ts`), pareggi (`breakeven.ts`), mappa di convenienza (`map.ts`). Codice TypeScript puro, senza interfaccia, con gli stessi nomi di `reference/model.py`.
+- Nuovo `tests/make_golden_parity.py` → `tests/golden_parity_cases.json`: i 7 casi di `tests/parity_prototype.js` (default, δ = 0, riscatto a 10 anni, importo fisso 3.000 € e 200 €, RAL 90.000 € e 20.000 €) calcolati con `reference/model.py`. Il modello non cambia.
+- Test Vitest: golden del profilo d'esempio e `tax_checks` al centesimo, pareggi entro 1e-6, parità a tre (model.py, prototipo v2, TypeScript), forma chiusa uguale alla ricorsione, mappa 40 × 120 sotto i 50 ms. Il profilo privato si confronta con `model.py` solo se il file esiste in locale.
+- `spec/package.json` (`"type": "commonjs"`): con `"type": "module"` nel `package.json` della radice, `node spec/tests/parity_prototype.js` non partiva più.
+
 ## 2026-10-23 · fase 1: scaffold e deploy
 
 - Vite 7 + TypeScript 5.9 + React 18, font Onest nel bundle (`@fontsource/onest`, solo latino), stile "lime" di base.
