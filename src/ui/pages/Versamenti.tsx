@@ -154,7 +154,7 @@ export function Versamenti() {
             )}
           </span>
         </div>
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label="Dettaglio movimenti">
           <table className="tbl num-tbl mov-tbl">
             <thead>
               <tr>

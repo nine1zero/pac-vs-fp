@@ -49,3 +49,18 @@ test('font Onest servito dallo stesso dominio', async ({ page }) => {
   });
   expect(loaded).toBe(true);
 });
+
+test('nessuna richiesta esterna, cookie o memoria su tutte le pagine senza "Salva"', async ({ page, baseURL }) => {
+  const { external, problems } = watch(page, new URL(baseURL!).origin);
+  for (const hash of ['#/', '#/storico', '#/parametri', '#/versamenti']) {
+    await page.goto(`./${hash}`);
+    await page.waitForLoadState('networkidle');
+  }
+  await page.getByRole('button', { name: "Usa un file d'esempio" }).click();
+  await page.waitForLoadState('networkidle');
+  expect(external).toEqual([]);
+  expect(problems).toEqual([]);
+  expect(await page.context().cookies()).toEqual([]);
+  expect(await page.evaluate(() => ({ local: window.localStorage.length, session: window.sessionStorage.length }))).toEqual({ local: 0, session: 0 });
+  expect(await page.evaluate(async () => (await navigator.serviceWorker?.getRegistrations())?.length ?? 0)).toBe(0);
+});

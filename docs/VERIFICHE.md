@@ -65,6 +65,14 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 
 `npm test` confronta l'app con `tests/golden_history.json` (CAGR uguali entro 1e-12) e con le statistiche di FORMULE par. 8 (media −6,16%, mediana −6,82%, deviazione standard campionaria 6,96%, intervallo [−9,81%; −2,51%], 3 anni positivi su 14). Verifica anche la scomposizione −2,1 / −2,7 / −1,0, i preset del prototipo (−5,81 / −5,04 / −3,95 / −4,80) e i cumulati dell'Assicurativo 2018-2025 (+18,0%, ISTAT +20,4%, TFR +24,0%; Azionario +45,6%). Sul fixture coincidono con `tests/golden_fixture_ok.json` la posizione reale, l'ETF dentro e fuori dal fondo e la data di valutazione; le serie mensili coincidono al centesimo con quelle del prototipo `design/v2/Versamenti.dc.html` per ACWI, MSCI World e MSCI Europe.
 
+### Privacy e accessibilità dell'app (23/10/2026)
+
+`npm run test:e2e` sulla build con la CSP:
+- nessuna richiesta esterna su tutte le pagine, anche con import e slider; nessun cookie, nessun dato in `localStorage` senza "Salva i miei dati";
+- axe-core WCAG 2.1 AA senza violazioni su tutte le pagine, a 1280 e a 390 px;
+- Lighthouse: Accessibility 100 e Best Practices 100 su simulatore, Storico, Parametri e fonti, I miei versamenti;
+- aggiornamento della risposta dopo uno slider: mediana sotto i 100 ms.
+
 ## 6. Profilo privato
 
 Il profilo reale dell'autore (`tests/private/profilo_privato.json`, solo in locale) è stato aggiornato ai parametri fiscali v2 e i suoi valori di controllo rigenerati con il nuovo modello; quelli del Google Sheet (modello v1) restano nel file come `golden_model_v1_sheet`. Il Google Sheet va aggiornato al calcolo fiscale v2 se deve restare il riferimento.
@@ -76,3 +84,4 @@ Il profilo reale dell'autore (`tests/private/profilo_privato.json`, solo in loca
 3. Nel 2026 il dato è gennaio-agosto: aggiornare `fpddi_azionario.json` quando esce il bilancio 2026.
 4. Aliquota dell'imposta sui rendimenti: usiamo il 20% nominale; l'aliquota effettiva del comparto (titoli pubblici al 12,5%) non è pubblicata.
 5. Medie storiche degli ETF: aggiornarle prima del rilascio, con la data in interfaccia.
+6. `data/etf_catalog.json` (titoli, patrimonio, medie a 5 e 10 anni e dal lancio): riscaricarlo dalle schede ufficiali degli emittenti (Vanguard, State Street, iShares), gratuite e senza autenticazione, come chiesto dall'autore. Dall'ambiente di sviluppo cloud questi siti sono bloccati dalla rete: va fatto in locale, oppure aggiungendo i domini consentiti nelle impostazioni dell'ambiente.
