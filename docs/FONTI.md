@@ -66,7 +66,7 @@ Rendimenti netti annui del comparto (dopo costi e imposta) e del benchmark (nett
 |---|---|
 | Prezzi mensili 12/2011-10/2026 di iShares MSCI ACWI (IE00B6R52259), iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80), Xtrackers EUR Overnight Rate Swap (LU0290358497) | Yahoo Finance, prezzi rettificati per i dividendi, ultimo prezzo del mese; dettagli in `data/etf_monthly.sources.json` |
 | Rendimenti annui Vanguard FTSE All-World (2018-2026, VGWL.DE), SPDR MSCI ACWI IMI (2017-2026, SPYI.DE) | Yahoo Finance, prezzi mensili rettificati, scaricati il 23/10/2026: `data/etf_annual_extra.json`. SPYI.DE ha prezzi errati prima del 2017 (salti del −96% e +40%) e sono esclusi |
-| TER, numero di titoli, patrimonio, data di lancio | Schede degli emittenti; valori letti su Finanzfluss ed extraETF tra il 20 e il 23/10/2026 |
+| TER, numero di titoli, patrimonio, data di lancio | Schede degli emittenti; valori letti su Finanzfluss ed extraETF tra il 20 e il 23/10/2026 (`data/etf_catalog.json`) |
 | Medie annue a 5 e 10 anni e dal lancio, in EUR | Finanzfluss, prezzi Xetra, al 20/10/2026. Vanguard 10 anni (12,1%) calcolato da Yahoo Finance sulla classe a distribuzione IE00B3RBWM25: lo stesso calcolo a 5 anni dà 11,3%, come Finanzfluss |
 | Quota del mercato coperta dagli indici | FTSE Russell (FTSE All-World: "around 90-95% of the world's investable market capitalisation"); MSCI (ACWI circa 85%, ACWI IMI circa 99%) |
 | Rendimento atteso di lungo periodo | J.P. Morgan Asset Management, Long-Term Capital Market Assumptions 2026: azionario globale 7% annuo in USD, 10-15 anni |

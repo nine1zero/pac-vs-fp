@@ -58,10 +58,10 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
             preserveAspectRatio="none"
             width="100%"
             height={H}
-            role="grid"
+            role="application"
+            aria-roledescription="mappa"
             tabIndex={0}
             aria-label={`Mappa: anni di uscita dal ${firstYear} al ${firstYear + n - 1} e differenziale da +3% a −12%, colorata con lo scenario migliore. Frecce per muoversi, Invio per provare la casella.`}
-            aria-activedescendant={`hm-${active.i}-${active.h}`}
             onKeyDown={(e) => {
               const d: Record<string, [number, number]> = {
                 ArrowUp: [-1, 0],
@@ -89,9 +89,6 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
                 return (
                   <rect
                     key={`${i}-${h}`}
-                    id={`hm-${i}-${h}`}
-                    role="gridcell"
-                    aria-label={cellTitle(i, h)}
                     x={k * cw}
                     y={i * ch}
                     width={cw}
@@ -132,11 +129,9 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
           ))}
         </div>
         <span className="axis-label">anno di uscita</span>
-        {cursor && (
-          <p className="heat-live" aria-live="polite">
-            {cellTitle(active.i, active.h)}
-          </p>
-        )}
+        <p className="heat-live" aria-live="polite">
+          {cursor ? cellTitle(active.i, active.h) : ''}
+        </p>
       </div>
     </div>
   );
