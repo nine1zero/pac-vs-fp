@@ -1,0 +1,261 @@
+{
+ "description": "Comparto Azionario FPDDI: rendimenti netti annui pubblicati (al netto di costi e imposta sui rendimenti) e benchmark netto pubblicato.",
+ "benchmark_composition": {
+  "MSCI World": 0.45,
+  "MSCI Europe": 0.45,
+  "JPM Cash Euro 3M": 0.1,
+  "source": "FPDDI, Documento sulla politica di investimento, par. 4.2 (codici Datastream MSWRLDE(PI), MSEROPE(PI), JPEC3ML(RI))"
+ },
+ "tax_rate_source": "Imposta sostitutiva annua: 11% fino al 2013 (D.Lgs. 252/2005 art. 17, testo previgente), 11,5% nel 2014 e 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI 'Regime fiscale' p. 5). Aliquota nominale: la quota di titoli pubblici (tassata 12,5%) nel comparto Azionario è marginale; l'aliquota effettiva dell'anno non è pubblicata.",
+ "gross_2009_2011": {
+  "2009": 0.0913,
+  "2010": 0.0282,
+  "2011": -0.0838,
+  "note": "Rendimenti lordi da Bilancio 2011 (comparto avviato a febbraio 2009); il Bilancio 2016 riporta -7,80% per il 2011"
+ },
+ "years": [
+  {
+   "year": 2012,
+   "period_end": "2012-12-31",
+   "partial": false,
+   "fund_net": 0.0409,
+   "benchmark_net": 0.0238,
+   "fund_tax_rate": 0.11,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2012 (relazione sulla gestione) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2012 (relazione sulla gestione), archivio locale 01_documenti_sito",
+    "page": null,
+    "quote": null,
+    "note": "Il bilancio 2012 non è tra i file del pacchetto: valore estratto in una sessione precedente dal PDF nell'archivio locale (01_documenti_sito). Da ricontrollare sul PDF prima del rilascio. Non verificabile con i documenti successivi (i cumulati partono dal 2009 e includono il 2009-2011 lordo)."
+   }
+  },
+  {
+   "year": 2013,
+   "period_end": "2013-12-31",
+   "partial": false,
+   "fund_net": 0.0983,
+   "benchmark_net": 0.1405,
+   "fund_tax_rate": 0.11,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2013 - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2013 (relazione sulla gestione), archivio locale 01_documenti_sito",
+    "page": null,
+    "quote": null,
+    "note": "Il bilancio 2013 non è tra i file del pacchetto: valore estratto in una sessione precedente dal PDF nell'archivio locale (01_documenti_sito). Da ricontrollare sul PDF prima del rilascio. Non verificabile con i documenti successivi (i cumulati partono dal 2009 e includono il 2009-2011 lordo)."
+   }
+  },
+  {
+   "year": 2014,
+   "period_end": "2014-12-31",
+   "partial": false,
+   "fund_net": -0.0295,
+   "benchmark_net": 0.0843,
+   "fund_tax_rate": 0.115,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2014 - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2014 (bil14.pdf)",
+    "page": 13,
+    "quote": "rendimento mensile netto dell’anno 2014 (-2,95%), alla data (13,24%) ed i bcmk netti alla data (31,83%) e nell’anno (8,43%)"
+   }
+  },
+  {
+   "year": 2015,
+   "period_end": "2015-12-31",
+   "partial": false,
+   "fund_net": 0.0869,
+   "benchmark_net": 0.0509,
+   "fund_tax_rate": 0.2,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2015 - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2015 (bil15.pdf)",
+    "page": 14,
+    "quote": "rendimento netto dell’anno 2015 (+8,69%), alla data (23,08%) ed i bcmk netti alla data (35,52%) e nell’anno (5,09%)"
+   }
+  },
+  {
+   "year": 2016,
+   "period_end": "2016-12-31",
+   "partial": false,
+   "fund_net": 0.01627,
+   "benchmark_net": 0.0286,
+   "fund_tax_rate": 0.2,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2016 - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2016 (bil16.pdf); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 13,
+    "quote": "rendimento netto dell’anno 2016 (+1,627%), alla data (25,08%) ed i bcmk netti alla data (39,64%) e nell’anno (2,86%)"
+   }
+  },
+  {
+   "year": 2017,
+   "period_end": "2017-12-31",
+   "partial": false,
+   "fund_net": 0.07811,
+   "benchmark_net": 0.046,
+   "fund_tax_rate": 0.2,
+   "nav_end": null,
+   "source": "Bilancio d'esercizio 2017 - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Bilancio d'esercizio 2017 (bil17.pdf); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 19,
+    "quote": "rendimento netto dell’anno 2017 (+7,811%), alla data (34,85%) ed i bcmk netti alla data (46,52%) e nell’anno (4,60%)"
+   }
+  },
+  {
+   "year": 2018,
+   "period_end": "2018-12-31",
+   "partial": false,
+   "fund_net": -0.0978,
+   "benchmark_net": -0.0858,
+   "fund_tax_rate": 0.2,
+   "nav_end": 12.166,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2019,
+   "period_end": "2019-12-31",
+   "partial": false,
+   "fund_net": 0.1822,
+   "benchmark_net": 0.1748,
+   "fund_tax_rate": 0.2,
+   "nav_end": 14.383,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2020,
+   "period_end": "2020-12-31",
+   "partial": false,
+   "fund_net": -0.0225,
+   "benchmark_net": -0.0017,
+   "fund_tax_rate": 0.2,
+   "nav_end": 14.059,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2021,
+   "period_end": "2021-12-31",
+   "partial": false,
+   "fund_net": 0.1582,
+   "benchmark_net": 0.1769,
+   "fund_tax_rate": 0.2,
+   "nav_end": 16.283,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2022,
+   "period_end": "2022-12-31",
+   "partial": false,
+   "fund_net": -0.0923,
+   "benchmark_net": -0.0894,
+   "fund_tax_rate": 0.2,
+   "nav_end": 14.78,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2023,
+   "period_end": "2023-12-31",
+   "partial": false,
+   "fund_net": 0.1112,
+   "benchmark_net": 0.108,
+   "fund_tax_rate": 0.2,
+   "nav_end": 16.423,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2024,
+   "period_end": "2024-12-31",
+   "partial": false,
+   "fund_net": 0.0931,
+   "benchmark_net": 0.107,
+   "fund_tax_rate": 0.2,
+   "nav_end": 17.952,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2025,
+   "period_end": "2025-12-31",
+   "partial": false,
+   "fund_net": 0.0934,
+   "benchmark_net": 0.0771,
+   "fund_tax_rate": 0.2,
+   "nav_end": 19.628,
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "page": 1,
+    "quote": null
+   }
+  },
+  {
+   "year": 2026,
+   "period_end": "2026-08-31",
+   "partial": true,
+   "fund_net": 0.0688,
+   "benchmark_net": 0.0828,
+   "fund_tax_rate": 0.2,
+   "nav_end": 20.978,
+   "source": "Pagina 'Comparto Azionario', dato gennaio-agosto 2026 (parziale) - https://www.fondopensioneibm.it",
+   "evidence": {
+    "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento', riga 08 (comp_azionario.pdf)",
+    "page": 1,
+    "quote": "08  58.385,310  6,88%  8,28%  109,78%  20,978"
+   }
+  }
+ ],
+ "cumulative_net_since_2009": {
+  "2018": 0.2166,
+  "2019": 0.4383,
+  "2020": 0.4059,
+  "2021": 0.6283,
+  "2022": 0.478,
+  "2023": 0.6423,
+  "2024": 0.7952,
+  "2025": 0.9628,
+  "2026-08": 1.0978
+ },
+ "cross_checks": {
+  "nota_informativa_tav5_2026": "Nota informativa 2026 p. 24, Tav. 5: comparto 3a 9,92 / 5a 6,90 / 10a 4,78 = medie composte ricalcolate da questi dati (esatte). Benchmark 3a 9,73 e 5a 7,20 esatti; 10a: Tav. 5 riporta 5,23 ma i valori annui della Tav. 4 (stessa pagina) danno 5,03. Incoerenza interna al documento del fondo: usiamo i valori annui.",
+  "catena_cumulato": "Rendimento netto 'alla data' (dal 2009) dei bilanci 2014-2017 e della tabella web (21,66% nel 2018 ... 96,28% nel 2025) coerente anno su anno con i rendimenti annui del fondo.",
+  "benchmark_alla_data": "I 'bcmk netti alla data' dei bilanci 2015-2017 non sono coerenti con i benchmark annui pubblicati negli stessi paragrafi (es. 35,52%→39,64% implica 3,04% e non 2,86%). Usiamo i valori annui, confermati dalla Tav. 4 della Nota informativa 2026."
+ }
+}
