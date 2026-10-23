@@ -1,5 +1,22 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 4: interfaccia v2 della Landing
+
+- Landing come nel prototipo `design/v2/Landing.dc.html`: menù dell'ETF nel titolo, tre card delle strategie, navigazione delle sezioni 0-6 con stato, sezioni comprimibili con riepilogo e badge `Esempio`/`Dati tuoi`.
+- Risultato: frase risposta (`aria-live`), tre card con capitale netto, euro di oggi e divisione fondo/PAC, barra "Chi vince a ogni differenziale", striscia "Se esci nel… conviene", fascia dei parametri, mappa "Per quanti anni conviene" (cliccabile e navigabile con le frecce) e grafico del capitale "Nel tempo" e "Al variare del differenziale" con i pareggi.
+- Tutti i numeri vengono da `src/model`; preset del differenziale e statistiche storiche sono calcolati dai dati, non scritti nel codice. Il pulsante "Usa un file d'esempio" legge davvero il fixture.
+- Tooltip della fonte (`Src`) su ogni numero che viene da un dato (SPEC par. 3.6): fonte di `params.json`, scheda dell'ETF, calcolo storico o formula con il rimando a `docs/FORMULE.md`.
+- "Salva i miei dati" e "Cancella tutto": `localStorage` (chiave `pacfondo.v1`) solo su azione esplicita, mai il file importato, niente cookie.
+- **Decisione dell'autore (23/10/2026):** sotto le card delle strategie c'è una riga di risposta sempre visibile. Riporta scenario migliore, vantaggio sulla seconda, pareggi delle tre coppie e orizzonte di pareggio 2-1 con il differenziale scelto (SPEC par. 8 punto 6), anche a sezioni chiuse.
+- **Nuovo `data/etf_catalog.json`** (autorizzato dall'autore): TER, ISIN, indice, copertura, titoli, patrimonio, storia e medie a 5 e 10 anni e dal lancio dei tre ETF. I valori sono trascritti dal prototipo, con le fonti di `docs/FONTI.md` par. 4 (rilevazioni del 20-23/10/2026). L'autore ha chiesto di riscaricarli dalle schede ufficiali degli emittenti quando sono raggiungibili senza autenticazione: dall'ambiente di sviluppo i siti degli emittenti sono bloccati dalla rete, quindi l'aggiornamento resta da fare.
+- Scelte di implementazione:
+  - grafici in SVG e CSS come nei prototipi, invece di ECharts (SPEC par. 2 lo consigliava): bundle più leggero, nessun problema di CSP, mappa navigabile da tastiera;
+  - la mappa usa il passo di 0,25 punti della SPEC par. 4.6 (il prototipo usava 0,5);
+  - l'avvertenza all'apertura è la sezione 0, aperta al primo accesso, come nel prototipo; il footer la riapre ("Privacy e avvertenze").
+- `Intl` in it-IT non separa le migliaia sotto 10.000 ("4390 €"): i formati usano `useGrouping: 'always'` per avere "4.390 €" come chiede la SPEC.
+- Pagine Versamenti, Storico e Parametri e fonti: segnaposto fino alla fase 5.
+- Test: store e salvataggio (Vitest), formati it-IT, Playwright sulla Landing (golden senza dati, fixture al passo 2, errori e avvisi dei file, badge "Dati tuoi", `localStorage`, cambio dell'ETF, slider da tastiera, testo delle fonti) e privacy con import e slider.
+
 ## 2026-10-23 · fase 3: storico e import del file
 
 - `src/data/`: i dati di `public/data/` entrano nel bundle (JSON e CSV), senza richieste di rete.

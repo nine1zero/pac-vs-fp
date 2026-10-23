@@ -1,0 +1,58 @@
+{
+  "description": "ETF proposti per il PAC (SPEC par. 3.0). Valori trascritti dal prototipo design/v2/Landing.dc.html, rilevati dall'autore tra il 20 e il 23/10/2026 (docs/FONTI.md par. 4). Da aggiornare dalle schede ufficiali degli emittenti quando possibile.",
+  "default": "vanguard",
+  "sources": {
+    "issuer": "Schede degli emittenti (Vanguard, State Street SPDR, iShares); valori letti su Finanzfluss ed extraETF tra il 20 e il 23/10/2026",
+    "returns": "Finanzfluss, medie annue in euro su prezzi Xetra al 20/10/2026, già al netto del TER",
+    "vanguard_10y": "Vanguard 10 anni: calcolato da Yahoo Finance sulla classe a distribuzione IE00B3RBWM25 (VGWL.DE); lo stesso calcolo a 5 anni dà 11,3%, come Finanzfluss",
+    "coverage_ftse": "FTSE Russell, scheda dell'indice FTSE All-World: \"around 90-95% of the world's investable market capitalisation\"",
+    "coverage_msci": "MSCI, schede degli indici: ACWI circa 85%, ACWI IMI circa 99% della capitalizzazione investibile"
+  },
+  "etfs": [
+    {
+      "id": "vanguard",
+      "name": "Vanguard FTSE All-World UCITS ETF Acc",
+      "short": "Vanguard FTSE All-World",
+      "isin": "IE00BK5BQT80",
+      "ter": 0.0014,
+      "index": "FTSE All-World",
+      "companies": "grandi + medie",
+      "coverage": "circa 90–95% del mercato",
+      "coverage_source": "coverage_ftse",
+      "holdings": 3755,
+      "aum_eur_bn": 76.9,
+      "history": "dal 07/2019 (classe a distribuzione dal 2012)",
+      "returns": { "y5": 0.1132, "y10": 0.1211, "since_launch": 0.1315, "launch": "07/2019", "as_of": "2026-10-20", "y10_source": "vanguard_10y" }
+    },
+    {
+      "id": "spdrimi",
+      "name": "SPDR MSCI ACWI IMI UCITS ETF",
+      "short": "SPDR MSCI ACWI IMI",
+      "isin": "IE00B3YLTY66",
+      "ter": 0.0017,
+      "index": "MSCI ACWI IMI",
+      "companies": "grandi + medie + piccole",
+      "coverage": "circa 99% del mercato",
+      "coverage_source": "coverage_msci",
+      "holdings": 5981,
+      "aum_eur_bn": 8.1,
+      "history": "dal 05/2011",
+      "returns": { "y5": 0.1101, "y10": 0.1174, "since_launch": 0.1212, "launch": "05/2011", "as_of": "2026-10-20" }
+    },
+    {
+      "id": "ishares",
+      "name": "iShares MSCI ACWI UCITS ETF Acc",
+      "short": "iShares MSCI ACWI",
+      "isin": "IE00B6R52259",
+      "ter": 0.002,
+      "index": "MSCI ACWI",
+      "companies": "grandi + medie",
+      "coverage": "circa 85% del mercato",
+      "coverage_source": "coverage_msci",
+      "holdings": 1645,
+      "aum_eur_bn": 33.3,
+      "history": "dal 10/2011",
+      "returns": { "y5": 0.1138, "y10": 0.121, "since_launch": 0.1268, "launch": "10/2011", "as_of": "2026-10-20" }
+    }
+  ]
+}
