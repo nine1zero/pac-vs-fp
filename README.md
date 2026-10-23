@@ -2,7 +2,14 @@
 
 Simulatore indipendente per gli iscritti al Fondo Pensione per i Dipendenti e Dirigenti IBM (FPDDI), comparto Azionario. Confronta tre modi di usare lo stesso risparmio: più o meno versamenti nel fondo e un PAC su un ETF azionario globale. Funziona interamente nel browser; nessun dato lascia il dispositivo. Non è consulenza finanziaria.
 
-Stato: **in costruzione per fasi** (`docs/SPEC.md`, par. 8). Fatte: fase 1 (scaffold, CSP, test di privacy, deploy su GitHub Pages) fase 2 (modello in `src/model/`, uguale a `spec/reference/model.py` al centesimo) fase 3 (storico e import del file contribuzioni, uguali a `spec/reference/history.py`) e fase 4 (interfaccia v2 della Landing, con le fonti nei tooltip). Sito: https://nine1zero.github.io/pac-vs-fp/
+Sito: https://nine1zero.github.io/pac-vs-fp/
+
+Stato: **in costruzione per fasi** (`docs/SPEC.md`, par. 8). Fatte:
+1. scaffold, CSP, test di privacy, deploy su GitHub Pages;
+2. modello in `src/model/`, uguale a `spec/reference/model.py` al centesimo;
+3. storico e import del file contribuzioni, uguali a `spec/reference/history.py`;
+4. interfaccia v2 della Landing, con le fonti nei tooltip;
+5. pagine I miei versamenti, Storico, Parametri e fonti.
 
 Licenza MIT (`LICENSE`). Il codice è pubblico perché chiunque possa controllare dati, fonti e formule.
 
