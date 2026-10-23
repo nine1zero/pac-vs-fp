@@ -53,6 +53,10 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 
 `tests/parity_prototype.js` esegue il codice del prototipo `design/v2/Landing.dc.html` e lo confronta con `reference/model.py` su 7 casi: default; δ = 0; riscatto a 10 anni; importo fisso 3.000 € e 200 €; RAL 90.000 € e 20.000 €. Esito: **identici al centesimo**, con lo stesso risparmio fiscale (0,542403).
 
+### Modello TypeScript (`src/model/`)
+
+`npm test` confronta il modello dell'app con `reference/model.py`. Riproduce al centesimo i capitali di `tests/golden_model_example.json` (pensione con δ storico e con δ = 0, euro di oggi, riscatto a 10 anni), i `tax_checks` e la prima riga dei flussi; i pareggi coincidono entro 1e-6. Anche i 7 casi del prototipo coincidono al centesimo, sia con `model.py` (`tests/golden_parity_cases.json`) sia con il codice del prototipo eseguito nel test. La forma chiusa coincide con la ricorsione per 6 differenziali, 2 modalità di uscita e 3 profili.
+
 ## 5. Storico
 
 `reference/history.py` riproduce `tests/golden_history.json` senza differenze: medie 2014-2025 fondo lordo 5,454%, benchmark lordo 6,460%, ETF 11,263%; δ = −5,808%; statistiche 2012-2025 come in docs/FORMULE.md par. 8.

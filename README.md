@@ -2,7 +2,7 @@
 
 Simulatore indipendente per gli iscritti al Fondo Pensione per i Dipendenti e Dirigenti IBM (FPDDI), comparto Azionario. Confronta tre modi di usare lo stesso risparmio: più o meno versamenti nel fondo e un PAC su un ETF azionario globale. Funziona interamente nel browser; nessun dato lascia il dispositivo. Non è consulenza finanziaria.
 
-Stato: **in costruzione per fasi** (`docs/SPEC.md`, par. 8). Fase 1 fatta: scaffold, CSP, test di privacy, deploy su GitHub Pages.
+Stato: **in costruzione per fasi** (`docs/SPEC.md`, par. 8). Fatte: fase 1 (scaffold, CSP, test di privacy, deploy su GitHub Pages) e fase 2 (modello in `src/model/`, uguale a `spec/reference/model.py` al centesimo).
 
 Licenza MIT (`LICENSE`). Il codice è pubblico perché chiunque possa controllare dati, fonti e formule.
 
@@ -42,6 +42,7 @@ Verifiche rapide:
 
 ```
 python3 spec/tests/make_golden.py                                         # rigenera i golden (solo per modifiche volute del modello)
+python3 spec/tests/make_golden_parity.py                                  # rigenera i casi di parità con il prototipo (idem)
 python3 spec/reference/history.py spec/tests/fixtures/sample_dettaglio_ok.xls
 node spec/tests/parity_prototype.js spec/design/v2/Landing.dc.html
 ```
