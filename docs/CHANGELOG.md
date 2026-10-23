@@ -1,5 +1,17 @@
 # Registro delle modifiche
 
+## 2026-10-23 · fase 6: test Playwright di privacy e accessibilità
+
+- `e2e/privacy.spec.ts`: nessuna richiesta verso altri domini, CSP attiva e nessun errore in console sulla build, anche durante l'import del file e l'uso degli slider, su tutte le pagine. Nessun cookie, `localStorage` e `sessionStorage` vuoti senza "Salva i miei dati", nessun service worker; font Onest servito dallo stesso dominio.
+- `e2e/a11y.spec.ts`:
+  - axe-core (WCAG 2.1 A e AA) senza violazioni sul simulatore, con ogni sezione aperta, con un file importato (anche con avvisi) e con il grafico al variare del differenziale;
+  - stesso controllo su Storico, Parametri e fonti, I miei versamenti con e senza file, a 1280 e a 390 px, dove si verifica anche che non ci sia scorrimento orizzontale;
+  - tastiera: link "Vai al contenuto", focus sempre visibile, tooltip delle fonti aperti dal focus;
+  - risposta principale in `aria-live`, aggiornata in meno di 100 ms dal movimento dello slider (mediana di 7 prove, SPEC par. 8 punto 5).
+- `e2e/lighthouse.spec.ts`: Lighthouse 13 sulla build con la CSP. Accessibility e Best Practices = 100 su tutte e quattro le pagine (soglia della SPEC: 95).
+- Correzione emersa dai test: le tabelle con scorrimento orizzontale sono ora regioni con etichetta, raggiungibili da tastiera.
+- CI: browser Playwright in cache e installazione senza le dipendenze apt (già presenti in `ubuntu-latest`). Con `--with-deps` il passo durava a volte 10-12 minuti.
+
 ## 2026-10-23 · fase 5: pagine Versamenti, Storico, Parametri e fonti
 
 - **I miei versamenti** (`design/v2/Versamenti.dc.html`), con il file letto in memoria (anche caricandolo da qui):
