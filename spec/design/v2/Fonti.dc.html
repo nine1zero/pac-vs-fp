@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Parametri e fonti</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F2}
+.lp{font-family:Onest,system-ui,sans-serif;color:#0B0B0B;letter-spacing:.2px}
+.lp ::selection{background:#D4EE36;color:#0B0B0B}
+.lp a{color:inherit}
+input,select{font:inherit}
+.mark{background:linear-gradient(180deg,transparent 12%,#D4EE36 12% 88%,transparent 88%);padding:0 6px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;padding:14px 22px;border:none}
+.btn.ghost{background:#FFFFFF;color:#0B0B0B;border:1px solid #D6D6D4;padding:9px 14px;font-size:14px;border-radius:12px}
+.btn.ghost:hover{border-color:#0B0B0B}
+.tip{position:relative;display:inline-flex;align-items:center}
+.tip .bubble{display:none;position:absolute;z-index:30;left:0;top:calc(100% + 6px);width:300px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,11,11,.2);white-space:normal;text-align:left}
+.tip.right .bubble{left:auto;right:0}
+.tip:hover .bubble,.tip:focus-within .bubble{display:block}
+.row:hover{background:#FAFBEF}
+.ib{width:20px;height:20px;flex:none;border-radius:99px;border:1px solid #9A9EA3;background:#FFFFFF;font-size:11px;font-weight:700;color:#3A3D42;cursor:help;padding:0;line-height:18px;text-align:center}
+.ib:hover,.ib:focus{border-color:#0B0B0B;background:#D4EE36;color:#0B0B0B;outline:none}
+.num{width:100%;box-sizing:border-box;padding:6px 10px;border-radius:10px;border:1px solid #D6D6D4;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;background:#FFFFFF}
+.num:focus{outline:3px solid #D4EE36;border-color:#0B0B0B}
+.sel{width:100%;padding:6px 8px;border-radius:10px;border:1px solid #D6D6D4;font-size:13.5px;font-weight:600;background:#FFFFFF}
+.sel:focus{outline:3px solid #D4EE36;border-color:#0B0B0B}
+.chipb:hover{border-color:#0B0B0B}
+@media (max-width:760px){.grid4{grid-template-columns:minmax(0,1fr) 130px !important}.hide-s{display:none !important}.h1{font-size:36px !important}}
+</style>
+</helmet>
+<div class="lp" style="min-height: 100vh; background: #F4F4F2">
+
+  <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo
+  </div>
+
+  <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
+    <nav style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      <a href="Storico.dc.html" class="btn ghost">Storico</a>
+    </nav>
+  </header>
+
+  <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 16px">
+
+    <section style="display: flex; flex-direction: column; gap: 12px; max-width: 820px; padding: 10px 0 6px">
+      <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">Parametri e <span class="mark">fonti</span></h1>
+      <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Ogni numero usato dal calcolo, con la sua fonte. Passa sopra la <span class="ib" style="display: inline-block; vertical-align: middle">i</span> per la spiegazione e sull'etichetta della fonte per il riferimento esatto. Puoi modificare i valori: restano solo sul tuo dispositivo.</p>
+    </section>
+
+    <div style="position: sticky; top: 0; z-index: 20; background: #F4F4F2; padding: 8px 0 12px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #E2E2DF">
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <label style="flex: 1 1 320px; display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1.5px solid #0B0B0B; border-radius: 14px; padding: 0 14px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0B0B0B" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+          <input type="search" value="{{ q }}" onInput="{{ setQ }}" placeholder="Cerca: deduzione, TFR, riscatto, TER, inflazione…" aria-label="Cerca un parametro" style="flex: 1; border: none; outline: none; padding: 12px 0; font-size: 15px; background: transparent">
+        </label>
+        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; background: #FFFFFF; border: 1px solid #D6D6D4; border-radius: 12px; padding: 11px 14px; cursor: pointer">
+          <input type="checkbox" checked="{{ onlyMain }}" onChange="{{ toggleMain }}" style="accent-color: #0B0B0B; width: 16px; height: 16px">
+          Solo i principali
+        </label>
+        <button type="button" onClick="{{ resetAll }}" disabled="{{ noneChanged }}" style="{{ resetAllStyle }}">↺ Ripristina tutti ({{ nChanged }})</button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="7">
+          <button type="button" class="chipb" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }} <span style="{{ c.nStyle }}">{{ c.n }}</span></button>
+        </sc-for>
+        <span style="margin-left: auto; font-size: 13px; font-weight: 600; color: #3A3D42">{{ countText }}</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: #3A3D42">
+      <span style="font-weight: 600">Tipo di fonte:</span>
+      <sc-for list="{{ legend }}" as="l" hint-placeholder-count="6"><span style="{{ l.style }}">{{ l.label }}</span></sc-for>
+    </div>
+
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+      <section style="background: #FFFFFF; border: 1px solid #E2E2DF; border-radius: 20px">
+        <div class="grid4" style="display: grid; grid-template-columns: minmax(0, 1fr) 200px 130px 92px; gap: 14px; align-items: center; padding: 12px 18px; border-bottom: 1px solid #E2E2DF; background: #F7F7F5; border-radius: 20px 20px 0 0">
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: #0B0B0B">{{ g.name }} <span style="font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 99px; background: #0B0B0B; color: #D4EE36; letter-spacing: 0">{{ g.n }}</span></span>
+          <span style="font-size: 12px; font-weight: 600; color: #5C6168; text-align: right">Valore</span>
+          <span class="hide-s" style="font-size: 12px; font-weight: 600; color: #5C6168">Fonte</span>
+          <span class="hide-s"></span>
+        </div>
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="6">
+          <div class="row grid4" style="display: grid; grid-template-columns: minmax(0, 1fr) 200px 130px 92px; gap: 14px; align-items: center; padding: 6px 18px; border-bottom: 1px solid #EFEFED; min-height: 34px">
+            <span style="display: flex; align-items: center; gap: 10px; min-width: 0">
+              <span class="tip"><button type="button" class="ib" aria-label="{{ r.aria }}">i</button><span class="bubble" role="tooltip"><strong>{{ r.label }}</strong><br>{{ r.desc }}</span></span>
+              <span style="font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" title="{{ r.label }}">{{ r.label }}</span>
+              <sc-if value="{{ r.adv }}" hint-placeholder-val="{{ false }}"><span style="flex: none; font-size: 11px; font-weight: 600; color: #5C6168; border: 1px solid #D6D6D4; border-radius: 6px; padding: 1px 6px">avanzato</span></sc-if>
+            </span>
+            <span style="display: flex; align-items: center; gap: 6px; justify-content: flex-end">
+              <sc-if value="{{ r.editable }}" hint-placeholder-val="{{ true }}">
+                <input class="num" type="number" value="{{ r.inputValue }}" step="{{ r.step }}" min="{{ r.min }}" max="{{ r.max }}" onChange="{{ r.onInput }}" aria-label="{{ r.label }}" style="{{ r.inputStyle }}">
+              </sc-if>
+              <sc-if value="{{ r.isMode }}" hint-placeholder-val="{{ false }}">
+                <select class="sel" onChange="{{ r.onInput }}" value="{{ r.inputValue }}" aria-label="{{ r.label }}" style="{{ r.inputStyle }}">
+                  <option value="Pensione">Pensione</option>
+                  <option value="Riscatto">Riscatto</option>
+                </select>
+              </sc-if>
+              <sc-if value="{{ r.isEtf }}" hint-placeholder-val="{{ false }}">
+                <select class="sel" onChange="{{ r.onInput }}" value="{{ r.inputValue }}" aria-label="{{ r.label }}" style="{{ r.inputStyle }}">
+                  <option value="Vanguard FTSE All-World Acc">Vanguard FTSE All-World</option>
+                  <option value="SPDR MSCI ACWI IMI">SPDR MSCI ACWI IMI</option>
+                  <option value="iShares MSCI ACWI Acc">iShares MSCI ACWI</option>
+                </select>
+              </sc-if>
+              <sc-if value="{{ r.isText }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right" title="{{ r.text }}">{{ r.text }}</span>
+              </sc-if>
+              <span style="flex: none; width: 34px; font-size: 12.5px; color: #5C6168">{{ r.unit }}</span>
+            </span>
+            <span class="tip right hide-s"><span tabindex="0" style="{{ r.srcStyle }}">{{ r.srcLabel }}</span><span class="bubble" role="tooltip">{{ r.source }}</span></span>
+            <span class="hide-s" style="display: flex; justify-content: flex-end">
+              <sc-if value="{{ r.changed }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ r.reset }}" title="{{ r.resetTitle }}" style="font: inherit; font-size: 12px; font-weight: 700; color: #0B0B0B; background: #D4EE36; border: 1px solid #0B0B0B; border-radius: 8px; padding: 3px 8px; cursor: pointer">↺ default</button>
+              </sc-if>
+            </span>
+          </div>
+        </sc-for>
+      </section>
+    </sc-for>
+
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 30px; text-align: center; background: #FFFFFF; border: 1.5px dashed #9A9EA3; border-radius: 20px; font-size: 15px; color: #3A3D42">Nessun parametro trovato per “{{ q }}”. Prova “tasse”, “azienda” o “rendimento”.</div>
+    </sc-if>
+
+    <section style="background: #FFFFFF; border: 1px solid #E2E2DF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+      <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase">Assunzioni del modello <span style="font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 99px; background: #0B0B0B; color: #D4EE36; letter-spacing: 0">{{ nAssump }}</span></span>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{ assumptions }}" as="a" hint-placeholder-count="10">
+          <span class="tip"><span tabindex="0" style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: #F4F4F2; border: 1px solid #E2E2DF; font-size: 13px; font-weight: 500; cursor: help">{{ a.title }}</span><span class="bubble" role="tooltip">{{ a.text }}</span></span>
+        </sc-for>
+      </div>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 6px">
+      <span style="font-size: 13px; color: #5C6168; line-height: 1.5; max-width: 760px">I valori predefiniti sono un profilo d'esempio verosimile. Le modifiche restano in questa pagina, sul tuo dispositivo. Documenti FPDDI: area pubblica di fondopensioneibm.it.</span>
+      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.P = [
+      ["birth_year", "Anno di nascita", "Dati personali", "anno", 1990, 1950, 2010, 1, 0, "Inserito dall'utente", "Con l’età di uscita fissa l’anno in cui esci e quindi quanti anni di versamenti simuliamo.", 0],
+      ["exit_age", "Età di uscita dal fondo", "Dati personali", "anni", 67, 40, 75, 1, 0, "Inserito dall'utente; 67 = età di vecchiaia (L. 214/2011)", "A che età chiedi la prestazione. Più anni nel fondo riducono l’aliquota finale, ma moltiplicano l’effetto del differenziale di rendimento.", 0],
+      ["first_join_year", "Anno di prima adesione alla previdenza complementare", "Dati personali", "anno", 2015, 1993, 2030, 1, 0, "Inserito dall'utente (estratto conto del fondo)", "L’anno della prima iscrizione a qualsiasi fondo pensione. Decide lo sconto sull’aliquota d’uscita e gli anni in cui puoi recuperare i contributi non dedotti.", 0],
+      ["ral", "RAL annua", "Dati personali", "€", 45000, 10000, 300000, 500, 0, "Inserito dall'utente", "Retribuzione annua lorda. Serve solo a stimare l’aliquota marginale, cioè quanto ti restituisce ogni euro dedotto.", 0],
+      ["min_member_month", "Contributo minimo a carico dell'aderente, mensile", "Dati personali", "€", 75, 0, 2000, 1, 0, "Estratto conto (se importato). Regola: 2% della retribuzione lorda fino alla prima fascia pensionabile INPS (56.224 € nel 2026) e 7% oltre — FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia; fascia: circolare INPS n. 6 del 30/01/2026", "Il minimo che devi versare tu per ricevere il contributo dell’azienda. Lo leggiamo dall’estratto se lo carichi.", 0],
+      ["employer_month", "Contributo dell'azienda, mensile", "Dati personali", "€", 70, 0, 2000, 1, 0, "Estratto conto (se importato). Regola: 1,5% fino alla prima fascia e 4% oltre, calcolato sui minimi contrattuali, massimo 3,5% della retribuzione lorda — FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia", "Soldi in più che l’azienda versa solo se tu versi almeno il minimo. Nello scenario 3 si perdono.", 0],
+      ["tfr_month", "TFR versato al fondo, mensile", "Dati personali", "€", 230, 0, 5000, 1, 0, "Estratto conto (se importato). TFR annuo = retribuzione / 13,5 (art. 2120 c.c.) meno lo 0,5% di contributo al Fondo di garanzia INPS (L. 297/1982 art. 3)", "Il TFR che va al fondo. È uguale nei tre scenari: una volta scelto il fondo non si può riportare in azienda.", 0],
+      ["months", "Mensilità contributive all'anno", "Dati personali", "n", 13, 12, 14, 1, 1, "Estratto operazioni FPDDI: a dicembre il versamento è doppio", "Quante volte all’anno arrivano i contributi. In FPDDI dicembre conta doppio, quindi 13.", 0],
+      ["current_position", "Posizione attuale nel fondo", "Dati personali", "€", 20000, 0, 2000000, 100, 0, "Estratto conto o somma quote x valore quota (calcolata dal file importato)", "Quanto vale oggi la tua posizione. Cresce allo stesso modo nei tre scenari.", 0],
+      ["current_taxable_base", "Parte della posizione attuale tassabile all'uscita", "Dati personali", "€", 16000, 0, 2000000, 100, 1, "Stima: contributi dedotti + azienda + TFR meno parti già tassate (anticipazioni)", "La parte su cui pagherai l’imposta d’uscita (i rendimenti sono già tassati ogni anno). Uguale nei tre scenari: cambia i totali, non quale conviene.", 1],
+      ["recoverable_non_deducted", "Contributi non dedotti ancora recuperabili", "Dati personali", "€", 0, 0, 200000, 100, 0, "Certificazione Unica, punto 419", "Chi ha iniziato a lavorare dopo il 2007 può dedurre fino a 2.650 € l’anno in più, dal 6° al 25° anno, per recuperare i contributi non dedotti nei primi 5 anni.", 0],
+      ["annual_saving", "Risparmio annuo da investire (vuoto = quanto serve per la deduzione massima)", "Dati personali", "€", null, 0, 50000, 100, 0, "Scelta dell'utente", "Il budget netto uguale per i tre scenari. Vuoto = quanto serve per arrivare alla deduzione massima. Cresce con la retribuzione.", 0],
+      ["start_year", "Primo anno simulato", "Tecnici", "anno", 2027, 2025, 2035, 1, 1, "Primo anno pieno dopo l'ultimo estratto", "Da quest’anno partono i versamenti simulati. Prima vale la posizione attuale.", 1],
+      ["growth", "Crescita annua di retribuzione e contributi", "Ipotesi di mercato", "%", 0.02, 0, 0.06, 0.0025, 0, "Assunzione", "Di quanto crescono ogni anno stipendio e contributi. Il limite di 5.300 € invece resta fisso.", 1],
+      ["inflation", "Inflazione annua (per i valori in euro di oggi)", "Ipotesi di mercato", "%", 0.02, 0, 0.08, 0.0025, 0, "Assunzione; obiettivo BCE 2%", "Serve solo a tradurre i risultati in euro di oggi. Non cambia quale scenario conviene.", 1],
+      ["etf_gross_return", "Rendimento atteso annuo dell'azionario globale, prima dei costi", "Ipotesi di mercato", "%", 0.07, 0, 0.15, 0.0025, 0, "Assunzione: stima di lungo periodo J.P. Morgan Long-Term Capital Market Assumptions 2026 (azionario globale 7% annuo in USD, orizzonte 10–15 anni). Alternative nella UI: medie annue a 5 e 10 anni e dal lancio dell'ETF scelto (Finanzfluss, prezzi Xetra in EUR al 20/10/2026), riportate al lordo del TER", "Rendimento annuo atteso dell'ETF prima del TER. Il fondo rende questo, meno il TER, più il differenziale.", 1],
+      ["delta", "Differenziale fondo meno ETF (prima dell'imposta, dopo i costi)", "Ipotesi di mercato", "%", -0.0581, -0.15, 0.03, 0.0005, 0, "Calcolo storico: media composta 2014-2025 del comparto Azionario prima dell'imposta (data/fpddi_azionario.json, fonti per anno in docs/FONTI.md) meno quella dell'ETF iShares MSCI ACWI in euro (data/etf_monthly.csv). Formula in docs/FORMULE.md", "La variabile che decide tutto: quanto rende ogni anno il comparto rispetto all’ETF, dopo i costi e prima dell’imposta del 20%. Storico 2014-2025: −5,81%.", 2],
+      ["exit_mode", "Modalità di uscita", "Ipotesi di mercato", "", "Pensione", null, null, null, 0, "D.Lgs. 252/2005 artt. 11 e 14", "Pensione: aliquota dal 15% al 9%. Riscatto per dimissioni o anticipazione per ulteriori esigenze: 23%.", 4],
+      ["inps_rate", "Contributi INPS a carico del dipendente (% della RAL)", "Fisco", "%", 0.0919, 0.05, 0.12, 0.0001, 1, "INPS: aliquota IVS a carico del lavoratore 9,19%; +1% sulla parte di retribuzione oltre la prima fascia pensionabile (L. 438/1992 art. 3-ter), fascia 2026 56.224 € (circolare INPS n. 6/2026). Non incluso lo 0,30% CIGS dovuto solo in alcuni settori", "Contributi previdenziali del dipendente, tolti dalla RAL per ottenere il reddito su cui si calcolano IRPEF e detrazioni.", 4],
+      ["irpef_brackets", "Scaglioni IRPEF 2026", "Fisco", "", [[28000, 0.23], [50000, 0.33], [null, 0.43]], null, null, null, 1, "L. 199/2025 (Legge di bilancio 2026) art. 1 c. 3: 23% fino a 28.000 €, 33% fino a 50.000 €, 43% oltre. Detrazione lavoro dipendente: art. 13 c. 1 TUIR. Cuneo fiscale: L. 207/2024 art. 1 cc. 4-6", "Il risparmio di ogni euro dedotto si calcola esattamente: IRPEF a scaglioni, meno detrazione per lavoro dipendente e ulteriore detrazione del cuneo fiscale (che crescono quando il reddito scende), più addizionali.", 4],
+      ["add_regional", "Addizionale regionale (scaglioni)", "Fisco", "", [[15000, 0.0123], [28000, 0.0158], [50000, 0.0172], [null, 0.0173]], 0, 0.04, 0.0001, 1, "Regione Lombardia, pagina 'Addizionale Regionale all'IRPEF' (agg. 05/05/2026): 1,23% fino a 15.000 €, 1,58% fino a 28.000 €, 1,72% fino a 50.000 €, 1,73% oltre (l.r. 10/2003 art. 72, scaglioni l.r. 5/2022). Modificabile per altre regioni", "Si somma all’IRPEF nell’aliquota marginale. Cambiala se non vivi in Lombardia.", 4],
+      ["add_municipal", "Addizionale comunale", "Fisco", "%", 0.008, 0, 0.009, 0.0001, 1, "Massimo di legge 0,8% (D.Lgs. 360/1998 art. 1 c. 3), applicato da molti capoluoghi (es. Milano). Esenzioni comunali non modellate: usa la delibera del tuo Comune", "Si somma all’IRPEF nell’aliquota marginale.", 4],
+      ["deduction_limit", "Limite annuo di deducibilità (aderente + azienda)", "Fisco", "€", 5300, 0, 10000, 50, 1, "FPDDI, 'Regime fiscale' p. 3: 5.300 € dall'annualità 2026 (5.164,57 € fino al 2025); D.Lgs. 252/2005 art. 8 c. 4 come modificato dalla L. 199/2025", "Il massimo che puoi togliere dal reddito ogni anno, sommando tuoi contributi e quelli dell’azienda. Il TFR non conta.", 3],
+      ["recovery_cap", "Recupero annuo massimo dei contributi non dedotti", "Fisco", "€", 2650, 0, 5000, 50, 1, "FPDDI, 'Regime fiscale' p. 3: recupero fino a 2.650 € annui (totale 7.950 €) dalla dichiarazione 2026; D.Lgs. 252/2005 art. 8 c. 6", "Quanto puoi dedurre in più ogni anno per recuperare i contributi non dedotti dei primi 5 anni.", 3],
+      ["recovery_from_year_offset", "Recupero possibile dal 6° anno di partecipazione (offset)", "Fisco", "anni", 5, null, null, null, 1, "D.Lgs. 252/2005 art. 8 c. 6", "Il recupero parte dopo 5 anni dalla prima adesione.", 4],
+      ["recovery_last_year_offset", "Recupero possibile fino al 25° anno (offset)", "Fisco", "anni", 24, null, null, null, 1, "D.Lgs. 252/2005 art. 8 c. 6", "Il recupero termina 24 anni dopo la prima adesione.", 4],
+      ["fund_return_tax", "Imposta annua sui rendimenti del fondo", "Fisco", "%", 0.2, 0, 0.3, 0.005, 1, "FPDDI, 'Regime fiscale' p. 5: imposta sostitutiva del 20% sul risultato netto annuo; titoli pubblici al 12,5% effettivo (L. 190/2014 art. 1 cc. 621-622)", "Il fondo paga ogni anno il 20% sui rendimenti, anche se non esci. Per questo il valore quota è già netto.", 4],
+      ["exit_tax_max", "Aliquota sulla prestazione, massima", "Fisco", "%", 0.15, null, null, null, 1, "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6", "Si applica a contributi dedotti, contributi dell’azienda e TFR quando esci per pensione.", 4],
+      ["exit_tax_reduction", "Riduzione per ogni anno oltre il 15°", "Fisco", "%", 0.003, null, null, null, 1, "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6", "Ogni anno di iscrizione oltre il 15° toglie 0,3 punti all’aliquota d’uscita.", 4],
+      ["exit_tax_min", "Aliquota sulla prestazione, minima", "Fisco", "%", 0.09, null, null, null, 1, "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6", "Dopo 35 anni di iscrizione l’aliquota non scende più.", 4],
+      ["exit_tax_threshold_years", "Anni dopo i quali inizia la riduzione", "Fisco", "anni", 15, null, null, null, 1, "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6", "La riduzione dell’aliquota parte dal 16° anno di iscrizione.", 4],
+      ["redemption_tax", "Aliquota su riscatto per dimissioni / anticipazione per ulteriori esigenze", "Fisco", "%", 0.23, null, null, null, 1, "FPDDI, 'Regime fiscale' pp. 6-7: riscatto per cause diverse (es. dimissioni) e anticipazioni per ulteriori esigenze al 23% a titolo d'imposta; D.Lgs. 252/2005 art. 14 c. 5 e art. 11 c. 7", "Se esci prima della pensione per dimissioni, o chiedi un’anticipazione per ulteriori esigenze.", 4],
+      ["etf_name", "ETF del PAC", "PAC ETF", "", "Vanguard FTSE All-World Acc", null, null, null, 1, "Scelta tra 3 ETF: Vanguard FTSE All-World Acc (IE00BK5BQT80), SPDR MSCI ACWI IMI (IE00B3YLTY66), iShares MSCI ACWI Acc (IE00B6R52259). Dati: schede emittenti e Finanzfluss al 20–23/10/2026; copertura indici: FTSE Russell (90–95%), MSCI (85% ACWI, 99% ACWI IMI)", "L’ETF di riferimento: circa 2.300 aziende di 23 paesi sviluppati e 24 emergenti. Accumula i dividendi.", 5],
+      ["etf_ter", "TER dell'ETF", "PAC ETF", "%", 0.0014, 0, 0.01, 0.0001, 1, "TER da scheda emittente: Vanguard 0,14%, SPDR 0,17%, iShares 0,20%. Segue l'ETF scelto", "Il costo annuo dell’ETF, tolto dal rendimento.", 5],
+      ["stamp_duty", "Imposta di bollo annua sul conto titoli", "PAC ETF", "%", 0.002, 0, 0.005, 0.0001, 1, "D.L. 201/2011 art. 19 (0,20%)", "Ogni anno lo 0,2% del valore del PAC. Il fondo pensione non la paga.", 4],
+      ["capital_gain_tax", "Imposta sulle plusvalenze", "PAC ETF", "%", 0.26, 0, 0.4, 0.01, 1, "D.L. 66/2014 (26%)", "Pagata una volta sola, quando vendi, sul guadagno.", 4],
+      ["fund_ter_reference", "TER 2025 comparto Azionario (solo informativo, già incluso nel differenziale)", "Fondo pensione", "%", 0.00473, null, null, null, 1, "FPDDI, Nota informativa 2026, p. 24, Tav. 7 (TER 2025): 0,473% = 0,414% commissioni di gestione finanziaria + 0,059% compensi depositario; oneri amministrativi NA", "Solo informativo: i costi sono già dentro il differenziale storico, non vanno tolti due volte.", 3],
+      ["fund_isc_10y", "ISC 10 anni comparto Azionario (informativo)", "Fondo pensione", "%", 0.0029, null, null, null, 1, "FPDDI, Scheda dei costi in vigore dal 01/01/2026, p. 2, Indicatore sintetico dei costi, comparto Azionario 10 anni: 0,29%", "Indicatore sintetico dei costi su 10 anni, come da schema COVIP. Informativo.", 3],
+      ["manager_fee", "Commissione di gestione Generali (informativo)", "Fondo pensione", "%", 0.0024, null, null, null, 1, "FPDDI, Documento sulla politica di investimento, par. 4.2 (p. 16): 0,24% del patrimonio annuo + commissione di over performance del 10% del rendimento addizionale", "Quanto prende il gestore, più il 10% di quel che fa meglio del benchmark. Informativo.", 3],
+      ["contribution_year_fraction", "Frazione d'anno di rendimento sui versamenti dell'anno", "Tecnici", "anni", 0.5, 0, 1, 0.05, 1, "Convenzione: versamenti mensili distribuiti nell'anno", "I versamenti dell’anno rendono in media per metà anno, perché arrivano mese per mese.", 1],
+      ["payroll_deduction", "Contributi trattenuti in busta paga", "Fisco", "", "Sì, in busta paga", null, null, null, 1, "Art. 51 c. 2 lett. h TUIR: i contributi trattenuti dal datore non formano reddito di lavoro dipendente, quindi riducono anche il reddito complessivo su cui si calcolano detrazioni e cuneo", "Sì (default): la deduzione abbassa il reddito complessivo e fa crescere detrazioni e cuneo. No: versamento diretto dedotto in dichiarazione, che riduce solo l'imponibile.", 4]
+    ];
+
+    var v = {}; this.P.forEach(function (p) { v[p[0]] = p[4]; });
+    this.state = { values: v, q: '', group: 'Tutti', onlyMain: false };
+  }
+  kind(src) {
+    if (/^(Inserito|Estratto|Scelta|Certificazione)/.test(src)) return 0;
+    if (/^Assunzione|^Convenzione|^Primo anno|^Stima/.test(src)) return 1;
+    if (/^Storico/.test(src)) return 2;
+    if (/^FPDDI/.test(src)) return 3;
+    if (/^(D\.Lgs|D\.L\.|L\. |INPS|Regione|Delibera)/.test(src)) return 4;
+    return 5;
+  }
+  fmt(p, val) {
+    var u = p[3];
+    if (val === null) return p[0] === 'annual_saving' ? 'deduzione max' : '–';
+    if (Array.isArray(val)) return val.map(function (b) { return (b[1] * 100) + '%' + (b[0] ? ' ≤' + (b[0] / 1000) + 'k' : ''); }).join(' · ');
+    if (typeof val === 'string') return val;
+    if (u === '%') return (val * 100).toLocaleString('it-IT', { maximumFractionDigits: 2 });
+    if (u === 'anno') return String(val);
+    return val.toLocaleString('it-IT', { maximumFractionDigits: 2 });
+  }
+  renderVals() {
+    var self = this, s = this.state, ink = '#0B0B0B', lime = '#D4EE36';
+    var kinds = [['Tuo dato', lime, ink], ['Ipotesi', '#FFF3D6', '#7A4B00'], ['Calcolo storico', '#E6E8FF', '#3730A3'], ['Doc. FPDDI', '#E3EDFF', '#1E40AF'], ['Norma', '#ECECEA', '#3A3D42'], ['Emittente', '#FCE7F3', '#9D174D']];
+    var pill = function (k) { return 'display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:8px;background:' + kinds[k][1] + ';color:' + kinds[k][2] + ';cursor:help;white-space:nowrap'; };
+    var words = s.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var groupNames = ['Dati personali', 'Ipotesi di mercato', 'Fisco', 'PAC ETF', 'Fondo pensione', 'Tecnici'];
+    var match = function (p) {
+      if (s.onlyMain && p[8]) return false;
+      if (!words.length) return true;
+      var hay = (p[0] + ' ' + p[1] + ' ' + p[2] + ' ' + p[9] + ' ' + p[10]).toLowerCase();
+      return words.every(function (w) { return hay.indexOf(w) >= 0; });
+    };
+    var visible = this.P.filter(match);
+    var changedIds = this.P.filter(function (p) { return JSON.stringify(s.values[p[0]]) !== JSON.stringify(p[4]); }).map(function (p) { return p[0]; });
+    var TER = { 'Vanguard FTSE All-World Acc': 0.0014, 'SPDR MSCI ACWI IMI': 0.0017, 'iShares MSCI ACWI Acc': 0.0020 };
+    var setVal = function (id, val) { var nv = Object.assign({}, self.state.values); nv[id] = val; if (id === 'etf_name' && TER[val] !== undefined) nv.etf_ter = TER[val]; self.setState({ values: nv }); };
+    var row = function (p) {
+      var id = p[0], val = s.values[id], k = p[11] !== undefined ? p[11] : self.kind(p[9]), isPct = p[3] === '%', changed = changedIds.indexOf(id) >= 0;
+      var numeric = p[5] !== null && (typeof p[4] === 'number' || p[4] === null), choice = id === 'exit_mode' || id === 'etf_name';
+      return {
+        label: p[1], aria: 'Spiegazione: ' + p[1], desc: p[10], adv: !!p[8], unit: p[3] === 'anno' || p[3] === 'testo' ? '' : p[3],
+        editable: numeric, isMode: id === 'exit_mode', isEtf: id === 'etf_name', isText: !numeric && !choice, text: self.fmt(p, val),
+        inputValue: choice ? val : (val === null ? '' : (isPct ? Math.round(val * 100000) / 1000 : val)),
+        step: numeric ? (isPct ? p[7] * 100 : p[7]) : '', min: numeric ? (isPct ? p[5] * 100 : p[5]) : '', max: numeric ? (isPct ? p[6] * 100 : p[6]) : '',
+        inputStyle: changed ? 'border-color:#0B0B0B;background:#F3FAD0' : '',
+        onInput: function (e) {
+          if (choice) return setVal(id, e.target.value);
+          var raw = e.target.value; if (raw === '') return setVal(id, p[4] === null ? null : p[4]);
+          var x = parseFloat(raw); if (isNaN(x)) return; if (isPct) x = x / 100;
+          x = Math.min(p[6], Math.max(p[5], x)); setVal(id, x);
+        },
+        source: p[9], srcLabel: kinds[k][0], srcStyle: pill(k), changed: changed,
+        resetTitle: 'Torna a ' + self.fmt(p, p[4]) + (p[3] && p[3] !== 'anno' ? ' ' + p[3] : ''), reset: function () { setVal(id, p[4]); }
+      };
+    };
+    var groups = groupNames.filter(function (g) { return s.group === 'Tutti' || s.group === g; }).map(function (g) {
+      var rows = visible.filter(function (p) { return p[2] === g; }).map(row);
+      return { name: g, n: rows.length, rows: rows };
+    }).filter(function (g) { return g.rows.length; });
+    var chipStyle = function (on) { return 'padding:8px 14px;border-radius:10px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid ' + (on ? ink : '#D6D6D4') + ';background:' + (on ? lime : '#FFFFFF') + ';color:' + ink; };
+    var chips = ['Tutti'].concat(groupNames).map(function (g) {
+      return { label: g, n: visible.filter(function (p) { return g === 'Tutti' || p[2] === g; }).length, style: chipStyle(s.group === g), nStyle: 'font-size:12px;color:' + (s.group === g ? ink : '#5C6168'), pick: function () { self.setState({ group: g }); } };
+    });
+    var shown = groups.reduce(function (a, g) { return a + g.n; }, 0);
+    var A = [
+      ['Stesso budget netto', 'I tre scenari spendono ogni anno gli stessi soldi dal tuo stipendio netto. Cambia solo dove li metti.'],
+      ['Rimborso IRPEF nel PAC', 'Il risparmio fiscale della deduzione viene investito nel PAC nello stesso anno, non speso.'],
+      ['Differenziale costante', 'Il fondo rende ogni anno come l’ETF più il differenziale scelto. Gli anni buoni e cattivi si compensano nella media.'],
+      ['Costi già nel differenziale', 'Il differenziale storico è calcolato sui valori quota, che sono già al netto di tutti i costi del fondo.'],
+      ['Contributi a metà anno', 'I versamenti mensili rendono in media per mezzo anno nell’anno in cui arrivano.'],
+      ['Contributi +2% l’anno', 'Contributi e TFR crescono con lo stipendio; il limite di deducibilità di 5.300 € no.'],
+      ['Minimo per l’azienda', 'Il risparmio non scende mai sotto la quota minima che dà diritto al contributo dell’azienda, né sopra la deduzione massima.'],
+      ['Uscita in capitale', 'Il confronto usa il capitale netto all’uscita. Non simula la conversione in rendita.'],
+      ['Riscatto anticipato al 23%', 'Nella striscia e nella mappa, ogni uscita prima dell’ultimo anno è trattata come riscatto per dimissioni.'],
+      ['PAC tassato alla fine', 'Il PAC paga il bollo dello 0,2% ogni anno e il 26% sulle plusvalenze solo alla vendita finale.'],
+      ['Norme fiscali 2026', 'Scaglioni, limiti e aliquote restano quelli in vigore nel 2026 per tutto l’orizzonte.']
+    ].map(function (a) { return { title: a[0], text: a[1] }; });
+    return {
+      q: s.q, setQ: function (e) { self.setState({ q: e.target.value }); },
+      onlyMain: s.onlyMain, toggleMain: function (e) { self.setState({ onlyMain: e.target.checked }); },
+      nChanged: changedIds.length, noneChanged: changedIds.length === 0,
+      resetAll: function () { var v = {}; self.P.forEach(function (p) { v[p[0]] = p[4]; }); self.setState({ values: v }); },
+      resetAllStyle: 'padding:11px 14px;border-radius:12px;font:inherit;font-size:14px;font-weight:600;border:1px solid ' + (changedIds.length ? ink : '#D6D6D4') + ';background:' + (changedIds.length ? lime : '#FFFFFF') + ';color:' + (changedIds.length ? ink : '#9A9EA3') + ';cursor:' + (changedIds.length ? 'pointer' : 'default'),
+      chips: chips, groups: groups, noResults: shown === 0,
+      countText: shown + ' di ' + this.P.length + ' parametri' + (changedIds.length ? ' · ' + changedIds.length + ' modificati' : ''),
+      legend: kinds.map(function (k, i) { return { label: k[0], style: pill(i).replace('cursor:help;', '') }; }),
+      assumptions: A, nAssump: A.length
+    };
+  }
+}
+</script>
+</body>
+</html>

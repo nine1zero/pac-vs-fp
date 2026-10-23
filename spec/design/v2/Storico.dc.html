@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Storico del fondo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F2}
+.lp{font-family:Onest,system-ui,sans-serif;color:#0B0B0B;letter-spacing:.2px}
+.lp ::selection{background:#D4EE36;color:#0B0B0B}
+.lp a{color:inherit}
+.mark{background:linear-gradient(180deg,transparent 12%,#D4EE36 12% 88%,transparent 88%);padding:0 6px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cap{font-size:12.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:#3A3D42;display:inline-flex;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E2E2DF;border-radius:24px;padding:26px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.tile{background:#F7F7F5;border:1px solid #E6E6E3;border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.big{font-size:26px;font-weight:600;letter-spacing:-.6px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sub{font-size:13px;color:#5C6168;line-height:1.5}
+.h2{font-size:22px;font-weight:600;letter-spacing:-.3px}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;padding:14px 22px;border:none}
+.btn.ghost{background:#FFFFFF;color:#0B0B0B;border:1px solid #D6D6D4;padding:9px 14px;font-size:14px;border-radius:12px}
+.btn.ghost:hover{border-color:#0B0B0B}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:12px;height:12px;border-radius:4px;flex:none}
+.ln{width:22px;height:3px;border-radius:2px;flex:none}
+.leg{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:#26282B}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.tbl th{position:sticky;top:0;background:#F7F7F5;text-align:right;padding:0;border-bottom:1px solid #E2E2DF;white-space:nowrap}
+.tbl th button{font:inherit;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#3A3D42;background:none;border:none;cursor:pointer;padding:10px 12px;width:100%;text-align:inherit}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td{text-align:right;padding:9px 12px;border-bottom:1px solid #EFEFED;white-space:nowrap}
+.tbl tr:hover td{background:#FAFBEF}
+@media (max-width:900px){.g4{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.g2{grid-template-columns:1fr !important}.h1{font-size:36px !important}}
+</style>
+</helmet>
+<div class="lp" style="min-height: 100vh; background: #F4F4F2">
+
+  <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · i rendimenti passati non garantiscono quelli futuri
+  </div>
+
+  <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
+    <nav style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+    </nav>
+  </header>
+
+  <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
+
+    <section style="display: flex; flex-direction: column; gap: 12px; max-width: 820px; padding: 10px 0 6px">
+      <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">Lo storico del <span class="mark">comparto Azionario</span></h1>
+      <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Dal 2012 a oggi, anno per anno: quanto ha reso il fondo, quanto il suo benchmark e ciascuna delle sue tre componenti, e quanto avrebbe reso un ETF azionario globale.</p>
+    </section>
+
+    <section class="card" style="gap: 14px">
+      <span class="cap">Com'è fatto il benchmark del fondo</span>
+      <div style="display: flex; height: 64px; border-radius: 16px; overflow: hidden; border: 1.5px solid #0B0B0B; font-weight: 600">
+        <div style="flex: 45; background: #0E7490; color: #FFFFFF; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; min-width: 0"><span style="font-size: 22px; line-height: 1">45%</span><span style="font-size: 13px; font-weight: 500">MSCI World · azioni dei paesi sviluppati</span></div>
+        <div style="flex: 45; background: #B45309; color: #FFFFFF; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; min-width: 0; border-left: 1.5px solid #0B0B0B"><span style="font-size: 22px; line-height: 1">45%</span><span style="font-size: 13px; font-weight: 500">MSCI Europe · azioni europee</span></div>
+        <div style="flex: 10; background: #D3D5D7; color: #0B0B0B; display: flex; flex-direction: column; justify-content: center; padding: 0 10px; min-width: 0; border-left: 1.5px solid #0B0B0B"><span style="font-size: 22px; line-height: 1">10%</span><span style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">liquidità</span></div>
+      </div>
+      <span style="font-size: 14.5px; line-height: 1.6; color: #26282B"><strong>Benchmark = 45% MSCI World + 45% MSCI Europe + 10% JPM Cash Euro 3M</strong>, ribilanciato ogni anno (Documento sulla politica di investimento FPDDI, par. 4.2). Le azioni europee pesano due volte: sono già circa il 15% del MSCI World e in più hanno un 45% dedicato. Il 10% è liquidità, che rende quasi zero. Nessuna esposizione ai mercati emergenti.</span>
+      <span class="sub">Per ricostruirlo usiamo ETF che replicano le stesse componenti: iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80) e, per la liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici Datastream del documento finiscono in (PI): se sono indici di prezzo, senza dividendi, il benchmark pubblicato parte svantaggiato di circa 2–3 punti l'anno rispetto agli ETF, che includono i dividendi. È un'ipotesi da confermare con il fondo.</span>
+    </section>
+
+    <section class="card">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span class="cap">ETF di confronto</span>
+          <span class="chips" role="radiogroup" aria-label="ETF di confronto"><sc-for list="{{ etfChips }}" as="c" hint-placeholder-count="4"><button type="button" role="radio" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="{{ c.style }}" title="{{ c.title }}">{{ c.label }}</button></sc-for></span>
+          <span class="sub">{{ etfInfo }}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span class="cap">Periodo delle statistiche</span>
+          <span class="chips"><sc-for list="{{ winChips }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for></span>
+          <span class="sub">{{ winNote }}</span>
+        </div>
+      </div>
+      <div class="g4" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="4">
+          <div style="{{ t.box }}"><span style="{{ t.capStyle }}">{{ t.cap }}</span><span class="big">{{ t.val }}</span><span style="{{ t.subStyle }}">{{ t.sub }}</span></div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+          <span class="h2">{{ c1Title }}</span>
+          <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ c1Pre }}<span class="mark" style="font-weight: 600">{{ c1Mark }}</span>{{ c1Post }}</span>
+        </div>
+        <div role="radiogroup" aria-label="Fondo e benchmark netti o lordi" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
+          <button type="button" role="radio" aria-checked="{{ isGross }}" onClick="{{ pickGross }}" style="{{ segGross }}">Prima dell'imposta</button>
+          <button type="button" role="radio" aria-checked="{{ isNet }}" onClick="{{ pickNet }}" style="{{ segNet }}">Dopo l'imposta</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 18px">
+        <span class="leg"><span class="ln" style="background: #3A3D42"></span>Fondo, comparto Azionario</span>
+        <span class="leg"><span class="ln" style="background: #7C3AED"></span>Benchmark pubblicato</span>
+        <span class="leg"><span class="ln" style="background: #2563EB"></span>{{ etfShort }}</span>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <div style="position: relative; width: 52px; flex: none; height: 340px; font-size: 12px; color: #5C6168; font-variant-numeric: tabular-nums">
+          <sc-for list="{{ c1.yTicks }}" as="t" hint-placeholder-count="5"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="position: relative; height: 340px" onMouseLeave="{{ leave1 }}">
+            <svg viewBox="0 0 1000 340" preserveAspectRatio="none" width="100%" height="340" role="img" aria-label="{{ c1Title }}" style="display: block; overflow: visible">
+              <path d="{{ c1.grid }}" fill="none" stroke="#E6E6E3" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c1.gap }}" fill="#D4EE36" fill-opacity="0.55"></path>
+              <path d="{{ c1.l0 }}" fill="none" stroke="#3A3D42" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c1.l1 }}" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c1.l2 }}" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <sc-if value="{{ c1.hasHover }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ c1.hv.line }}"></span>
+              <span style="{{ c1.hv.box }}">
+                <strong style="font-size: 14px">{{ c1.hv.label }}</strong>
+                <sc-for list="{{ c1.hv.rows }}" as="r" hint-placeholder-count="3"><span style="display: flex; justify-content: space-between; gap: 16px"><span style="{{ r.dot }}">{{ r.name }}</span><strong>{{ r.val }}</strong></span></sc-for>
+              </span>
+            </sc-if>
+            <sc-for list="{{ c1.hits }}" as="h" hint-placeholder-count="8"><span style="{{ h.style }}" onMouseEnter="{{ h.enter }}" onClick="{{ h.enter }}"></span></sc-for>
+          </div>
+          <div style="position: relative; height: 18px; font-size: 12.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+            <sc-for list="{{ c1.xTicks }}" as="t" hint-placeholder-count="8"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+      <span class="sub">Valore di 100 € investiti all'inizio, anno per anno. In lime la distanza tra l'ETF e il fondo. "Prima dell'imposta" toglie dal fondo e dal benchmark l'imposta annua sui rendimenti (20%, 11% nel 2012–2013): è il confronto corretto con l'ETF, che le imposte le paga solo alla vendita. 2026: gennaio–agosto.</span>
+    </section>
+
+    <section class="card">
+      <div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px">
+        <span class="h2">Le tre componenti del benchmark</span>
+        <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ c2Text }}</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 18px">
+        <span class="leg"><span class="ln" style="background: #0E7490"></span>MSCI World (45%)</span>
+        <span class="leg"><span class="ln" style="background: #B45309"></span>MSCI Europe (45%)</span>
+        <span class="leg"><span class="ln" style="background: #9A9EA3"></span>Liquidità €STR (10%)</span>
+        <span class="leg"><span class="ln" style="background: #0B0B0B"></span>Benchmark ricostruito 45/45/10</span>
+        <span class="leg"><span class="ln" style="background: #7C3AED"></span>Benchmark pubblicato, prima dell'imposta</span>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <div style="position: relative; width: 52px; flex: none; height: 320px; font-size: 12px; color: #5C6168; font-variant-numeric: tabular-nums">
+          <sc-for list="{{ c2.yTicks }}" as="t" hint-placeholder-count="5"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="position: relative; height: 320px" onMouseLeave="{{ leave2 }}">
+            <svg viewBox="0 0 1000 320" preserveAspectRatio="none" width="100%" height="320" role="img" aria-label="Componenti del benchmark: MSCI World, MSCI Europe, liquidità, benchmark ricostruito e pubblicato, 100 € a fine 2011" style="display: block; overflow: visible">
+              <path d="{{ c2.grid }}" fill="none" stroke="#E6E6E3" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l0 }}" fill="none" stroke="#0E7490" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l1 }}" fill="none" stroke="#B45309" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l2 }}" fill="none" stroke="#9A9EA3" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l3 }}" fill="none" stroke="#0B0B0B" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l4 }}" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <sc-if value="{{ c2.hasHover }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ c2.hv.line }}"></span>
+              <span style="{{ c2.hv.box }}">
+                <strong style="font-size: 14px">{{ c2.hv.label }}</strong>
+                <sc-for list="{{ c2.hv.rows }}" as="r" hint-placeholder-count="5"><span style="display: flex; justify-content: space-between; gap: 16px"><span style="{{ r.dot }}">{{ r.name }}</span><strong>{{ r.val }}</strong></span></sc-for>
+              </span>
+            </sc-if>
+            <sc-for list="{{ c2.hits }}" as="h" hint-placeholder-count="8"><span style="{{ h.style }}" onMouseEnter="{{ h.enter }}" onClick="{{ h.enter }}"></span></sc-for>
+          </div>
+          <div style="position: relative; height: 18px; font-size: 12.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+            <sc-for list="{{ c2.xTicks }}" as="t" hint-placeholder-count="8"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+      <span class="sub">100 € a fine 2011, con i dividendi reinvestiti (prezzi degli ETF). Il ricostruito pesa le tre linee 45/45/10 e si ribilancia ogni gennaio. Se il pubblicato resta sotto il ricostruito anche se hanno gli stessi pesi, la differenza sta nel modo di calcolarlo (probabilmente indici senza dividendi).</span>
+    </section>
+
+    <div class="g2" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 18px">
+      <section class="card">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span class="h2">Anno per anno</span>
+            <span class="sub">{{ barsNote }}</span>
+          </div>
+          <div role="radiogroup" aria-label="Differenziale" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
+            <button type="button" role="radio" aria-checked="{{ isVsEtf }}" onClick="{{ pickVsEtf }}" style="{{ segVsEtf }}">Fondo − ETF</button>
+            <button type="button" role="radio" aria-checked="{{ isVsBench }}" onClick="{{ pickVsBench }}" style="{{ segVsBench }}">Fondo − benchmark</button>
+          </div>
+        </div>
+        <div style="position: relative; height: 260px; display: flex; align-items: stretch; gap: 6px; border-bottom: 1px solid #E6E6E3">
+          <span style="{{ zeroLine }}"></span>
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="14">
+            <div style="flex: 1; min-width: 0; position: relative" title="{{ b.title }}">
+              <span style="{{ b.bar }}"></span>
+              <span style="{{ b.lab }}">{{ b.val }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 6px; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="14"><span style="flex: 1; min-width: 0; text-align: center">{{ b.year }}</span></sc-for>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 18px">
+          <span class="leg"><span class="sw" style="background: #15803D"></span>Il fondo ha fatto meglio</span>
+          <span class="leg"><span class="sw" style="background: #B91C1C"></span>Il fondo ha fatto peggio</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span class="h2">Da dove viene il ritardo</span>
+          <span class="sub">{{ wfNote }}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{ wf }}" as="w" hint-placeholder-count="5">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px"><span style="{{ w.nameStyle }}">{{ w.name }}</span><strong style="font-variant-numeric: tabular-nums">{{ w.val }}</strong></span>
+              <span style="position: relative; height: 22px; background: #F4F4F2; border-radius: 6px; overflow: hidden"><span style="{{ w.bar }}"></span></span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span class="h2">Il differenziale in numeri</span>
+        <span class="sub">{{ statNote }}</span>
+      </div>
+      <div class="g4" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{ stats }}" as="t" hint-placeholder-count="5">
+          <div class="tile"><span class="cap">{{ t.cap }}</span><span class="big">{{ t.val }}</span><span class="sub">{{ t.sub }}</span></div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span class="h2">Tabella annuale</span>
+        <span class="sub">Rendimenti in euro. Clicca su un'intestazione per ordinare. 2026*: gennaio–agosto. "n.d.": l'ETF non esisteva o la sua quotazione non è affidabile.</span>
+      </div>
+      <div style="max-height: 460px; overflow: auto; border: 1px solid #E6E6E3; border-radius: 16px">
+        <table class="tbl">
+          <thead><tr><sc-for list="{{ cols }}" as="c" hint-placeholder-count="10"><th><button type="button" onClick="{{ c.sort }}" title="{{ c.title }}">{{ c.label }}</button></th></sc-for></tr></thead>
+          <tbody>
+            <sc-for list="{{ trows }}" as="r" hint-placeholder-count="15"><tr><sc-for list="{{ r.cells }}" as="x" hint-placeholder-count="10"><td style="{{ x.style }}">{{ x.v }}</td></sc-for></tr></sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+        <span style="font-size: 14px; color: #3A3D42">Il differenziale del periodo scelto alimenta l'ipotesi del simulatore</span>
+        <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      </div>
+    </section>
+
+    <span class="sub">Fonti: rendimenti del fondo e del benchmark dai bilanci FPDDI 2012–2025 e dalla pagina del comparto (2026 gennaio–agosto, parziale); imposta annua dai bilanci. ETF: Yahoo Finance, prezzi di fine mese rettificati per i dividendi (iShares MSCI ACWI calcolato da ISAC.L in dollari e cambio EUR/USD; Vanguard FTSE All-World da VGWL.DE; SPDR MSCI ACWI IMI da SPYI.DE dal 2017, prima la quotazione Xetra non è affidabile).</span>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.D = {"years":[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"partial":[2026],"fundNet":[0.0409,0.0983,-0.0295,0.0869,0.01627,0.07811,-0.0978,0.1822,-0.0225,0.1582,-0.0923,0.1112,0.0931,0.0934,0.0688],"fundGross":[0.045955,0.110449,-0.033333,0.108625,0.020337,0.097637,-0.12225,0.22775,-0.028125,0.19775,-0.115375,0.139,0.116375,0.11675,0.086],"benchNet":[0.0238,0.1405,0.0843,0.0509,0.0286,0.046,-0.0858,0.1748,-0.0017,0.1769,-0.0894,0.108,0.107,0.0771,0.0828],"benchGross":[0.026742,0.157865,0.095254,0.063625,0.03575,0.0575,-0.10725,0.2185,-0.002125,0.221125,-0.11175,0.135,0.13375,0.096375,0.1035],"tax":[0.11,0.11,0.115,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],"world":[0.124519,0.218897,0.203788,0.1081,0.109124,0.077051,-0.05131,0.313441,0.054833,0.327137,-0.135881,0.201262,0.2593,0.079013,0.134109],"europe":[0.182463,0.193752,0.069522,0.092437,0.018552,0.105064,-0.109347,0.278492,-0.031421,0.249499,-0.090723,0.157844,0.082156,0.203431,0.122979],"cash":[0.001067,-0.0001,1.4e-05,-0.002311,-0.004769,-0.005181,-0.004737,-0.004905,-0.005683,-0.00584,-0.000414,0.032998,0.037849,0.02246,0.013208],"rebuilt":[0.138249,0.185682,0.122991,0.090011,0.056977,0.081434,-0.072769,0.26588,0.009967,0.258902,-0.102013,0.164897,0.15744,0.129346,0.11701],"etf":{"ishares":[0.117724,0.187969,0.192287,0.073884,0.11235,0.10168,-0.057658,0.284226,0.053391,0.290778,-0.130613,0.180587,0.253026,0.083909,0.155078],"vanguard":[null,null,null,null,null,null,-0.060262,0.301162,0.053794,0.285977,-0.134788,0.18173,0.244035,0.091764,0.146305],"spdrimi":[null,null,null,null,null,0.084556,-0.067121,0.296446,0.053942,0.2777,-0.129196,0.175408,0.229169,0.090969,0.151734]}};
+    this.state = { etf: 'ishares', gross: true, win: 'w1425', vs: 'etf', sort: 'year', dir: 1, h1: -1, h2: -1 };
+  }
+  pct(v, d) { return v === null || v === undefined ? 'n.d.' : (v * 100).toLocaleString('it-IT', { minimumFractionDigits: d === undefined ? 1 : d, maximumFractionDigits: d === undefined ? 1 : d }).replace('-', '−') + '%'; }
+  pts(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' punti'; }
+  cagr(a, i0, i1) { var p = 1; for (var i = i0; i <= i1; i++) p *= 1 + a[i]; return Math.pow(p, 1 / (i1 - i0 + 1)) - 1; }
+  chart(series, i0, i1, H, hoverKey, names, colors) {
+    var self = this, D = this.D, n = i1 - i0 + 2, W = 1000;
+    var lines = series.map(function (a) { var v = [100]; for (var i = i0; i <= i1; i++) v.push(v[v.length - 1] * (1 + a[i])); return v; });
+    var top = Math.max.apply(null, lines.map(function (l) { return Math.max.apply(null, l); }));
+    var step = [25, 50, 100, 200].filter(function (s) { return s >= top / 5; })[0] || 200, ymax = Math.ceil(top / step) * step;
+    var X = function (k) { return k / (n - 1) * W; }, Y = function (v) { return H - v / ymax * H; };
+    var path = function (l) { return l.map(function (v, k) { return (k ? 'L' : 'M') + X(k).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' '); };
+    var grid = '', yTicks = [];
+    for (var v = 0; v <= ymax + 1e-6; v += step) { grid += 'M0 ' + Y(v).toFixed(1) + ' H1000 '; yTicks.push({ label: v + ' €', style: 'position:absolute;right:0;transform:translateY(-50%);top:' + ((1 - v / ymax) * 100).toFixed(2) + '%' }); }
+    var lab = function (k) { return k === 0 ? 'fine ' + (D.years[i0] - 1) : (D.years[i0 + k - 1] === 2026 ? 'ago 2026' : 'fine ' + D.years[i0 + k - 1]); };
+    var xTicks = []; for (var k = 0; k < n; k++) { var yy = k === 0 ? D.years[i0] - 1 : D.years[i0 + k - 1];
+      xTicks.push({ label: String(yy) + (yy === 2026 ? '*' : ''), style: 'position:absolute;top:0;white-space:nowrap;left:' + (X(k) / W * 100).toFixed(2) + '%;transform:translateX(' + (k === 0 ? '0' : k === n - 1 ? '-100%' : '-50%') + ')' }); }
+    var hits = []; for (var k2 = 0; k2 < n; k2++) { (function (k) { var w = 100 / (n - 1); hits.push({ style: 'position:absolute;top:0;bottom:0;cursor:crosshair;left:' + Math.max(0, (k - 0.5) * w).toFixed(3) + '%;width:' + w.toFixed(3) + '%', enter: function () { var o = {}; o[hoverKey] = k; if (self.state[hoverKey] !== k) self.setState(o); } }); })(k2); }
+    var h = this.state[hoverKey], hv = {};
+    if (h >= 0 && h < n) { var pc = X(h) / W * 100;
+      hv = { line: 'position:absolute;top:0;bottom:0;width:1px;background:#0B0B0B;pointer-events:none;left:' + pc.toFixed(2) + '%', label: lab(h),
+        box: 'position:absolute;top:8px;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:5px;min-width:230px;padding:12px 14px;border-radius:14px;background:#0B0B0B;color:#F4F4F2;font-size:13px;font-variant-numeric:tabular-nums;box-shadow:0 10px 30px rgba(11,11,11,.18);left:' + pc.toFixed(2) + '%;transform:translateX(' + (h > n * 0.55 ? 'calc(-100% - 14px)' : '14px') + ')',
+        rows: lines.map(function (l, j) { return { name: names[j], val: new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(l[h]) + ' €', dot: 'display:inline-flex;align-items:center;gap:8px;border-left:4px solid ' + (colors[j] === '#0B0B0B' ? '#F4F4F2' : colors[j]) + ';padding-left:8px' }; }) }; }
+    return { lines: lines, Y: Y, X: X, path: path, grid: grid, yTicks: yTicks, xTicks: xTicks, hits: hits, hasHover: h >= 0 && h < n, hv: hv };
+  }
+  renderVals() {
+    var self = this, s = this.state, D = this.D, ink = '#0B0B0B', lime = '#D4EE36', Y = D.years, last = Y.length - 1;
+    var ETFS = {
+      ishares: { short: 'iShares MSCI ACWI', name: 'iShares MSCI ACWI UCITS ETF Acc', isin: 'IE00B6R52259', ter: '0,20%', idx: 'MSCI ACWI · grandi + medie · circa 85% del mercato · 1.645 titoli · 33,3 mld €' },
+      vanguard: { short: 'Vanguard FTSE All-World', name: 'Vanguard FTSE All-World UCITS ETF', isin: 'IE00BK5BQT80 / IE00B3RBWM25', ter: '0,14%', idx: 'FTSE All-World · grandi + medie · circa 90–95% del mercato · 3.755 titoli · 76,9 mld €' },
+      spdrimi: { short: 'SPDR MSCI ACWI IMI', name: 'SPDR MSCI ACWI IMI UCITS ETF', isin: 'IE00B3YLTY66', ter: '0,17%', idx: 'MSCI ACWI IMI · grandi + medie + piccole · circa 99% del mercato · 5.981 titoli · 8,1 mld €' }
+    };
+    var E = D.etf[s.etf], first = E.findIndex(function (v) { return v !== null; });
+    var chip = function (on) { return 'font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;border:1px solid ' + (on ? ink : '#D6D6D4') + ';background:' + (on ? lime : '#FFFFFF') + ';color:' + ink; };
+    var seg = function (on) { return 'padding:9px 14px;border-radius:9px;border:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:' + ink + ';background:' + (on ? lime : 'transparent') + ';box-shadow:' + (on ? 'inset 0 0 0 1px ' + ink : 'none'); };
+    var etfChips = Object.keys(ETFS).map(function (k) { var f = D.etf[k].findIndex(function (v) { return v !== null; });
+      return { label: ETFS[k].short + ' · dal ' + Y[f], title: ETFS[k].name + ' · ' + ETFS[k].isin + ' · TER ' + ETFS[k].ter, on: s.etf === k, style: chip(s.etf === k), pick: function () { self.setState({ etf: k, h1: -1 }); } }; });
+    var WINS = { w1225: ['2012–2025', 2012, 2025], w1425: ['2014–2025', 2014, 2025], w10: ['Ultimi 10 anni', 2016, 2025], w5: ['Ultimi 5 anni', 2021, 2025] };
+    var winChips = Object.keys(WINS).map(function (k) { return { label: WINS[k][0], style: chip(s.win === k), pick: function () { self.setState({ win: k }); } }; });
+    var w = WINS[s.win], i0 = Math.max(Y.indexOf(w[1]), first), i1 = Y.indexOf(w[2]);
+    var cut = Y[i0] > w[1];
+    if (i0 > i1) { i0 = first; i1 = last; }
+    var fund = s.gross ? D.fundGross : D.fundNet, bench = s.gross ? D.benchGross : D.benchNet;
+    var cF = this.cagr(D.fundGross, i0, i1), cE = this.cagr(E, i0, i1), cB = this.cagr(D.benchGross, i0, i1), cR = this.cagr(D.rebuilt, i0, i1);
+    var per = Y[i0] + '–' + Y[i1];
+    var tiles = [
+      { cap: 'Fondo, prima dell’imposta', val: this.pct(cF), sub: 'media annua ' + per + ' · dopo l’imposta ' + this.pct(this.cagr(D.fundNet, i0, i1)), dark: false },
+      { cap: 'Benchmark pubblicato', val: this.pct(cB), sub: 'prima dell’imposta · ricostruito 45/45/10: ' + this.pct(cR), dark: false },
+      { cap: ETFS[s.etf].short, val: this.pct(cE), sub: 'media annua ' + per + ' · TER ' + ETFS[s.etf].ter, dark: false },
+      { cap: 'Differenziale fondo − ETF', val: this.pts(cF - cE).replace(' punti', ''), sub: 'punti l’anno · ' + per, dark: true } ].map(function (t) {
+        return { cap: t.cap, val: t.val, sub: t.sub, box: 'border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0;' + (t.dark ? 'background:#0B0B0B;color:' + lime + ';border:1px solid #0B0B0B' : 'background:#F7F7F5;border:1px solid #E6E6E3'),
+          capStyle: 'font-size:12.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:' + (t.dark ? '#B9BCC0' : '#3A3D42'), subStyle: 'font-size:13px;line-height:1.5;color:' + (t.dark ? '#D9DBDE' : '#5C6168') }; });
+    // chart 1
+    var c0 = first, c1n = ['Fondo', 'Benchmark', ETFS[s.etf].short], c1c = ['#3A3D42', '#7C3AED', '#2563EB'];
+    var ch1 = this.chart([fund, bench, E], c0, last, 340, 'h1', c1n, c1c);
+    var gapPath = (function () { var a = ch1.lines[2], b = ch1.lines[0], f = a.map(function (v, k) { return (k ? 'L' : 'M') + ch1.X(k).toFixed(1) + ' ' + ch1.Y(v).toFixed(1); }).join(' '); for (var k = b.length - 1; k >= 0; k--) f += ' L' + ch1.X(k).toFixed(1) + ' ' + ch1.Y(b[k]).toFixed(1); return f + ' Z'; })();
+    var endF = ch1.lines[0][ch1.lines[0].length - 1], endE = ch1.lines[2][ch1.lines[2].length - 1], endB = ch1.lines[1][ch1.lines[1].length - 1];
+    var fmt0 = function (v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(v) + ' €'; };
+    // chart 2 (always from 2012)
+    var c2n = ['MSCI World', 'MSCI Europe', 'Liquidità', 'Ricostruito', 'Pubblicato'], c2c = ['#0E7490', '#B45309', '#9A9EA3', '#0B0B0B', '#7C3AED'];
+    var ch2 = this.chart([D.world, D.europe, D.cash, D.rebuilt, D.benchGross], 0, last, 320, 'h2', c2n, c2c);
+    var e2 = ch2.lines.map(function (l) { return l[l.length - 1]; });
+    // bars
+    var diffs = Y.map(function (y, i) { var b = s.vs === 'etf' ? E[i] : D.benchGross[i]; return b === null ? null : D.fundGross[i] - b; });
+    var maxAbs = Math.max(0.05, Math.max.apply(null, diffs.filter(function (v) { return v !== null; }).map(Math.abs)));
+    var mid = 50;
+    var bars = Y.map(function (y, i) { var d = diffs[i], inWin = i >= i0 && i <= i1;
+      if (d === null) return { year: String(y).slice(2) + (y === 2026 ? '*' : ''), val: 'n.d.', title: y + ': ETF non disponibile', bar: 'display:none', lab: 'position:absolute;left:0;right:0;text-align:center;font-size:10.5px;color:#9A9EA3;top:calc(' + mid + '% - 8px)' };
+      var hgt = Math.abs(d) / maxAbs * 46, col = d >= 0 ? '#15803D' : '#B91C1C';
+      return { year: String(y).slice(2) + (y === 2026 ? '*' : ''), val: (d > 0 ? '+' : '') + (d * 100).toLocaleString('it-IT', { maximumFractionDigits: 1, minimumFractionDigits: 1 }), title: y + ': fondo ' + self.pct(D.fundGross[i]) + ' contro ' + self.pct(s.vs === 'etf' ? E[i] : D.benchGross[i]),
+        bar: 'position:absolute;left:12%;right:12%;border-radius:4px;background:' + col + ';opacity:' + (inWin ? 1 : 0.35) + ';' + (d >= 0 ? 'bottom:' + mid + '%;height:' + hgt + '%' : 'top:' + mid + '%;height:' + hgt + '%'),
+        lab: 'position:absolute;left:-6px;right:-6px;text-align:center;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums;color:' + col + ';' + (d >= 0 ? 'bottom:calc(' + (mid + hgt) + '% + 2px)' : 'top:calc(' + (mid + hgt) + '% + 2px)') }; });
+    // waterfall
+    var d1 = cR - cE, d2 = cB - cR, d3 = cF - cB, tot = cF - cE, mx = Math.max(Math.abs(d1), Math.abs(d2), Math.abs(d3), Math.abs(tot), 0.001);
+    var wfRow = function (name, v, strong) { var wpc = Math.abs(v) / mx * 100, col = v >= 0 ? '#15803D' : '#B91C1C';
+      return { name: name, val: self.pts(v), nameStyle: strong ? 'font-weight:700' : 'color:#26282B', bar: 'position:absolute;top:0;bottom:0;right:0;width:' + wpc.toFixed(1) + '%;border-radius:6px;background:' + (strong ? ink : col) }; };
+    var wf = [wfRow('Pesi del benchmark (Europa 45%, liquidità 10%, niente emergenti) contro ' + ETFS[s.etf].short, d1), wfRow('Calcolo del benchmark pubblicato contro il ricostruito (indici senza dividendi?)', d2), wfRow('Gestore e costi contro il benchmark pubblicato', d3), wfRow('Totale: fondo prima dell’imposta contro ETF', tot, true)];
+    // stats
+    var sel = []; for (var i = i0; i <= i1; i++) sel.push(D.fundGross[i] - E[i]);
+    var nS = sel.length, mean = sel.reduce(function (a, b) { return a + b; }, 0) / nS, srt = sel.slice().sort(function (a, b) { return a - b; });
+    var med = nS % 2 ? srt[(nS - 1) / 2] : (srt[nS / 2 - 1] + srt[nS / 2]) / 2, sd = nS > 1 ? Math.sqrt(sel.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (nS - 1)) : 0, se = sd / Math.sqrt(nS), pos = sel.filter(function (v) { return v > 0; }).length;
+    var stats = [{ cap: 'Media', val: this.pct(mean, 2), sub: 'differenza media dei singoli anni' }, { cap: 'Mediana', val: this.pct(med, 2), sub: 'metà degli anni sopra, metà sotto' }, { cap: 'Deviazione standard', val: this.pct(sd, 2), sub: 'quanto varia da un anno all’altro' },
+      { cap: 'Intervallo al 95%', val: this.pct(mean - 1.96 * se, 1) + ' / ' + this.pct(mean + 1.96 * se, 1), sub: 'dove sta la media vera, con il 95% di probabilità' }, { cap: 'Anni migliori dell’ETF', val: pos + ' su ' + nS, sub: per }];
+    // table
+    var cols = [['year', 'Anno', 'Anno'], ['fundNet', 'Fondo netto', 'Rendimento pubblicato, dopo l’imposta annua'], ['fundGross', 'Fondo lordo', 'Prima dell’imposta annua'], ['benchGross', 'Bench. pubbl.', 'Benchmark pubblicato, prima dell’imposta'], ['rebuilt', 'Ricostruito', '45% World + 45% Europe + 10% €STR'], ['world', 'MSCI World', 'iShares Core MSCI World'], ['europe', 'MSCI Europe', 'iShares Core MSCI Europe'], ['cash', 'Liquidità', 'Xtrackers EUR Overnight Rate Swap'], ['etf', ETFS[s.etf].short, ETFS[s.etf].name], ['diff', 'Fondo − ETF', 'Fondo lordo meno ETF, in punti']];
+    var val = function (k, i) { return k === 'year' ? Y[i] : k === 'etf' ? E[i] : k === 'diff' ? (E[i] === null ? null : D.fundGross[i] - E[i]) : D[k][i]; };
+    var idx = Y.map(function (y, i) { return i; }).sort(function (a, b) { var va = val(s.sort, a), vb = val(s.sort, b); if (va === null) return 1; if (vb === null) return -1; return (va - vb) * s.dir; });
+    var trows = idx.map(function (i) { return { cells: cols.map(function (c) { var v = val(c[0], i), inW = i >= i0 && i <= i1;
+      if (c[0] === 'year') return { v: Y[i] + (Y[i] === 2026 ? '*' : ''), style: 'font-weight:600' + (inW ? ';box-shadow:inset 4px 0 0 ' + lime : '') };
+      var st = ''; if (c[0] === 'diff' && v !== null) st = 'font-weight:700;color:' + (v >= 0 ? '#15803D' : '#B91C1C'); if (c[0] === 'etf') st = 'font-weight:600;color:#2563EB';
+      return { v: c[0] === 'diff' ? (v === null ? 'n.d.' : (v > 0 ? '+' : '') + (v * 100).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 })) : self.pct(v), style: st }; }) }; });
+    return {
+      etfChips: etfChips, winChips: winChips, etfShort: ETFS[s.etf].short,
+      etfInfo: ETFS[s.etf].name + ' · ' + ETFS[s.etf].isin + ' · TER ' + ETFS[s.etf].ter + ' · ' + ETFS[s.etf].idx,
+      winNote: cut ? 'L’ETF scelto ha dati dal ' + Y[first] + ': le statistiche partono da lì (' + per + ').' : 'Statistiche calcolate sul ' + per + '.',
+      tiles: tiles,
+      c1Title: '100 € a fine ' + (Y[c0] - 1) + ': fondo, benchmark e ' + ETFS[s.etf].short,
+      c1Pre: 'A fine agosto 2026 il fondo vale ' + fmt0(endF) + (s.gross ? ' prima dell’imposta' : ' dopo l’imposta') + ', il benchmark ' + fmt0(endB) + ', l’ETF ' + fmt0(endE) + ': ', c1Mark: fmt0(endE - endF) + (endE >= endF ? ' in più con l’ETF' : ' in meno con l’ETF'), c1Post: '.',
+      c1: { grid: ch1.grid, l0: ch1.path(ch1.lines[0]), l1: ch1.path(ch1.lines[1]), l2: ch1.path(ch1.lines[2]), gap: gapPath, yTicks: ch1.yTicks, xTicks: ch1.xTicks, hits: ch1.hits, hasHover: ch1.hasHover, hv: ch1.hv },
+      leave1: function () { self.setState({ h1: -1 }); }, leave2: function () { self.setState({ h2: -1 }); },
+      isGross: s.gross, isNet: !s.gross, segGross: seg(s.gross), segNet: seg(!s.gross), pickGross: function () { self.setState({ gross: true }); }, pickNet: function () { self.setState({ gross: false }); },
+      c2Text: '100 € a fine 2011 diventano ' + fmt0(e2[0]) + ' nel MSCI World, ' + fmt0(e2[1]) + ' nel MSCI Europe e ' + fmt0(e2[2]) + ' in liquidità. Mescolati 45/45/10 fanno ' + fmt0(e2[3]) + '; il benchmark pubblicato, prima dell’imposta, si ferma a ' + fmt0(e2[4]) + '.',
+      c2: { grid: ch2.grid, l0: ch2.path(ch2.lines[0]), l1: ch2.path(ch2.lines[1]), l2: ch2.path(ch2.lines[2]), l3: ch2.path(ch2.lines[3]), l4: ch2.path(ch2.lines[4]), yTicks: ch2.yTicks, xTicks: ch2.xTicks, hits: ch2.hits, hasHover: ch2.hasHover, hv: ch2.hv },
+      isVsEtf: s.vs === 'etf', isVsBench: s.vs === 'bench', segVsEtf: seg(s.vs === 'etf'), segVsBench: seg(s.vs === 'bench'), pickVsEtf: function () { self.setState({ vs: 'etf' }); }, pickVsBench: function () { self.setState({ vs: 'bench' }); },
+      barsNote: 'Punti di rendimento in più o in meno del fondo, prima dell’imposta, contro ' + (s.vs === 'etf' ? ETFS[s.etf].short : 'il benchmark pubblicato') + '. Le barre piene sono gli anni del periodo scelto.',
+      zeroLine: 'position:absolute;left:0;right:0;top:' + mid + '%;height:1px;background:#0B0B0B',
+      bars: bars,
+      wfNote: 'Medie annue ' + per + ', in punti l’anno. Le tre voci sommate danno il totale.',
+      wf: wf,
+      statNote: 'Differenza tra fondo, prima dell’imposta, e ' + ETFS[s.etf].short + ', anno per anno, ' + per + ' (' + nS + ' anni).',
+      stats: stats,
+      cols: cols.map(function (c) { return { label: c[1] + (s.sort === c[0] ? (s.dir > 0 ? ' ▲' : ' ▼') : ''), title: c[2], sort: function () { self.setState(self.state.sort === c[0] ? { dir: -self.state.dir } : { sort: c[0], dir: c[0] === 'year' ? 1 : -1 }); } }; }),
+      trows: trows
+    };
+  }
+}
+</script>
+</body>
+</html>

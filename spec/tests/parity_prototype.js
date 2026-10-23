@@ -1,0 +1,12 @@
+const fs=require('fs');const s=fs.readFileSync(process.argv[2],'utf8');const m=s.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/);
+global.window={localStorage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}};
+global.DCLogic=class{constructor(p){this.props=p||{}}setState(o){Object.assign(this.state,o)}};
+eval(m[1]+';global.C=Component');const c=new C({});
+c.state.delta=-0.05808330715699661;
+const out={};
+const run=(over,d,h,mode)=>{Object.assign(c.state,over);const p=c.params();const rows=c.flows(p);const n=rows.length;return c.sim(p,rows,d===undefined?p.delta:d,h||n,mode||p.mode).map(r=>Math.round(r.tot*100)/100)};
+out.pens=run({});out.d0=run({},0);out.r10=run({},undefined,10,'Riscatto');
+out.fix=run({savMode:'fix',saving:3000});out.fixLow=run({savMode:'fix',saving:200});
+out.ral90=run({savMode:'max',ral:90000});out.ral20=run({ral:20000});
+const p=c.params(); c.state.ral=45000; out.tau=c.marg(c.params());
+console.log(JSON.stringify(out));
