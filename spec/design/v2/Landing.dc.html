@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>PAC o Fondo: simulatore</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F2}
+.lp{font-family:Onest,system-ui,sans-serif;color:#0B0B0B;letter-spacing:.2px}
+.lp ::selection{background:#D4EE36;color:#0B0B0B}
+.lp a{color:inherit}
+.mark{background:linear-gradient(180deg,transparent 12%,#D4EE36 12% 88%,transparent 88%);padding:0 6px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cap{font-size:12.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:#3A3D42;display:inline-flex;align-items:center;gap:8px}
+.val{background:#FFFFFF;border:1px solid #D6D6D4;border-radius:12px;padding:6px 12px;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:#F7F7F5;border:1px solid #E6E6E3;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.ticks{display:flex;justify-content:space-between;font-size:12.5px;color:#5C6168;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;padding:14px 22px;border:none}
+.btn.dark{background:#0B0B0B;color:#FFFFFF}
+.btn.dark:hover{background:#2A2A2A}
+.btn.lime{background:#D4EE36;color:#0B0B0B}
+.btn.lime:hover{background:#C6E21F}
+.btn.ghost{background:#FFFFFF;color:#0B0B0B;border:1px solid #D6D6D4;padding:9px 14px;font-size:14px;border-radius:12px}
+.btn.ghost:hover{border-color:#0B0B0B}
+.num{width:100%;box-sizing:border-box;background:#FFFFFF;border:1px solid #D6D6D4;border-radius:12px;padding:10px 12px;font:inherit;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.num:focus{outline:3px solid #D4EE36;border-color:#0B0B0B}
+input[type=range].r{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;outline:none;margin:8px 0}
+input[type=range].r::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#FFFFFF;border:3px solid #0B0B0B;cursor:pointer}
+input[type=range].r::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#FFFFFF;border:3px solid #0B0B0B;cursor:pointer}
+input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4EE36}
+.tip{position:relative;display:inline-flex}
+.tip .bubble{display:none;position:absolute;z-index:20;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:280px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px}
+.tip:hover .bubble,.tip:focus-within .bubble{display:block}
+.ib{width:18px;height:18px;border-radius:99px;border:1px solid #9A9EA3;background:#FFFFFF;font-size:10.5px;font-weight:700;color:#3A3D42;cursor:help;padding:0;line-height:16px}
+.drop:hover{border-color:#0B0B0B;background:#FFFFFF}
+.tab:hover{border-color:#0B0B0B}
+.zone{flex:1}
+@media (max-width:900px){.g3{grid-template-columns:1fr !important}.g2{grid-template-columns:1fr !important}.sumrow{display:none !important}.h1{font-size:36px !important}}
+</style>
+</helmet>
+<div class="lp" style="min-height: 100vh; background: #F4F4F2">
+
+  <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo
+  </div>
+
+  <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
+    <nav style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <span class="tip"><button type="button" onClick="{{ saveData }}" style="{{ saveStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"></path><path d="M8 3v6h8V3"></path><path d="M8 21v-7h8v7"></path></svg>{{ saveLabel }}</button><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">Salva i dati inseriti nella memoria di questo browser (localStorage, non cookie). Restano solo su questo dispositivo, non vengono inviati a nessuno, e al prossimo accesso ritrovi tutto com’era.</span></span>
+      <span class="tip"><button type="button" onClick="{{ resetData }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">Torna al profilo d’esempio e cancella anche i dati salvati in questo browser.</span></span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2DF">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+        100% locale
+      </span>
+      <a href="Storico.dc.html" class="btn ghost">Storico</a>
+      <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+    </nav>
+  </header>
+
+  <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
+
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
+      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
+        <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px; width: 759px">Simulatore strategie <span style="position: relative; display: inline-block"><button type="button" onClick="{{ toggleEtfMenu }}" aria-expanded="{{ etfMenu }}" aria-haspopup="listbox" title="Scegli l'ETF del PAC" style="font: inherit; letter-spacing: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline dotted 3px; text-underline-offset: 9px">PAC ETF globale<span aria-hidden="true" style="font-size: 24px; margin-left: 8px; vertical-align: middle; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 10px; background: #D4EE36; border: 1.5px solid #0B0B0B">▾</span></button><sc-if value="{{ etfMenu }}" hint-placeholder-val="{{ false }}"><span role="listbox" aria-label="ETF del PAC" style="position: absolute; left: 0; top: calc(100% + 10px); z-index: 30; width: 480px; display: flex; flex-direction: column; gap: 6px; padding: 8px; background: #FFFFFF; border: 1.5px solid #0B0B0B; border-radius: 18px; box-shadow: 0 16px 40px rgba(11,11,11,.16); font-size: 14px; letter-spacing: .2px; line-height: 1.4; font-weight: 400"><sc-for list="{{ etfOpts }}" as="o" hint-placeholder-count="4"><button type="button" role="option" aria-selected="{{ o.on }}" onClick="{{ o.pick }}" style="{{ o.style }}"><span style="display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 15px"><span>{{ o.name }}</span><span style="white-space: nowrap">TER {{ o.ter }}</span></span><span style="font-size: 12px; color: #5C6168">{{ o.isin }}</span><span style="display: grid; grid-template-columns: 86px 1fr; gap: 2px 10px; font-size: 13px; line-height: 1.45"><sc-for list="{{ o.facts }}" as="f" hint-placeholder-count="6"><span style="color: #5C6168">{{ f.k }}</span><span style="color: #0B0B0B; font-weight: 500">{{ f.v }}</span></sc-for></span></button></sc-for></span></sc-if></span> vs <span class="mark">Fondo Pensione IBM</span></h1>
+        <span style="display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; align-self: flex-start; padding: 8px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; color: #26282B"><span class="cap">ETF del PAC</span><strong>{{ etfName }}</strong><span>{{ etfIsin }} · TER {{ etfTer }}</span><span style="color: #5C6168">usato in tutta la simulazione</span></span>
+        <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Sei sezioni, ognuna si può saltare. Senza i tuoi dati usa un profilo d'esempio con dati verosimili.<br>SOLO per gli iscritti FPDDI IBM <span class="mark" style="color: #0B0B0B; font-weight: 600">a comparto Azionario</span>.</p>
+      </div>
+      
+    </section>
+
+    
+
+    <!-- 0 · AVVERTENZE -->
+    <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+      <sc-for list="{{ topCards }}" as="c" hint-placeholder-count="3">
+        <div style="{{ c.box }}">
+          <span style="display: flex; align-items: center; gap: 10px"><span style="{{ c.num }}">{{ c.n }}</span><span style="font-size: 18px; font-weight: 600; letter-spacing: -.2px">{{ c.name }}</span></span>
+          <span style="{{ c.descStyle }}">{{ c.desc }}</span>
+        </div>
+      </sc-for>
+    </div><nav aria-label="Sezioni" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="7">
+        <button type="button" class="tab" onClick="{{ t.go }}" aria-current="{{ t.current }}" style="{{ t.style }}">
+          <span style="{{ t.numStyle }}">{{ t.mark }}</span>
+          <span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </nav><section style="{{ sec0.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec0.num }}">{{ sec0.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Prima di iniziare</span><span style="font-size: 12.5px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: #D4EE36">Da leggere</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Chi siamo, cosa fa questo strumento e cosa non fa</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">Indipendente <span style="color: #9A9EA3">·</span> Locale <span style="color: #9A9EA3">·</span> Non è consulenza</span>
+        <button type="button" class="btn ghost" onClick="{{ sec0.toggle }}" aria-expanded="{{ sec0.open }}">{{ sec0.btn }}</button>
+      </div>
+      <sc-if value="{{ sec0.open }}" hint-placeholder-val="{{ true }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+            <div class="panel"><span class="cap">Indipendente</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">Non è uno strumento del Fondo Pensione per i Dipendenti e Dirigenti IBM, né di IBM, né di un gestore o di un intermediario. Non vende nulla e non riceve commissioni.</span></div>
+            <div class="panel"><span class="cap">I tuoi dati restano qui</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">Calcolo e lettura del file avvengono nel tuo browser. Nessun dato viene inviato, nessun account, nessun tracciamento. Chiudendo la pagina tutto si cancella.</span></div>
+            <div class="panel"><span class="cap">Non è consulenza</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">È una simulazione informativa su dati storici pubblicati e ipotesi che puoi cambiare. I rendimenti passati non garantiscono quelli futuri. Le norme fiscali possono cambiare.</span></div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="font-size: 14px; color: #3A3D42">Prima di decidere verifica sempre i documenti ufficiali del fondo e, se serve, un consulente abilitato.</span>
+            <span style="display: flex; gap: 10px; flex-wrap: wrap">
+              <button type="button" class="btn ghost" onClick="{{ skipAll }}">Mostrami subito l'esempio</button>
+              <button type="button" class="btn dark" onClick="{{ sec0.next }}">Ho capito, iniziamo <span aria-hidden="true">→</span></button>
+            </span>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 1 · ORIZZONTE -->
+    <section style="{{ sec1.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec1.num }}">{{ sec1.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Età e orizzonte</span><span style="{{ sec1.badgeStyle }}">{{ sec1.badge }}</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Quando esci dal fondo decide quanti anni di versamenti simuliamo</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">{{ sum1 }}</span>
+        <button type="button" class="btn ghost" onClick="{{ sec1.toggle }}" aria-expanded="{{ sec1.open }}">{{ sec1.btn }}</button>
+      </div>
+      <sc-if value="{{ sec1.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Anno di nascita</span><span class="val">{{ birth }}</span></span>
+              <input class="r" type="range" min="1955" max="2005" step="1" value="{{ birth }}" onInput="{{ setBirth }}" aria-label="Anno di nascita" style="{{ trBirth }}">
+              <span class="ticks"><span>1955</span><span>1980</span><span>2005</span></span>
+              <span class="chips"><sc-for list="{{ chBirth }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for></span>
+            </div>
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Età di uscita</span><span class="val">{{ exitAge }} anni</span></span>
+              <input class="r" type="range" min="45" max="72" step="1" value="{{ exitAge }}" onInput="{{ setExitAge }}" aria-label="Età di uscita" style="{{ trExit }}">
+              <span class="ticks"><span>45</span><span>67 = vecchiaia</span><span>72</span></span>
+              <span class="cap" style="margin-top: 6px">Come uscirai</span>
+              <div role="radiogroup" aria-label="Modalità di uscita" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
+                <button type="button" role="radio" aria-checked="{{ isPens }}" onClick="{{ pickPens }}" style="{{ segPens }}">Pensione 15→9%</button>
+                <button type="button" role="radio" aria-checked="{{ isRisc }}" onClick="{{ pickRisc }}" style="{{ segRisc }}">Riscatto 23%</button>
+              </div>
+            </div>
+            <div class="panel" style="background: #0B0B0B; border-color: #0B0B0B; color: #F4F4F2; justify-content: space-between">
+              <span class="cap" style="color: #B9BCC0">Uscita prevista</span>
+              <span style="font-size: 56px; font-weight: 600; letter-spacing: -2px; line-height: 1; font-variant-numeric: tabular-nums">{{ exitYear }}</span>
+              <span style="font-size: 14.5px; color: #D9DBDE; line-height: 1.5">{{ years }} anni di versamenti simulati, dal 2027. Se pensi di uscire prima, scegli il riscatto sotto l'età di uscita.</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="font-size: 14px; color: #3A3D42">Prima adesione a un fondo pensione: <strong>{{ joined }}</strong> · anni di iscrizione all'uscita: <strong>{{ seniority }}</strong></span>
+            <button type="button" class="btn dark" onClick="{{ sec1.next }}">Conferma e passa al tuo fondo <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 2 · IL TUO FONDO -->
+    <section style="{{ sec2.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec2.num }}">{{ sec2.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Il tuo fondo</span><span style="{{ sec2.badgeStyle }}">{{ sec2.badge }}</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Trascina l'estratto delle contribuzioni: posizione e contributi si compilano da soli</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">{{ sum2 }}</span>
+        <button type="button" class="btn ghost" onClick="{{ sec2.toggle }}" aria-expanded="{{ sec2.open }}">{{ sec2.btn }}</button>
+      </div>
+      <sc-if value="{{ sec2.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g2" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px">
+            <div class="panel" style="gap: 14px">
+              <span class="cap">Estratto contribuzioni (.xls)</span>
+              <label class="drop" style="flex: 1; min-height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 2px dashed #9A9EA3; border-radius: 16px; background: #F4F4F2; text-align: center; padding: 18px; cursor: pointer; position: relative">
+                <sc-if value="{{ noFile }}" hint-placeholder-val="{{ true }}">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M12 12v6M9 15l3-3 3 3"></path></svg>
+                  <span style="font-size: 16px; font-weight: 600">Trascina qui DettaglioOperazioni.xls</span>
+                  <span style="font-size: 13px; color: #5C6168">o fai clic · Area riservata › Posizione › Operazioni › Esporta</span>
+                </sc-if>
+                <sc-if value="{{ hasChecks }}" hint-placeholder-val="{{ false }}">
+                  <span style="width: 44px; height: 44px; border-radius: 14px; background: #D4EE36; border: 1.5px solid #0B0B0B; display: inline-flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B0B0B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+                  <span style="font-size: 20px; font-weight: 600; letter-spacing: -.3px">{{ importTitle }}</span>
+                  <span style="font-size: 13px; color: #5C6168">{{ importSub }}</span>
+                </sc-if>
+                <input type="file" accept=".xls,.html,.htm" onChange="{{ onFile }}" style="position: absolute; inset: 0; opacity: 0; cursor: pointer">
+              </label>
+              <sc-if value="{{ hasChecks }}" hint-placeholder-val="{{ false }}">
+                <a href="Versamenti.dc.html" class="btn dark" style="justify-content: center">Vedi i miei versamenti e il grafico <span aria-hidden="true">→</span></a>
+              </sc-if>
+              <span style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between">
+                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: #3A3D42"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Letto solo nel browser, mai salvato</span>
+                <button type="button" class="btn ghost" onClick="{{ useSample }}">Usa un file d'esempio</button>
+              </span>
+              <sc-if value="{{ fileErr }}" hint-placeholder-val="{{ false }}"><span style="padding: 10px 12px; border-radius: 12px; background: #FDECEC; color: #8A1C1C; font-size: 13.5px; font-weight: 600">{{ fileError }}</span></sc-if>
+            </div>
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Dati della posizione</span><span style="{{ srcBadge }}">{{ srcText }}</span></span>
+              <sc-if value="{{ hasChecks }}" hint-placeholder-val="{{ false }}">
+                <span style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{ checks }}" as="c" hint-placeholder-count="3"><span style="{{ c.style }}">{{ c.text }}</span></sc-for></span>
+              </sc-if>
+              <div class="g2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42">Posizione attuale (€)<input class="num" type="number" value="{{ pos }}" onChange="{{ setPos }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42">Anno di prima adesione<input class="num" type="number" value="{{ joined }}" onChange="{{ setJoined }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42">Tuo contributo minimo €/mese<input class="num" type="number" value="{{ minM }}" onChange="{{ setMin }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42">Contributo azienda €/mese<input class="num" type="number" value="{{ azM }}" onChange="{{ setAz }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42">TFR al fondo €/mese<input class="num" type="number" value="{{ tfrM }}" onChange="{{ setTfr }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3D42"><span style="display: flex; align-items: center; gap: 6px">Contributi non dedotti (€)
+                  <span class="tip"><button type="button" class="ib" aria-label="Cosa sono i contributi non dedotti">i</button><span class="bubble" role="tooltip">Chi ha iniziato a lavorare dopo il 2007 può dedurre fino a 2.650 € l'anno in più, dal 6° al 25° anno di iscrizione, per recuperare i contributi non dedotti nei primi 5 anni. Il residuo è nella Certificazione Unica, punto 419. Se non lo sai lascia 0.</span></span></span><input class="num" type="number" value="{{ recov }}" onChange="{{ setRecov }}" aria-label="Contributi non dedotti da recuperare in euro"></label>
+                <span style="grid-column: 1 / -1; font-size: 13px; color: #5C6168; line-height: 1.45">13 mensilità l'anno (dicembre doppio). Il contributo dell'azienda arriva solo se versi almeno il minimo: nello schema generale IBM Italia 2026 è il 2% della retribuzione lorda fino a 56.224 € e il 7% oltre (Nota informativa FPDDI). Con la tua RAL sono circa <strong>{{ minSugg }}</strong>. I non dedotti aumentano lo spazio deducibile fino a 7.950 € l'anno negli anni ammessi.</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="font-size: 14px; color: #3A3D42">Oggi nel fondo arrivano <strong>{{ yearlyIn }}</strong> l'anno tra te, l'azienda e il TFR</span>
+            <button type="button" class="btn dark" onClick="{{ sec2.next }}">Conferma e passa allo stipendio <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 3 · STIPENDIO E RISPARMIO -->
+    <section style="{{ sec3.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec3.num }}">{{ sec3.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Stipendio e risparmio</span><span style="{{ sec3.badgeStyle }}">{{ sec3.badge }}</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">La RAL fissa il rimborso IRPEF; il risparmio è uguale nei tre scenari</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">{{ sum3 }}</span>
+        <button type="button" class="btn ghost" onClick="{{ sec3.toggle }}" aria-expanded="{{ sec3.open }}">{{ sec3.btn }}</button>
+      </div>
+      <sc-if value="{{ sec3.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">RAL annua</span><span class="val">{{ ralTxt }}</span></span>
+              <input class="r" type="range" min="15000" max="150000" step="500" value="{{ ral }}" onInput="{{ setRal }}" aria-label="RAL annua" style="{{ trRal }}">
+              <span class="ticks"><span>15k</span><span>80k</span><span>150k</span></span>
+              <span class="chips"><sc-for list="{{ chRal }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for></span>
+            </div>
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Risparmio annuo</span><span class="val">{{ savingTxt }}</span></span>
+              <div role="radiogroup" aria-label="Risparmio annuo" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
+                <button type="button" role="radio" aria-checked="{{ savMax }}" onClick="{{ pickMax }}" style="{{ segMax }}">Deduzione massima</button>
+                <button type="button" role="radio" aria-checked="{{ savFix }}" onClick="{{ pickFix }}" style="{{ segFix }}">Importo fisso</button>
+              </div>
+              <sc-if value="{{ savFix }}" hint-placeholder-val="{{ false }}">
+                <input class="r" type="range" min="{{ savMinV }}" max="{{ savMaxV }}" step="50" value="{{ saving }}" onInput="{{ setSaving }}" aria-label="Importo annuo" style="{{ trSav }}">
+              </sc-if>
+              <span style="font-size: 13px; color: #5C6168; line-height: 1.45">{{ savNote }}</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: #3A3D42">Risparmio fiscale effettivo sulla deduzione massima <strong>{{ margTxt }}</strong> · ogni 100 € dedotti te ne restituiscono circa <strong>{{ margEuro }} €</strong> (IRPEF, detrazioni per lavoro dipendente, cuneo fiscale e addizionali 2026)</span>
+            <button type="button" class="btn dark" onClick="{{ sec3.next }}">Conferma e passa alle ipotesi <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 4 · IPOTESI -->
+    <section style="{{ sec4.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec4.num }}">{{ sec4.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Ipotesi di rendimento</span><span style="{{ sec4.badgeStyle }}">{{ sec4.badge }}</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Quanto renderà il fondo rispetto all'ETF: il dato che decide tutto</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">{{ sum4 }}</span>
+        <button type="button" class="btn ghost" onClick="{{ sec4.toggle }}" aria-expanded="{{ sec4.open }}">{{ sec4.btn }}</button>
+      </div>
+      <sc-if value="{{ sec4.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g2" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px">
+            <div class="panel">
+              <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Differenziale fondo − ETF, annuo</span><span class="val" style="font-size: 26px">{{ deltaTxt }}</span></span>
+              <input class="r" type="range" min="-12" max="3" step="0.1" value="{{ deltaPct }}" onInput="{{ setDelta }}" aria-label="Differenziale annuo fondo meno ETF in punti percentuali" style="{{ trDelta }}">
+              <span class="ticks"><span>−12: fondo molto peggiore</span><span>0: come l'ETF</span><span>+3</span></span>
+              <span class="chips"><sc-for list="{{ chDelta }}" as="c" hint-placeholder-count="5"><button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for></span>
+              <span style="padding: 12px 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E6E3; font-size: 13.5px; line-height: 1.5; color: #26282B">Dal 2012 al 2025 il comparto ha reso più dell'ETF globale solo 3 anni su 14. Media dei singoli anni −6,2 punti, con il 95% di probabilità tra −9,8 e −2,5.</span>
+              <a href="Storico.dc.html" class="btn dark" style="justify-content: center">Vedi lo storico completo: fondo, benchmark ed ETF <span aria-hidden="true">→</span></a>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <div class="panel">
+                <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Rendimento ETF atteso, prima del TER</span><span class="val">{{ etfTxt }}</span></span>
+                <input class="r" type="range" min="2" max="21" step="0.1" value="{{ etfPct }}" onInput="{{ setEtf }}" aria-label="Rendimento atteso dell'ETF" style="{{ trEtf }}">
+                <span class="chips"><sc-for list="{{ chEtf }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" style="{{ c.style }}" title="{{ c.title }}">{{ c.label }}</button></sc-for></span>
+                <span style="font-size: 12.5px; color: #5C6168; line-height: 1.5">{{ etfHistNote }}</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="font-size: 14px; color: #3A3D42">ETF dopo costi e bollo · fondo dopo costi, prima dell'imposta del 20% sui rendimenti</span>
+            <button type="button" class="btn dark" onClick="{{ sec4.next }}">Calcola il risultato <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 5 · RISULTATO -->
+    <section style="{{ sec5.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec5.num }}">{{ sec5.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Risultato e punti di pareggio</span><span style="font-size: 12.5px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: #0B0B0B; color: #D4EE36; font-variant-numeric: tabular-nums">{{ bestVal }}</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Capitale netto all'uscita, chi vince a ogni differenziale e per ogni anno di uscita</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 10px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums">
+          <sc-for list="{{ sum5 }}" as="s" hint-placeholder-count="3"><span style="{{ s.style }}">{{ s.text }}</span></sc-for>
+        </span>
+        <button type="button" class="btn ghost" onClick="{{ sec5.toggle }}" aria-expanded="{{ sec5.open }}">{{ sec5.btn }}</button>
+      </div>
+      <sc-if value="{{ sec5.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 24px">
+          <h2 aria-live="polite" style="margin: 0; font-size: 28px; line-height: 1.3; font-weight: 500; letter-spacing: -.5px">{{ headPre }}<span class="mark">{{ headWin }}</span>{{ headPost }}</h2>
+          <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+            <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
+              <div style="{{ c.box }}">
+                <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="display: inline-flex; align-items: center; gap: 10px"><span style="{{ c.tag }}">{{ c.n }}</span><span style="font-size: 15px; font-weight: 600">{{ c.name }}</span></span><span style="{{ c.badgeStyle }}">{{ c.badge }}</span></span>
+                <span style="font-size: 34px; font-weight: 600; letter-spacing: -1px; font-variant-numeric: tabular-nums">{{ c.total }}</span>
+                <span style="font-size: 13.5px; color: #5C6168; font-variant-numeric: tabular-nums">{{ c.real }} in euro di oggi</span>
+                <span style="font-size: 13.5px; color: #3A3D42; font-variant-numeric: tabular-nums">{{ c.split }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div class="g2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: stretch">
+            <div class="panel">
+              <span class="cap">Chi vince a ogni differenziale</span>
+              <div style="position: relative; padding-top: 18px">
+                <span style="{{ cursorStyle }}">{{ deltaTxt }}</span>
+                <div role="img" aria-label="{{ zoneLabel }}" style="display: flex; height: 22px; border-radius: 8px; overflow: hidden">
+                  <sc-for list="{{ zones }}" as="z" hint-placeholder-count="60"><div class="zone" title="{{ z.title }}" style="{{ z.style }}"></div></sc-for>
+                </div>
+              </div>
+              <span class="ticks"><span>−12%</span><span>−6%</span><span>0</span><span>+3%</span></span>
+              <span style="display: flex; flex-direction: column; gap: 6px">
+                <sc-for list="{{ breaks }}" as="b" hint-placeholder-count="3"><span style="font-size: 13.5px; line-height: 1.5; color: #26282B">{{ b }}</span></sc-for>
+              </span>
+            </div>
+            <div class="panel">
+              <span class="cap">Se esci nel… conviene</span>
+              <div role="img" aria-label="{{ stripLabel }}" style="display: flex; gap: 2px; height: 40px; margin-top: 18px">
+                <sc-for list="{{ strip }}" as="b" hint-placeholder-count="30"><div title="{{ b.title }}" style="{{ b.style }}"></div></sc-for>
+              </div>
+              <span class="ticks"><span>2027</span><span>prima dell'ultimo anno: riscatto 23%</span><span>{{ exitYear }}</span></span>
+              <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #2563EB"></span>1 · Minimo per l'azienda</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #15803D"></span>2 · Deduzione massima</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #C2410C"></span>3 · Solo TFR</span>
+              </span>
+            </div>
+
+            <div style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px; padding: 16px 20px; border-radius: 18px; background: #FFFFFF; border: 1.5px solid #0B0B0B">
+              <span class="cap" style="flex: 1 1 100%">Parametri dei grafici qui sotto</span>
+              <div class="g3" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; flex: 1 1 560px">
+                <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #3A3D42"><span style="display: flex; justify-content: space-between">Differenziale<span style="color: #0B0B0B">{{ deltaTxt }}</span></span><input class="r" type="range" min="-12" max="3" step="0.1" value="{{ deltaPct }}" onInput="{{ setDelta }}" style="{{ trDelta }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #3A3D42"><span style="display: flex; justify-content: space-between">Rendimento ETF<span style="color: #0B0B0B">{{ etfTxt }}</span></span><input class="r" type="range" min="2" max="21" step="0.1" value="{{ etfPct }}" onInput="{{ setEtf }}" style="{{ trEtf }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #3A3D42"><span style="display: flex; justify-content: space-between">Età di uscita<span style="color: #0B0B0B">{{ exitAge }} anni</span></span><input class="r" type="range" min="45" max="72" step="1" value="{{ exitAge }}" onInput="{{ setExitAge }}" style="{{ trExit }}"></label>
+                <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #3A3D42"><span style="display: flex; justify-content: space-between">RAL<span style="color: #0B0B0B">{{ ralTxt }}</span></span><input class="r" type="range" min="15000" max="150000" step="500" value="{{ ral }}" onInput="{{ setRal }}" style="{{ trRal }}"></label>
+              </div>
+              <div role="radiogroup" aria-label="Modalità di uscita" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px; flex: none">
+                <button type="button" role="radio" aria-checked="{{ isPens }}" onClick="{{ pickPens }}" style="{{ segPens }}">Pensione 15→9%</button>
+                <button type="button" role="radio" aria-checked="{{ isRisc }}" onClick="{{ pickRisc }}" style="{{ segRisc }}">Riscatto 23%</button>
+              </div>
+            </div>
+
+            <div class="panel" style="gap: 18px">
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <span class="cap">Per quanti anni conviene</span>
+                <span style="font-size: 15px; line-height: 1.55; color: #26282B">Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno, più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; clicca una casella per provare quell’uscita e quel differenziale.</span>
+              </div>
+              <span style="font-size: 13px; color: #5C6168">{{ hm.note }}</span>
+              <div style="display: flex; gap: 8px">
+                <div style="position: relative; width: 44px; flex: none; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+                  <sc-for list="{{ hm.yLab }}" as="t" hint-placeholder-count="6"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+                </div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+                  <div style="position: relative">
+                    <div role="img" aria-label="{{ hm.label }}" style="{{ hm.grid }}">
+                      <sc-for list="{{ hm.cells }}" as="c" hint-placeholder-count="120"><button type="button" title="{{ c.title }}" onClick="{{ c.pick }}" style="{{ c.style }}" aria-label="{{ c.title }}"></button></sc-for>
+                    </div>
+                    <span style="{{ hm.histLine }}"></span>
+                    <span style="{{ hm.histLab }}">storico fondo −5,8%</span>
+                    <span style="{{ hm.vLine }}"></span>
+                    <span style="{{ hm.hLine }}"></span>
+                    <span style="{{ hm.you }}">Tu sei qui</span>
+                  </div>
+                  <div style="position: relative; height: 16px; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+                    <sc-for list="{{ hm.xLab }}" as="t" hint-placeholder-count="8"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+                  </div>
+                  <span style="font-size: 12.5px; color: #5C6168; text-align: center">anno di uscita</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <span style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Capitale netto nei tre scenari e punti di pareggio</span>
+                  <span role="radiogroup" aria-label="Asse orizzontale" style="display: flex; gap: 4px; background: #ECECEA; padding: 3px; border-radius: 10px"><button type="button" role="radio" aria-checked="{{ lnIsTime }}" onClick="{{ pickLnTime }}" style="{{ segLnTime }}">Nel tempo</button><button type="button" role="radio" aria-checked="{{ lnIsDelta }}" onClick="{{ pickLnDelta }}" style="{{ segLnDelta }}">Al variare del differenziale</button></span></span>
+                <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ ln.text }}</span>
+              </div>
+              <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #2563EB"></span>1 · Minimo per l'azienda + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #15803D"></span>2 · Deduzione massima + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #C2410C"></span>3 · Solo TFR + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #D4EE36; border: 2px solid #0B0B0B"></span>pareggio</span>
+              </span>
+              <div style="display: flex; gap: 8px">
+                <div style="position: relative; width: 64px; flex: none; height: 320px; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
+                  <sc-for list="{{ ln.yLab }}" as="t" hint-placeholder-count="5"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
+                </div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+                  <div style="position: relative; height: 320px">
+                    <svg viewBox="0 0 1000 320" preserveAspectRatio="none" width="100%" height="320" role="img" aria-label="{{ ln.label }}" style="display: block; overflow: visible">
+                      <path d="{{ ln.grid }}" fill="none" stroke="#E2E2DF" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l0 }}" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l1 }}" fill="none" stroke="#15803D" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l2 }}" fill="none" stroke="#C2410C" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                    </svg>
+                    <span style="{{ ln.cur }}"></span>
+                    <span style="{{ ln.curLab }}">tu: {{ deltaTxt }}</span>
+                    <sc-for list="{{ ln.pts }}" as="x" hint-placeholder-count="3"><span style="{{ x.dot }}" title="{{ x.label }}"></span><span style="{{ x.lab }}">{{ x.label }}</span></sc-for>
+                  </div>
+                  <span class="ticks"><sc-for list="{{ ln.xt }}" as="t" hint-placeholder-count="6"><span>{{ t }}</span></sc-for></span>
+                  <span style="font-size: 12.5px; color: #5C6168; text-align: center">{{ ln.xAxis }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
+            <span style="font-size: 13.5px; color: #3A3D42">Stesso risparmio netto nei tre scenari · rimborso IRPEF reinvestito nel PAC · valori stimati, non garantiti</span>
+            <button type="button" class="btn lime" onClick="{{ sec5.next }}">Vedi assunzioni e fonti <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- 6 · ASSUNZIONI E FONTI -->
+    <section style="{{ sec6.box }}">
+      <div style="display: flex; align-items: center; gap: 20px; padding: 24px 28px">
+        <span style="{{ sec6.num }}">{{ sec6.mark }}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Assunzioni, fonti e avvertenze</span><span style="font-size: 12.5px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: #ECECEA">Verificabile</span></span>
+          <span style="font-size: 14.5px; color: #5C6168">Ogni numero ha una fonte; ogni ipotesi si può cambiare</span>
+        </div>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">40 parametri <span style="color: #9A9EA3">·</span> 10 assunzioni <span style="color: #9A9EA3">·</span> fonti citate</span>
+        <button type="button" class="btn ghost" onClick="{{ sec6.toggle }}" aria-expanded="{{ sec6.open }}">{{ sec6.btn }}</button>
+      </div>
+      <sc-if value="{{ sec6.open }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
+          <div class="g2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+            <div class="panel" style="gap: 10px">
+              <span class="cap">Parametri chiave</span>
+              <sc-for list="{{ keyParams }}" as="k" hint-placeholder-count="8">
+                <span style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #ECECEA; font-size: 13.5px">
+                  <span><span style="font-weight: 600">{{ k.name }}</span><span style="color: #5C6168"> · {{ k.src }}</span></span>
+                  <span style="font-weight: 600; font-variant-numeric: tabular-nums">{{ k.val }}</span>
+                </span>
+              </sc-for>
+              <a href="Fonti.dc.html" style="font-size: 13.5px; font-weight: 600">Tutti i 40 parametri con le fonti →</a>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <div class="panel" style="gap: 10px">
+                <span class="cap">Assunzioni del modello</span>
+                <span style="display: flex; flex-wrap: wrap; gap: 6px">
+                  <sc-for list="{{ assumptions }}" as="a" hint-placeholder-count="10">
+                    <span class="tip"><span tabindex="0" style="display: inline-block; padding: 6px 10px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 12.5px; cursor: help">{{ a.t }}</span><span class="bubble" role="tooltip">{{ a.d }}</span></span>
+                  </sc-for>
+                </span>
+              </div>
+              <div class="panel" style="gap: 8px; background: #FFFFFF">
+                <span class="cap">Avvertenze</span>
+                <span style="font-size: 13.5px; line-height: 1.55; color: #26282B">Simulazione a scopo informativo, non consulenza finanziaria, fiscale o previdenziale. Strumento indipendente, non affiliato a FPDDI, IBM o ai gestori citati. Rendimenti passati non garantiscono quelli futuri. Il modello tratta il capitale come interamente liquidabile e non simula la rendita. Verifica i documenti ufficiali del fondo.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+  </main>
+
+  <footer style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #5C6168">
+    <span>pac/fondo · strumento indipendente · calcolo 100% locale, nessun dato inviato</span>
+    <span>Dati storici: bilanci e pagine pubbliche di fondopensioneibm.it; prezzi ETF di fine mese</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: 0, done: [], birth: 1990, exitAge: 67, joined: 2015, ral: 45000, minM: 75, azM: 70, tfrM: 230, pos: 20000, base: 16000, recov: 0,
+      etfId: 'vanguard', etfMenu: false, lnMode: 'time', savMode: 'max', saving: 4000, delta: -0.0581, etf: 0.07, mode: 'Pensione', source: 'esempio', fileError: '', fileInfo: null, mine: {} };
+    this.KEYS = ['done', 'birth', 'exitAge', 'joined', 'ral', 'minM', 'azM', 'tfrM', 'pos', 'base', 'recov', 'etfId', 'savMode', 'saving', 'delta', 'etf', 'mode', 'source', 'fileInfo', 'mine', 'lnMode'];
+    this.DEF = JSON.parse(JSON.stringify(this.state));
+    this.state.savedAt = null; this.state.storeErr = false;
+    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) { var o = JSON.parse(raw), st = this.state; this.KEYS.forEach(function (k) { if (o.data && o.data[k] !== undefined) st[k] = o.data[k]; }); st.savedAt = o.at || null; st.open = -1; this.savedSnap = this.snapshot(); } } catch (e) { }
+  }
+  snapshot() { var s = this.state, d = {}; this.KEYS.forEach(function (k) { d[k] = s[k]; }); return JSON.stringify(d); }
+  fmtE(v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(v) + ' €'; }
+  fmtK(v) { return Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' mln €' : Math.round(v / 1000).toLocaleString('it-IT') + 'k €'; }
+  fmtP(v, d) { var s = (v * 100).toLocaleString('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }); return (v > 0 ? '+' : '') + s + '%'; }
+  params() { var s = this.state; return { birth: s.birth, exitAge: s.exitAge, joined: s.joined, ral: s.ral, minM: s.minM, azM: s.azM, tfrM: s.tfrM, pos: s.pos, base: s.base, recov: s.recov, saving: s.savMode === 'max' ? null : s.saving, delta: s.delta, etf: s.etf, ter: this.etfSel().ter, mode: s.mode }; }
+  minRal() { var r = this.state.ral; return 0.02 * Math.min(r, 56224) + 0.07 * Math.max(0, r - 56224); }
+  minFloor() { return Math.min(this.dedMax(), Math.ceil(Math.max(this.minRal(), this.state.minM * 13) / 50) * 50); }
+  dedMax() { var s = this.state; return Math.max(s.minM * 13, 5300 + Math.min(2650, s.recov) - s.azM * 13); }
+  etfList() { return [
+    { id: 'vanguard', name: 'Vanguard FTSE All-World UCITS ETF Acc', isin: 'IE00BK5BQT80', ter: 0.0014, facts: [['Indice', 'FTSE All-World'], ['Società', 'grandi + medie'], ['Copertura', 'circa 90–95% del mercato'], ['Titoli', '3.755'], ['Patrimonio', '76,9 mld €'], ['Storia', 'dal 07/2019 (classe a distribuzione dal 2012)']], hist: { y5: 0.1132, y10: 0.1211, all: 0.1315, since: '07/2019' } },
+    { id: 'spdrimi', name: 'SPDR MSCI ACWI IMI UCITS ETF', isin: 'IE00B3YLTY66', ter: 0.0017, facts: [['Indice', 'MSCI ACWI IMI'], ['Società', 'grandi + medie + piccole'], ['Copertura', 'circa 99% del mercato'], ['Titoli', '5.981'], ['Patrimonio', '8,1 mld €'], ['Storia', 'dal 05/2011']], hist: { y5: 0.1101, y10: 0.1174, all: 0.1212, since: '05/2011' } },
+    { id: 'ishares', name: 'iShares MSCI ACWI UCITS ETF Acc', isin: 'IE00B6R52259', ter: 0.0020, facts: [['Indice', 'MSCI ACWI'], ['Società', 'grandi + medie'], ['Copertura', 'circa 85% del mercato'], ['Titoli', '1.645'], ['Patrimonio', '33,3 mld €'], ['Storia', 'dal 10/2011']], hist: { y5: 0.1138, y10: 0.1210, all: 0.1268, since: '10/2011' } }]; }
+  etfSel() { var id = this.state.etfId, l = this.etfList(); return l.filter(function (e) { return e.id === id; })[0] || l[0]; }
+  // Fisco 2026: stesse formule di reference/model.py (docs/FORMULE.md §2)
+  prog(x, B) { var t = 0, lo = 0; for (var i = 0; i < B.length; i++) { var lim = B[i][0], top = lim === null ? x : Math.min(x, lim); if (top > lo) t += (top - lo) * B[i][1]; if (lim === null || x <= lim) break; lo = lim; } return t; }
+  taxInc(ral) { return ral - 0.0919 * ral - 0.01 * Math.max(0, ral - 56224); }
+  detr(r) { return r <= 15000 ? 1955 : r <= 28000 ? 1910 + 1190 * (28000 - r) / 13000 : r <= 50000 ? 1910 * (50000 - r) / 22000 : 0; }
+  taxTot(r) { var es = r <= 20000 ? (r <= 8500 ? 0.071 : r <= 15000 ? 0.053 : 0.048) * r : 0, ul = r > 20000 && r <= 32000 ? 1000 : r > 32000 && r <= 40000 ? 1000 * (40000 - r) / 8000 : 0, b = Math.max(0, r - es);
+    return Math.max(0, this.prog(b, [[28000, 0.23], [50000, 0.33], [null, 0.43]]) - this.detr(r) - ul) + this.prog(b, [[15000, 0.0123], [28000, 0.0158], [50000, 0.0172], [null, 0.0173]]) + 0.008 * b; }
+  taxSave(ral, d) { if (d <= 0) return 0; var r = this.taxInc(ral); return this.taxTot(r) - this.taxTot(r - d); }
+  marg(p) { var J0 = Math.max(p.minM * 13, 5300 + Math.min(2650, p.recov) - p.azM * 13); return this.taxSave(p.ral, J0) / J0; }
+  flows(p) {
+    var n = Math.max(1, p.birth + p.exitAge - 2027 + 1), H = p.recov, rows = [];
+    for (var k = 1; k <= n; k++) {
+      var y = 2026 + k, g = Math.pow(1.02, k - 1), E = p.minM * 13 * g, F = p.azM * 13 * g, G = p.tfrM * 13 * g;
+      var I = (y >= p.joined + 5 && y <= p.joined + 24) ? Math.min(2650, H) : 0;
+      var ry = p.ral * g, fl = Math.max(E, 0.02 * Math.min(ry, 56224) + 0.07 * Math.max(0, ry - 56224));
+      var J = Math.max(E, 5300 + I - F), K = p.saving === null ? J : Math.min(J, Math.max(fl, p.saving * g));
+      var N = Math.max(0, Math.min(E, 5300 - F)), O = this.taxSave(ry, N);
+      var S = Math.max(E, Math.min(J, K)), U = Math.max(0, Math.min(S, 5300 + I - F)), V = Math.max(0, U + F - 5300), W = this.taxSave(ry, U);
+      rows.push([{ pac: Math.max(0, K - E + O), fund: E + F + G, tax: N + F + G }, { pac: Math.max(0, K - S + W), fund: S + F + G, tax: U + F + G }, { pac: K, fund: G, tax: G }]);
+      H = Math.max(0, H - V);
+    }
+    return rows;
+  }
+  sim(p, rows, d, h, mode) {
+    var re = p.etf - p.ter, rn = (re + d) * 0.8, Y = 2026 + h, t;
+    t = mode === 'Riscatto' ? 0.23 : Math.max(0.09, 0.15 - 0.003 * Math.max(0, Y - p.joined - 15));
+    var out = [];
+    for (var s = 0; s < 3; s++) {
+      var F = p.pos, B = p.base, V = 0, C = 0;
+      for (var k = 0; k < h; k++) { var x = rows[k][s]; F = F * (1 + rn) + x.fund * Math.pow(1 + rn, 0.5); B += x.tax; V = (k > 0 ? V * (1 + re) * 0.998 : 0) + x.pac * Math.pow(1 + re, 0.5); C += x.pac; }
+      var tot = F - t * B + V - 0.26 * Math.max(0, V - C);
+      out.push({ tot: tot, real: tot / Math.pow(1.02, Y - 2026), fund: F - t * B, pac: V - 0.26 * Math.max(0, V - C) });
+    }
+    return out;
+  }
+  best(r) { var b = 0; for (var i = 1; i < 3; i++) if (r[i].tot > r[b].tot) b = i; return b; }
+  heat(p, rows, n) {
+    var self = this, s = this.state, colors = ['#2563EB', '#15803D', '#C2410C'], ink = '#0B0B0B', lime = '#D4EE36', R = 31, cells = [];
+    var dOf = function (k) { return 0.03 - 0.005 * k; }, fE = function (v) { return self.fmtK(v); };
+    for (var k = 0; k < R; k++) { for (var h = 1; h <= n; h++) { (function (k, h) { var d = dOf(k), md = h < n ? 'Riscatto' : p.mode, r = self.sim(p, rows, d, h, md), b = self.best(r);
+      var srt = [r[0].tot, r[1].tot, r[2].tot].sort(function (a, c) { return c - a; }), m = srt[0] > 0 ? (srt[0] - srt[1]) / srt[0] : 0, op = 0.3 + 0.7 * Math.min(1, m / 0.08);
+      cells.push({ title: 'Uscita nel ' + (2026 + h) + ', differenziale ' + self.fmtP(d, 1) + ': vince ' + (b + 1) + ' · 1 = ' + fE(r[0].tot) + ', 2 = ' + fE(r[1].tot) + ', 3 = ' + fE(r[2].tot),
+        style: 'display:block;border:none;padding:0;margin:0;cursor:pointer;height:10px;min-width:0;background:' + colors[b] + ';opacity:' + op.toFixed(2),
+        pick: function () { self.setState({ exitAge: Math.max(45, Math.min(72, 2026 + h - s.birth)), delta: Math.round(d * 1000) / 1000 }); } }); })(k, h); } }
+    var topOf = function (d) { return ((0.03 - d) / 0.005 + 0.5) / R * 100; }, leftOf = function (h) { return (h - 0.5) / n * 100; };
+    var yLab = [0.03, 0, -0.03, -0.06, -0.09, -0.12].map(function (d) { return { label: self.fmtP(d, 0), style: 'position:absolute;right:0;transform:translateY(-50%);top:' + topOf(d).toFixed(2) + '%' }; });
+    var xLab = [], stepY = n > 30 ? 5 : n > 12 ? 3 : 1; for (var h = 1; h <= n; h++) if (h === 1 || h === n || (2026 + h) % stepY === 0 && h > 2 && h < n - 1) xLab.push({ label: String(2026 + h), style: 'position:absolute;top:0;white-space:nowrap;transform:translateX(-50%);left:' + leftOf(h).toFixed(2) + '%' });
+    var dT = Math.max(-0.12, Math.min(0.03, s.delta)), hist = -0.0581;
+    return { cells: cells, yLab: yLab, xLab: xLab, grid: 'display:grid;gap:1px;background:#F7F7F5;border-radius:8px;overflow:hidden;grid-template-columns:repeat(' + n + ',minmax(0,1fr))',
+      label: 'Mappa: anni di uscita da ' + 2027 + ' a ' + (2026 + n) + ' e differenziale da +3% a −12%, colorata con lo scenario migliore',
+      note: n + ' anni di uscita · prima dell’ultimo anno uscita con riscatto 23%',
+      histLine: 'position:absolute;left:0;right:0;border-top:2px dashed ' + ink + ';pointer-events:none;top:' + topOf(hist).toFixed(2) + '%',
+      histLab: 'position:absolute;left:6px;transform:translateY(-120%);font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#FFFFFF;pointer-events:none;top:' + topOf(hist).toFixed(2) + '%',
+      vLine: 'position:absolute;top:0;bottom:0;width:0;border-left:2px solid ' + ink + ';pointer-events:none;left:' + leftOf(n).toFixed(2) + '%',
+      hLine: 'position:absolute;left:0;right:0;height:0;border-top:2px solid ' + ink + ';pointer-events:none;top:' + topOf(dT).toFixed(2) + '%',
+      you: 'position:absolute;transform:translate(calc(-100% - 8px),-50%);font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:8px;background:' + lime + ';border:1.5px solid ' + ink + ';white-space:nowrap;pointer-events:none;left:' + leftOf(n).toFixed(2) + '%;top:' + topOf(dT).toFixed(2) + '%' };
+  }
+  linesTime(p, rows, n) {
+    var self = this, ink = '#0B0B0B', lime = '#D4EE36', W = 1000, H = 320, d = p.delta, vals = [[], [], []];
+    for (var h = 1; h <= n; h++) { var r = this.sim(p, rows, d, h, p.mode); for (var j = 0; j < 3; j++) vals[j].push(r[j].tot); }
+    var all = vals[0].concat(vals[1], vals[2]), lo = Math.min(0, Math.min.apply(null, all)), hi = Math.max.apply(null, all);
+    var raw = (hi - lo) / 4 || 1, mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), step = [1, 2, 2.5, 5, 10].map(function (x) { return x * mag; }).filter(function (x) { return x >= raw; })[0];
+    var y0 = Math.floor(lo / step) * step, y1 = Math.ceil(hi / step) * step;
+    var X = function (k) { return n > 1 ? k / (n - 1) * W : W / 2; }, Y = function (v) { return H - (v - y0) / (y1 - y0) * H; };
+    var path = function (a) { return a.map(function (v, k) { return (k ? 'L' : 'M') + X(k).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' '); };
+    var grid = '', yLab = []; for (var v = y0; v <= y1 + 1e-6; v += step) { grid += 'M0 ' + Y(v).toFixed(1) + ' H1000 '; yLab.push({ label: Math.abs(v) < 1 ? '0 €' : this.fmtK(v), style: 'position:absolute;right:0;transform:translateY(-50%);top:' + (Y(v) / H * 100).toFixed(2) + '%' }); }
+    var pts = [], txt = [];
+    [[0, 1], [1, 2], [0, 2]].forEach(function (pr) { for (var k = 1; k < n; k++) { var a0 = vals[pr[0]][k - 1] - vals[pr[1]][k - 1], a1 = vals[pr[0]][k] - vals[pr[1]][k];
+      if (a0 === 0 || a0 * a1 < 0) { var t = a0 === 0 ? 0 : a0 / (a0 - a1), xk = k - 1 + t, yv = vals[pr[0]][k - 1] + (vals[pr[0]][k] - vals[pr[0]][k - 1]) * t, yr = Math.round(2027 + xk);
+        var lab = 'Pareggio ' + (pr[0] + 1) + ' = ' + (pr[1] + 1) + ' nel ' + yr, xp = X(xk) / W * 100, yp = Y(yv) / H * 100;
+        txt.push(lab + ' (' + self.fmtK(yv) + '): da lì in poi, tra le due, è meglio la ' + (a1 > 0 ? pr[0] + 1 : pr[1] + 1));
+        pts.push({ label: lab, dot: 'position:absolute;width:16px;height:16px;border-radius:50%;background:' + lime + ';border:2.5px solid ' + ink + ';box-sizing:border-box;transform:translate(-50%,-50%);left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%',
+          lab: 'position:absolute;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;background:' + ink + ';color:' + lime + ';white-space:nowrap;pointer-events:none;left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%;transform:translate(' + (xp > 70 ? 'calc(-100% - 12px)' : '12px') + ',' + (pts.length % 2 ? '8px' : 'calc(-100% - 8px)') + ')' }); } } });
+    var xt = []; for (var i = 0; i < 6; i++) xt.push(String(2027 + Math.round(i / 5 * (n - 1))));
+    return { l0: path(vals[0]), l1: path(vals[1]), l2: path(vals[2]), grid: grid, yLab: yLab, pts: pts.slice(0, 4), xt: xt, xAxis: 'anno di uscita',
+      cur: 'display:none', curLab: 'display:none',
+      label: 'Capitale netto nei tre scenari se esci in ciascun anno dal 2027 al ' + (2026 + n) + ', differenziale ' + this.fmtP(d, 1) + ', con i punti di pareggio',
+      text: 'Capitale netto se esci in quell’anno, con differenziale ' + this.fmtP(d, 1) + ' e uscita per ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. ' + (txt.length ? txt.join(' · ') + '.' : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.') };
+  }
+  lines(p, rows, n) {
+    var self = this, s = this.state, colors = ['#2563EB', '#15803D', '#C2410C'], ink = '#0B0B0B', lime = '#D4EE36', W = 1000, H = 320, N = 61;
+    var ds = [], vals = [[], [], []]; for (var i = 0; i < N; i++) { var d = -0.12 + i * 0.0025, r = this.sim(p, rows, d, n, p.mode); ds.push(d); for (var j = 0; j < 3; j++) vals[j].push(r[j].tot); }
+    var all = vals[0].concat(vals[1], vals[2]), lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+    var raw = (hi - lo) / 4, mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), step = [1, 2, 2.5, 5, 10].map(function (x) { return x * mag; }).filter(function (x) { return x >= raw; })[0];
+    var y0 = Math.floor(lo / step) * step, y1 = Math.ceil(hi / step) * step;
+    var X = function (d) { return (d + 0.12) / 0.15 * W; }, Y = function (v) { return H - (v - y0) / (y1 - y0) * H; };
+    var path = function (a) { return a.map(function (v, i) { return (i ? 'L' : 'M') + X(ds[i]).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' '); };
+    var grid = '', yLab = []; for (var v = y0; v <= y1 + 1e-6; v += step) { grid += 'M0 ' + Y(v).toFixed(1) + ' H1000 '; yLab.push({ label: Math.abs(v) < 1 ? '0 €' : this.fmtK(v), style: 'position:absolute;right:0;transform:translateY(-50%);top:' + (Y(v) / H * 100).toFixed(2) + '%' }); }
+    var pairs = [[0, 1], [1, 2], [0, 2]], pts = [], txt = [];
+    pairs.forEach(function (pr) { var be = self.breakeven(p, rows, pr[0], pr[1], n, p.mode);
+      if (typeof be === 'number' && be >= -0.12 && be <= 0.03) { var r = self.sim(p, rows, be, n, p.mode), v = r[pr[0]].tot, xp = X(be) / W * 100, yp = Y(v) / H * 100, lab = 'Pareggio ' + (pr[0] + 1) + ' = ' + (pr[1] + 1) + ' a ' + self.fmtP(be, 1);
+        txt.push(lab + ' (' + self.fmtK(v) + ')');
+        pts.push({ label: lab, dot: 'position:absolute;width:16px;height:16px;border-radius:50%;background:' + lime + ';border:2.5px solid ' + ink + ';box-sizing:border-box;transform:translate(-50%,-50%);left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%',
+          lab: 'position:absolute;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;background:' + ink + ';color:' + lime + ';white-space:nowrap;pointer-events:none;left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%;transform:translate(' + (xp > 70 ? 'calc(-100% - 12px)' : '12px') + ',' + (pts.length % 2 ? '8px' : 'calc(-100% - 8px)') + ')' }); } });
+    var cx = X(Math.max(-0.12, Math.min(0.03, s.delta))) / W * 100;
+    return { l0: path(vals[0]), l1: path(vals[1]), l2: path(vals[2]), grid: grid, yLab: yLab, pts: pts, xt: ['−12%', '−9%', '−6%', '−3%', '0', '+3%'], xAxis: 'differenziale annuo fondo − ETF',
+      cur: 'position:absolute;top:0;bottom:0;width:0;border-left:2px dashed ' + ink + ';pointer-events:none;left:' + cx.toFixed(2) + '%',
+      curLab: 'position:absolute;top:-2px;transform:translateX(-50%);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';border:1px solid ' + ink + ';white-space:nowrap;left:' + cx.toFixed(2) + '%',
+      label: 'Capitale netto all’uscita nel ' + (2026 + n) + ' nei tre scenari al variare del differenziale, con i punti di pareggio',
+      text: 'Uscita nel ' + (2026 + n) + ' con ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. Dove due linee si incrociano i due scenari danno lo stesso capitale: ' + (txt.length ? txt.join(' · ') + '.' : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.') };
+  }
+  breakeven(p, rows, a, b, h, mode) {
+    var self = this, f = function (d) { var r = self.sim(p, rows, d, h, mode); return r[a].tot - r[b].tot; };
+    var lo = -0.95, hi = 0.5; if (f(lo) > 0) return 'always'; if (f(hi) < 0) return 'never';
+    for (var i = 0; i < 50; i++) { var m = (lo + hi) / 2; if (f(m) > 0) hi = m; else lo = m; }
+    return (lo + hi) / 2;
+  }
+  onFileText(txt) {
+    try {
+      var doc = new DOMParser().parseFromString(txt, 'text/html');
+      var heads = Array.prototype.map.call(doc.querySelectorAll('thead th'), function (t) { return t.textContent.trim(); });
+      if (!heads.length) throw new Error('Nel file non c’è la tabella delle operazioni.');
+      var need = ['Tipo Operazione', 'Data Competenza', 'Importo Lordo Aderente', 'Importo Lordo Azienda', 'Tfr', 'Importo Netto', 'Numero Quote', 'Valore Quota', 'Data Valore Quota'];
+      var miss = need.filter(function (h) { return heads.indexOf(h) < 0; }); if (miss.length) throw new Error('Mancano le colonne: ' + miss.join(', ') + '.');
+      var num = function (s) { s = (s || '').trim(); return s === '' ? 0 : parseFloat(s.replace(/\./g, '').replace(',', '.')); };
+      var dt = function (s) { var m = /(\d\d)\/(\d\d)\/(\d{4})/.exec(s || ''); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; };
+      var ix = function (h) { return heads.indexOf(h); }, rows = [], sums = [0, 0, 0];
+      Array.prototype.forEach.call(doc.querySelectorAll('tbody tr'), function (tr) {
+        var c = Array.prototype.map.call(tr.querySelectorAll('td'), function (td) { return td.textContent.trim(); });
+        if (c.length < heads.length || c[0] === 'TOTALE') return;
+        var r = { tipo: c[ix('Tipo Operazione')], comp: dt(c[ix('Data Competenza')]), dv: dt(c[ix('Data Valore Quota')]), ad: num(c[ix('Importo Lordo Aderente')]), az: num(c[ix('Importo Lordo Azienda')]), tfr: num(c[ix('Tfr')]), net: num(c[ix('Importo Netto')]), comparto: c[ix('Comparto')] || '', q: num(c[ix('Numero Quote')]), vq: num(c[ix('Valore Quota')]) };
+        rows.push(r); sums[0] += r.ad; sums[1] += r.az; sums[2] += r.tfr;
+      });
+      if (!rows.length) throw new Error('La tabella è vuota.');
+      var foot = Array.prototype.map.call(doc.querySelectorAll('tfoot td'), function (td) { return td.textContent.trim(); });
+      var totOk = foot.length > 7 ? (Math.abs(num(foot[5]) - sums[0]) < 0.02 && Math.abs(num(foot[6]) - sums[1]) < 0.02 && Math.abs(num(foot[7]) - sums[2]) < 0.02) : null;
+      var withQ = rows.filter(function (r) { return r.dv; }), last = withQ.reduce(function (a, r) { return !a || r.dv > a.dv ? r : a; }, null);
+      var quote = rows.filter(function (r) { return r.comparto === 'AZIONARIO'; }).reduce(function (a, r) { return a + r.q; }, 0);
+      var pending = rows.filter(function (r) { return r.tipo === 'Contr. non investito'; }).reduce(function (a, r) { return a + r.net; }, 0);
+      var qOk = withQ.every(function (r) { return r.tipo.indexOf('Concambio') === 0 || Math.abs(r.q * r.vq - r.net) <= 0.05 + Math.abs(r.net) * 0.0005; });
+      var contribs = rows.filter(function (r) { return r.tipo === 'Contributo' && r.comp && r.comp.getMonth() !== 11; }).sort(function (a, b) { return b.comp - a.comp; });
+      var lc = contribs[0] || { ad: this.state.minM, az: this.state.azM, tfr: this.state.tfrM };
+      var first = rows.reduce(function (a, r) { return r.comp && (!a || r.comp < a) ? r.comp : a; }, null);
+      var lastC = rows.reduce(function (a, r) { return r.comp && (!a || r.comp > a) ? r.comp : a; }, null);
+      var mmY = function (d) { return d ? ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear() : ''; };
+      this.setState({ source: 'file', fileError: '', pos: Math.round((quote * (last ? last.vq : 0) + pending) * 100) / 100, minM: lc.ad, azM: lc.az, tfrM: lc.tfr, joined: first ? first.getFullYear() : this.state.joined,
+        fileInfo: { n: rows.length, totOk: totOk, qOk: qOk, from: mmY(first), to: mmY(lastC) } });
+    } catch (err) { this.setState({ fileError: err.message }); }
+  }
+  renderVals() {
+    var self = this, s = this.state, p = this.params(), rows = this.flows(p), n = rows.length, res = this.sim(p, rows, p.delta, n, p.mode);
+    var colors = ['#2563EB', '#15803D', '#C2410C'], names = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'];
+    var b = this.best(res), worst = [0, 1, 2].reduce(function (a, i) { return res[i].tot < res[a].tot ? i : a; }, 0);
+    var second = [0, 1, 2].filter(function (i) { return i !== b; }).reduce(function (a, i) { return res[i].tot > res[a].tot ? i : a; }, b === 0 ? 1 : 0);
+    var ink = '#0B0B0B', lime = '#D4EE36';
+    var chip = function (on) { return 'font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;font-variant-numeric:tabular-nums;border:1px solid ' + (on ? ink : '#D6D6D4') + ';background:' + (on ? lime : '#FFFFFF') + ';color:' + ink; };
+    var seg = function (on) { return 'flex:1;padding:10px 12px;border-radius:9px;border:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:' + ink + ';background:' + (on ? lime : 'transparent') + ';box-shadow:' + (on ? 'inset 0 0 0 1px ' + ink : 'none'); };
+    var track = function (v, lo, hi) { var pc = Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100)); return 'background:linear-gradient(90deg,' + ink + ' 0 ' + pc + '%,#E2E2DF ' + pc + '% 100%)'; };
+    var mkChips = function (list, cur, key, fmt, tol) { return list.map(function (v) { var val = Array.isArray(v) ? v[1] : v, lab = Array.isArray(v) ? v[0] : fmt(v);
+      return { label: lab, style: chip(Math.abs(cur - val) < (tol || 1e-9)), pick: function () { var o = {}; o[key] = val; self.setState(o); } }; }); };
+    var titles = ['Avvertenze', 'Età e orizzonte', 'Il tuo fondo', 'Stipendio', 'Ipotesi', 'Risultato', 'Fonti'];
+    var mineKey = [null, 'eta', 'fondo', 'ral', 'ipotesi', null, null];
+    var isDone = function (k) { return s.done.indexOf(k) >= 0; };
+    var open = function (k) { return function () { self.setState({ open: s.open === k ? -1 : k }); }; };
+    var next = function (k) { return function () { var d = s.done.slice(); if (d.indexOf(k) < 0) d.push(k); var m = Object.assign({}, s.mine); if (mineKey[k]) m[mineKey[k]] = true; self.setState({ open: k + 1, done: d, mine: m }); }; };
+    var numStyle = function (k, big) { var active = s.open === k, dn = isDone(k), sz = big ? 56 : 28;
+      return 'flex:none;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + (big ? 16 : 8) + 'px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:' + (big ? 22 : 13) + 'px;' +
+        (active ? 'background:' + lime + ';color:' + ink : dn ? 'background:' + ink + ';color:' + lime : 'background:#ECECEA;color:#5C6168'); };
+    var sec = function (k) { var on = s.open === k, mine = mineKey[k] && s.mine[mineKey[k]];
+      return { open: on, toggle: open(k), next: next(k), btn: on ? 'Chiudi ▴' : (isDone(k) ? 'Modifica ▾' : 'Apri ▾'), num: numStyle(k, true), mark: isDone(k) && !on ? '✓' : String(k),
+        badge: mine ? 'Dati tuoi' : 'Esempio', badgeStyle: 'font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:99px;' + (mine ? 'background:' + lime + ';color:' + ink : 'background:#ECECEA;color:#3A3D42'),
+        box: 'background:#FFFFFF;border-radius:24px;border:' + (on ? '1.5px solid ' + ink : '1px solid #E2E2DF') + ';box-shadow:' + (on ? '0 10px 30px rgba(11,11,11,.08)' : 'none') }; };
+    var tabs = titles.map(function (t, k) { var on = s.open === k;
+      return { label: t, go: function () { self.setState({ open: k }); }, current: on ? 'step' : 'false', mark: isDone(k) && !on ? '✓' : String(k), numStyle: numStyle(k, false),
+        style: 'display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font:inherit;color:' + ink + ';cursor:pointer;text-align:left;min-width:0;background:#FFFFFF;border:' + (on ? '1.5px solid ' + ink : '1px solid #E2E2DF') }; });
+    var zones = [];
+    for (var i = 0; i <= 60; i++) { var d = -0.12 + i * 0.0025, w = this.best(this.sim(p, rows, d, n, p.mode)); zones.push({ style: 'background:' + colors[w], title: this.fmtP(d, 2) + ': vince ' + names[w] }); }
+    var strip = [];
+    for (var h = 1; h <= n; h++) { var rr = this.sim(p, rows, p.delta, h, h < n ? 'Riscatto' : p.mode), bb = this.best(rr); strip.push({ style: 'flex:1;border-radius:4px;background:' + colors[bb], title: (2026 + h) + ': conviene ' + names[bb] }); }
+    var bePhrase = function (a, c, label) { var v = self.breakeven(p, rows, a, c, n, p.mode);
+      if (v === 'always') return label + ': vince sempre la ' + (a + 1) + '.'; if (v === 'never') return label + ': vince sempre la ' + (c + 1) + '.';
+      return label + ': pareggio a ' + self.fmtP(v, 1) + ' (sopra vince la ' + (a + 1) + ', sotto la ' + (c + 1) + ').'; };
+    var cursorPc = Math.max(0, Math.min(100, (s.delta + 0.12) / 0.15 * 100));
+    var fi = s.fileInfo;
+    var checkStyle = function (ok) { return 'font-size:12.5px;font-weight:600;padding:5px 9px;border-radius:9px;' + (ok ? 'background:' + lime + ';color:' + ink : 'background:#FFF3D6;color:#7A4B00'); };
+    var J0 = Math.max(p.minM * 13, 5300 + Math.min(2650, p.recov) - p.azM * 13), tau = this.marg(p);
+    var A = [['Stesso budget netto', 'I tre scenari usano ogni anno gli stessi soldi del tuo stipendio netto. Cambia solo dove li metti.'], ['Rimborso IRPEF nel PAC', 'Il risparmio fiscale della deduzione è investito nel PAC nello stesso anno.'], ['Differenziale costante', 'Il fondo rende ogni anno come l’ETF più il differenziale scelto.'], ['Costi già nel differenziale', 'Il differenziale storico è calcolato sui valori quota, già al netto dei costi del fondo.'], ['Versamenti a metà anno', 'I contributi mensili rendono in media mezzo anno nell’anno in cui arrivano.'], ['Contributi +2% l’anno', 'Contributi e TFR crescono con lo stipendio; il limite di 5.300 € resta fisso.'], ['Uscita in capitale', 'Confrontiamo il capitale netto all’uscita; la rendita non è simulata.'], ['Riscatto anticipato 23%', 'Nella striscia, ogni uscita prima dell’ultimo anno è trattata come riscatto per dimissioni.'], ['PAC tassato alla fine', 'Il PAC paga il bollo 0,2% ogni anno e il 26% sulle plusvalenze solo alla vendita.'], ['Norme 2026', 'Scaglioni, limiti e aliquote restano quelli del 2026 per tutto l’orizzonte.']];
+    return {
+      saveData: function () { var at = new Date(), d = JSON.parse(self.snapshot());
+        try { window.localStorage.setItem('pacfondo.v1', JSON.stringify({ at: at.toISOString(), data: d })); self.savedSnap = self.snapshot(); self.setState({ savedAt: at.toISOString(), storeErr: false }); } catch (e) { self.setState({ storeErr: true }); } },
+      resetData: function () { try { window.localStorage.removeItem('pacfondo.v1'); } catch (e) { } self.savedSnap = null; self.setState(Object.assign(JSON.parse(JSON.stringify(self.DEF)), { savedAt: null, storeErr: false, open: 0 })); },
+      saveLabel: s.storeErr ? 'Salvataggio non disponibile' : (s.savedAt ? (self.savedSnap === undefined || self.savedSnap === self.snapshot() ? 'Salvato · ' + new Date(s.savedAt).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salva le modifiche') : 'Salva i miei dati'),
+      saveStyle: 'display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:8px 12px;border-radius:12px;color:' + ink + ';' + (s.savedAt && (self.savedSnap === undefined || self.savedSnap === self.snapshot()) ? 'background:#FFFFFF;border:1px solid #D6D6D4' : 'background:' + lime + ';border:1px solid ' + ink),
+      tabs: tabs, sec0: sec(0), sec1: sec(1), sec2: sec(2), sec3: sec(3), sec4: sec(4), sec5: sec(5), sec6: sec(6),
+      skipAll: function () { self.setState({ open: 5, done: [0] }); },
+      topCards: [0, 1, 2].map(function (i) { var win = i === b, dk = win;
+        var desc = ['Nel fondo versi solo il minimo che ti dà il contributo dell’azienda. Tutto il resto del risparmio va nel PAC.', 'Nel fondo versi fino al limite deducibile, contando anche il contributo dell’azienda. Il rimborso IRPEF che ottieni lo investi nel PAC.', 'Nel fondo va solo il TFR, senza contributo tuo né dell’azienda. Tutto il risparmio va nel PAC.'][i];
+        return { n: String(i + 1), name: names[i], desc: desc, val: self.fmtE(res[i].tot), badge: win ? 'Conviene' : (i === worst ? 'La peggiore' : 'Seconda'),
+          sub: win ? self.fmtE(res[i].tot - res[second].tot) + ' più della seconda · netti all’uscita' : self.fmtE(res[b].tot - res[i].tot) + ' meno della migliore',
+          box: 'border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0;background:#FFFFFF;color:#0B0B0B;border:1px solid #E2E2DF',
+          num: 'width:30px;height:30px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#FFFFFF;background:' + colors[i],
+          badgeStyle: 'font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;' + (win ? 'background:' + lime + ';color:' + ink : 'background:#ECECEA;color:#3A3D42'),
+          descStyle: 'font-size:14px;line-height:1.55;color:#3A3D42',
+          valStyle: 'font-size:26px;font-weight:600;letter-spacing:-.6px;font-variant-numeric:tabular-nums;margin-top:auto;color:' + (dk ? lime : ink),
+          subStyle: 'font-size:12.5px;font-variant-numeric:tabular-nums;color:' + (dk ? '#B9BCC0' : '#5C6168') }; }),
+      topWinner: (b + 1) + ' · ' + names[b], topWinnerVal: this.fmtE(res[b].tot) + ' netti · ' + this.fmtE(res[b].tot - res[second].tot) + ' più della seconda',
+      birth: s.birth, exitAge: s.exitAge, exitYear: s.birth + s.exitAge, years: n, joined: s.joined, seniority: s.birth + s.exitAge - s.joined,
+      setBirth: function (e) { self.setState({ birth: parseInt(e.target.value, 10) }); }, setExitAge: function (e) { self.setState({ exitAge: parseInt(e.target.value, 10) }); },
+      trBirth: track(s.birth, 1955, 2005), trExit: track(s.exitAge, 45, 72),
+      chBirth: mkChips([1970, 1980, 1990, 2000], s.birth, 'birth', String), chExit: mkChips([60, 63, 67, 70], s.exitAge, 'exitAge', function (v) { return v + ' anni'; }),
+      sum1: 'Nato nel ' + s.birth + ' · uscita ' + (s.birth + s.exitAge) + ' (' + (s.mode === 'Riscatto' ? 'riscatto' : 'pensione') + ') · ' + n + ' anni',
+      onFile: function (e) { var f = e.target.files && e.target.files[0]; if (f) f.text().then(function (t) { self.onFileText(t); }); },
+      useSample: function () { self.setState({ source: 'file', fileError: '', pos: 18751.61, minM: 75, azM: 70, tfrM: 230, joined: 2023, fileInfo: { n: 43, totOk: true, qOk: true, from: '01/2023', to: '07/2026' } }); },
+      fileErr: !!s.fileError, fileError: s.fileError,
+      srcText: s.source === 'file' ? 'Dal tuo file' : 'Profilo d’esempio', srcBadge: 'font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;' + (s.source === 'file' ? 'background:' + lime : 'background:#ECECEA'),
+      hasChecks: !!fi, noFile: !fi, importTitle: fi ? fi.n + ' movimenti importati' : '', importSub: fi ? (fi.from ? 'competenza dal ' + fi.from + ' al ' + fi.to + ' · ' : '') + 'trascina un altro file per sostituirlo' : '',checks: fi ? [{ text: '✓ ' + fi.n + ' movimenti letti', style: checkStyle(true) }, { text: (fi.totOk === false ? '! totali diversi dalla riga TOTALE' : '✓ totali = riga TOTALE'), style: checkStyle(fi.totOk !== false) }, { text: (fi.qOk ? '✓ quote × valore = importo' : '! quote da verificare'), style: checkStyle(fi.qOk) }] : [],
+      pos: s.pos, minM: s.minM, azM: s.azM, tfrM: s.tfrM,
+      setPos: function (e) { self.setState({ pos: +e.target.value || 0 }); }, setJoined: function (e) { self.setState({ joined: parseInt(e.target.value, 10) || s.joined }); },
+      setMin: function (e) { self.setState({ minM: +e.target.value || 0 }); }, setAz: function (e) { self.setState({ azM: +e.target.value || 0 }); }, setTfr: function (e) { self.setState({ tfrM: +e.target.value || 0 }); },
+      yearlyIn: this.fmtE((s.minM + s.azM + s.tfrM) * 13),
+      sum2: this.fmtE(s.pos) + ' · ' + s.minM + '/' + s.azM + '/' + s.tfrM + ' €/mese · dal ' + s.joined,
+      ral: s.ral, ralTxt: this.fmtE(s.ral), setRal: function (e) { self.setState({ ral: parseInt(e.target.value, 10) }); }, trRal: track(s.ral, 15000, 150000),
+      chRal: mkChips([['30k', 30000], ['45k', 45000], ['60k', 60000], ['90k', 90000]], s.ral, 'ral'),
+      savMax: s.savMode === 'max', savFix: s.savMode === 'fix', pickMax: function () { self.setState({ savMode: 'max' }); }, pickFix: function () { self.setState({ savMode: 'fix' }); },
+      segMax: seg(s.savMode === 'max'), segFix: seg(s.savMode === 'fix'), saving: Math.max(this.minFloor(), Math.min(s.saving, J0)), savMinV: this.minFloor(), savMaxV: J0, minSugg: this.fmtE(this.minRal() / 13) + ' al mese', setSaving: function (e) { self.setState({ saving: parseInt(e.target.value, 10) }); }, trSav: track(Math.max(this.minFloor(), Math.min(s.saving, J0)), this.minFloor(), J0),
+      savingTxt: this.fmtE(s.savMode === 'max' ? J0 : Math.max(this.minFloor(), Math.min(s.saving, J0))),
+      savNote: s.savMode === 'max' ? 'Quanto ti manca per arrivare al limite deducibile (5.300 € con il contributo dell’azienda): ' + this.fmtE(J0) + ' il primo anno, +2% l’anno. È lo stesso budget nei tre scenari: il simulatore ti dice dove mettere ogni euro, fondo o ETF.' : 'Da ' + this.fmtE(this.minFloor()) + ' a ' + this.fmtE(J0) + ', cresce del 2% l’anno. Il minimo segue la RAL (' + this.fmtE(p.ral) + '): è la quota minima a tuo carico per avere il contributo dell’azienda, 2% fino a 56.224 € e 7% oltre. Sotto la quota minima si eliminerebbe uno dei tre scenari, “Minimo per l’azienda + PAC”. Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell’ETF, perché nel fondo non avrebbe più il vantaggio fiscale.',
+      recov: s.recov, recovTxt: this.fmtE(s.recov), setRecov: function (e) { self.setState({ recov: +e.target.value || 0 }); },
+      margTxt: (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%', margEuro: Math.round(tau * 100),
+      sum3: 'RAL ' + this.fmtK(s.ral) + ' · aliquota ' + (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '% · ' + (s.savMode === 'max' ? 'deduzione max' : this.fmtE(s.saving) + '/anno'),
+      deltaTxt: this.fmtP(s.delta, 1), deltaPct: Math.round(s.delta * 1000) / 10, setDelta: function (e) { self.setState({ delta: parseFloat(e.target.value) / 100 }); }, trDelta: track(s.delta, -0.12, 0.03),
+      chDelta: mkChips([['Storico −5,8', -0.0581], ['10 anni −5,0', -0.0504], ['5 anni −4,0', -0.0395], ['Benchmark −4,8', -0.0480], ['Passivo 0', 0]], s.delta, 'delta', null, 0.0004),
+      etfTxt: (s.etf * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%', etfPct: s.etf * 100, setEtf: function (e) { self.setState({ etf: parseFloat(e.target.value) / 100 }); }, trEtf: track(s.etf, 0.02, 0.21),
+      etfMenu: s.etfMenu, toggleEtfMenu: function () { self.setState({ etfMenu: !self.state.etfMenu }); },
+      etfName: this.etfSel().name, etfIsin: this.etfSel().isin, etfTer: this.fmtP(this.etfSel().ter, 2).replace('+', ''),
+      etfOpts: this.etfList().map(function (e) { var on = e.id === self.etfSel().id; return { name: e.name, isin: e.isin, facts: e.facts.map(function (f) { return { k: f[0], v: f[1] }; }), ter: self.fmtP(e.ter, 2).replace('+', ''), on: on, pick: function () { self.setState({ etfId: e.id, etfMenu: false }); },
+        style: 'display:flex;flex-direction:column;gap:3px;text-align:left;width:100%;padding:10px 12px;border-radius:12px;cursor:pointer;font:inherit;color:#0B0B0B;border:1px solid ' + (on ? '#0B0B0B' : 'transparent') + ';background:' + (on ? '#D4EE36' : '#F7F7F5') }; }),
+      chEtf: (function () { var e = self.etfSel(), h = e.hist, pc = function (v) { return (v * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%'; };
+        var L = [['Stima lungo periodo ' + pc(0.07), 0.07, 'Stima di consenso per l’azionario globale nei prossimi 10–15 anni (J.P. Morgan LTCMA 2026)'], ['5 anni', h.y5, 'Media annua 20/10/2021–20/10/2026'], ['10 anni', h.y10, 'Media annua 20/10/2016–20/10/2026'], ['Dal lancio (' + h.since + ')', h.all, 'Media annua dal ' + h.since + ' al 20/10/2026']];
+        return L.map(function (x) { var ok = x[1] !== null, gross = ok ? x[1] + (x[0].indexOf('Stima') === 0 ? 0 : e.ter) : null, on = ok && Math.abs(s.etf - gross) < 0.00005;
+          return { label: x[0] + (ok ? (x[1] === 0.07 && x[0].indexOf('Stima') === 0 ? '' : ' · ' + pc(x[1])) : ' · n.d.'), title: ok ? x[2] : 'Non disponibile: l’ETF non esiste da così tanto tempo', style: ok ? chip(on) : chip(false) + ';opacity:.45;cursor:not-allowed', pick: function () { if (ok) self.setState({ etf: gross }); } }; }); })(),
+      etfHistNote: 'Medie annue in euro di ' + this.etfSel().name.split(' UCITS')[0] + ' al 20/10/2026 (Finanzfluss, prezzi Xetra), già al netto del TER: scegliendole il simulatore aggiunge il TER al valore mostrato qui sopra, che è sempre prima dei costi, e lo toglie nel calcolo, così il costo non è contato due volte. Gli ultimi anni sono stati eccezionali: per un orizzonte di decenni la stima di lungo periodo è più prudente (J.P. Morgan LTCMA 2026: azionario globale 7% l’anno, in dollari, sui prossimi 10–15 anni).',
+      isPens: s.mode === 'Pensione', isRisc: s.mode === 'Riscatto', pickPens: function () { self.setState({ mode: 'Pensione' }); }, pickRisc: function () { self.setState({ mode: 'Riscatto' }); },
+      segPens: seg(s.mode === 'Pensione'), segRisc: seg(s.mode === 'Riscatto'),
+      sum4: 'Δ ' + this.fmtP(s.delta, 1) + ' · ETF ' + (s.etf * 100).toLocaleString('it-IT') + '% · ' + s.mode,
+      bestVal: 'Vince la ' + (b + 1) + ' · ' + this.fmtK(res[b].tot),
+      sum5: [0, 1, 2].map(function (k) { return { text: (k + 1) + ' · ' + self.fmtK(res[k].tot), style: 'color:' + colors[k] + (k === b ? ';text-decoration:underline;text-decoration-color:' + lime + ';text-decoration-thickness:4px;text-underline-offset:4px' : '') }; }),
+      headPre: 'Con un differenziale di ' + this.fmtP(p.delta, 1) + ' e uscita nel ' + (s.birth + s.exitAge) + ' conviene ', headWin: (b + 1) + ' · ' + names[b], headPost: ': ' + this.fmtE(res[b].tot) + ' netti, ' + this.fmtE(res[b].tot - res[worst].tot) + ' più della peggiore.',
+      cards: [0, 1, 2].map(function (k) { var on = k === b;
+        return { n: String(k + 1), name: names[k], total: self.fmtE(res[k].tot), real: self.fmtE(res[k].real), split: 'Fondo ' + self.fmtE(res[k].fund) + ' · PAC ' + self.fmtE(res[k].pac),
+          badge: on ? 'Conviene' : '−' + self.fmtE(res[b].tot - res[k].tot).replace('-', ''),
+          badgeStyle: 'font-size:12.5px;font-weight:600;padding:4px 9px;border-radius:99px;white-space:nowrap;' + (on ? 'background:' + lime + ';color:' + ink : 'background:#ECECEA;color:#3A3D42'),
+          tag: 'width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;background:' + colors[k],
+          box: 'display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:20px;background:' + (on ? '#FFFFFF' : '#F7F7F5') + ';border:' + (on ? '3px solid ' : '1.5px solid ') + colors[k] + (on ? ';box-shadow:0 10px 28px rgba(11,11,11,.10)' : '') }; }),
+      hm: this.heat(p, rows, n), ln: s.lnMode === 'delta' ? this.lines(p, rows, n) : this.linesTime(p, rows, n),
+      lnIsTime: s.lnMode !== 'delta', lnIsDelta: s.lnMode === 'delta', pickLnTime: function () { self.setState({ lnMode: 'time' }); }, pickLnDelta: function () { self.setState({ lnMode: 'delta' }); },
+      segLnTime: seg(s.lnMode !== 'delta') + ';flex:none;padding:6px 10px;font-size:13px', segLnDelta: seg(s.lnMode === 'delta') + ';flex:none;padding:6px 10px;font-size:13px',
+      zones: zones, zoneLabel: 'Barra del differenziale da −12% a +3%, colorata con lo scenario che vince a ogni valore',
+      cursorStyle: 'position:absolute;top:-4px;left:' + cursorPc + '%;transform:translateX(-50%);font-size:12px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';border:1px solid ' + ink + ';white-space:nowrap',
+      breaks: [bePhrase(1, 0, '2 contro 1'), bePhrase(1, 2, '2 contro 3'), bePhrase(0, 2, '1 contro 3')],
+      strip: strip, stripLabel: 'Scenario migliore per ogni anno di uscita dal 2027 al ' + (s.birth + s.exitAge),
+      keyParams: [
+        { name: 'Limite deducibile', val: '5.300 €', src: 'D.Lgs. 252/2005 art. 8' }, { name: 'Imposta sui rendimenti del fondo', val: '20%', src: 'L. 190/2014' },
+        { name: 'Aliquota d’uscita', val: '15% → 9%', src: 'D.Lgs. 252/2005 art. 11' }, { name: 'Riscatto per dimissioni', val: '23%', src: 'art. 14' },
+        { name: 'Plusvalenze PAC', val: '26%', src: 'D.L. 66/2014' }, { name: 'Bollo conto titoli', val: '0,2%', src: 'D.L. 201/2011' },
+        { name: 'TER ETF (' + this.etfSel().name.split(' UCITS')[0] + ')', val: this.fmtP(this.etfSel().ter, 2).replace('+', ''), src: 'scheda emittente' }, { name: 'TER comparto 2025', val: '0,47%', src: 'Nota informativa FPDDI' }
+      ],
+      assumptions: A.map(function (a) { return { t: a[0], d: a[1] }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

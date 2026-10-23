@@ -1,0 +1,138 @@
+{
+ "description": "Comparto Assicurativo FPDDI (Generali Italia, gestioni separate). Rendimento netto medio ponderato = al netto di tutte le spese e della fiscalità.",
+ "source": "Pagina 'Comparti assicurativi GESAV, Euroforte RE, RISPAV e Genris' - https://www.fondopensioneibm.it",
+ "years": [
+  {
+   "year": 2018,
+   "istat": 0.0099,
+   "tfr_gross": 0.0224,
+   "tfr_net": 0.0186,
+   "gesav_gross": 0.0337,
+   "rispav_gross": 0.0391,
+   "euroforte_royal_gross": 0.0463,
+   "genris_gross": null,
+   "net_weighted": 0.0244,
+   "nav_end": 10.244
+  },
+  {
+   "year": 2019,
+   "istat": 0.0039,
+   "tfr_gross": 0.0179,
+   "tfr_net": 0.0149,
+   "gesav_gross": 0.0325,
+   "rispav_gross": 0.0397,
+   "euroforte_royal_gross": 0.0481,
+   "genris_gross": null,
+   "net_weighted": 0.0237,
+   "nav_end": 10.487
+  },
+  {
+   "year": 2020,
+   "istat": 0.0,
+   "tfr_gross": 0.015,
+   "tfr_net": 0.0125,
+   "gesav_gross": 0.0295,
+   "rispav_gross": 0.0355,
+   "euroforte_royal_gross": 0.0201,
+   "genris_gross": null,
+   "net_weighted": 0.0211,
+   "nav_end": 10.708
+  },
+  {
+   "year": 2021,
+   "istat": 0.0381,
+   "tfr_gross": 0.0436,
+   "tfr_net": 0.0362,
+   "gesav_gross": 0.0282,
+   "rispav_gross": 0.0343,
+   "euroforte_royal_gross": 0.0286,
+   "genris_gross": null,
+   "net_weighted": 0.0204,
+   "nav_end": 10.926
+  },
+  {
+   "year": 2022,
+   "istat": 0.113,
+   "tfr_gross": 0.0997,
+   "tfr_net": 0.0828,
+   "gesav_gross": 0.0272,
+   "rispav_gross": 0.0284,
+   "euroforte_royal_gross": 0.021,
+   "genris_gross": null,
+   "net_weighted": 0.0188,
+   "nav_end": 11.131
+  },
+  {
+   "year": 2023,
+   "istat": 0.0059,
+   "tfr_gross": 0.0194,
+   "tfr_net": 0.0161,
+   "gesav_gross": 0.0294,
+   "rispav_gross": 0.0312,
+   "euroforte_royal_gross": 0.0201,
+   "genris_gross": 0.0262,
+   "net_weighted": 0.0184,
+   "nav_end": 11.336
+  },
+  {
+   "year": 2024,
+   "istat": 0.0109,
+   "tfr_gross": 0.0232,
+   "tfr_net": 0.0193,
+   "gesav_gross": 0.0299,
+   "rispav_gross": 0.0338,
+   "euroforte_royal_gross": 0.0155,
+   "genris_gross": 0.03,
+   "net_weighted": 0.0199,
+   "nav_end": 11.562
+  },
+  {
+   "year": 2025,
+   "istat": 0.0108,
+   "tfr_gross": 0.0231,
+   "tfr_net": 0.0192,
+   "gesav_gross": 0.0311,
+   "rispav_gross": 0.0311,
+   "euroforte_royal_gross": 0.0406,
+   "genris_gross": 0.0315,
+   "net_weighted": 0.0207,
+   "nav_end": 11.801
+  },
+  {
+   "year": "2026-08",
+   "istat": 0.0361,
+   "tfr_gross": 0.0371,
+   "tfr_net": 0.0308,
+   "gesav_gross": 0.0318,
+   "rispav_gross": 0.0336,
+   "euroforte_royal_gross": 0.0387,
+   "genris_gross": 0.0315,
+   "net_weighted": 0.0142,
+   "nav_end": 11.969
+  }
+ ],
+ "gesav_gross_history": {
+  "source": "Bilanci d'esercizio 1999-2017 (nota integrativa; 1999-2008 scansioni lette con OCR)",
+  "note": "Lordo di costi e imposte; fino al 2007 Generali tratteneva 0,30 punti",
+  "values": {
+   "1999": 0.0775,
+   "2000": 0.0781,
+   "2001": 0.0635,
+   "2002": 0.051,
+   "2003": 0.0492,
+   "2004": 0.0493,
+   "2005": 0.0496,
+   "2006": 0.0502,
+   "2007": 0.0523,
+   "2009": 0.0454,
+   "2010": 0.041,
+   "2011": 0.0431,
+   "2012": 0.0413,
+   "2013": 0.0421,
+   "2014": 0.0388,
+   "2015": 0.0376,
+   "2016": 0.0363,
+   "2017": 0.0357
+  }
+ }
+}

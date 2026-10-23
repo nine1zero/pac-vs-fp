@@ -1,0 +1,86 @@
+{
+ "source": "Yahoo Finance chart API, adjclose mensile (dividendi reinvestiti), scaricato il 23/10/2026; rendimento = prezzo fine anno / fine anno precedente - 1; 2026 = gen-ago",
+ "series": {
+  "vanguard_ftse_all_world": {
+   "ticker": "VGWL.DE",
+   "isin": "IE00B3RBWM25"
+  },
+  "spdr_msci_acwi_imi": {
+   "ticker": "SPYI.DE",
+   "isin": "IE00B3YLTY66",
+   "note": "quotazione Xetra non affidabile prima del 2017"
+  },
+  "invesco_ftse_all_world": {
+   "ticker": "FWRA.MI",
+   "isin": "IE000716YHJ7"
+  }
+ },
+ "years": [
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025,
+  2026
+ ],
+ "vanguard_ftse_all_world": [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  -0.060262,
+  0.301162,
+  0.053794,
+  0.285977,
+  -0.134788,
+  0.18173,
+  0.244035,
+  0.091764,
+  0.146305
+ ],
+ "spdr_msci_acwi_imi": [
+  null,
+  null,
+  null,
+  null,
+  null,
+  0.084556,
+  -0.067121,
+  0.296446,
+  0.053942,
+  0.2777,
+  -0.129196,
+  0.175408,
+  0.229169,
+  0.090969,
+  0.151734
+ ],
+ "invesco_ftse_all_world": [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  0.253044,
+  0.088673,
+  0.143933
+ ]
+}

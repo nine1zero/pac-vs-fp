@@ -1,0 +1,708 @@
+{
+  "version": 2,
+  "note": "Catalogo parametri. 'default' è un profilo d'esempio pubblico; il profilo reale dell'utente va caricato in locale (JSON) e non va committato.",
+  "parameters": [
+    {
+      "id": "birth_year",
+      "label": "Anno di nascita",
+      "group": "Dati personali",
+      "unit": "anno",
+      "default": 1990,
+      "min": 1950,
+      "max": 2010,
+      "step": 1,
+      "advanced": false,
+      "source": "Inserito dall'utente",
+      "description": "Con l’età di uscita fissa l’anno in cui esci e quindi quanti anni di versamenti simuliamo.",
+      "tags": [
+        "età",
+        "pensione"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "exit_age",
+      "label": "Età di uscita dal fondo",
+      "group": "Dati personali",
+      "unit": "anni",
+      "default": 67,
+      "min": 40,
+      "max": 75,
+      "step": 1,
+      "advanced": false,
+      "source": "Inserito dall'utente; 67 = età di vecchiaia (L. 214/2011)",
+      "description": "A che età chiedi la prestazione. Più anni nel fondo riducono l’aliquota finale, ma moltiplicano l’effetto del differenziale di rendimento.",
+      "tags": [
+        "pensione",
+        "orizzonte"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "first_join_year",
+      "label": "Anno di prima adesione alla previdenza complementare",
+      "group": "Dati personali",
+      "unit": "anno",
+      "default": 2015,
+      "min": 1993,
+      "max": 2030,
+      "step": 1,
+      "advanced": false,
+      "source": "Inserito dall'utente (estratto conto del fondo)",
+      "description": "L’anno della prima iscrizione a qualsiasi fondo pensione. Decide lo sconto sull’aliquota d’uscita e gli anni in cui puoi recuperare i contributi non dedotti.",
+      "tags": [
+        "anzianità"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "ral",
+      "label": "RAL annua",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 45000,
+      "min": 10000,
+      "max": 300000,
+      "step": 500,
+      "advanced": false,
+      "source": "Inserito dall'utente",
+      "description": "Retribuzione annua lorda. Serve solo a stimare l’aliquota marginale, cioè quanto ti restituisce ogni euro dedotto.",
+      "tags": [
+        "stipendio",
+        "irpef"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "min_member_month",
+      "label": "Contributo minimo a carico dell'aderente, mensile",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 75,
+      "min": 0,
+      "max": 2000,
+      "step": 1,
+      "advanced": false,
+      "source": "Estratto conto (se importato). Regola: 2% della retribuzione lorda fino alla prima fascia pensionabile INPS (56.224 € nel 2026) e 7% oltre — FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia; fascia: circolare INPS n. 6 del 30/01/2026",
+      "description": "Il minimo che devi versare tu per ricevere il contributo dell’azienda. Lo leggiamo dall’estratto se lo carichi.",
+      "tags": [
+        "contributo"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "employer_month",
+      "label": "Contributo dell'azienda, mensile",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 70,
+      "min": 0,
+      "max": 2000,
+      "step": 1,
+      "advanced": false,
+      "source": "Estratto conto (se importato). Regola: 1,5% fino alla prima fascia e 4% oltre, calcolato sui minimi contrattuali, massimo 3,5% della retribuzione lorda — FPDDI, Nota informativa (in vigore dal 01/01/2026), scheda 'I destinatari e i contributi', p. 9, schema generale IBM Italia",
+      "description": "Soldi in più che l’azienda versa solo se tu versi almeno il minimo. Nello scenario 3 si perdono.",
+      "tags": [
+        "azienda",
+        "contributo"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "tfr_month",
+      "label": "TFR versato al fondo, mensile",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 230,
+      "min": 0,
+      "max": 5000,
+      "step": 1,
+      "advanced": false,
+      "source": "Estratto conto (se importato). TFR annuo = retribuzione / 13,5 (art. 2120 c.c.) meno lo 0,5% di contributo al Fondo di garanzia INPS (L. 297/1982 art. 3)",
+      "description": "Il TFR che va al fondo. È uguale nei tre scenari: una volta scelto il fondo non si può riportare in azienda.",
+      "tags": [
+        "tfr"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "months",
+      "label": "Mensilità contributive all'anno",
+      "group": "Dati personali",
+      "unit": "n",
+      "default": 13,
+      "min": 12,
+      "max": 14,
+      "step": 1,
+      "advanced": true,
+      "source": "Estratto operazioni FPDDI: a dicembre il versamento è doppio",
+      "description": "Quante volte all’anno arrivano i contributi. In FPDDI dicembre conta doppio, quindi 13.",
+      "tags": [],
+      "source_kind": "user"
+    },
+    {
+      "id": "current_position",
+      "label": "Posizione attuale nel fondo",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 20000,
+      "min": 0,
+      "max": 2000000,
+      "step": 100,
+      "advanced": false,
+      "source": "Estratto conto o somma quote x valore quota (calcolata dal file importato)",
+      "description": "Quanto vale oggi la tua posizione. Cresce allo stesso modo nei tre scenari.",
+      "tags": [
+        "posizione"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "current_taxable_base",
+      "label": "Parte della posizione attuale tassabile all'uscita",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 16000,
+      "min": 0,
+      "max": 2000000,
+      "step": 100,
+      "advanced": true,
+      "source": "Stima: contributi dedotti + azienda + TFR meno parti già tassate (anticipazioni)",
+      "description": "La parte su cui pagherai l’imposta d’uscita (i rendimenti sono già tassati ogni anno). Uguale nei tre scenari: cambia i totali, non quale conviene.",
+      "tags": [],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "recoverable_non_deducted",
+      "label": "Contributi non dedotti ancora recuperabili",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": 0,
+      "min": 0,
+      "max": 200000,
+      "step": 100,
+      "advanced": false,
+      "source": "Certificazione Unica, punto 419",
+      "description": "Chi ha iniziato a lavorare dopo il 2007 può dedurre fino a 2.650 € l’anno in più, dal 6° al 25° anno, per recuperare i contributi non dedotti nei primi 5 anni.",
+      "tags": [
+        "deduzione",
+        "recupero"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "annual_saving",
+      "label": "Risparmio annuo da investire (vuoto = quanto serve per la deduzione massima)",
+      "group": "Dati personali",
+      "unit": "€",
+      "default": null,
+      "min": 0,
+      "max": 50000,
+      "step": 100,
+      "advanced": false,
+      "source": "Scelta dell'utente",
+      "description": "Il budget netto uguale per i tre scenari. Vuoto = quanto serve per arrivare alla deduzione massima. Cresce con la retribuzione.",
+      "tags": [
+        "budget",
+        "risparmio"
+      ],
+      "source_kind": "user"
+    },
+    {
+      "id": "start_year",
+      "label": "Primo anno simulato",
+      "group": "Tecnici",
+      "unit": "anno",
+      "default": 2027,
+      "min": 2025,
+      "max": 2035,
+      "step": 1,
+      "advanced": true,
+      "source": "Primo anno pieno dopo l'ultimo estratto",
+      "description": "Da quest’anno partono i versamenti simulati. Prima vale la posizione attuale.",
+      "tags": [],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "growth",
+      "label": "Crescita annua di retribuzione e contributi",
+      "group": "Ipotesi di mercato",
+      "unit": "%",
+      "default": 0.02,
+      "min": 0,
+      "max": 0.06,
+      "step": 0.0025,
+      "advanced": false,
+      "source": "Assunzione",
+      "description": "Di quanto crescono ogni anno stipendio e contributi. Il limite di 5.300 € invece resta fisso.",
+      "tags": [
+        "inflazione",
+        "stipendio"
+      ],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "inflation",
+      "label": "Inflazione annua (per i valori in euro di oggi)",
+      "group": "Ipotesi di mercato",
+      "unit": "%",
+      "default": 0.02,
+      "min": 0,
+      "max": 0.08,
+      "step": 0.0025,
+      "advanced": false,
+      "source": "Assunzione; obiettivo BCE 2%",
+      "description": "Serve solo a tradurre i risultati in euro di oggi. Non cambia quale scenario conviene.",
+      "tags": [
+        "inflazione"
+      ],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "etf_gross_return",
+      "label": "Rendimento atteso annuo dell'azionario globale, prima dei costi",
+      "group": "Ipotesi di mercato",
+      "unit": "%",
+      "default": 0.07,
+      "min": 0,
+      "max": 0.15,
+      "step": 0.0025,
+      "advanced": false,
+      "source": "Assunzione: stima di lungo periodo J.P. Morgan Long-Term Capital Market Assumptions 2026 (azionario globale 7% annuo in USD, orizzonte 10–15 anni). Alternative nella UI: medie annue a 5 e 10 anni e dal lancio dell'ETF scelto (Finanzfluss, prezzi Xetra in EUR al 20/10/2026), riportate al lordo del TER",
+      "description": "Rendimento annuo atteso dell'ETF prima del TER. Il fondo rende questo, meno il TER, più il differenziale.",
+      "tags": [
+        "rendimento",
+        "etf"
+      ],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "delta",
+      "label": "Differenziale fondo meno ETF (prima dell'imposta, dopo i costi)",
+      "group": "Ipotesi di mercato",
+      "unit": "punti %",
+      "default": null,
+      "min": -0.15,
+      "max": 0.03,
+      "step": 0.0005,
+      "advanced": false,
+      "source": "Calcolo storico: media composta 2014-2025 del comparto Azionario prima dell'imposta (data/fpddi_azionario.json, fonti per anno in docs/FONTI.md) meno quella dell'ETF iShares MSCI ACWI in euro (data/etf_monthly.csv). Formula in docs/FORMULE.md",
+      "description": "La variabile che decide tutto: quanto rende ogni anno il comparto rispetto all’ETF, dopo i costi e prima dell’imposta del 20%. Storico 2014-2025: −5,81%.",
+      "tags": [
+        "differenziale",
+        "delta",
+        "benchmark",
+        "gap"
+      ],
+      "source_kind": "historic_calc"
+    },
+    {
+      "id": "exit_mode",
+      "label": "Modalità di uscita",
+      "group": "Ipotesi di mercato",
+      "unit": "scelta",
+      "default": "Pensione",
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": false,
+      "source": "D.Lgs. 252/2005 artt. 11 e 14",
+      "description": "Pensione: aliquota dal 15% al 9%. Riscatto per dimissioni o anticipazione per ulteriori esigenze: 23%.",
+      "tags": [
+        "uscita",
+        "riscatto",
+        "pensione"
+      ],
+      "source_kind": "law"
+    },
+    {
+      "id": "inps_rate",
+      "label": "Contributi INPS a carico del dipendente (% della RAL)",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.0919,
+      "min": 0.05,
+      "max": 0.12,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "INPS: aliquota IVS a carico del lavoratore 9,19%; +1% sulla parte di retribuzione oltre la prima fascia pensionabile (L. 438/1992 art. 3-ter), fascia 2026 56.224 € (circolare INPS n. 6/2026). Non incluso lo 0,30% CIGS dovuto solo in alcuni settori",
+      "description": "Contributi previdenziali del dipendente, tolti dalla RAL per ottenere il reddito su cui si calcolano IRPEF e detrazioni.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "irpef_brackets",
+      "label": "Scaglioni IRPEF 2026",
+      "group": "Fisco",
+      "unit": "tabella",
+      "default": [
+        [
+          28000,
+          0.23
+        ],
+        [
+          50000,
+          0.33
+        ],
+        [
+          null,
+          0.43
+        ]
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "L. 199/2025 (Legge di bilancio 2026) art. 1 c. 3: 23% fino a 28.000 €, 33% fino a 50.000 €, 43% oltre. Detrazione lavoro dipendente: art. 13 c. 1 TUIR. Cuneo fiscale: L. 207/2024 art. 1 cc. 4-6",
+      "description": "Il risparmio di ogni euro dedotto si calcola esattamente: IRPEF a scaglioni, meno detrazione per lavoro dipendente e ulteriore detrazione del cuneo fiscale (che crescono quando il reddito scende), più addizionali.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "add_regional",
+      "label": "Addizionale regionale (scaglioni)",
+      "group": "Fisco",
+      "unit": "",
+      "default": [
+        [
+          15000,
+          0.0123
+        ],
+        [
+          28000,
+          0.0158
+        ],
+        [
+          50000,
+          0.0172
+        ],
+        [
+          null,
+          0.0173
+        ]
+      ],
+      "min": 0,
+      "max": 0.04,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "Regione Lombardia, pagina 'Addizionale Regionale all'IRPEF' (agg. 05/05/2026): 1,23% fino a 15.000 €, 1,58% fino a 28.000 €, 1,72% fino a 50.000 €, 1,73% oltre (l.r. 10/2003 art. 72, scaglioni l.r. 5/2022). Modificabile per altre regioni",
+      "description": "Si somma all’IRPEF nell’aliquota marginale. Cambiala se non vivi in Lombardia.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "add_municipal",
+      "label": "Addizionale comunale",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.008,
+      "min": 0,
+      "max": 0.009,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "Massimo di legge 0,8% (D.Lgs. 360/1998 art. 1 c. 3), applicato da molti capoluoghi (es. Milano). Esenzioni comunali non modellate: usa la delibera del tuo Comune",
+      "description": "Si somma all’IRPEF nell’aliquota marginale.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "deduction_limit",
+      "label": "Limite annuo di deducibilità (aderente + azienda)",
+      "group": "Fisco",
+      "unit": "€",
+      "default": 5300,
+      "min": 0,
+      "max": 10000,
+      "step": 50,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' p. 3: 5.300 € dall'annualità 2026 (5.164,57 € fino al 2025); D.Lgs. 252/2005 art. 8 c. 4 come modificato dalla L. 199/2025",
+      "description": "Il massimo che puoi togliere dal reddito ogni anno, sommando tuoi contributi e quelli dell’azienda. Il TFR non conta.",
+      "tags": [],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "recovery_cap",
+      "label": "Recupero annuo massimo dei contributi non dedotti",
+      "group": "Fisco",
+      "unit": "€",
+      "default": 2650,
+      "min": 0,
+      "max": 5000,
+      "step": 50,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' p. 3: recupero fino a 2.650 € annui (totale 7.950 €) dalla dichiarazione 2026; D.Lgs. 252/2005 art. 8 c. 6",
+      "description": "Quanto puoi dedurre in più ogni anno per recuperare i contributi non dedotti dei primi 5 anni.",
+      "tags": [],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "recovery_from_year_offset",
+      "label": "Recupero possibile dal 6° anno di partecipazione (offset)",
+      "group": "Fisco",
+      "unit": "anni",
+      "default": 5,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "D.Lgs. 252/2005 art. 8 c. 6",
+      "description": "Il recupero parte dopo 5 anni dalla prima adesione.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "recovery_last_year_offset",
+      "label": "Recupero possibile fino al 25° anno (offset)",
+      "group": "Fisco",
+      "unit": "anni",
+      "default": 24,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "D.Lgs. 252/2005 art. 8 c. 6",
+      "description": "Il recupero termina 24 anni dopo la prima adesione.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "fund_return_tax",
+      "label": "Imposta annua sui rendimenti del fondo",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.2,
+      "min": 0,
+      "max": 0.3,
+      "step": 0.005,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' p. 5: imposta sostitutiva del 20% sul risultato netto annuo; titoli pubblici al 12,5% effettivo (L. 190/2014 art. 1 cc. 621-622)",
+      "description": "Il fondo paga ogni anno il 20% sui rendimenti, anche se non esci. Per questo il valore quota è già netto.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "exit_tax_max",
+      "label": "Aliquota sulla prestazione, massima",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.15,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6",
+      "description": "Si applica a contributi dedotti, contributi dell’azienda e TFR quando esci per pensione.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "exit_tax_reduction",
+      "label": "Riduzione per ogni anno oltre il 15°",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.003,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6",
+      "description": "Ogni anno di iscrizione oltre il 15° toglie 0,3 punti all’aliquota d’uscita.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "exit_tax_min",
+      "label": "Aliquota sulla prestazione, minima",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.09,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6",
+      "description": "Dopo 35 anni di iscrizione l’aliquota non scende più.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "exit_tax_threshold_years",
+      "label": "Anni dopo i quali inizia la riduzione",
+      "group": "Fisco",
+      "unit": "anni",
+      "default": 15,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6",
+      "description": "La riduzione dell’aliquota parte dal 16° anno di iscrizione.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "redemption_tax",
+      "label": "Aliquota su riscatto per dimissioni / anticipazione per ulteriori esigenze",
+      "group": "Fisco",
+      "unit": "%",
+      "default": 0.23,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, 'Regime fiscale' pp. 6-7: riscatto per cause diverse (es. dimissioni) e anticipazioni per ulteriori esigenze al 23% a titolo d'imposta; D.Lgs. 252/2005 art. 14 c. 5 e art. 11 c. 7",
+      "description": "Se esci prima della pensione per dimissioni, o chiedi un’anticipazione per ulteriori esigenze.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "etf_name",
+      "label": "ETF del PAC",
+      "group": "PAC ETF",
+      "unit": "testo",
+      "default": "Vanguard FTSE All-World UCITS ETF Acc · IE00BK5BQT80",
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "Scelta tra 3 ETF: Vanguard FTSE All-World Acc (IE00BK5BQT80), SPDR MSCI ACWI IMI (IE00B3YLTY66), iShares MSCI ACWI Acc (IE00B6R52259). Dati: schede emittenti e Finanzfluss al 20–23/10/2026; copertura indici: FTSE Russell (90–95%), MSCI (85% ACWI, 99% ACWI IMI)",
+      "description": "L’ETF di riferimento: circa 2.300 aziende di 23 paesi sviluppati e 24 emergenti. Accumula i dividendi.",
+      "tags": [],
+      "source_kind": "issuer"
+    },
+    {
+      "id": "etf_ter",
+      "label": "TER dell'ETF",
+      "group": "PAC ETF",
+      "unit": "%",
+      "default": 0.0014,
+      "min": 0,
+      "max": 0.01,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "TER da scheda emittente: Vanguard 0,14%, SPDR 0,17%, iShares 0,20%. Segue l'ETF scelto",
+      "description": "Il costo annuo dell’ETF, tolto dal rendimento.",
+      "tags": [
+        "costi",
+        "ter"
+      ],
+      "source_kind": "issuer"
+    },
+    {
+      "id": "stamp_duty",
+      "label": "Imposta di bollo annua sul conto titoli",
+      "group": "PAC ETF",
+      "unit": "%",
+      "default": 0.002,
+      "min": 0,
+      "max": 0.005,
+      "step": 0.0001,
+      "advanced": true,
+      "source": "D.L. 201/2011 art. 19 (0,20%)",
+      "description": "Ogni anno lo 0,2% del valore del PAC. Il fondo pensione non la paga.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "capital_gain_tax",
+      "label": "Imposta sulle plusvalenze",
+      "group": "PAC ETF",
+      "unit": "%",
+      "default": 0.26,
+      "min": 0,
+      "max": 0.4,
+      "step": 0.01,
+      "advanced": true,
+      "source": "D.L. 66/2014 (26%)",
+      "description": "Pagata una volta sola, quando vendi, sul guadagno.",
+      "tags": [],
+      "source_kind": "law"
+    },
+    {
+      "id": "fund_ter_reference",
+      "label": "TER 2025 comparto Azionario (solo informativo, già incluso nel differenziale)",
+      "group": "Fondo pensione",
+      "unit": "%",
+      "default": 0.00473,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, Nota informativa 2026, p. 24, Tav. 7 (TER 2025): 0,473% = 0,414% commissioni di gestione finanziaria + 0,059% compensi depositario; oneri amministrativi NA",
+      "description": "Solo informativo: i costi sono già dentro il differenziale storico, non vanno tolti due volte.",
+      "tags": [],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "fund_isc_10y",
+      "label": "ISC 10 anni comparto Azionario (informativo)",
+      "group": "Fondo pensione",
+      "unit": "%",
+      "default": 0.0029,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, Scheda dei costi in vigore dal 01/01/2026, p. 2, Indicatore sintetico dei costi, comparto Azionario 10 anni: 0,29%",
+      "description": "Indicatore sintetico dei costi su 10 anni, come da schema COVIP. Informativo.",
+      "tags": [],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "manager_fee",
+      "label": "Commissione di gestione Generali (informativo)",
+      "group": "Fondo pensione",
+      "unit": "%",
+      "default": 0.0024,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "FPDDI, Documento sulla politica di investimento, par. 4.2 (p. 16): 0,24% del patrimonio annuo + commissione di over performance del 10% del rendimento addizionale",
+      "description": "Quanto prende il gestore, più il 10% di quel che fa meglio del benchmark. Informativo.",
+      "tags": [],
+      "source_kind": "fpddi_doc"
+    },
+    {
+      "id": "contribution_year_fraction",
+      "label": "Frazione d'anno di rendimento sui versamenti dell'anno",
+      "group": "Tecnici",
+      "unit": "anni",
+      "default": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "advanced": true,
+      "source": "Convenzione: versamenti mensili distribuiti nell'anno",
+      "description": "I versamenti dell’anno rendono in media per metà anno, perché arrivano mese per mese.",
+      "tags": [],
+      "source_kind": "assumption"
+    },
+    {
+      "id": "payroll_deduction",
+      "label": "Contributi trattenuti in busta paga",
+      "group": "Fisco",
+      "unit": "",
+      "default": true,
+      "min": null,
+      "max": null,
+      "step": null,
+      "advanced": true,
+      "source": "Art. 51 c. 2 lett. h TUIR: i contributi trattenuti dal datore non formano reddito di lavoro dipendente, quindi riducono anche il reddito complessivo su cui si calcolano detrazioni e cuneo",
+      "description": "Sì (default): la deduzione abbassa il reddito complessivo e fa crescere detrazioni e cuneo. No: versamento diretto dedotto in dichiarazione, che riduce solo l'imponibile.",
+      "tags": [
+        "deduzione",
+        "busta paga"
+      ],
+      "source_kind": "law"
+    }
+  ],
+  "source_kinds": {
+    "user": "Tuo dato",
+    "assumption": "Ipotesi",
+    "historic_calc": "Calcolo storico",
+    "fpddi_doc": "Doc. FPDDI",
+    "law": "Norma",
+    "issuer": "Emittente"
+  }
+}

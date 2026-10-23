@@ -1,0 +1,14 @@
+# dati personali: mai nel repository
+tests/private/
+spec/tests/private/
+*.xls
+*.xlsx
+!spec/tests/fixtures/*.xls
+!tests/fixtures/*.xls
+*.pdf
+profilo*.json
+# build
+node_modules/
+dist/
+.DS_Store
+__pycache__/

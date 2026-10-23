@@ -1,0 +1,13 @@
+{
+ "etf_monthly.csv": {
+  "source": "Yahoo Finance, serie giornaliere (prezzi rettificati 'adjclose'), scaricate il 21/10/2026; ultimo prezzo di ogni mese",
+  "columns": {
+   "acwi_usd": "iShares MSCI ACWI UCITS ETF USD (Acc), IE00B6R52259, quotazione LSE in USD (ticker ISAC.L)",
+   "eurusd": "Cambio EUR/USD (EURUSD=X), stesso giorno",
+   "acwi_eur": "acwi_usd / eurusd (la quotazione Xetra IUSQ.DE nel 2012 non ha scambi regolari)",
+   "msci_world_eur": "iShares Core MSCI World UCITS ETF (Acc), IE00B4L5Y983, Xetra EUNL.DE, proxy dell'indice MSCI World",
+   "msci_europe_eur": "iShares Core MSCI Europe UCITS ETF EUR (Acc), IE00B4K48X80, Xetra EUNK.DE, proxy MSCI Europe",
+   "estr_eur": "Xtrackers II EUR Overnight Rate Swap UCITS ETF 1C, LU0290358497, Xetra XEON.DE, proxy della liquidità (segue €STR, non Euribor 3M)"
+  }
+ }
+}
