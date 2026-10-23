@@ -10,7 +10,7 @@ import { breakPhrase, Sec0, Sec1, Sec2, Sec3, Sec4, Sec5, Sec6 } from './Section
 
 export function Landing() {
   const { state } = useStore();
-  const p = useMemo(() => toModelParams(state.inputs), [state.inputs]);
+  const p = useMemo(() => toModelParams(state.inputs, state.overrides), [state.inputs, state.overrides]);
   const r = useMemo(() => computeResults(p), [p]);
   return (
     <main className="wrap main" id="contenuto">
