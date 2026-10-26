@@ -67,7 +67,7 @@ export function Parametri({ anchor }: { anchor?: string }) {
         </h1>
         <p className="lead">
           Ogni numero usato dal calcolo, con la sua fonte. Passa sopra la <span className="ib inline">i</span> per la spiegazione e sull'etichetta della fonte per il
-          riferimento esatto. Puoi modificare i valori: restano solo sul tuo dispositivo.
+          riferimento esatto. Puoi modificare i valori: si salvano da soli, solo sul tuo dispositivo.
         </p>
       </section>
 
@@ -264,7 +264,7 @@ export function Parametri({ anchor }: { anchor?: string }) {
 
       <div className="sec-foot">
         <span className="muted text-sm">
-          I valori predefiniti sono un profilo d'esempio verosimile. Le modifiche restano su questo dispositivo finché non chiudi la pagina, o finché non le salvi.
+          I valori predefiniti sono un profilo d'esempio verosimile. Le modifiche si salvano da sole su questo dispositivo; «Cancella tutto» le elimina.
         </span>
         <a href="#/" className="btn ghost">
           <span aria-hidden="true">←</span> Torna al simulatore

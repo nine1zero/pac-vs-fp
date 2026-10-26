@@ -1,4 +1,4 @@
-import { forget, isDirty, persist, useStore } from '../state/store';
+import { forget, useStore } from '../state/store';
 
 function itDateTime(iso: string) {
   return new Date(iso).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -6,15 +6,11 @@ function itDateTime(iso: string) {
 
 export function Header() {
   const { state, dispatch } = useStore();
-  const dirty = isDirty(state);
-  const saved = state.savedAt !== null && !dirty;
   const label = state.storeErr
     ? 'Salvataggio non disponibile'
     : state.savedAt === null
-      ? 'Salva i miei dati'
-      : saved
-        ? `Salvato · ${itDateTime(state.savedAt)}`
-        : 'Salva le modifiche';
+      ? 'Salvataggio automatico'
+      : `Salvato · ${itDateTime(state.savedAt)}`;
   return (
     <>
       <a className="skip" href="#contenuto">
@@ -27,21 +23,13 @@ export function Header() {
         </a>
         <nav className="head-nav" aria-label="Principale">
           <span className="tip tip-right tip-below">
-            <button
-              type="button"
-              className={`btn save${saved ? '' : ' lime-outline'}`}
-              aria-describedby="tip-save"
-              onClick={() => {
-                const at = new Date().toISOString();
-                if (persist(state, at)) dispatch({ type: 'save', at });
-                else dispatch({ type: 'saveFailed' });
-              }}
-            >
+            <span className="badge save-status" tabIndex={0} aria-describedby="tip-save" data-testid="save-status">
               {label}
-            </button>
+            </span>
             <span className="bubble" role="tooltip" id="tip-save">
-              Salva i dati inseriti nella memoria di questo browser (localStorage, non cookie). Restano solo su questo dispositivo, non vengono inviati a nessuno, e
-              al prossimo accesso ritrovi tutto com’era. Il file importato non viene salvato.
+              {state.storeErr
+                ? 'Questo browser non permette di salvare (ad esempio in navigazione privata): i dati restano finché non chiudi la pagina.'
+                : 'Ogni dato che inserisci si salva da solo nella memoria di questo browser (localStorage, non cookie). Resta solo su questo dispositivo, non viene inviato a nessuno, e al prossimo accesso ritrovi tutto com’era. Anche il file delle operazioni si salva qui. Per cancellare tutto usa «Cancella tutto».'}
             </span>
           </span>
           <span className="tip tip-right tip-below">
@@ -58,7 +46,7 @@ export function Header() {
               Cancella tutto
             </button>
             <span className="bubble" role="tooltip" id="tip-reset">
-              Torna al profilo d’esempio e cancella anche i dati salvati in questo browser e il file letto.
+              Torna al profilo d’esempio e cancella dalla memoria di questo browser tutti i dati inseriti e il file delle operazioni.
             </span>
           </span>
           <span className="badge">100% locale</span>

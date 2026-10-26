@@ -1,12 +1,15 @@
-// Stato dell'app (SPEC par. 1.1 e 7). I dati restano in memoria; localStorage solo con "Salva i miei dati"
-// e svuotato da "Cancella tutto". Il file importato non viene mai salvato.
-import { createContext, useContext, useMemo, useReducer, type Dispatch, type ReactNode } from 'react';
+// Stato dell'app (SPEC par. 1.1 e 7). Ogni dato inserito si salva da solo in localStorage, solo su questo
+// dispositivo, dalla prima modifica; anche il file delle operazioni, in una voce a parte. "Cancella tutto" svuota tutto.
+import { createContext, useContext, useEffect, useMemo, useReducer, type Dispatch, type ReactNode } from 'react';
 import { etfById, etfCatalog } from '../data/catalog';
 import type { ParseResult } from '../import/dettaglio';
+import { loadDettaglio } from '../import/load';
 import type { Comparison } from '../model/contributions';
 import { EXAMPLE_PARAMS, yearlyFlows, type ExitMode, type ModelParams } from '../model';
 
 export const STORAGE_KEY = 'pacfondo.v1';
+/** il file delle operazioni, salvato a parte perché più grande e scritto solo quando si importa */
+export const FILE_KEY = 'pacfondo.v1.file';
 
 export interface Inputs {
   birth_year: number;
@@ -35,6 +38,8 @@ export interface ImportedFile {
   name: string;
   result: ParseResult;
   comparison: Comparison | null;
+  /** testo del file (per salvarlo); assente nei test */
+  text?: string;
 }
 
 export interface State {
@@ -51,8 +56,10 @@ export interface State {
   storeErr: boolean;
   /** parametri del modello modificati nella pagina "Parametri e fonti" (oltre a quelli di Inputs) */
   overrides: Partial<ModelParams>;
-  /** solo in memoria */
+  /** file delle operazioni letto (salvato a parte, vedi FILE_KEY) */
   file: ImportedFile | null;
+  /** il file non si è potuto salvare (memoria del browser piena o non disponibile) */
+  fileStoreErr: boolean;
 }
 
 const P = EXAMPLE_PARAMS;
@@ -101,8 +108,10 @@ export function initialState(storage: Pick<Storage, 'getItem'> | null = safeStor
     storeErr: false,
     overrides: {},
     file: null,
+    fileStoreErr: false,
   };
   try {
+    base.file = restoreFile(storage);
     const raw = storage?.getItem(STORAGE_KEY);
     if (!raw) return base;
     const o = JSON.parse(raw) as { at?: string; data?: Partial<State> };
@@ -124,6 +133,31 @@ export function initialState(storage: Pick<Storage, 'getItem'> | null = safeStor
   }
 }
 
+/** Rilegge il file salvato; null se non c'è o se non si può leggere (anche fuori dal browser). */
+function restoreFile(storage: Pick<Storage, 'getItem'> | null): ImportedFile | null {
+  try {
+    const raw = storage?.getItem(FILE_KEY);
+    if (!raw || typeof DOMParser === 'undefined') return null;
+    const o = JSON.parse(raw) as { name?: string; text?: string };
+    if (typeof o.text !== 'string') return null;
+    const f = loadDettaglio(o.name ?? 'DettaglioOperazioni.xls', o.text);
+    return { name: f.name, text: f.text, result: f.result, comparison: f.comparison };
+  } catch {
+    return null;
+  }
+}
+
+/** Salva il file delle operazioni su questo dispositivo; false se non c'è spazio o la memoria non è disponibile. */
+export function persistFile(f: ImportedFile, storage: Pick<Storage, 'setItem'> | null = safeStorage()): boolean {
+  try {
+    if (!storage || f.text === undefined) return false;
+    storage.setItem(FILE_KEY, JSON.stringify({ name: f.name, text: f.text, at: new Date().toISOString() }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function safeStorage(): Storage | null {
   try {
     return typeof window !== 'undefined' ? window.localStorage : null;
@@ -141,7 +175,7 @@ export type Action =
   | { type: 'confirm'; section: number; mine?: MineKey }
   | { type: 'skipToResult' }
   | { type: 'lnMode'; mode: State['lnMode'] }
-  | { type: 'importFile'; file: ImportedFile; prefill: Partial<Inputs> | null }
+  | { type: 'importFile'; file: ImportedFile; prefill: Partial<Inputs> | null; stored?: boolean }
   | { type: 'save'; at: string }
   | { type: 'saveFailed' }
   | { type: 'reset' };
@@ -176,6 +210,7 @@ export function reducer(s: State, a: Action): State {
       return {
         ...s,
         file: a.file,
+        fileStoreErr: a.stored === false,
         source: a.prefill ? 'file' : s.source,
         inputs: a.prefill ? normalize({ ...s.inputs, ...a.prefill }) : s.inputs,
       };
@@ -193,6 +228,18 @@ function without<T extends object>(o: T, k: keyof T): T {
   delete c[k];
   return c;
 }
+
+/** Istantanea del profilo d'esempio appena aperto: finché lo stato è questo non si salva nulla. */
+const PRISTINE = snapshot({ inputs: DEFAULT_INPUTS, overrides: {}, done: [], mine: {}, source: 'esempio', lnMode: 'time' });
+
+/** Va salvato? Sì se è cambiato dall'ultimo salvataggio e, la prima volta, se differisce dall'esempio appena aperto. */
+export function needsAutosave(s: State): boolean {
+  if (!isDirty(s)) return false;
+  return s.savedAt !== null || snapshot(s) !== PRISTINE;
+}
+
+/** Ritardo del salvataggio automatico: uno slider trascinato scrive una volta sola. */
+export const AUTOSAVE_DELAY_MS = 400;
 
 /** Ci sono modifiche rispetto all'ultimo salvataggio? */
 export function isDirty(s: State): boolean {
@@ -213,6 +260,7 @@ export function persist(s: State, at: string, storage: Pick<Storage, 'setItem'> 
 export function forget(storage: Pick<Storage, 'removeItem'> | null = safeStorage()): void {
   try {
     storage?.removeItem(STORAGE_KEY);
+    storage?.removeItem(FILE_KEY);
   } catch {
     // niente da cancellare
   }
@@ -253,6 +301,16 @@ const Ctx = createContext<{ state: State; dispatch: Dispatch<Action> } | null>(n
 export function StoreProvider({ children, init }: { children: ReactNode; init?: State }) {
   const [state, dispatch] = useReducer(reducer, init, (x) => x ?? initialState());
   const value = useMemo(() => ({ state, dispatch }), [state]);
+  // salvataggio automatico dei dati inseriti
+  useEffect(() => {
+    if (state.storeErr || !needsAutosave(state)) return;
+    const t = setTimeout(() => {
+      const at = new Date().toISOString();
+      if (persist(state, at)) dispatch({ type: 'save', at });
+      else dispatch({ type: 'saveFailed' });
+    }, AUTOSAVE_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [state]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
