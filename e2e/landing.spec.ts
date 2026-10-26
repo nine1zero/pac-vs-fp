@@ -67,24 +67,49 @@ test('"Dati tuoi" solo sulle sezioni confermate (SPEC par. 8 punto 8c)', async (
   for (const k of [2, 3, 4]) await expect(page.locator(`#sezione-${k} .sec-head .badge-pill`)).toHaveText('Esempio');
 });
 
-test('localStorage solo con "Salva i miei dati"; "Cancella tutto" lo svuota', async ({ page }) => {
+test('ogni dato inserito si salva da solo; "Cancella tutto" svuota la memoria', async ({ page }) => {
   const stored = () => page.evaluate(() => ({ ...window.localStorage }));
+  // solo aprendo la pagina non si salva nulla
+  expect(await stored()).toEqual({});
   await openSection(page, 3);
   await page.getByRole('button', { name: '60k' }).click();
-  expect(await stored()).toEqual({});
-  await page.getByRole('button', { name: 'Salva i miei dati' }).click();
-  await expect(page.getByRole('button', { name: /^Salvato/ })).toBeVisible();
+  await expect(page.getByTestId('save-status')).toContainText('Salvato');
   expect(Object.keys(await stored())).toEqual(['pacfondo.v1']);
   expect(await page.evaluate(() => document.cookie)).toBe('');
 
+  // campo numerico: il valore digitato si ritrova dopo il ricaricamento
+  await openSection(page, 2);
+  await page.getByLabel('TFR al fondo €/mese').fill('245');
+  await expect.poll(async () => JSON.parse((await stored())['pacfondo.v1'] ?? '{}').data?.inputs?.tfr_month).toBe(245);
+
   await page.reload();
-  // dati salvati: sezioni chiuse, valori ritrovati
   await expect(page.locator('.sec.open')).toHaveCount(0);
   await expect(page.locator('#sezione-3 .sumrow')).toContainText('RAL 60k €');
+  await expect(page.locator('#sezione-2 .sumrow')).toContainText('75/70/245 €/mese');
 
   await page.getByRole('button', { name: 'Cancella tutto' }).click();
-  expect(await stored()).toEqual({});
   await expect(page.locator('#sezione-3 .sumrow')).toContainText('RAL 45k €');
+  await page.waitForTimeout(600);
+  expect(await stored()).toEqual({});
+});
+
+test('anche il file delle operazioni si salva: dopo il ricaricamento i versamenti ci sono ancora', async ({ page }) => {
+  await openSection(page, 2);
+  await page.getByLabel('Scegli il file DettaglioOperazioni').setInputFiles(fixture('sample_dettaglio_ok.xls'));
+  await expect(page.getByTestId('save-status')).toContainText('Salvato');
+  const keys = await page.evaluate(() => Object.keys(window.localStorage).sort());
+  expect(keys).toEqual(['pacfondo.v1', 'pacfondo.v1.file']);
+  await page.reload();
+  await page.goto('./#/versamenti');
+  await expect(page.locator('.tile').nth(3)).toContainText('18.751,61 €');
+  await expect(page.locator('.mov-tbl tbody tr')).toHaveCount(43);
+  await page.getByRole('button', { name: 'Cancella tutto' }).click();
+  await page.waitForTimeout(600);
+  expect(await page.evaluate(() => window.localStorage.length)).toBe(0);
+  await page.reload();
+  await page.goto('./#/versamenti');
+  await expect(page.getByLabel('Scegli il file DettaglioOperazioni')).toBeAttached();
+  await expect(page.locator('.mov-tbl')).toHaveCount(0);
 });
 
 test('cambiare l’ETF aggiorna il TER e il risultato', async ({ page }) => {
@@ -110,4 +135,17 @@ test('ogni fonte nei tooltip ha un testo', async ({ page }) => {
   const texts = await page.getByTestId('source-text').allTextContents();
   expect(texts.length).toBeGreaterThan(5);
   for (const t of texts) expect(t.trim().length).toBeGreaterThan(10);
+});
+
+test('la mappa "Per quanti anni conviene" è di sola lettura', async ({ page }) => {
+  await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
+  const answer = (await page.getByTestId('answer').textContent())!;
+  const map = page.locator('.heat-plot svg');
+  await map.click({ position: { x: 20, y: 20 } });
+  await map.focus();
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.heat-live')).toContainText('Uscita nel');
+  await expect(page.getByTestId('answer')).toHaveText(answer);
+  await expect(page.locator('#sezione-5 .band-field').first()).toContainText('−5,8%');
 });

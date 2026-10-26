@@ -23,6 +23,7 @@ interface Props {
 
 const W = 1000;
 const H = 320;
+const LINE_WIDTHS = [7, 4.5, 2.5];
 
 export function LineChart({ xs, series, markers, xTicks, xLabel, ariaLabel, cursor }: Props) {
   const all = series.flat();
@@ -53,8 +54,9 @@ export function LineChart({ xs, series, markers, xTicks, xLabel, ariaLabel, curs
         <div className="lc-plot">
           <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" width="100%" height={H} role="img" aria-label={ariaLabel}>
             <path d={yTicks.map((v) => `M0 ${Y(v).toFixed(1)} H${W}`).join(' ')} fill="none" stroke="#e2e2df" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            {/* spessori decrescenti: se due scenari coincidono, la linea sotto resta visibile come bordo */}
             {series.map((s, i) => (
-              <path key={i} d={path(s)} fill="none" stroke={SCENARIO_COLORS[i]} strokeWidth="3" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+              <path key={i} d={path(s)} fill="none" stroke={SCENARIO_COLORS[i]} strokeWidth={LINE_WIDTHS[i]} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             ))}
           </svg>
           {cursor && (

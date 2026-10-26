@@ -324,9 +324,13 @@ button {
 .btn.save:hover {
   border-color: var(--ink);
 }
-.btn.save.lime-outline {
-  background: var(--lime);
-  border-color: var(--ink);
+.save-status {
+  cursor: help;
+  font-variant-numeric: tabular-nums;
+}
+.save-status::before {
+  content: '✓';
+  font-weight: 700;
 }
 .chips {
   display: flex;
@@ -1014,6 +1018,10 @@ input[type='range'].r:focus-visible::-moz-range-thumb {
   margin: 6px 0 0;
   padding-left: 18px;
 }
+.alert.warn {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
 .alert.error {
   background: var(--err-bg);
   color: var(--err-ink);
@@ -1194,7 +1202,7 @@ input[type='range'].r:focus-visible::-moz-range-thumb {
 .heat-plot svg {
   display: block;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: default;
 }
 .heat-plot svg:focus-visible {
   outline: 3px solid var(--ink);
@@ -1982,4 +1990,27 @@ input[type='range'].r:focus-visible::-moz-range-thumb {
   .hide-l {
     display: block;
   }
+}
+
+.leg-ln {
+  width: 22px;
+  border-radius: 99px;
+}
+.leg-ln.w1 {
+  height: 7px;
+}
+.leg-ln.w2 {
+  height: 4.5px;
+}
+.leg-ln.w3 {
+  height: 2.5px;
+}
+.leg-ln.s1 {
+  background: var(--s1);
+}
+.leg-ln.s2 {
+  background: var(--s2);
+}
+.leg-ln.s3 {
+  background: var(--s3);
 }
