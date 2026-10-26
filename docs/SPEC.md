@@ -68,12 +68,12 @@ Il foglio Google originale dell'autore (privato, link nel file `tests/private/pr
   - tutte le librerie sono incluse nel bundle;
   - i dati storici sono file statici serviti dallo stesso dominio.
 - Meta tag Content-Security-Policy restrittivo: `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'`.
-- Il file contribuzioni si legge solo con `FileReader`/`File.text()` in memoria. Non viene salvato in `localStorage` né in IndexedDB, salvo scelta esplicita dell'utente. Pulsante "Dimentica i miei dati" che svuota tutto.
-- `localStorage` si usa solo per i dati inseriti e solo su azione esplicita: pulsante **"Salva i miei dati"** nell'header (salva tutti i valori, non il file importato) e pulsante **"Cancella tutto"** (torna al profilo d'esempio e svuota la memoria). Tooltip: "Restano solo su questo dispositivo, non vengono inviati a nessuno". Niente cookie. Riferimento: `design/v2/Landing.dc.html`.
+- Il file contribuzioni si legge solo con `FileReader`/`File.text()` nel browser e non viene mai inviato.
+- **Salvataggio automatico** (decisione dell'autore del 26/10/2026, sostituisce il pulsante "Salva i miei dati" del prototipo): ogni dato inserito si salva da solo in `localStorage`, dalla prima modifica, solo su questo dispositivo. Anche il file delle operazioni si salva, in una voce a parte (`pacfondo.v1.file`), e alla riapertura viene riletto. Finché non si inserisce nulla non si salva nulla. Nell'header uno stato "Salvato · gg/mm hh:mm" con tooltip "Restano solo su questo dispositivo, non vengono inviati a nessuno"; il pulsante **"Cancella tutto"** torna al profilo d'esempio e svuota la memoria, file compreso. Niente cookie.
 - Link di condivisione dei parametri (hash dell'URL): opzionale, generato solo su richiesta, con avviso che contiene i valori inseriti (RAL, posizione). Non include mai dati del file importato.
 - **Disclaimer all'apertura** (modale, da accettare una volta per sessione, poi richiamabile dal footer). Testo:
 
-> **Questo strumento funziona interamente sul tuo dispositivo.** I dati che inserisci e il file delle contribuzioni che carichi non vengono inviati a nessun server: il calcolo avviene nel tuo browser e chiudendo la pagina tutto viene cancellato, salvo che tu scelga di ricordare i parametri su questo dispositivo.
+> **Questo strumento funziona interamente sul tuo dispositivo.** I dati che inserisci e il file delle contribuzioni che carichi non vengono inviati a nessun server: il calcolo avviene nel tuo browser e i dati e il file restano salvati solo nella memoria di questo browser, finché non premi "Cancella tutto".
 >
 > È una simulazione a scopo informativo, basata su dati storici pubblicati e su ipotesi modificabili. Non è una consulenza finanziaria, fiscale o previdenziale. I rendimenti passati non garantiscono quelli futuri. Verifica sempre i documenti ufficiali del tuo fondo pensione.
 >
@@ -142,7 +142,7 @@ Riferimento: `design/v2/` (prototipi funzionanti, stile e comportamento). **Fa f
 - Barra lime in alto con il disclaimer breve. Card bianche con raggio 20-24 px, pannelli `#F7F7F5`.
 - Testo evidenziato in lime (classe `.mark`) per le parole chiave. Scenari: 1 blu `#2563EB`, 2 verde `#15803D`, 3 arancio `#C2410C`; fondo grigio `#3A3D42`, benchmark viola `#7C3AED`, ETF blu.
 
-**Header**: logo "pac/fondo IBM", pulsanti `Salva i miei dati` e `Cancella tutto` (par. 1.1), badge "100% locale", link `Storico` e `Parametri e fonti`.
+**Header**: logo "pac/fondo IBM", stato del salvataggio automatico e pulsante `Cancella tutto` (par. 1.1), badge "100% locale", link `Storico` e `Parametri e fonti`.
 
 **Landing = simulatore a sezioni comprimibili** (`Landing.dc.html`):
 - Titolo "Simulatore strategie **PAC ETF globale** vs Fondo Pensione IBM": "PAC ETF globale" apre un **menù a tendina dell'ETF**, usato in tutta la simulazione. Le voci sono confrontabili riga per riga (indice, società coperte, quota del mercato, numero di titoli, patrimonio, storia, TER):
@@ -268,7 +268,7 @@ In tutti e tre gli scenari la posizione attuale e il TFR restano nel fondo.
   - **linee orizzontali tratteggiate** per lo storico del fondo, lo storico del benchmark e il differenziale scelto;
   - un **mirino "Tu sei qui"** (anni di permanenza previsti × differenziale scelto).
 - Tooltip su ogni cella: "Uscita nel 2040, differenziale −5%: scenario 2 = … €, scenario 1 = … €, scenario 3 = … €".
-- Click su una cella: imposta quegli anni e quel differenziale nel simulatore.
+- Solo lettura (decisione dell'autore del 26/10/2026): la mappa si ricalcola a ogni cambio dei parametri, ma non li modifica; passando sopra una cella, o con le frecce, se ne leggono i valori.
 - Modalità di uscita selezionabile direttamente sopra il grafico.
 - Versione compatta sulla home, versione completa nella pagina "Per quanti anni conviene".
 
@@ -585,7 +585,7 @@ Esito positivo (verde): "N movimenti letti, dal mm/aaaa al mm/aaaa, totali coere
 
 ## 7. Stato, preset e ricerca dei parametri
 - Store unico tipizzato, generato da `params.json`. Ogni parametro ha: `id`, `label`, `group`, `unit`, `default`, `min`, `max`, `step`, `advanced`, `source`, `description`, `tags`.
-- Ordine di priorità dei valori: URL hash (se presente) > localStorage (se c'è il consenso) > profilo importato > default.
+- Ordine di priorità dei valori: URL hash (se presente) > localStorage (salvataggio automatico) > profilo importato > default.
 - Preset del differenziale calcolati dai dati storici (par. 5.2), con etichetta e valore visibili.
 - Preset utente: salva, rinomina, elimina, esporta/importa JSON (`{ version, name, values: {id: value} }`), con validazione dei limiti.
 - Pulsanti globali: "Ripristina tutto", "Esporta parametri", "Importa profilo", "Dimentica i miei dati".

@@ -1,29 +1,28 @@
 // Lettura del DettaglioOperazioni in memoria (SPEC par. 6): parser, confronto con l'ETF e precompilazione.
 import { useState } from 'react';
 import sampleXls from '../../spec/tests/fixtures/sample_dettaglio_ok.xls?raw';
-import { azionario, etfMonthly } from '../data';
-import { parseDettaglio } from '../import/dettaglio';
-import { compareWithEtf, prefillFromFile } from '../model/contributions';
-import { useStore, type Inputs } from '../state/store';
+import { loadDettaglio } from '../import/load';
+import { persistFile, useStore, type ImportedFile, type Inputs } from '../state/store';
 
 export function useImport() {
   const { dispatch } = useStore();
   const [busy, setBusy] = useState(false);
   const readText = (name: string, text: string) => {
-    const result = parseDettaglio(text);
-    if (result.status === 'error') {
-      dispatch({ type: 'importFile', file: { name, result, comparison: null }, prefill: null });
+    const f = loadDettaglio(name, text);
+    const file: ImportedFile = { name, text, result: f.result, comparison: f.comparison };
+    if (f.result.status === 'error') {
+      dispatch({ type: 'importFile', file, prefill: null });
       return;
     }
-    const comparison = compareWithEtf(result.movements, azionario, etfMonthly);
-    const pf = prefillFromFile(result.movements, comparison);
+    const pf = f.prefill!;
     const prefill: Partial<Inputs> = {};
     if (pf.first_join_year !== null) prefill.first_join_year = pf.first_join_year;
     if (pf.min_member_month !== null) prefill.min_member_month = pf.min_member_month;
     if (pf.employer_month !== null) prefill.employer_month = pf.employer_month;
     if (pf.tfr_month !== null) prefill.tfr_month = pf.tfr_month;
     if (pf.current_position !== null) prefill.current_position = Math.round(pf.current_position * 100) / 100;
-    dispatch({ type: 'importFile', file: { name, result, comparison }, prefill });
+    // anche il file si salva da solo su questo dispositivo ("Cancella tutto" lo elimina)
+    dispatch({ type: 'importFile', file, prefill, stored: persistFile(file) });
   };
   const readFile = (f: File | undefined) => {
     if (!f) return;

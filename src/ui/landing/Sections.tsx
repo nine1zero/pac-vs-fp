@@ -87,8 +87,8 @@ export function Sec0() {
         <div className="panel">
           <span className="cap">I tuoi dati restano qui</span>
           <span className="text">
-            Calcolo e lettura del file avvengono nel tuo browser. Nessun dato viene inviato, nessun account, nessun tracciamento. Chiudendo la pagina
-            tutto si cancella, salvo che tu scelga «Salva i miei dati».
+            Calcolo e lettura del file avvengono nel tuo browser. Nessun dato viene inviato, nessun account, nessun tracciamento. I dati che inserisci e il
+            file delle operazioni si salvano da soli in questo browser, solo su questo dispositivo: «Cancella tutto» li elimina.
           </span>
         </div>
         <div className="panel">
@@ -239,11 +239,16 @@ export function Sec2({ r }: { r: Results }) {
             </a>
           )}
           <span className="row-gap wrap">
-            <span className="muted lock">Letto solo nel browser, mai salvato</span>
+            <span className="muted lock">Letto solo nel browser e salvato solo su questo dispositivo</span>
             <button type="button" className="btn ghost" onClick={useSample}>
               Usa un file d'esempio
             </button>
           </span>
+          {ok && state.fileStoreErr && (
+            <div className="alert warn" role="status">
+              Il file è stato letto ma non salvato: la memoria del browser è piena o non disponibile. I valori ricavati restano salvati.
+            </div>
+          )}
           {errors.length > 0 && (
             <div className="alert error" role="alert">
               <strong>Il file non si può usare.</strong>
@@ -587,6 +592,21 @@ export function Sec5({ r }: { r: Results }) {
     };
   }
 
+  // due scenari quasi uguali: le linee si sovrappongono, lo diciamo nel testo
+  const overlaps: string[] = [];
+  for (const [a, b] of [
+    [0, 1],
+    [1, 2],
+    [0, 2],
+  ] as const) {
+    const A = line.series[a]!;
+    const B = line.series[b]!;
+    const maxDiff = Math.max(...A.map((v, k) => Math.abs(v - B[k]!)));
+    const top = Math.max(...A.map(Math.abs), ...B.map(Math.abs));
+    if (top > 0 && maxDiff / top < 0.01)
+      overlaps.push(`Le linee ${a + 1} e ${b + 1} quasi coincidono (al massimo ${euro(maxDiff)} di differenza), per questo si vedono una sopra l'altra.`);
+  }
+
   return (
     <Section
       k={5}
@@ -704,7 +724,7 @@ export function Sec5({ r }: { r: Results }) {
         <span className="cap">Per quanti anni conviene</span>
         <span className="text-sm">
           Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno,
-          più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; clicca una casella per provare quell’uscita e quel differenziale.
+          più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; passa sopra una casella, o usa le frecce, per leggerne i valori.
         </span>
         <span className="text-sm muted">
           {r.n} anni di uscita · prima dell’ultimo anno uscita con riscatto {pctShort(P.redemption_tax)}
@@ -714,7 +734,6 @@ export function Sec5({ r }: { r: Results }) {
           firstYear={firstYear}
           delta={i.delta}
           histDelta={histDelta}
-          onPick={(h, d) => set({ exit_age: Math.max(45, Math.min(72, firstYear + h - 1 - i.birth_year)), delta: Math.round(d * 10000) / 10000 })}
         />
         <span className="sr-only">Differenziali della mappa da {pct(MAP_DELTAS[0]!, 0, true)} a {pct(MAP_DELTAS[MAP_DELTAS.length - 1]!, 0, true)}, passo 0,25 punti.</span>
       </div>
@@ -733,9 +752,12 @@ export function Sec5({ r }: { r: Results }) {
             ]}
           />
         </span>
-        <span className="text-sm">{line.text}</span>
+        <span className="text-sm">
+          {line.text}
+          {overlaps.length > 0 && ` ${overlaps.join(' ')}`}
+        </span>
         <span className="legend">
-          <Legend inline />
+          <Legend inline lines />
           <span className="leg">
             <span className="leg-dot" />
             pareggio
@@ -754,12 +776,12 @@ export function breakPhrase(pair: [number, number], v: number | string): string 
   return `${label}: pareggio a ${pct(v as number, 1, true)} (sopra vince la ${pair[0] + 1}, sotto la ${pair[1] + 1}).`;
 }
 
-function Legend({ inline }: { inline?: boolean }) {
+function Legend({ inline, lines }: { inline?: boolean; lines?: boolean }) {
   return (
     <span className={inline ? 'legend-inline' : 'legend'}>
       {[0, 1, 2].map((k) => (
         <span key={k} className="leg">
-          <span className={`leg-sw s${k + 1}`} />
+          <span className={`${lines ? `leg-ln w${k + 1}` : 'leg-sw'} s${k + 1}`} />
           {k + 1} · {inline ? SCENARIO_NAMES[k] : SCENARIO_NAMES[k]!.replace(' + PAC', '')}
         </span>
       ))}

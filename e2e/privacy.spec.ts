@@ -50,17 +50,30 @@ test('font Onest servito dallo stesso dominio', async ({ page }) => {
   expect(loaded).toBe(true);
 });
 
-test('nessuna richiesta esterna, cookie o memoria su tutte le pagine senza "Salva"', async ({ page, baseURL }) => {
+test('nessuna richiesta esterna né cookie; in memoria solo dopo un dato inserito', async ({ page, baseURL }) => {
   const { external, problems } = watch(page, new URL(baseURL!).origin);
   for (const hash of ['#/', '#/storico', '#/parametri', '#/versamenti']) {
     await page.goto(`./${hash}`);
     await page.waitForLoadState('networkidle');
   }
+  // senza inserire nulla non si salva nulla
+  expect(await page.evaluate(() => ({ local: window.localStorage.length, session: window.sessionStorage.length }))).toEqual({ local: 0, session: 0 });
   await page.getByRole('button', { name: "Usa un file d'esempio" }).click();
   await page.waitForLoadState('networkidle');
+  await expect.poll(() => page.evaluate(() => Object.keys(window.localStorage).sort())).toEqual(['pacfondo.v1', 'pacfondo.v1.file']);
+  expect(await page.evaluate(() => window.sessionStorage.length)).toBe(0);
   expect(external).toEqual([]);
   expect(problems).toEqual([]);
   expect(await page.context().cookies()).toEqual([]);
-  expect(await page.evaluate(() => ({ local: window.localStorage.length, session: window.sessionStorage.length }))).toEqual({ local: 0, session: 0 });
   expect(await page.evaluate(async () => (await navigator.serviceWorker?.getRegistrations())?.length ?? 0)).toBe(0);
+});
+
+test('favicon SVG e ICO servite dallo stesso dominio', async ({ page, request }) => {
+  await page.goto('./');
+  const hrefs = await page.locator('link[rel="icon"]').evaluateAll((els) => els.map((e) => (e as HTMLLinkElement).href));
+  expect(hrefs.length).toBe(2);
+  for (const h of hrefs) {
+    expect(new URL(h).origin).toBe(new URL(page.url()).origin);
+    expect((await request.get(h)).status()).toBe(200);
+  }
 });

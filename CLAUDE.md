@@ -14,7 +14,7 @@ Web app statica (GitHub Pages, repository `nine1zero/pac-vs-fp`) che confronta i
 
 ## Privacy
 - Tutto in locale nel browser: nessuna chiamata di rete dopo il caricamento, niente CDN né analytics, CSP restrittiva, font Onest incluso nel bundle.
-- `localStorage` solo su azione esplicita ("Salva i miei dati" / "Cancella tutto"); niente cookie.
+- Salvataggio automatico in `localStorage` di ogni dato inserito e del file delle operazioni, solo su questo dispositivo e dalla prima modifica; "Cancella tutto" svuota tutto (decisione dell'autore, SPEC par. 1.1). Niente cookie.
 - **Mai committare dati personali**: niente `tests/private/` (anche se lo trovi in locale), niente `.xls` reali (solo `spec/tests/fixtures/`), niente PDF, niente `profilo*.json`. Controlla `git status` prima di ogni commit.
 - Default pubblici = `data/profile_example.json` (profilo inventato). Il profilo reale si importa solo in locale.
 

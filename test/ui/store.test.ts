@@ -7,6 +7,7 @@ import {
   forget,
   initialState,
   isDirty,
+  needsAutosave,
   persist,
   reducer,
   toModelParams,
@@ -71,6 +72,26 @@ describe('reducer', () => {
   it('importo fisso: senza valore scelto usa la deduzione massima del primo anno', () => {
     const p = toModelParams({ ...DEFAULT_INPUTS, saving_mode: 'fix', saving: null });
     expect(p.annual_saving).toBe(4390);
+  });
+});
+
+describe('salvataggio automatico', () => {
+  it('nulla da salvare sul profilo d’esempio appena aperto', () => {
+    expect(needsAutosave(initialState(null))).toBe(false);
+  });
+  it('si salva dalla prima modifica; dopo il salvataggio non c’è altro da salvare', () => {
+    let s = reducer(initialState(null), { type: 'set', inputs: { ral: 52000 } });
+    expect(needsAutosave(s)).toBe(true);
+    s = reducer(s, { type: 'save', at: '2026-10-26T10:00:00Z' });
+    expect(needsAutosave(s)).toBe(false);
+    // tornare ai valori d'esempio dopo un salvataggio va salvato anch'esso
+    s = reducer(s, { type: 'set', inputs: { ral: 45000 } });
+    expect(needsAutosave(s)).toBe(true);
+  });
+  it('anche aprire una sezione o confermarla si salva; "Cancella tutto" torna a non salvare', () => {
+    const s = reducer(initialState(null), { type: 'confirm', section: 0 });
+    expect(needsAutosave(s)).toBe(true);
+    expect(needsAutosave(reducer(s, { type: 'reset' }))).toBe(false);
   });
 });
 

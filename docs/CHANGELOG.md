@@ -1,5 +1,16 @@
 # Registro delle modifiche
 
+## 2026-10-26 · salvataggio automatico e favicon
+
+- **Salvataggio automatico** (richiesta dell'autore): ogni dato inserito si salva da solo in `localStorage` (`pacfondo.v1`) dalla prima modifica, con un ritardo di 400 ms perché uno slider trascinato scriva una volta sola. Aprire la pagina senza inserire nulla non salva niente.
+- Si salva anche il **file delle operazioni**, in una voce a parte (`pacfondo.v1.file`), scritta solo quando si importa un file valido. Alla riapertura il file viene riletto con il parser, quindi la pagina I miei versamenti e i controlli tornano. Se la memoria del browser è piena, un avviso lo dice e i valori ricavati restano salvati.
+- "Cancella tutto" svuota entrambe le voci e torna al profilo d'esempio. Il pulsante "Salva i miei dati" è sostituito dallo stato "Salvato · gg/mm hh:mm".
+- Aggiornati SPEC par. 1.1 (privacy) e CLAUDE.md; testi dell'app (avvertenze, header, sezione "Il tuo fondo", Parametri e fonti).
+- **Mappa "Per quanti anni conviene" di sola lettura** (richiesta dell'autore): si ricalcola a ogni cambio dei parametri, ma cliccando le caselle non cambia più età di uscita e differenziale. I valori di ogni casella si leggono passando sopra con il mouse o con le frecce. Aggiornato SPEC par. 3.4 A.
+- **Grafico "Capitale netto nei tre scenari"**: quando due scenari quasi coincidono (ad esempio con l'importo fisso al minimo, dove 1 e 2 differiscono di meno dell'1%), la linea blu dello scenario 1 restava nascosta sotto la verde. Ora le linee hanno spessori decrescenti (1 più spessa, 3 più sottile), così quella sotto resta visibile come bordo, e il testo dice quali linee quasi coincidono e di quanto.
+- **Favicon** dell'autore (`public/favicon.svg` e `public/favicon.ico`), servite dallo stesso dominio.
+- Test: regola del salvataggio automatico (Vitest); Playwright: dato salvato e ritrovato dopo il ricaricamento, file salvato e ritrovato nella pagina I miei versamenti, "Cancella tutto" che svuota la memoria, nulla salvato senza inserire dati, favicon.
+
 ## 2026-10-23 · fase 6: test Playwright di privacy e accessibilità
 
 - `e2e/privacy.spec.ts`: nessuna richiesta verso altri domini, CSP attiva e nessun errore in console sulla build, anche durante l'import del file e l'uso degli slider, su tutte le pagine. Nessun cookie, `localStorage` e `sessionStorage` vuoti senza "Salva i miei dati", nessun service worker; font Onest servito dallo stesso dominio.
