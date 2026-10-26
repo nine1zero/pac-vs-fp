@@ -1,5 +1,6 @@
 // Mappa "Per quanti anni conviene" (SPEC par. 3.4 A): anni di uscita × differenziale, colore = scenario migliore,
-// intensità = margine sul secondo. Una sola casella attiva per la tastiera (frecce, Invio).
+// intensità = margine sul secondo. Solo lettura: si ricalcola quando cambiano i parametri, ma non li modifica.
+// Con le frecce si leggono i valori di ogni casella.
 import { useRef, useState } from 'react';
 import type { ConvenienceMap } from '../../model';
 import { euroK, pct } from '../format';
@@ -11,13 +12,12 @@ interface Props {
   /** differenziale scelto e anni di permanenza previsti, per il mirino */
   delta: number;
   histDelta: number;
-  onPick: (h: number, delta: number) => void;
 }
 
 const W = 1000;
 const H = 330;
 
-export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
+export function HeatMap({ map, firstYear, delta, histDelta }: Props) {
   const { deltas, n } = map;
   const R = deltas.length;
   const cw = W / n;
@@ -58,10 +58,10 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
             preserveAspectRatio="none"
             width="100%"
             height={H}
-            role="application"
+            role="group"
             aria-roledescription="mappa"
             tabIndex={0}
-            aria-label={`Mappa: anni di uscita dal ${firstYear} al ${firstYear + n - 1} e differenziale da +3% a −12%, colorata con lo scenario migliore. Frecce per muoversi, Invio per provare la casella.`}
+            aria-label={`Mappa: anni di uscita dal ${firstYear} al ${firstYear + n - 1} e differenziale da +3% a −12%, colorata con lo scenario migliore. Usa le frecce per leggere i valori di ogni casella.`}
             onKeyDown={(e) => {
               const d: Record<string, [number, number]> = {
                 ArrowUp: [-1, 0],
@@ -69,18 +69,13 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
                 ArrowLeft: [0, -1],
                 ArrowRight: [0, 1],
               };
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onPick(active.h, deltas[active.i]!);
-                return;
-              }
               const m = d[e.key];
               if (!m) return;
               e.preventDefault();
               setCursor({ i: Math.max(0, Math.min(R - 1, active.i + m[0])), h: Math.max(1, Math.min(n, active.h + m[1])) });
             }}
           >
-            {deltas.map((d, i) =>
+            {deltas.map((_d, i) =>
               Array.from({ length: n }, (_, k) => {
                 const h = k + 1;
                 const cell = i * n + k;
@@ -99,7 +94,6 @@ export function HeatMap({ map, firstYear, delta, histDelta, onPick }: Props) {
                     stroke={isActive ? 'var(--ink)' : 'none'}
                     strokeWidth={isActive ? 3 : 0}
                     vectorEffect="non-scaling-stroke"
-                    onClick={() => onPick(h, d)}
                   >
                     <title>{cellTitle(i, h)}</title>
                   </rect>
