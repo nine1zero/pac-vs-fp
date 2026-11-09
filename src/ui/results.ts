@@ -16,6 +16,7 @@ import {
   type Breakeven,
   type ConvenienceMap,
   type ExitMode,
+  type FlowRow,
   type ModelParams,
   type ScenarioResult,
 } from '../model';
@@ -23,10 +24,11 @@ import { annualTable, deltaPresets, diffStats, lastFullYear } from '../model/his
 
 export const SCENARIO_NAMES = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'] as const;
 export const SCENARIO_SHORT = ['Minimo per l’azienda', 'Deduzione massima', 'Solo TFR'] as const;
+export const SCENARIO_ROLE = ['Ibrido · Match + PAC', 'Max fisco nel Fondo', '100% autonomo nel PAC'] as const;
 export const SCENARIO_DESC = [
-  'Nel fondo versi solo il minimo che ti dà il contributo dell’azienda. Tutto il resto del risparmio va nel PAC.',
-  'Nel fondo versi fino al limite deducibile, contando anche il contributo dell’azienda. Il rimborso IRPEF che ottieni lo investi nel PAC.',
-  'Nel fondo va solo il TFR, senza contributo tuo né dell’azienda. Tutto il risparmio va nel PAC.',
+  'Dal tuo budget versi nel Fondo solo il minimo che sblocca il contributo IBM; tutto il resto del budget più il rimborso IRPEF vanno nel PAC ETF.',
+  'Dal tuo budget versi nel Fondo fino al tetto massimo deducibile (incluso il contributo IBM); nel PAC ETF investi il rimborso IRPEF ottenuto.',
+  'Dal tuo budget versi 0 € nel Fondo (rinunciando a contributo IBM e deduzione IRPEF): il 100% del tuo budget va direttamente nel PAC ETF.',
 ] as const;
 
 /** Coppie di pareggio nell'ordine della SPEC: (2,1), (2,3), (1,3). Sopra δ* conviene la prima. */
@@ -50,6 +52,8 @@ export interface Results {
   p: ModelParams;
   n: number;
   exitYear: number;
+  /** flussi del primo anno di simulazione (budget K, TFR G e ripartizione nei 3 scenari) */
+  firstRow: FlowRow;
   res: [ScenarioResult, ScenarioResult, ScenarioResult];
   /** indici degli scenari dal migliore al peggiore */
   rank: number[];
@@ -122,6 +126,7 @@ export function computeResults(p: ModelParams): Results {
     p,
     n,
     exitYear: p.start_year + n - 1,
+    firstRow: rows[0]!,
     res,
     rank,
     breakevens: PAIRS.map((pair) => ({ pair, value: breakeven(pre, pair[0], pair[1], n, p.exit_mode) })),

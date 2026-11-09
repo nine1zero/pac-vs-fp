@@ -472,7 +472,7 @@ export function Sec4() {
             {pct(st.ci95[1], 1, true).replace('%', '')}{' '}
             <Src
               kind="Calcolo storico"
-              source="Differenziali annui fondo prima dell'imposta − ETF iShares MSCI ACWI in euro; intervallo = media ± 1,96 × errore standard (docs/FORMULE.md par. 8). Il 2012 e il 2013 sono da ricontrollare sui bilanci (docs/VERIFICHE.md par. 7)."
+              source="Differenziali annui fondo prima dell'imposta − ETF iShares MSCI ACWI in euro; intervallo = media ± 1,96 × errore standard (docs/FORMULE.md par. 8; tutti gli anni 2012–2025 verificati sui Bilanci FPDDI, docs/VERIFICHE.md par. 7)."
               what="statistiche storiche"
             />
             .

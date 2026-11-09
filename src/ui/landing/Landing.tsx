@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { toModelParams, useStore } from '../../state/store';
 import { EXAMPLE_PARAMS } from '../../model';
 import { euro, pct } from '../format';
-import { computeResults, SCENARIO_DESC, SCENARIO_NAMES, type Results } from '../results';
+import { computeResults, SCENARIO_DESC, SCENARIO_NAMES, SCENARIO_ROLE, type Results } from '../results';
 import { Src } from '../Tip';
 import { EtfBox, EtfMenu } from './EtfMenu';
 import { SectionNav } from './Section';
@@ -12,6 +12,8 @@ export function Landing() {
   const { state } = useStore();
   const p = useMemo(() => toModelParams(state.inputs, state.overrides), [state.inputs, state.overrides]);
   const r = useMemo(() => computeResults(p), [p]);
+  const row1 = r.firstRow;
+  const budget = row1.K;
   return (
     <main className="wrap main" id="contenuto">
       <section className="hero">
@@ -27,17 +29,85 @@ export function Landing() {
           </p>
         </div>
       </section>
-      <div className="g3">
-        {[0, 1, 2].map((k) => (
-          <div key={k} className="scard">
-            <span className="row-gap">
-              <span className={`tag s${k + 1}`}>{k + 1}</span>
-              <span className="scard-name">{SCENARIO_NAMES[k]}</span>
-            </span>
-            <span className="scard-desc">{SCENARIO_DESC[k]}</span>
+      <section className="scenarios-intro" aria-label="I tre scenari confrontati a parità di budget">
+        <div className="budget-banner">
+          <div className="budget-banner-main">
+            <span className="budget-pill">Stesso identico budget nei 3 scenari</span>
+            <p className="budget-text">
+              In tutte e tre le strategie metti di tasca tua <strong>esattamente la stessa cifra</strong>: nel 1° anno{' '}
+              <strong>{euro(budget)}/anno</strong> ({euro(Math.round(budget / 12))}/mese), oltre al <strong>TFR ({euro(row1.G)}/anno)</strong> e alla{' '}
+              <strong>posizione già maturata ({euro(p.current_position)})</strong> che restano sempre nel Fondo.{' '}
+              <span className="mark">L’unica scelta è quanto del tuo budget allocare nel Fondo e quanto nel PAC ETF autonomo</span> (più il rimborso IRPEF reinvestito nel PAC).
+            </p>
           </div>
-        ))}
-      </div>
+          <div className="budget-legend" aria-hidden="true">
+            <span className="budget-leg-item">
+              <span className="scard-dot fund" /> Quota budget nel Fondo
+            </span>
+            <span className="budget-leg-item">
+              <span className="scard-dot pac" /> Quota budget nel PAC ETF
+            </span>
+          </div>
+        </div>
+        <div className="g3">
+          {[0, 1, 2].map((k) => {
+            const s = row1.s[k]!;
+            const fromBudgetToFund = s.member;
+            const fromBudgetToPac = Math.max(0, budget - s.member);
+            const fundShare = budget > 0 ? Math.min(1, Math.max(0, fromBudgetToFund / budget)) : 0;
+            const pacShare = Math.max(0, 1 - fundShare);
+            return (
+              <div key={k} className="scard">
+                <div className="scard-top">
+                  <span className="row-gap">
+                    <span className={`tag s${k + 1}`}>{k + 1}</span>
+                    <span className="scard-name">{SCENARIO_NAMES[k]}</span>
+                  </span>
+                  <span className="scard-role">{SCENARIO_ROLE[k]}</span>
+                </div>
+                <span className="scard-desc">{SCENARIO_DESC[k]}</span>
+                <div className="scard-alloc">
+                  <div className="scard-alloc-title">Come dividi il tuo budget ({euro(budget)}/a)</div>
+                  <div className="scard-alloc-labels">
+                    <span>
+                      <span className="scard-dot fund" aria-hidden="true" />
+                      Fondo <strong>{pct(fundShare, 0)}</strong> ({euro(fromBudgetToFund)})
+                    </span>
+                    <span>
+                      <span className="scard-dot pac" aria-hidden="true" />
+                      PAC <strong>{pct(pacShare, 0)}</strong> ({euro(fromBudgetToPac)})
+                    </span>
+                  </div>
+                  <div className="scard-alloc-bar" aria-hidden="true">
+                    {fundShare > 0 && <span className="scard-seg fund" style={{ width: `${fundShare * 100}%` }} />}
+                    {pacShare > 0 && <span className="scard-seg pac" style={{ width: `${pacShare * 100}%` }} />}
+                  </div>
+                </div>
+                <div className="scard-flows">
+                  <div className="scard-flow-row">
+                    <span className="scard-flow-k">Contributo IBM (Fondo)</span>
+                    <strong className={s.employer > 0 ? 'scard-pos' : 'scard-neg'}>
+                      {s.employer > 0 ? `+${euro(s.employer)}/a` : '0 € · perso'}
+                    </strong>
+                  </div>
+                  <div className="scard-flow-row">
+                    <span className="scard-flow-k">Rimborso IRPEF (→ PAC)</span>
+                    <strong className={s.irpef_saving > 0 ? 'scard-pos' : 'scard-muted'}>
+                      {s.irpef_saving > 0 ? `+${euro(s.irpef_saving)}/a` : '0 €'}
+                    </strong>
+                  </div>
+                  <div className="scard-flow-row tot">
+                    <span className="scard-flow-k">Flusso 1° anno (+TFR)</span>
+                    <span>
+                      Fondo <strong>{euro(s.fund)}</strong> · PAC <strong>{euro(s.pac)}</strong>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
       <AnswerLine r={r} />
       <SectionNav />
       <Sec0 />

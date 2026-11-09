@@ -131,7 +131,8 @@ def simulate(p, delta=None, horizon=None, mode=None):
     rows = yearly_flows(p)
     H = len(rows) if horizon is None else horizon
     re = p["etf_gross_return"] - p["etf_ter"]
-    rn = (re + delta) * (1 - p["fund_return_tax"])
+    ref_re = p["etf_gross_return"] - EXAMPLE_PARAMS["etf_ter"]
+    rn = (ref_re + delta) * (1 - p["fund_return_tax"])
     fz = p["contribution_year_fraction"]
     exit_year = p["start_year"] + H - 1
     t_exit = exit_tax(p, exit_year, mode)

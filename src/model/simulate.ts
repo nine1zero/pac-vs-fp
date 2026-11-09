@@ -1,15 +1,21 @@
 // Valori nel tempo e all'uscita (SPEC par. 4.3-4.4; docs/FORMULE.md par. 6-7).
+import { EXAMPLE_PARAMS } from './params';
 import { exitTax } from './tax';
 import type { ExitMode, FlowRow, ModelParams, ScenarioResult } from './types';
 
-/** Rendimento annuo dell'ETF dopo il TER. */
+/** Rendimento annuo dell'ETF scelto per il PAC dopo il suo TER. */
 export function etfNetReturn(p: ModelParams): number {
   return p.etf_gross_return - p.etf_ter;
 }
 
-/** Rendimento annuo netto del fondo per un differenziale δ. */
+/**
+ * Rendimento annuo netto del fondo per un differenziale δ.
+ * Ancorato al rendimento netto dell'ETF di riferimento (VWCE, TER 0,14%) su cui è calibrato δ,
+ * così che cambiare l'ETF scelto per il PAC modifichi solo il PAC e non il montante del Fondo.
+ */
 export function fundNetReturn(p: ModelParams, delta: number): number {
-  return (etfNetReturn(p) + delta) * (1 - p.fund_return_tax);
+  const refMarketNet = p.etf_gross_return - EXAMPLE_PARAMS.etf_ter;
+  return (refMarketNet + delta) * (1 - p.fund_return_tax);
 }
 
 /** Capitale netto all'uscita dei tre scenari dopo `horizon` anni (default: fino all'uscita prevista). */

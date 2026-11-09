@@ -12,7 +12,10 @@ Registro delle verifiche fatte: cosa è stato controllato, come, e cosa è cambi
 | Rendimento "alla data" (dal 2009) di bilanci 2014-2017 e tabella web 2018-2025 | Coerente anno su anno con i rendimenti annui del fondo |
 | Valore quota di fine anno 2018-2025 | Il rapporto tra valori quota coincide con il rendimento annuo pubblicato |
 | "Benchmark alla data" dei bilanci 2015-2017 | Non coerente con i benchmark annui degli stessi paragrafi (35,52% → 39,64% implicherebbe 3,04%, non 2,86%). Usiamo i valori annui, confermati dalla Tav. 4 |
-| Rendimenti 2012 e 2013 | Presi dai bilanci 2012 e 2013 in una sessione precedente; quei PDF non sono nel pacchetto. **Da ricontrollare sul PDF** prima del rilascio |
+| Rendimenti 2012 e 2013 | Verificati su `bilancio12.pdf` (p. 14 e Sez. 4.2.3 p. 39: fondo +4,09%, benchmark +2,38%, quota 10,624 €) e `bilancio13.pdf` (p. 14 e Sez. 4.2.3 p. 35: fondo +9,83%, benchmark +14,05%, quota 11,668 €) |
+| Rendimenti e quote 2009-2011 | Verificati su `bilancio10.pdf` (p. 24), `bilancio11.pdf` (p. 24) e `bilancio16.pdf` (p. 11): quota iniziale 10,000 € a inizio 2009; quote nette 10,818 (+8,18%), 11,070 (+2,33%) e 10,207 (−7,80%). I cumulati `Quota(t)/10 − 1` sono interamente netti fin dall'avvio |
+| Imposta sostitutiva effettiva (Conto Economico Sez. 4.2.2, Bilanci 2010–2025) | Verificata: il comparto Azionario detiene 0,00% di titoli di Stato (Tav. 1 Nota informativa p. 9) e il rapporto effettivo `Imposta sostitutiva / Margine gestione finanziaria` negli anni positivi è 11,00% (2009–2013), 11,51% (2014) e 19,98%–20,03% (2015–2025; es. nel 2025: 998.083 € / 4.995.691 € = 19,98%) |
+| Benchmark su indici Price Index (senza dividendi) | Confermato in `politica_investimento.pdf` par. 4.2.4, p. 18: codici Datastream `MSWRLDE(PI)` e `MSEROPE(PI)`, codici Bloomberg `MSERWI` e `MSEREURP` (Price Index in EUR), liquidità `JPEC3ML(RI)` / `JPCAEU3M` |
 | TER 2025 | Correzione della descrizione: 0,473% = 0,414% commissioni di gestione + 0,059% depositario (prima era indicato "0,41% finanziario + 0,06% amministrativo") |
 | Fonte del contributo dell'azienda | L'accordo aziendale del 04/07/2023 è nell'archivio locale ma non tra i file verificati qui: la fonte citata ora è la Nota informativa 2026, p. 9, che riporta lo schema in vigore |
 
@@ -46,6 +49,7 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 |---|---|
 | TER contato due volte con le medie storiche: le medie dell'ETF sono già al netto del TER, ma il modello toglieva di nuovo il TER | Il campo "Rendimento ETF atteso" è sempre prima del TER; scegliendo una media storica l'interfaccia aggiunge il TER |
 | TER fisso 0,20% | Segue l'ETF scelto: Vanguard 0,14% (default), SPDR 0,17%, iShares 0,20% |
+| Rendimento del Fondo ancorato al TER dell'ETF selezionato per il PAC | Disaccoppiato: `fundNetReturn` usa sempre il TER dell'ETF di riferimento su cui è calibrato δ (0,14%), così cambiare l'ETF del PAC aggiorna solo il montante PAC e non il montante del Fondo |
 | Importo fisso del risparmio senza limiti | Limitato ogni anno tra il minimo che dà diritto al contributo dell'azienda e la deduzione massima |
 | Posizione reale del file d'esempio calcolata con un valore quota 20,9305 di cui non si trova la fonte | Si usa il valore quota dell'ultimo movimento del file (20,930), come dice la SPEC: 18.751,61 € (prima 18.752,05 €). La riga TOTALE non conta più come movimento (43 movimenti, non 44) |
 
@@ -74,11 +78,10 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 - aggiornamento della risposta dopo uno slider: mediana sotto i 100 ms.
 
 
-## 7. Cosa resta da verificare
+## 7. Anomalie riscontrate nei documenti del fondo e punti aperti
 
-1. Rendimenti 2012 e 2013 sui PDF dei bilanci 2012 e 2013 (archivio locale).
-2. Ipotesi "benchmark su indici di prezzo": va chiesta conferma al fondo (codici "(PI)").
-3. Nel 2026 il dato è gennaio-agosto: aggiornare `fpddi_azionario.json` quando esce il bilancio 2026.
-4. Aliquota dell'imposta sui rendimenti: usiamo il 20% nominale; l'aliquota effettiva del comparto (titoli pubblici al 12,5%) non è pubblicata.
-5. Medie storiche degli ETF: aggiornarle prima del rilascio, con la data in interfaccia.
-6. `data/etf_catalog.json` (titoli, patrimonio, medie a 5 e 10 anni e dal lancio): riscaricarlo dalle schede ufficiali degli emittenti (Vanguard, State Street, iShares), gratuite e senza autenticazione. Dall'ambiente di sviluppo cloud questi siti sono bloccati dalla rete: va fatto in locale, oppure aggiungendo i domini consentiti nelle impostazioni dell'ambiente.
+1. **Refuso nella tabella web di maggio 2026 (`comparto_azionario.html` / `comp_azionario.pdf`)**: la riga `05/2026` riporta un valore quota di `20,352` con rendimento da inizio 2009 `+105,32%` e rendimento da inizio 2026 `+4,61%`, valori matematicamente corrispondenti a una quota di **`20,532`** (cifre `3` e `5` invertite).
+2. **Incoerenza interna nella Nota informativa 2026 (p. 24)**: la Tav. 5 dichiara un rendimento medio composto a 10 anni (2016–2025) del benchmark pari a `5,23%`, mentre i rendimenti annui della Tav. 4 nella stessa pagina danno esattamente `5,03%`.
+3. **Incoerenza nei "bcmk netti alla data" dei Bilanci 2015–2017**: i valori cumulati del benchmark nel testo della Relazione sulla gestione non concatenano con i valori annui dichiarati nella stessa frase.
+4. **Dati 2026 parziali**: aggiornare `fpddi_azionario.json` quando esce il Bilancio 2026 completo (sul sito del fondo è già disponibile anche la riga `09/2026`: quota `21,150`, rendimento YTD `+7,75%`, benchmark YTD `+9,22%`).
+5. **Medie storiche degli ETF (`data/etf_catalog.json`)**: aggiornabili periodicamente dalle schede ufficiali degli emittenti (Vanguard, State Street SPDR, BlackRock iShares).

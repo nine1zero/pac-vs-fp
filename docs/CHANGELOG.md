@@ -1,5 +1,19 @@
 # Registro delle modifiche
 
+## 2026-11-09 · verifiche integrali sui Bilanci FPDDI, disaccoppiamento TER e confronto grafico dei 3 scenari
+
+- **Landing — Confronto grafico dei 3 scenari a parità di budget** (`src/ui/landing/Landing.tsx`, `src/ui/results.ts`, `src/styles/base.css`):
+  - aggiunto banner esplicito **"Stesso identico budget nei 3 scenari"** sopra le tre card iniziali, che mostra l'esborso annuo netto identico per l'aderente (oltre a TFR e posizione già maturata che restano sempre nel Fondo);
+  - ogni card iniziale mostra ora una **barra grafica proporzionale** di ripartizione del budget personale tra **Fondo Pensione** e **PAC ETF autonomo** (`Fondo % / €` vs `PAC % / €`) e il **riepilogo dei flussi del 1° anno** (contributo azienda IBM sbloccato o perso, rimborso IRPEF reinvestito nel PAC e flusso totale annuo verso Fondo e PAC).
+- **Modello — Disaccoppiamento del montante del Fondo dal TER dell'ETF scelto per il PAC** (`src/model/simulate.ts`, `spec/reference/model.py`):
+  - `fundNetReturn` è ora ancorato al TER dell'ETF di riferimento su cui è calibrato il differenziale storico δ (`0,14%`), così che cambiare l'ETF nel menù a tendina modifichi solo il rendimento e il montante del PAC (e il totale netto), lasciando invariato il montante del Fondo Pensione IBM.
+- **Dati storici e fonti verificati su tutti i documenti FPDDI (`public/data/fpddi_azionario.json`, `docs/FONTI.md`, `docs/VERIFICHE.md`, `src/ui/pages/Storico.tsx`)**:
+  - completati per il **2012 e 2013** i numeri di pagina (`p. 14`), le citazioni letterali e i valori quota di fine anno (`10,624 €` e `11,668 €`) dai PDF originali `bilancio12.pdf` e `bilancio13.pdf`;
+  - aggiunti i valori quota di fine anno **2014–2017** (`11,324`, `12,308`, `12,508`, `13,485`) dalla Sez. 4.2.3 della Nota integrativa dei rispettivi Bilanci;
+  - aggiunti i rendimenti netti e i valori quota **2009–2011** (`+8,18%` / `10,818`, `+2,33%` / `11,070`, `−7,80%` / `10,207`, da quota iniziale `10,000 €` a inizio 2009) verificati su `bilancio10.pdf` (p. 24) e `bilancio11.pdf` (p. 24), completando la serie `cumulative_net_since_2009` dal 2009 al 2026;
+  - verificata sul Conto Economico (Sez. 4.2.2 dei Bilanci 2010–2025) l'**aliquota effettiva dell'imposta sostitutiva** pagata dal Comparto Azionario (`11,00%` nel 2009–2013, `11,51%` nel 2014, `19,98%–20,03%` nel 2015–2025, con `0,00%` di titoli di Stato in portafoglio);
+  - confermata sul Documento sulla politica di investimento (par. 4.2.4, p. 18) la natura **Price Index (senza dividendi)** delle componenti azionarie del benchmark (`MSWRLDE(PI)` / Bloomberg `MSERWI` e `MSEROPE(PI)` / Bloomberg `MSEREURP`).
+
 ## 2026-10-26 · salvataggio automatico e favicon
 
 - **Salvataggio automatico**: ogni dato inserito si salva da solo in `localStorage` (`pacfondo.v1`) dalla prima modifica, con un ritardo di 400 ms perché uno slider trascinato scriva una volta sola. Aprire la pagina senza inserire nulla non salva niente.

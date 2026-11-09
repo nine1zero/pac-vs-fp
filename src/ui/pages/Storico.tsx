@@ -174,9 +174,9 @@ export function Storico() {
         </span>
         <span className="text-sm muted">
           Per ricostruirlo usiamo ETF che replicano le stesse componenti: iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80) e, per la
-          liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici Datastream del documento finiscono in (PI): se
-          sono indici di prezzo, senza dividendi, il benchmark pubblicato parte svantaggiato rispetto agli ETF, che includono i dividendi. È un'ipotesi da confermare
-          con il fondo.
+          liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici ufficiali della Politica di investimento (par.
+          4.2.4, p. 18: Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP) confermano che le componenti azionarie sono indici Price Index (senza
+          dividendi): il benchmark pubblicato esclude ~2,5–2,8% annuo di dividendi che invece entrano negli ETF ad accumulazione.
         </span>
       </section>
 
@@ -312,8 +312,8 @@ export function Storico() {
           ]}
         />
         <span className="text-sm muted">
-          100 € a fine 2011, con i dividendi reinvestiti (prezzi degli ETF). Il ricostruito pesa le tre linee 45/45/10 e si ribilancia ogni gennaio. Se il pubblicato
-          resta sotto il ricostruito anche se hanno gli stessi pesi, la differenza sta nel modo di calcolarlo (probabilmente indici senza dividendi).
+          100 € a fine 2011, con i dividendi reinvestiti (prezzi degli ETF). Il ricostruito pesa le tre linee 45/45/10 e si ribilancia ogni gennaio. Il pubblicato
+          resta sotto il ricostruito anche a parità di pesi perché calcolato su indici Price Index senza dividendi (MSWRLDE(PI) e MSEROPE(PI)).
         </span>
       </section>
 
@@ -379,7 +379,7 @@ export function Storico() {
           <ul className="wf">
             {[
               [`Pesi del benchmark (Europa 45%, liquidità 10%, niente emergenti) contro ${meta.short}`, d1, false],
-              ['Calcolo del benchmark pubblicato contro il ricostruito (indici senza dividendi?)', d2, false],
+              ['Calcolo del benchmark pubblicato contro il ricostruito (indici Price Index senza dividendi)', d2, false],
               ['Gestore e costi contro il benchmark pubblicato', d3, false],
               ['Totale: fondo prima dell’imposta contro ETF', tot, true],
             ].map(([name, v, strong]) => (

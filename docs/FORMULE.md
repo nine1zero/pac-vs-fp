@@ -92,7 +92,7 @@ Il rimborso fiscale si reinveste nel PAC nello stesso anno. I contributi non ded
 - ETF dopo i costi: `r_e = etf_gross_return − etf_ter`. `etf_gross_return` è il rendimento atteso **prima del TER**:
   - default 7%, stima di lungo periodo per l'azionario globale di J.P. Morgan, LTCMA 2026 (in dollari, 10-15 anni);
   - in alternativa, medie annue storiche dell'ETF scelto. Sono rendimenti di prezzo, già al netto del TER, quindi l'interfaccia le converte in "prima del TER" sommando il TER, così il costo non è contato due volte.
-- Fondo prima dell'imposta: `r_f = r_e + δ`, con `δ` differenziale annuo fondo − ETF (par. 8). Netto dell'imposta annua del 20%: `r_n = r_f · (1 − 0,20)`. Negli anni negativi il fondo registra un credito d'imposta, quindi la formula vale per ogni segno.
+- Fondo prima dell'imposta: `r_f = (etf_gross_return − 0,14%) + δ`, con `δ` differenziale annuo fondo − ETF calibrato sull'ETF di riferimento (par. 8), così che cambiare l'ETF del PAC aggiorni solo `r_e` e il montante PAC senza alterare il montante del Fondo. Netto dell'imposta annua del 20%: `r_n = r_f · (1 − 0,20)`. Negli anni negativi il fondo registra un credito d'imposta, quindi la formula vale per ogni segno.
 
 ## 7. Valori all'uscita
 
@@ -139,7 +139,7 @@ Statistiche sui differenziali annui (fondo lordo − ETF), 2012-2025 (14 anni):
 | Calcolo del benchmark pubblicato | `CAGR(benchmark lordo) − CAGR(ricostruito)` | −2,7 |
 | Gestore e costi | `CAGR(fondo lordo) − CAGR(benchmark lordo)` | −1,0 |
 
-Benchmark ricostruito: `0,45 · MSCI World + 0,45 · MSCI Europe + 0,10 · liquidità €STR`, ribilanciato ogni anno, con ETF che replicano le componenti. La seconda voce è compatibile con un benchmark calcolato su indici di prezzo, senza dividendi (codici Datastream "(PI)" nel documento di politica di investimento). È un'ipotesi da confermare con il fondo.
+Benchmark ricostruito: `0,45 · MSCI World + 0,45 · MSCI Europe + 0,10 · liquidità €STR`, ribilanciato ogni anno, con ETF che replicano le componenti. La seconda voce è spiegata dal fatto che il benchmark pubblicato usa indici azionari di prezzo (Price Index, senza dividendi: codici Datastream `MSWRLDE(PI)` e `MSEROPE(PI)`, codici Bloomberg `MSERWI` e `MSEREURP` nel Documento sulla politica di investimento, par. 4.2.4, p. 18).
 
 ## 9. Pareggi
 
