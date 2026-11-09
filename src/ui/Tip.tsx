@@ -1,5 +1,6 @@
 // Tooltip accessibili da tastiera (hover e focus) e tooltip delle fonti (SPEC par. 3.6).
 import { useId, type ReactNode } from 'react';
+import { fundDocLinksForSource } from '../data/sourcesList';
 
 export type SourceKind = 'Tuo dato' | 'Ipotesi' | 'Calcolo storico' | 'Doc. FPDDI' | 'Norma' | 'Emittente' | 'Calcolo';
 
@@ -39,12 +40,22 @@ interface SrcProps {
 
 /** Icona della fonte di un numero: tipo di fonte e riferimento completo. */
 export function Src({ kind, source, what, align, below }: SrcProps) {
+  const docLinks = fundDocLinksForSource(source);
   return (
     <Tip label={`Fonte${what ? ` di ${what}` : ''}`} align={align} below={below}>
       <span className="bubble-kind" data-kind={kind}>
         {kind}
       </span>
       <span data-testid="source-text">{source}</span>
+      {docLinks.length > 0 && (
+        <span className="bubble-links">
+          {docLinks.map((f) => (
+            <a key={f.url} href={f.url} target="_blank" rel="noopener noreferrer" className="bubble-link">
+              ↗ {f.label}
+            </a>
+          ))}
+        </span>
+      )}
     </Tip>
   );
 }

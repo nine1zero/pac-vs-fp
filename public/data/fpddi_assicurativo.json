@@ -1,6 +1,6 @@
 {
  "description": "Comparto Assicurativo FPDDI (Generali Italia, gestioni separate). Rendimento netto medio ponderato = al netto di tutte le spese e della fiscalità.",
- "source": "Pagina 'Comparti assicurativi GESAV, Euroforte RE, RISPAV e Genris' - https://www.fondopensioneibm.it",
+ "source": "Pagina 'Comparti assicurativi GESAV, Euroforte RE, RISPAV e Genris' - https://www.fondopensioneibm.it/docs/comp_assicurativo.pdf",
  "years": [
   {
    "year": 2018,
@@ -112,7 +112,7 @@
   }
  ],
  "gesav_gross_history": {
-  "source": "Bilanci d'esercizio 1999-2017 (nota integrativa; 1999-2008 scansioni lette con OCR)",
+  "source": "Bilanci d'esercizio 1999-2017 (nota integrativa; 1999-2008 scansioni lette con OCR) - https://www.fondopensioneibm.it/bilanci.htm",
   "note": "Lordo di costi e imposte; fino al 2007 Generali tratteneva 0,30 punti",
   "values": {
    "1999": 0.0775,

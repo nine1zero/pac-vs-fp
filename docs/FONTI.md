@@ -12,35 +12,35 @@ Rendimenti netti annui del comparto (dopo costi e imposta) e del benchmark (nett
 
 | Anno | Fondo netto | Benchmark netto | Fonte |
 |---|---|---|---|
-| 2012 | 4,09% | 2,38% | Bilancio 2012 (`bilancio12.pdf`), p. 14 ("rendimento mensile netto dell'anno 2012 (4,09%) … bcmk … nell'anno (2,38%)") e Nota integrativa Sez. 4.2.3 p. 39 (quota 10,624 €) |
-| 2013 | 9,83% | 14,05% | Bilancio 2013 (`bilancio13.pdf`), p. 14 ("rendimento mensile netto dell'anno 2013 (9,83%) … bcmk … nell'anno (14,05%)") e Nota integrativa Sez. 4.2.3 p. 35 (quota 11,668 €) |
-| 2014 | −2,95% | 8,43% | Bilancio 2014 (`bilancio14.pdf`), p. 13 ("rendimento mensile netto dell'anno 2014 (-2,95%) … bcmk … nell'anno (8,43%)") e Sez. 4.2.3 p. 33 (quota 11,324 €) |
-| 2015 | 8,69% | 5,09% | Bilancio 2015 (`bilancio15.pdf`), p. 14 e Sez. 4.2.3 p. 35 (quota 12,308 €) |
-| 2016 | 1,627% | 2,86% | Bilancio 2016 (`bilancio16.pdf`), p. 13 e Sez. 4.2.3 p. 29 (quota 12,508 €); Nota informativa 2026, Tav. 4, p. 24 |
-| 2017 | 7,811% | 4,60% | Bilancio 2017 (`bilancio17.pdf`), p. 19 e Sez. 4.2.3 p. 37 (quota 13,485 €); Nota informativa 2026, Tav. 4, p. 24 |
-| 2018-2025 | vedi JSON | vedi JSON | Pagina web "Comparto Azionario", tabella "Consistenza e rendimento" (comp_azionario.pdf, p. 1); Nota informativa 2026, Tav. 4, p. 24; Bilancio 2025, Sez. 4.2.3 p. 40 |
-| 2026 (gen-ago) | 6,88% | 8,28% | Pagina web "Comparto Azionario", riga 08/2026. Parziale: escluso dalle medie |
+| 2012 | 4,09% | 2,38% | Bilancio 2012 ([`bilancio12.pdf`](https://www.fondopensioneibm.it/docs/bilancio12.pdf)), p. 14 ("rendimento mensile netto dell'anno 2012 (4,09%) … bcmk … nell'anno (2,38%)") e Nota integrativa Sez. 4.2.3 p. 39 (quota 10,624 €) |
+| 2013 | 9,83% | 14,05% | Bilancio 2013 ([`bilancio13.pdf`](https://www.fondopensioneibm.it/docs/bilancio13.pdf)), p. 14 ("rendimento mensile netto dell'anno 2013 (9,83%) … bcmk … nell'anno (14,05%)") e Nota integrativa Sez. 4.2.3 p. 35 (quota 11,668 €) |
+| 2014 | −2,95% | 8,43% | Bilancio 2014 ([`bilancio14.pdf`](https://www.fondopensioneibm.it/docs/bilancio14.pdf)), p. 13 ("rendimento mensile netto dell'anno 2014 (-2,95%) … bcmk … nell'anno (8,43%)") e Sez. 4.2.3 p. 33 (quota 11,324 €) |
+| 2015 | 8,69% | 5,09% | Bilancio 2015 ([`bilancio15.pdf`](https://www.fondopensioneibm.it/docs/bilancio15.pdf)), p. 14 e Sez. 4.2.3 p. 35 (quota 12,308 €) |
+| 2016 | 1,627% | 2,86% | Bilancio 2016 ([`bilancio16.pdf`](https://www.fondopensioneibm.it/docs/bilancio16.pdf)), p. 13 e Sez. 4.2.3 p. 29 (quota 12,508 €); [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 4, p. 24 |
+| 2017 | 7,811% | 4,60% | Bilancio 2017 ([`bilancio17.pdf`](https://www.fondopensioneibm.it/docs/bilancio17.pdf)), p. 19 e Sez. 4.2.3 p. 37 (quota 13,485 €); [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 4, p. 24 |
+| 2018-2025 | vedi JSON | vedi JSON | Pagina web ["Comparto Azionario"](https://www.fondopensioneibm.it/comparto_azionario.html), tabella "Consistenza e rendimento" ([`comp_azionario.pdf`](https://www.fondopensioneibm.it/docs/comp_azionario.pdf), p. 1); [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 4, p. 24; [Bilancio 2025](https://www.fondopensioneibm.it/docs/bilancio25.pdf), Sez. 4.2.3 p. 40 |
+| 2026 (gen-ago) | 6,88% | 8,28% | Pagina web ["Comparto Azionario"](https://www.fondopensioneibm.it/comparto_azionario.html) ([`comp_azionario.pdf`](https://www.fondopensioneibm.it/docs/comp_azionario.pdf)), riga 08/2026. Parziale: escluso dalle medie |
 
-- Valore quota di fine anno 2009-2026: 2009–2011 dai grafici mensili di Bilancio 2010 (p. 24) e Bilancio 2011 (p. 24), 2012–2017 dalla Nota integrativa Sez. 4.2.3 dei Bilanci, 2018–2026 dalla tabella web e dai Bilanci.
-- Imposta sui rendimenti per anno: 11% fino al 2013, 11,5% nel 2014, 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI "Regime fiscale", p. 5). Verificata sul Conto Economico (Sez. 4.2.2 dei Bilanci 2010–2025): il rapporto effettivo `Imposta sostitutiva / Margine gestione finanziaria` negli anni positivi è 11,00% (2009–2013), 11,51% (2014) e 19,98%–20,03% (2015–2025; es. nel 2025: 998.083 € / 4.995.691 € = 19,98%), confermando che il comparto detiene 0,00% di titoli di Stato (Tav. 1 Nota informativa p. 9).
-- Rendimenti 2009-2011: sia lordi (+9,13%, +2,82%, −8,38%) sia netti (+8,18%, +2,33%, −7,80%, con quote 10,818 / 11,070 / 10,207 da quota iniziale 10,000 € a inizio 2009) verificati su Bilancio 2010 (p. 24), Bilancio 2011 (p. 24) e Bilancio 2016 (p. 11).
+- Valore quota di fine anno 2009-2026: 2009–2011 dai grafici mensili di [Bilancio 2010](https://www.fondopensioneibm.it/docs/bilancio10.pdf) (p. 24) e [Bilancio 2011](https://www.fondopensioneibm.it/docs/bilancio11.pdf) (p. 24), 2012–2017 dalla Nota integrativa Sez. 4.2.3 dei [Bilanci](https://www.fondopensioneibm.it/bilanci.htm), 2018–2026 dalla [tabella web](https://www.fondopensioneibm.it/docs/comp_azionario.pdf) e dai Bilanci.
+- Imposta sui rendimenti per anno: 11% fino al 2013, 11,5% nel 2014, 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI ["Regime fiscale"](https://www.fondopensioneibm.it/docs/regime_fiscale.pdf), p. 5). Verificata sul Conto Economico (Sez. 4.2.2 dei [Bilanci 2010–2025](https://www.fondopensioneibm.it/bilanci.htm)): il rapporto effettivo `Imposta sostitutiva / Margine gestione finanziaria` negli anni positivi è 11,00% (2009–2013), 11,51% (2014) e 19,98%–20,03% (2015–2025; es. nel [Bilancio 2025](https://www.fondopensioneibm.it/docs/bilancio25.pdf): 998.083 € / 4.995.691 € = 19,98%), confermando che il comparto detiene 0,00% di titoli di Stato (Tav. 1 [Nota informativa](https://www.fondopensioneibm.it/docs/nota_informativa.pdf) p. 9).
+- Rendimenti 2009-2011: sia lordi (+9,13%, +2,82%, −8,38%) sia netti (+8,18%, +2,33%, −7,80%, con quote 10,818 / 11,070 / 10,207 da quota iniziale 10,000 € a inizio 2009) verificati su [Bilancio 2010](https://www.fondopensioneibm.it/docs/bilancio10.pdf) (p. 24), [Bilancio 2011](https://www.fondopensioneibm.it/docs/bilancio11.pdf) (p. 24) e [Bilancio 2016](https://www.fondopensioneibm.it/docs/bilancio16.pdf) (p. 11).
 
 ## 2. Altri dati del fondo
 
 | Dato | Valore | Fonte |
 |---|---|---|
-| Benchmark del comparto | 45% MSCI World, 45% MSCI Europe, 10% JPM Cash Euro 3M | Documento sulla politica di investimento, par. 4.2.4, p. 18 (codici Price Index Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP; liquidità JPEC3ML(RI) / JPCAEU3M) |
-| Commissione del gestore | 0,24% annuo + 10% dell'over performance | Documento sulla politica di investimento, p. 16 |
-| TER 2025 comparto Azionario | 0,473% = 0,414% gestione finanziaria + 0,059% depositario | Nota informativa 2026, Tav. 7, p. 24 (`nota_informativa_opzioni_di_investimento.pdf` p. 10) |
-| ISC a 10 anni | 0,29% | Scheda dei costi in vigore dal 01/01/2026, p. 2 |
-| Medie composte ufficiali | 3a 9,92 / 5a 6,90 / 10a 4,78 (benchmark 9,73 / 7,20 / 5,23) | Nota informativa 2026, Tav. 5, p. 24 |
-| Contributi minimi IBM Italia | aderente 2% fino alla prima fascia e 7% oltre; azienda 1,5% e 4% (sui minimi contrattuali), tetto 3,5% della retribuzione | Nota informativa 2026, scheda "I destinatari e i contributi", p. 9 |
-| Limite di deducibilità | 5.300 € dal 2026 (5.164,57 € fino al 2025) | "Regime fiscale", p. 3 |
-| Recupero non dedotti | 2.650 € l'anno, 7.950 € complessivi, dal 6° al 25° anno | "Regime fiscale", p. 3 |
-| Imposta d'uscita | 15% − 0,3 punti per anno oltre il 15°, minimo 9%; riscatto per cause diverse e anticipazioni per ulteriori esigenze 23% | "Regime fiscale", pp. 6-7 |
-| Parte imponibile della prestazione | al netto di rendimenti già tassati e contributi non dedotti | Nota informativa 2026, p. 24 |
-| Portafoglio 31/12/2025 | quattro OICR Generali Investments SICAV = 88,40% delle attività (90,56% del patrimonio netto; 9,44% liquidità) | Bilancio 2025, p. 41; Nota informativa 2026, Tav. 1–3 p. 9 |
-| Comparto Assicurativo 2018-2026 | rendimenti, ISTAT, TFR | Pagina web "Comparti assicurativi" (comp_assicurativo.pdf) |
+| Benchmark del comparto | 45% MSCI World, 45% MSCI Europe, 10% JPM Cash Euro 3M | [Documento sulla politica di investimento](https://www.fondopensioneibm.it/docs/politica_investimento.pdf), par. 4.2.4, p. 18 (codici Price Index Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP; liquidità JPEC3ML(RI) / JPCAEU3M) |
+| Commissione del gestore | 0,24% annuo + 10% dell'over performance | [Documento sulla politica di investimento](https://www.fondopensioneibm.it/docs/politica_investimento.pdf), p. 16 |
+| TER 2025 comparto Azionario | 0,473% = 0,414% gestione finanziaria + 0,059% depositario | [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 7, p. 24 ([`nota_informativa_opzioni_di_investimento.pdf`](https://www.fondopensioneibm.it/docs/nota_informativa_opzioni_di_investimento.pdf) p. 10) |
+| ISC a 10 anni | 0,29% | [Scheda dei costi](https://www.fondopensioneibm.it/docs/scheda_costi.pdf) in vigore dal 01/01/2026, p. 2 |
+| Medie composte ufficiali | 3a 9,92 / 5a 6,90 / 10a 4,78 (benchmark 9,73 / 7,20 / 5,23) | [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 5, p. 24 |
+| Contributi minimi IBM Italia | aderente 2% fino alla prima fascia e 7% oltre; azienda 1,5% e 4% (sui minimi contrattuali), tetto 3,5% della retribuzione | [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), scheda ["I destinatari e i contributi"](https://www.fondopensioneibm.it/docs/nota_informativa_destinatari_e_contributi.pdf), p. 9; [Accordo 04/07/2023](https://www.fondopensioneibm.it/docs/04072023.pdf) |
+| Limite di deducibilità | 5.300 € dal 2026 (5.164,57 € fino al 2025) | ["Regime fiscale"](https://www.fondopensioneibm.it/docs/regime_fiscale.pdf), p. 3 |
+| Recupero non dedotti | 2.650 € l'anno, 7.950 € complessivi, dal 6° al 25° anno | ["Regime fiscale"](https://www.fondopensioneibm.it/docs/regime_fiscale.pdf), p. 3 |
+| Imposta d'uscita | 15% − 0,3 punti per anno oltre il 15°, minimo 9%; riscatto per cause diverse e anticipazioni per ulteriori esigenze 23% | ["Regime fiscale"](https://www.fondopensioneibm.it/docs/regime_fiscale.pdf), pp. 6-7 |
+| Parte imponibile della prestazione | al netto di rendimenti già tassati e contributi non dedotti | [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), p. 24 |
+| Portafoglio 31/12/2025 | quattro OICR Generali Investments SICAV = 88,40% delle attività (90,56% del patrimonio netto; 9,44% liquidità) | [Bilancio 2025](https://www.fondopensioneibm.it/docs/bilancio25.pdf), p. 41; [Nota informativa 2026](https://www.fondopensioneibm.it/docs/nota_informativa.pdf), Tav. 1–3 p. 9 |
+| Comparto Assicurativo 2018-2026 | rendimenti, ISTAT, TFR | Pagina web ["Comparti assicurativi"](https://www.fondopensioneibm.it/comparto_assicurativo.html) ([`comp_assicurativo.pdf`](https://www.fondopensioneibm.it/docs/comp_assicurativo.pdf)) |
 
 ## 3. Norme e fonti istituzionali
 

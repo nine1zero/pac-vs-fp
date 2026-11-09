@@ -4,14 +4,14 @@
   "MSCI World": 0.45,
   "MSCI Europe": 0.45,
   "JPM Cash Euro 3M": 0.1,
-  "source": "FPDDI, Documento sulla politica di investimento, par. 4.2 (codici Datastream MSWRLDE(PI), MSEROPE(PI), JPEC3ML(RI))"
+  "source": "FPDDI, Documento sulla politica di investimento, par. 4.2 (codici Datastream MSWRLDE(PI), MSEROPE(PI), JPEC3ML(RI)) - https://www.fondopensioneibm.it/docs/politica_investimento.pdf"
  },
- "tax_rate_source": "Imposta sostitutiva annua: 11% fino al 2013 (D.Lgs. 252/2005 art. 17, testo previgente), 11,5% nel 2014 e 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI 'Regime fiscale' p. 5). Verifica sul Conto Economico dei Bilanci 2010–2025 (Sez. 4.2.2): il rapporto effettivo Imposta sostitutiva / Margine gestione finanziaria negli anni positivi è 11,00% (2009–2013), 11,51% (2014) e 19,98%–20,03% (2015–2025; es. nel 2025: 998.083 € / 4.995.691 € = 19,98%), confermando che il comparto Azionario detiene 0,00% di titoli di Stato (Tav. 1 Nota informativa p. 9).",
+ "tax_rate_source": "Imposta sostitutiva annua: 11% fino al 2013 (D.Lgs. 252/2005 art. 17, testo previgente), 11,5% nel 2014 e 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI 'Regime fiscale' p. 5 - https://www.fondopensioneibm.it/docs/regime_fiscale.pdf). Verifica sul Conto Economico dei Bilanci 2010–2025 (Sez. 4.2.2, es. https://www.fondopensioneibm.it/docs/bilancio25.pdf): il rapporto effettivo Imposta sostitutiva / Margine gestione finanziaria negli anni positivi è 11,00% (2009–2013), 11,51% (2014) e 19,98%–20,03% (2015–2025; es. nel 2025: 998.083 € / 4.995.691 € = 19,98%), confermando che il comparto Azionario detiene 0,00% di titoli di Stato (Tav. 1 Nota informativa p. 9 - https://www.fondopensioneibm.it/docs/nota_informativa.pdf).",
  "gross_2009_2011": {
   "2009": 0.0913,
   "2010": 0.0282,
   "2011": -0.0838,
-  "note": "Rendimenti lordi riportati nel testo del Bilancio 2011 (comparto avviato a inizio 2009 con quota 10,000 €); i grafici mensili (Bilancio 2010 p. 24 e Bilancio 2011 p. 24) riportano anche i rendimenti netti (+8,18%, +2,33%, -7,80%)"
+  "note": "Rendimenti lordi riportati nel testo del Bilancio 2011 (comparto avviato a inizio 2009 con quota 10,000 €); i grafici mensili (Bilancio 2010 p. 24 - https://www.fondopensioneibm.it/docs/bilancio10.pdf e Bilancio 2011 p. 24 - https://www.fondopensioneibm.it/docs/bilancio11.pdf) riportano anche i rendimenti netti (+8,18%, +2,33%, -7,80%)"
  },
  "net_2009_2011": {
   "2009": 0.0818,
@@ -22,7 +22,7 @@
    "2010": 11.07,
    "2011": 10.207
   },
-  "note": "Rendimenti netti e quote a fine anno da Bilancio 2010 (p. 24), Bilancio 2011 (p. 24) e Bilancio 2016 (p. 11). Quota iniziale 10,000 € a inizio 2009."
+  "note": "Rendimenti netti e quote a fine anno da Bilancio 2010 (p. 24 - https://www.fondopensioneibm.it/docs/bilancio10.pdf), Bilancio 2011 (p. 24 - https://www.fondopensioneibm.it/docs/bilancio11.pdf) e Bilancio 2016 (p. 11 - https://www.fondopensioneibm.it/docs/bilancio16.pdf). Quota iniziale 10,000 € a inizio 2009."
  },
  "years": [
   {
@@ -36,6 +36,7 @@
    "source": "Bilancio d'esercizio 2012 (relazione sulla gestione, p. 14; nota integrativa sez. 4.2.3, p. 39) - https://www.fondopensioneibm.it/docs/bilancio12.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2012 (bilancio12.pdf)",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio12.pdf",
     "page": 14,
     "quote": "Nel grafico sopra riportato, relativo al comparto azionario, si mette in luce il rendimento mensile netto dell’anno 2012 (4,09%), alla data (6,24%), i rendimenti su base composta nell’ultimo triennio (0,80%), il rendimento medio composto alla data (1,52%) e i bcmk netti alla data (6,32%) e nell’anno (2,38%). Nota integrativa Sez. 4.2.3 (p. 39): valore quota al 31/12/2012 pari a 10,624 €."
    }
@@ -51,6 +52,7 @@
    "source": "Bilancio d'esercizio 2013 (relazione sulla gestione, p. 14; nota integrativa sez. 4.2.3, p. 35) - https://www.fondopensioneibm.it/docs/bilancio13.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2013 (bilancio13.pdf)",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio13.pdf",
     "page": 14,
     "quote": "Nel grafico sopra riportato, relativo al comparto azionario, si mette in luce il rendimento mensile netto dell’anno 2013 (9,83%), alla data (16,68%) ed i bcmk netti alla data (21,38%) e nell’anno (14,05%). Nota integrativa Sez. 4.2.3 (p. 35): valore quota al 31/12/2013 pari a 11,668 €."
    }
@@ -66,6 +68,7 @@
    "source": "Bilancio d'esercizio 2014 - https://www.fondopensioneibm.it/docs/bilancio14.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2014 (bilancio14.pdf)",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio14.pdf",
     "page": 13,
     "quote": "rendimento mensile netto dell’anno 2014 (-2,95%), alla data (13,24%) ed i bcmk netti alla data (31,83%) e nell’anno (8,43%). Nota integrativa Sez. 4.2.3 (p. 33): valore quota al 31/12/2014 pari a 11,324 €."
    }
@@ -81,6 +84,7 @@
    "source": "Bilancio d'esercizio 2015 - https://www.fondopensioneibm.it/docs/bilancio15.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2015 (bilancio15.pdf)",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio15.pdf",
     "page": 14,
     "quote": "rendimento netto dell’anno 2015 (+8,69%), alla data (23,08%) ed i bcmk netti alla data (35,52%) e nell’anno (5,09%). Nota integrativa Sez. 4.2.3 (p. 35): valore quota al 31/12/2015 pari a 12,308 €."
    }
@@ -96,6 +100,7 @@
    "source": "Bilancio d'esercizio 2016 - https://www.fondopensioneibm.it/docs/bilancio16.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2016 (bilancio16.pdf); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio16.pdf",
     "page": 13,
     "quote": "rendimento netto dell’anno 2016 (+1,627%), alla data (25,08%) ed i bcmk netti alla data (39,64%) e nell’anno (2,86%). Nota integrativa Sez. 4.2.3 (p. 29): valore quota al 31/12/2016 pari a 12,508 €."
    }
@@ -111,6 +116,7 @@
    "source": "Bilancio d'esercizio 2017 - https://www.fondopensioneibm.it/docs/bilancio17.pdf",
    "evidence": {
     "file": "Bilancio d'esercizio 2017 (bilancio17.pdf); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/bilancio17.pdf",
     "page": 19,
     "quote": "rendimento netto dell’anno 2017 (+7,811%), alla data (34,85%) ed i bcmk netti alla data (46,52%) e nell’anno (4,60%). Nota integrativa Sez. 4.2.3 (p. 37): valore quota al 31/12/2017 pari a 13,485 €."
    }
@@ -123,9 +129,10 @@
    "benchmark_net": -0.0858,
    "fund_tax_rate": 0.2,
    "nav_end": 12.166,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -138,9 +145,10 @@
    "benchmark_net": 0.1748,
    "fund_tax_rate": 0.2,
    "nav_end": 14.383,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -153,9 +161,10 @@
    "benchmark_net": -0.0017,
    "fund_tax_rate": 0.2,
    "nav_end": 14.059,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -168,9 +177,10 @@
    "benchmark_net": 0.1769,
    "fund_tax_rate": 0.2,
    "nav_end": 16.283,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -183,9 +193,10 @@
    "benchmark_net": -0.0894,
    "fund_tax_rate": 0.2,
    "nav_end": 14.78,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -198,9 +209,10 @@
    "benchmark_net": 0.108,
    "fund_tax_rate": 0.2,
    "nav_end": 16.423,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -213,9 +225,10 @@
    "benchmark_net": 0.107,
    "fund_tax_rate": 0.2,
    "nav_end": 17.952,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -228,9 +241,10 @@
    "benchmark_net": 0.0771,
    "fund_tax_rate": 0.2,
    "nav_end": 19.628,
-   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario' (tabella Consistenza e rendimento) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento' (comp_azionario.pdf, salvata il 21/10/2026); Nota informativa 2026, Tav. 4 p. 24",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": null
    }
@@ -243,9 +257,10 @@
    "benchmark_net": 0.0828,
    "fund_tax_rate": 0.2,
    "nav_end": 20.978,
-   "source": "Pagina 'Comparto Azionario', dato gennaio-agosto 2026 (parziale) - https://www.fondopensioneibm.it",
+   "source": "Pagina 'Comparto Azionario', dato gennaio-agosto 2026 (parziale) - https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
    "evidence": {
     "file": "Pagina web 'Comparto Azionario' – tabella 'Consistenza e rendimento', riga 08 (comp_azionario.pdf)",
+    "url": "https://www.fondopensioneibm.it/docs/comp_azionario.pdf",
     "page": 1,
     "quote": "08  58.385,310  6,88%  8,28%  109,78%  20,978"
    }

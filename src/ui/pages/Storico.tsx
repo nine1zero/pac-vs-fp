@@ -174,8 +174,11 @@ export function Storico() {
         </span>
         <span className="text-sm muted">
           Per ricostruirlo usiamo ETF che replicano le stesse componenti: iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80) e, per la
-          liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici ufficiali della Politica di investimento (par.
-          4.2.4, p. 18: Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP) confermano che le componenti azionarie sono indici Price Index (senza
+          liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici ufficiali della{' '}
+          <a href="https://www.fondopensioneibm.it/docs/politica_investimento.pdf" target="_blank" rel="noopener noreferrer">
+            Politica di investimento (par. 4.2.4, p. 18)
+          </a>{' '}
+          (Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP) confermano che le componenti azionarie sono indici Price Index (senza
           dividendi): il benchmark pubblicato esclude ~2,5–2,8% annuo di dividendi che invece entrano negli ETF ad accumulazione.
         </span>
       </section>
@@ -473,7 +476,23 @@ export function Storico() {
         </div>
       </section>
       <p className="text-sm muted">
-        Fonti: {FUND_SOURCE} ETF: {STORICO_ETFS.ishares.source}; {STORICO_ETFS.vanguard.source}; {STORICO_ETFS.spdrimi.source}.
+        Fonti: {FUND_SOURCE} Documenti diretti FPDDI:{' '}
+        <a href="https://www.fondopensioneibm.it/docs/comp_azionario.pdf" target="_blank" rel="noopener noreferrer">
+          comp_azionario.pdf
+        </a>
+        ,{' '}
+        <a href="https://www.fondopensioneibm.it/docs/nota_informativa.pdf" target="_blank" rel="noopener noreferrer">
+          nota_informativa.pdf
+        </a>
+        ,{' '}
+        <a href="https://www.fondopensioneibm.it/docs/politica_investimento.pdf" target="_blank" rel="noopener noreferrer">
+          politica_investimento.pdf
+        </a>
+        ,{' '}
+        <a href="https://www.fondopensioneibm.it/bilanci.htm" target="_blank" rel="noopener noreferrer">
+          bilanci 2012–2025
+        </a>
+        . ETF: {STORICO_ETFS.ishares.source}; {STORICO_ETFS.vanguard.source}; {STORICO_ETFS.spdrimi.source}.
       </p>
     </main>
   );

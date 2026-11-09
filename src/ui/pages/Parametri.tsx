@@ -2,7 +2,7 @@
 import Fuse from 'fuse.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { params, type Parameter } from '../../data';
-import { ASSUMPTIONS, FUND_DOCS, FUND_SITE, LAWS, LIMITS, MARKETS, STUDIES } from '../../data/sourcesList';
+import { ASSUMPTIONS, FUND_DOCS, FUND_SITE, fundDocLinksForSource, LAWS, LIMITS, MARKETS, STUDIES } from '../../data/sourcesList';
 import {
   currentValue,
   defaultValue,
@@ -232,9 +232,22 @@ export function Parametri({ anchor }: { anchor?: string }) {
             <tbody>
               {FUND_DOCS.map((d) => (
                 <tr key={d.doc}>
-                  <td>{d.doc}</td>
                   <td>
-                    <code>{d.file}</code>
+                    <a href={d.pageUrl} target="_blank" rel="noopener noreferrer">
+                      {d.doc}
+                    </a>
+                  </td>
+                  <td>
+                    <span className="doc-file-links">
+                      {d.files.map((f, idx) => (
+                        <span key={f.url}>
+                          {idx > 0 && ', '}
+                          <a href={f.url} target="_blank" rel="noopener noreferrer">
+                            <code>{f.label}</code>
+                          </a>
+                        </span>
+                      ))}
+                    </span>
                   </td>
                   <td>{d.data}</td>
                 </tr>
@@ -286,6 +299,7 @@ function ParamRow({ p }: { p: Parameter }) {
   };
   const def = defaultValue(p.id);
   const link = `${window.location.origin}${window.location.pathname}#/parametri/${p.id}`;
+  const docLinks = fundDocLinksForSource(p.source);
   return (
     <div className={`prow${changed ? ' changed' : ''}`} id={`param-${p.id}`}>
       <span className="pname">
@@ -295,6 +309,15 @@ function ParamRow({ p }: { p: Parameter }) {
           <span className="tip-src hide-l">
             Fonte ({kindLabel}): {p.source}
           </span>
+          {docLinks.length > 0 && (
+            <span className="bubble-links">
+              {docLinks.map((f) => (
+                <a key={f.url} href={f.url} target="_blank" rel="noopener noreferrer" className="bubble-link">
+                  ↗ {f.label}
+                </a>
+              ))}
+            </span>
+          )}
           <button type="button" className="copy" onClick={() => navigator.clipboard?.writeText(link)}>
             Copia il link a questo parametro
           </button>
@@ -355,8 +378,17 @@ function ParamRow({ p }: { p: Parameter }) {
         <span className="kind" data-kind={kindLabel} tabIndex={0} aria-describedby={`src-${p.id}`}>
           {kindLabel}
         </span>
-        <span className="bubble" role="tooltip" id={`src-${p.id}`} data-testid="source-text">
-          {p.source}
+        <span className="bubble" role="tooltip" id={`src-${p.id}`}>
+          <span data-testid="source-text">{p.source}</span>
+          {docLinks.length > 0 && (
+            <span className="bubble-links">
+              {docLinks.map((f) => (
+                <a key={f.url} href={f.url} target="_blank" rel="noopener noreferrer" className="bubble-link">
+                  ↗ {f.label}
+                </a>
+              ))}
+            </span>
+          )}
         </span>
       </span>
       <span className="hide-s">

@@ -554,6 +554,42 @@ input[type='range'].r:focus-visible::-moz-range-thumb {
 .bubble-kind[data-kind='Calcolo'] {
   background: #c7d2fe;
 }
+.tip .bubble::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 10px;
+}
+.tip.tip-below .bubble::after {
+  top: auto;
+  bottom: 100%;
+}
+.bubble-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.bubble-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--lime);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.bubble-link:hover {
+  color: #fff;
+}
+.doc-file-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px 4px;
+}
 .sourced {
   display: inline-flex;
   align-items: center;
