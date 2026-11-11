@@ -56,8 +56,15 @@ test('I miei versamenti: nessuna violazione WCAG AA, con e senza file', async ({
 
 test('tastiera: link per saltare al contenuto, focus visibile, tooltip delle fonti', async ({ page }) => {
   await page.goto('./');
-  await page.keyboard.press('Tab');
   const skip = page.getByRole('link', { name: 'Vai al contenuto' });
+  // pagina pronta e focus sul documento, prima del primo Tab (in CI a volte il Tab arrivava troppo presto)
+  await expect(skip).toBeAttached();
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.evaluate(() => {
+    (document.activeElement as HTMLElement | null)?.blur();
+    window.focus();
+  });
+  await page.keyboard.press('Tab');
   await expect(skip).toBeFocused();
   await expect(skip).toBeInViewport();
   // il focus è sempre visibile: outline o ombra sull'elemento attivo
