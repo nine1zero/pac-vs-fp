@@ -85,13 +85,13 @@ export function Header() {
               <span className="ghb-arrow" aria-hidden="true" />
               <strong className="ghb-title">Migliora il repo</strong>
               <span className="ghb-sep" aria-hidden="true" />
-              <a className="ghb-it" href={REPO_URL} rel="noopener noreferrer" title="Apri il repository e premi Star">
+              <a className="ghb-it" href={REPO_URL} target="_blank" rel="noopener noreferrer" title="Apri il repository e premi Star">
                 <svg className="ghb-star" width="13" height="13" viewBox="0 0 24 24" fill="#D4EE36" aria-hidden="true">
                   <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" />
                 </svg>
                 stella
               </a>
-              <a className="ghb-it" href={`${REPO_URL}/fork`} rel="noopener noreferrer" title="Crea un fork per proporre una modifica con una pull request">
+              <a className="ghb-it" href={`${REPO_URL}/fork`} target="_blank" rel="noopener noreferrer" title="Crea un fork per proporre una modifica con una pull request">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="6" cy="5" r="2.5" />
                   <circle cx="6" cy="19" r="2.5" />
@@ -102,7 +102,7 @@ export function Header() {
                 </svg>
                 pull request
               </a>
-              <a className="ghb-it" href={ISSUE_URL} rel="noopener noreferrer" title="Apri una issue già impostata con un modello">
+              <a className="ghb-it" href={ISSUE_URL} target="_blank" rel="noopener noreferrer" title="Apri una issue già impostata con un modello">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                   <circle cx="12" cy="12" r="8.5" />
                   <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />

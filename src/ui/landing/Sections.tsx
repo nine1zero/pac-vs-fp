@@ -1,4 +1,5 @@
 // Le sette sezioni della Landing (prototipo spec/design/v2/Landing.dc.html, SPEC par. 3.0).
+import { AreaRiservata } from '../AreaRiservata';
 import { useState, type DragEvent } from 'react';
 import { params } from '../../data';
 import { etfById, etfCatalog, paramSource } from '../../data/catalog';
@@ -229,7 +230,9 @@ export function Sec2({ r }: { r: Results }) {
             ) : (
               <>
                 <span className="drop-title">{busy ? 'Lettura in corso…' : 'Trascina qui DettaglioOperazioni.xls'}</span>
-                <span className="drop-sub">o fai clic · Area riservata › Posizione › Operazioni › Esporta</span>
+                <span className="drop-sub">
+                  scaricato da <AreaRiservata />
+                </span>
               </>
             )}
             <input type="file" accept=".xls,.html,.htm" onChange={(e) => readFile(e.target.files?.[0])} aria-label="Scegli il file DettaglioOperazioni" />

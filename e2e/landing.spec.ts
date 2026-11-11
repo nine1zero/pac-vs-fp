@@ -191,4 +191,26 @@ test('fumetto "Migliora il repo": stella, pull request e issue precompilata', as
   expect(u.pathname).toBe('/nine1zero/pac-vs-fp/issues/new');
   expect(u.searchParams.get('labels')).toBe('enhancement');
   expect(u.searchParams.get('body')).toContain('Cosa proporresti');
+  // i link del fumetto si aprono sempre in una nuova scheda
+  for (const name of ['stella', 'pull request', 'issue']) await expect(g.getByRole('link', { name })).toHaveAttribute('target', '_blank');
+});
+
+test('"FPDDI IBM" porta al sito del fondo in una nuova scheda', async ({ page }) => {
+  const link = page.locator('.lead').getByRole('link', { name: 'FPDDI IBM' });
+  await expect(link).toHaveAttribute('href', 'https://www.fondopensioneibm.it/');
+  await expect(link).toHaveAttribute('target', '_blank');
+});
+
+test('area di caricamento: "scaricato da Area Riservata" con il link al fondo, cliccabile', async ({ page }) => {
+  await openSection(page, 2);
+  const link = page.locator('#sezione-2 .drop').getByRole('link', { name: 'Area Riservata' });
+  await expect(link).toHaveAttribute('href', 'https://funds.previnet.it/w-horizon-ibmdip/login.html#/');
+  await expect(link).toHaveAttribute('target', '_blank');
+  await expect(page.locator('#sezione-2 .drop-sub')).toHaveText('scaricato da Area Riservata');
+  // il link sta sopra il campo file invisibile: un clic apre il link, non la scelta del file
+  const onTop = await link.evaluate((a) => {
+    const r = a.getBoundingClientRect();
+    return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) === a;
+  });
+  expect(onTop).toBe(true);
 });
