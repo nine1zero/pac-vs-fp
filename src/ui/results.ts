@@ -81,6 +81,11 @@ export interface Results {
   savingMax: number;
   /** estremo dello slider: savingMin più un multiplo di 50 € che copre savingMax (il valore resta limitato a savingMax) */
   savingSliderMax: number;
+  /** quota minima per il contributo dell'azienda (non arrotondata) e da cosa dipende */
+  savingFloor: number;
+  savingFloorFrom: 'contributo' | 'ral';
+  /** true se la quota minima arriva già alla deduzione massima: non c'è un importo da scegliere */
+  savingLocked: boolean;
   /** quota minima mensile stimata dalla RAL */
   minMonthlyFromRal: number;
 }
@@ -126,7 +131,8 @@ export function computeResults(p: ModelParams): Results {
   });
 
   const maxDeduction = rows[0]!.J;
-  const floor = Math.max(minMemberFromRal(p.ral, p.inps_first_band), rows[0]!.E);
+  const floorRal = minMemberFromRal(p.ral, p.inps_first_band);
+  const floor = Math.max(floorRal, rows[0]!.E);
   // il minimo coincide con la quota minima per il contributo dell'azienda, arrotondata solo all'euro
   const savingMin = Math.min(maxDeduction, Math.ceil(floor));
   return {
@@ -149,6 +155,9 @@ export function computeResults(p: ModelParams): Results {
     savingMin,
     savingMax: maxDeduction,
     savingSliderMax: savingMin + Math.ceil((maxDeduction - savingMin) / 50) * 50,
+    savingFloor: floor,
+    savingFloorFrom: rows[0]!.E >= floorRal ? 'contributo' : 'ral',
+    savingLocked: savingMin >= maxDeduction,
     minMonthlyFromRal: minMemberFromRal(p.ral, p.inps_first_band) / p.months,
   };
 }

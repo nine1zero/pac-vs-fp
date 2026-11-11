@@ -14,9 +14,12 @@ interface RangeProps {
 
 /** Slider con traccia piena fino al valore (stile del prototipo v2). */
 export function Range({ label, value, min, max, step, onChange, valueText, className }: RangeProps) {
-  const pc = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+  // con min = max non c'è niente da scegliere: traccia piena e slider disattivato (niente NaN nello stile)
+  const locked = max <= min;
+  const pc = locked ? 100 : Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
   return (
     <input
+      disabled={locked}
       className={`r${className ? ` ${className}` : ''}`}
       type="range"
       min={min}

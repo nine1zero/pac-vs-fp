@@ -164,3 +164,12 @@ test('il mini slider della domanda va dalla quota minima per il contributo alla 
   await box.getByRole('button', { name: 'Torna al massimo' }).click();
   await expect(box).toContainText('Ora: deduzione massima.');
 });
+
+test('se la quota minima arriva alla deduzione massima lo slider si ferma e una nota spiega perché', async ({ page }) => {
+  await openSection(page, 2);
+  await page.getByLabel('Tuo contributo minimo €/mese').fill('400');
+  const box = page.locator('.budget-box');
+  await expect(box.getByRole('slider', { name: 'Risparmio aggiuntivo annuo' })).toBeDisabled();
+  await expect(box.locator('.lock-note')).toContainText('Lo slider è fermo');
+  await expect(box.locator('.lock-note')).toContainText('Tuo contributo minimo');
+});

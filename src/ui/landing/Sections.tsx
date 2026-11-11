@@ -11,6 +11,7 @@ import { LineChart, type Marker } from '../charts/LineChart';
 import { Chips, NumField, Range, Segmented } from '../controls';
 import { euro, euroK, pct, pctShort } from '../format';
 import { HISTORY, LINE_DELTAS, MAP_DELTAS, SCENARIO_NAMES, type Results } from '../results';
+import { SavingLockNote } from '../SavingLockNote';
 import { Src, Tip } from '../Tip';
 import { useImport } from '../useImport';
 import { NextButton, Section } from './Section';
@@ -389,6 +390,7 @@ export function Sec3({ r }: { r: Results }) {
               onChange={(v) => set({ saving: Math.min(r.savingMax, v) })}
             />
           )}
+          {i.saving_mode === 'fix' && <SavingLockNote r={r} />}
           <span className="text-sm">
             {i.saving_mode === 'max' ? (
               <>

@@ -4,6 +4,7 @@ import { toModelParams, useStore } from '../../state/store';
 import { Range } from '../controls';
 import { euro } from '../format';
 import { CARD_NAMES, CARD_ROLE, computeResults, SCENARIO_DESC } from '../results';
+import { SavingLockNote } from '../SavingLockNote';
 import { Src } from '../Tip';
 import { EtfBox, EtfMenu } from './EtfMenu';
 import { SectionNav } from './Section';
@@ -71,7 +72,9 @@ export function Landing() {
               <span>min {euro(r.savingMin)}</span>
               <span>max {euro(r.savingMax)}</span>
             </span>
-            {isMax ? (
+            {r.savingLocked ? (
+              <SavingLockNote r={r} />
+            ) : isMax ? (
               <span className="budget-box-note">Ora: deduzione massima. Sposta lo slider per un importo fisso.</span>
             ) : (
               <span className="budget-box-note row">
