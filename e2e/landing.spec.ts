@@ -192,3 +192,17 @@ test('fumetto "Migliora il repo": stella, pull request e issue precompilata', as
   expect(u.searchParams.get('labels')).toBe('enhancement');
   expect(u.searchParams.get('body')).toContain('Cosa proporresti');
 });
+
+test('area di caricamento: "scaricato da Area Riservata" con il link al fondo, cliccabile', async ({ page }) => {
+  await openSection(page, 2);
+  const link = page.locator('#sezione-2 .drop').getByRole('link', { name: 'Area Riservata' });
+  await expect(link).toHaveAttribute('href', 'https://funds.previnet.it/w-horizon-ibmdip/login.html#/');
+  await expect(link).toHaveAttribute('target', '_blank');
+  await expect(page.locator('#sezione-2 .drop-sub')).toHaveText('scaricato da Area Riservata');
+  // il link sta sopra il campo file invisibile: un clic apre il link, non la scelta del file
+  const onTop = await link.evaluate((a) => {
+    const r = a.getBoundingClientRect();
+    return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) === a;
+  });
+  expect(onTop).toBe(true);
+});

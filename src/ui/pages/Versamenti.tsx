@@ -1,4 +1,5 @@
 // Pagina G "I miei versamenti" (SPEC par. 3.4 G e 6, prototipo spec/design/v2/Versamenti.dc.html).
+import { AreaRiservata } from '../AreaRiservata';
 import { useMemo, useState } from 'react';
 import { azionario, etfMonthly, etfMonthlySources, type PriceColumn } from '../../data';
 import { monthlySeries } from '../../model/contributions';
@@ -44,7 +45,10 @@ export function Versamenti() {
           <BackLink top />
         </section>
         <label className="drop big">
-          <span className="drop-title">{busy ? 'Lettura in corso…' : 'Trascina qui il file DettaglioOperazioni scaricato dall’area riservata del fondo (.xls)'}</span>
+          <span className="drop-title">{busy ? 'Lettura in corso…' : 'Trascina qui il file DettaglioOperazioni (.xls)'}</span>
+          <span className="drop-sub">
+            scaricato da <AreaRiservata />
+          </span>
           <span className="drop-sub lock">Il file viene letto solo nel tuo browser</span>
           <input type="file" accept=".xls,.html,.htm" onChange={(e) => readFile(e.target.files?.[0])} aria-label="Scegli il file DettaglioOperazioni" />
         </label>

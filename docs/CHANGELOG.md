@@ -12,6 +12,7 @@
 - Implementato nell'header il fumetto del prototipo (`design/v2/Landing.dc.html`) accanto all'icona di GitHub: "Migliora il repo" con i link stella, pull request (fork) e issue precompilata con il modello. Ha la stessa animazione, ferma con "riduci movimento"; si nasconde sotto i 760 px.
 - Scenario 3: "IBM 0 €" senza "· perso" (anche nel prototipo e nella SPEC).
 - Tolta la doppia spunta nello stato del salvataggio.
+- Area di caricamento del file (sezione "Il tuo fondo" e pagina I miei versamenti): "o fai clic · Area riservata › Posizione › Operazioni › Esporta" diventa "scaricato da Area Riservata". "Area Riservata" è un link all'area riservata del fondo (`https://funds.previnet.it/w-horizon-ibmdip/login.html#/`), che si apre in una nuova scheda; il clic sull'area fuori dal link apre ancora la scelta del file.
 
 ## 2026-11-11 · interfaccia dal canvas di design: la domanda, card con le barre del 1° anno, risposta nel Risultato
 
