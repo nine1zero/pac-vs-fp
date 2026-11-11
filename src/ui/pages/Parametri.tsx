@@ -140,7 +140,7 @@ export function Parametri({ anchor }: { anchor?: string }) {
       <section className="card col">
         <h2 className="h2">Profilo: esporta e importa</h2>
         <p className="text-sm">
-          Scarica i valori come file JSON per ritrovarli su un altro dispositivo, o importa un profilo (ad esempio il tuo profilo privato, che resta sul tuo computer). Il
+          Scarica i valori come file JSON per ritrovarli su un altro dispositivo, o importa un profilo (ad esempio un profilo salvato in precedenza su questo dispositivo). Il
           file è letto solo nel browser.
         </p>
         <span className="row-gap wrap">

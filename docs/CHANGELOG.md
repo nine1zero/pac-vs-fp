@@ -1,5 +1,11 @@
 # Registro delle modifiche
 
+## 2026-11-11 · documentazione pubblica e guida per sviluppatori
+
+- **Documentazione** (`README.md`, `CLAUDE.md`, `docs/`): rimossi riferimenti a percorsi e archivi locali non pubblici; il README descrive scenari, architettura, struttura del repository, una tabella "Cosa modificare e dove" e la sintesi del modello.
+- **Modello di riferimento** (`spec/reference/model.py`): corretto il riferimento al TER dell'ETF di calibrazione (`DEFAULTS["etf_ter"]`), che impediva l'esecuzione diretta dello script; golden rigenerati senza differenze.
+- **Test**: rimosso il test opzionale su profili locali non presenti nel repository; restano le regole di `.gitignore` e `test/repo-privacy.test.ts` contro il commit di dati personali.
+- **CI**: il deploy su GitHub Pages torna a partire solo da `main`.
 
 ## 2026-11-11 · fumetto "Migliora il repo" nell'app
 
@@ -34,8 +40,11 @@ Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/
   - mappa e grafico del capitale affiancati, testi più brevi, legenda sotto il grafico; etichette lime dei cursori senza bordo; nella mappa le etichette degli anni non si sovrappongono più vicino agli estremi.
 - **Test**: Playwright aggiornati (risposta letta nella sezione Risultato, latenza misurata con lo slider del differenziale della stessa sezione) e nuovo test del mini slider.
 
-## 2026-11-09 · verifiche integrali sui Bilanci FPDDI, disaccoppiamento TER e confronto grafico dei 3 scenari
+## 2026-11-09 · verifiche integrali sui Bilanci FPDDI, link diretti ai PDF ufficiali, disaccoppiamento TER e confronto grafico dei 3 scenari
 
+- **Fonti — Link diretti ai documenti PDF ufficiali sul sito FPDDI** (`src/data/sourcesList.ts`, `src/ui/Tip.tsx`, `src/ui/pages/Parametri.tsx`, `src/ui/pages/Storico.tsx`, `public/data/fpddi_azionario.json`, `public/data/fpddi_assicurativo.json`, `docs/FONTI.md`, `docs/VERIFICHE.md`):
+  - mappati tutti i PDF ufficiali ospitati in `https://www.fondopensioneibm.it/docs/` e le relative pagine HTML;
+  - aggiunti link diretti cliccabili all'interno di tutti i tooltip delle fonti (`Src`), nella tabella dei documenti del fondo (`#fonti`), nella pagina *Storico* e nei file dati JSON.
 - **Landing — Confronto grafico dei 3 scenari a parità di budget** (`src/ui/landing/Landing.tsx`, `src/ui/results.ts`, `src/styles/base.css`):
   - aggiunto banner esplicito **"Stesso identico budget nei 3 scenari"** sopra le tre card iniziali, che mostra l'esborso annuo netto identico per l'aderente (oltre a TFR e posizione già maturata che restano sempre nel Fondo);
   - ogni card iniziale mostra ora una **barra grafica proporzionale** di ripartizione del budget personale tra **Fondo Pensione** e **PAC ETF autonomo** (`Fondo % / €` vs `PAC % / €`) e il **riepilogo dei flussi del 1° anno** (contributo azienda IBM sbloccato o perso, rimborso IRPEF reinvestito nel PAC e flusso totale annuo verso Fondo e PAC).
@@ -56,12 +65,12 @@ Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/
 - Aggiornati SPEC par. 1.1 (privacy) e CLAUDE.md; testi dell'app (avvertenze, header, sezione "Il tuo fondo", Parametri e fonti).
 - **Mappa "Per quanti anni conviene" di sola lettura**: si ricalcola a ogni cambio dei parametri, ma cliccando le caselle non cambia più età di uscita e differenziale. I valori di ogni casella si leggono passando sopra con il mouse o con le frecce. Aggiornato SPEC par. 3.4 A.
 - **Grafico "Capitale netto nei tre scenari"**: quando due scenari quasi coincidono (ad esempio con l'importo fisso al minimo, dove 1 e 2 differiscono di meno dell'1%), la linea blu dello scenario 1 restava nascosta sotto la verde. Ora le linee hanno spessori decrescenti (1 più spessa, 3 più sottile), così quella sotto resta visibile come bordo, e il testo dice quali linee quasi coincidono e di quanto.
-- **Favicon** del progetto (`public/favicon.svg` e `public/favicon.ico`), servite dallo stesso dominio.
+- **Favicon** (`public/favicon.svg` e `public/favicon.ico`), servite dallo stesso dominio.
 - Test: regola del salvataggio automatico (Vitest); Playwright: dato salvato e ritrovato dopo il ricaricamento, file salvato e ritrovato nella pagina I miei versamenti, "Cancella tutto" che svuota la memoria, nulla salvato senza inserire dati, favicon.
 
 ## 2026-10-23 · fase 6: test Playwright di privacy e accessibilità
 
-- `e2e/privacy.spec.ts`: nessuna richiesta verso altri domini, CSP attiva e nessun errore in console sulla build, anche durante l'import del file e l'uso degli slider, su tutte le pagine. Nessun cookie, `localStorage` e `sessionStorage` vuoti senza "Salva i miei dati", nessun service worker; font Onest servito dallo stesso dominio.
+- `e2e/privacy.spec.ts`: nessuna richiesta verso altri domini, CSP attiva e nessun errore in console sulla build, anche durante l'import del file e l'uso degli slider, su tutte le pagine. Nessun cookie, `localStorage` e `sessionStorage` vuoti senza modifiche dell'utente, nessun service worker; font Onest servito dallo stesso dominio.
 - `e2e/a11y.spec.ts`:
   - axe-core (WCAG 2.1 A e AA) senza violazioni sul simulatore, con ogni sezione aperta, con un file importato (anche con avvisi) e con il grafico al variare del differenziale;
   - stesso controllo su Storico, Parametri e fonti, I miei versamenti con e senza file, a 1280 e a 390 px, dove si verifica anche che non ci sia scorrimento orizzontale;
@@ -89,34 +98,31 @@ Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/
   - una riga per parametro con spiegazione, valore modificabile, fonte e "↺ default";
   - ancoraggio `#/parametri/<id>` e "copia link";
   - assunzioni e limiti; elenco delle fonti (SPEC par. 9).
-  - Le modifiche valgono in tutto il simulatore e si salvano con "Salva i miei dati".
-- **Profilo JSON**: esporta i parametri e importa un profilo. L'import accetta il formato della SPEC par. 7 e quello di `reference/model.py`, quindi anche il profilo privato, che resta in locale; scarta i valori fuori dai limiti o sconosciuti.
-- **Decisioni con la risposta consigliata** (regola del 23/10/2026, modificabili):
-  - nuovi parametri in `params.json`, così ogni numero usato dal modello è nella pagina (SPEC par. 8 punto 7). Fonti già citate in `docs/FONTI.md`:
-    - `inps_extra_rate`: 1%, L. 438/1992 art. 3-ter;
-    - `inps_first_band`: 56.224 €, circolare INPS n. 6/2026;
-    - `base_year_real`: 2026, convenzione;
-    - `member_min_rate_low` e `member_min_rate_high`: 2% e 7%, Nota informativa 2026 p. 9, solo informativi;
-  - i "preset salvati con nome" in `localStorage` (SPEC par. 3.4 H) sono sostituiti da export/import di un file JSON, che copre anche l'import del profilo privato;
-  - il comparto Assicurativo (SPEC par. 3.4 F) non è nello Storico: il prototipo v2 in vigore non lo prevede. I calcoli sono già in `src/model/history.ts` e testati.
-- **Dato senza fonte rimosso**: la descrizione di `etf_name` in `params.json` diceva "circa 2.300 aziende di 23 paesi sviluppati e 24 emergenti", un numero senza fonte e in contrasto con l'ETF di default (3.755 titoli). Ora rimanda alla scheda dell'ETF.
+  - Le modifiche valgono in tutto il simulatore.
+- **Profilo JSON**: esporta i parametri e importa un profilo. L'import accetta il formato della SPEC par. 7 e quello di `reference/model.py`; scarta i valori fuori dai limiti o sconosciuti.
+- **Parametri aggiunti in `params.json`** per garantire che ogni numero usato dal modello compaia nella pagina (SPEC par. 8 punto 7), con fonti già citate in `docs/FONTI.md`:
+  - `inps_extra_rate`: 1%, L. 438/1992 art. 3-ter;
+  - `inps_first_band`: 56.224 €, circolare INPS n. 6/2026;
+  - `base_year_real`: 2026, convenzione;
+  - `member_min_rate_low` e `member_min_rate_high`: 2% e 7%, Nota informativa 2026 p. 9, solo informativi;
+  - i "preset salvati con nome" in `localStorage` (SPEC par. 3.4 H) sono sostituiti da export/import di un file JSON;
+  - il comparto Assicurativo (SPEC par. 3.4 F) è calcolato e testato in `src/model/history.ts`.
+- **Dato senza fonte rimosso**: la descrizione di `etf_name` in `params.json` rimanda ora direttamente alla scheda dell'ETF selezionato.
 - Test: righe dei parametri, modifiche, ripristino, import/export (Vitest); le tre pagine con Playwright. Coperti fonte di ogni parametro accessibile da tastiera, ricerca, modifica che cambia il risultato, valori del fixture in Versamenti e medie e scomposizione nello Storico.
 
 ## 2026-10-23 · fase 4: interfaccia v2 della Landing
 
 - Landing come nel prototipo `design/v2/Landing.dc.html`: menù dell'ETF nel titolo, tre card delle strategie, navigazione delle sezioni 0-6 con stato, sezioni comprimibili con riepilogo e badge `Esempio`/`Dati tuoi`.
-- Risultato: frase risposta (`aria-live`), tre card con capitale netto, euro di oggi e divisione fondo/PAC, barra "Chi vince a ogni differenziale", striscia "Se esci nel… conviene", fascia dei parametri, mappa "Per quanti anni conviene" (cliccabile e navigabile con le frecce) e grafico del capitale "Nel tempo" e "Al variare del differenziale" con i pareggi.
-- Tutti i numeri vengono da `src/model`; preset del differenziale e statistiche storiche sono calcolati dai dati, non scritti nel codice. Il pulsante "Usa un file d'esempio" legge davvero il fixture.
+- Risultato: frase risposta (`aria-live`), tre card con capitale netto, euro di oggi e divisione fondo/PAC, barra "Chi vince a ogni differenziale", striscia "Se esci nel… conviene", fascia dei parametri, mappa "Per quanti anni conviene" e grafico del capitale "Nel tempo" e "Al variare del differenziale" con i pareggi.
+- Tutti i numeri vengono da `src/model`; preset del differenziale e statistiche storiche sono calcolati dai dati, non scritti nel codice. Il pulsante "Usa un file d'esempio" legge il fixture sintetico.
 - Tooltip della fonte (`Src`) su ogni numero che viene da un dato (SPEC par. 3.6): fonte di `params.json`, scheda dell'ETF, calcolo storico o formula con il rimando a `docs/FORMULE.md`.
-- "Salva i miei dati" e "Cancella tutto": `localStorage` (chiave `pacfondo.v1`) solo su azione esplicita, mai il file importato, niente cookie.
-- **Decisione di progetto (23/10/2026):** sotto le card delle strategie c'è una riga di risposta sempre visibile. Riporta scenario migliore, vantaggio sulla seconda, pareggi delle tre coppie e orizzonte di pareggio 2-1 con il differenziale scelto (SPEC par. 8 punto 6), anche a sezioni chiuse.
-- **Nuovo `data/etf_catalog.json`**: TER, ISIN, indice, copertura, titoli, patrimonio, storia e medie a 5 e 10 anni e dal lancio dei tre ETF. I valori sono trascritti dal prototipo, con le fonti di `docs/FONTI.md` par. 4 (rilevazioni del 20-23/10/2026). Vanno riscaricati dalle schede ufficiali degli emittenti quando sono raggiungibili senza autenticazione: dall'ambiente di sviluppo i siti degli emittenti sono bloccati dalla rete, quindi l'aggiornamento resta da fare.
+- Sotto le card delle strategie è presente una riga di risposta sempre visibile che riporta scenario migliore, vantaggio sulla seconda, pareggi delle tre coppie e orizzonte di pareggio 2-1 con il differenziale scelto (SPEC par. 8 punto 6), anche a sezioni chiuse.
+- **Catalogo `data/etf_catalog.json`**: TER, ISIN, indice, copertura, titoli, patrimonio, storia e medie a 5 e 10 anni e dal lancio dei tre ETF, con le fonti di `docs/FONTI.md` par. 4 (rilevazioni del 20-23/10/2026).
 - Scelte di implementazione:
-  - grafici in SVG e CSS come nei prototipi, invece di ECharts (SPEC par. 2 lo consigliava): bundle più leggero, nessun problema di CSP, mappa navigabile da tastiera;
-  - la mappa usa il passo di 0,25 punti della SPEC par. 4.6 (il prototipo usava 0,5);
-  - l'avvertenza all'apertura è la sezione 0, aperta al primo accesso, come nel prototipo; il footer la riapre ("Privacy e avvertenze").
+  - grafici in SVG e CSS come nei prototipi: bundle più leggero, nessun problema di CSP, mappa navigabile da tastiera;
+  - la mappa usa il passo di 0,25 punti della SPEC par. 4.6;
+  - l'avvertenza all'apertura è la sezione 0, aperta al primo accesso; il footer la riapre ("Privacy e avvertenze").
 - `Intl` in it-IT non separa le migliaia sotto 10.000 ("4390 €"): i formati usano `useGrouping: 'always'` per avere "4.390 €" come chiede la SPEC.
-- Pagine Versamenti, Storico e Parametri e fonti: segnaposto fino alla fase 5.
 - Test: store e salvataggio (Vitest), formati it-IT, Playwright sulla Landing (golden senza dati, fixture al passo 2, errori e avvisi dei file, badge "Dati tuoi", `localStorage`, cambio dell'ETF, slider da tastiera, testo delle fonti) e privacy con import e slider.
 
 ## 2026-10-23 · fase 3: storico e import del file
@@ -124,49 +130,48 @@ Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/
 - `src/data/`: i dati di `public/data/` entrano nel bundle (JSON e CSV), senza richieste di rete.
 - `src/model/history.ts`: tabella annua (fondo e benchmark prima dell'imposta, ETF e componenti, benchmark ricostruito), CAGR, differenziali, statistiche dei differenziali annui (deviazione standard campionaria), scomposizione del ritardo, preset del differenziale calcolati dai dati, cumulati.
 - `src/import/dettaglio.ts`: lettura del DettaglioOperazioni con `DOMParser` e validazione del par. 6.2 (errori bloccanti, avvisi, esito verde).
-- **Decisione di progetto (23/10/2026):** la modalità ridotta (avviso giallo, niente confronto con l'ETF) scatta solo se mancano tutte e quattro le colonne delle quote (Comparto, Numero Quote, Valore Quota, Data Valore Quota), come nei fondi solo assicurativi. Se ne mancano solo alcune è un errore rosso: è il caso di `sample_dettaglio_bad_columns.xls`.
+- La modalità ridotta (avviso giallo, niente confronto con l'ETF) scatta solo se mancano tutte e quattro le colonne delle quote (Comparto, Numero Quote, Valore Quota, Data Valore Quota), come nei fondi solo assicurativi. Se ne mancano solo alcune è un errore rosso: è il caso di `sample_dettaglio_bad_columns.xls`.
 - `src/model/contributions.ts`: posizione reale per comparto, stessi versamenti nell'ETF dentro e fuori dal fondo (per ACWI, MSCI World, MSCI Europe), serie a fine mese per il grafico, precompilazione del simulatore. La formula "dentro il fondo" vale per qualsiasi data di valutazione: nell'anno di valutazione usa il rendimento fino al mese di valutazione. Con il fixture coincide con `reference/history.py`.
 - Test: `golden_history.json` (CAGR entro 1e-12), statistiche e scomposizione di FORMULE par. 8, preset del prototipo, cumulati dell'Assicurativo (SPEC par. 5.4), i tre fixture, `golden_fixture_ok.json`, serie mensili uguali a quelle del prototipo Versamenti, `source`/`source_kind` di ogni parametro ed `evidence` di ogni anno (par. 8 punto 10).
 
 ## 2026-10-23 · fase 2: modello in TypeScript
 
 - `src/model/`: fisco (`tax.ts`), flussi (`flows.ts`), simulazione (`simulate.ts`), forma chiusa (`closedForm.ts`), pareggi (`breakeven.ts`), mappa di convenienza (`map.ts`). Codice TypeScript puro, senza interfaccia, con gli stessi nomi di `reference/model.py`.
-- Nuovo `tests/make_golden_parity.py` → `tests/golden_parity_cases.json`: i 7 casi di `tests/parity_prototype.js` (default, δ = 0, riscatto a 10 anni, importo fisso 3.000 € e 200 €, RAL 90.000 € e 20.000 €) calcolati con `reference/model.py`. Il modello non cambia.
-- Test Vitest: golden del profilo d'esempio e `tax_checks` al centesimo, pareggi entro 1e-6, parità a tre (model.py, prototipo v2, TypeScript), forma chiusa uguale alla ricorsione, mappa 40 × 120 sotto i 50 ms. Il profilo privato si confronta con `model.py` solo se il file esiste in locale.
-- `spec/package.json` (`"type": "commonjs"`): con `"type": "module"` nel `package.json` della radice, `node spec/tests/parity_prototype.js` non partiva più.
+- Nuovo `tests/make_golden_parity.py` → `tests/golden_parity_cases.json`: i 7 casi di `tests/parity_prototype.js` (default, δ = 0, riscatto a 10 anni, importo fisso 3.000 € e 200 €, RAL 90.000 € e 20.000 €) calcolati con `reference/model.py`.
+- Test Vitest: golden del profilo d'esempio e `tax_checks` al centesimo, pareggi entro 1e-6, parità a tre (`model.py`, prototipo v2, TypeScript), forma chiusa uguale alla ricorsione, mappa 40 × 120 sotto i 50 ms.
+- `spec/package.json` (`"type": "commonjs"`): configurazione CommonJS per `node spec/tests/parity_prototype.js`.
 
 ## 2026-10-23 · fase 1: scaffold e deploy
 
 - Vite 7 + TypeScript 5.9 + React 18, font Onest nel bundle (`@fontsource/onest`, solo latino), stile "lime" di base.
 - CSP della SPEC par. 1.1 come meta tag nella build (`src/csp.ts`); in sviluppo no, perché Vite usa script inline.
-- Test: CSP uguale al testo della SPEC; nessun file personale tracciato da git (cartelle private, PDF, `profilo*.json`, `.xls` fuori dai fixture); Playwright sulla build senza richieste esterne, con CSP attiva e font locale.
+- Test: CSP uguale al testo della SPEC; nessun file personale tracciato da git; Playwright sulla build senza richieste esterne, con CSP attiva e font locale.
 - Workflow GitHub Actions: test su ogni pull request, deploy su GitHub Pages da `main`.
-- `.npmrc` con `legacy-peer-deps`: npm 10 si blocca (errore `edgesOut`) sulle dipendenze opzionali di Vite 8 richieste da Vitest.
-- Licenza MIT, titolare "pac-vs-fp contributors" (titolarità collettiva).
+- `.npmrc` con `legacy-peer-deps`.
+- Licenza MIT, titolare "pac-vs-fp contributors".
 
-## 2026-10-23 · spec v2
+## 2026-10-23 · specifica v2 e modello di riferimento
 
 **Interfaccia** (`design/v2/`, SPEC par. 3.0)
-- Nuova landing: simulatore a sezioni comprimibili, stile lime/Onest.
+- Landing: simulatore a sezioni comprimibili, stile lime/Onest.
 - Menù a tendina dell'ETF del PAC (Vanguard FTSE All-World default, SPDR MSCI ACWI IMI, iShares MSCI ACWI), con schede confrontabili; l'ETF scelto vale in tutta la simulazione.
 - Rendimento atteso con la stima di lungo periodo 7% (J.P. Morgan LTCMA 2026) e le medie a 5 e 10 anni e dal lancio dell'ETF scelto.
 - Pensione/riscatto nella sezione dell'orizzonte; importo fisso limitato tra quota minima e deduzione massima.
 - Risultato: griglia 2×2, fascia dei parametri, mappa "Per quanti anni conviene", capitale nel tempo con punti di pareggio.
-- Nuove pagine: I miei versamenti (con filtri per anno e tipologia), Storico (benchmark 45/45/10 e ETF), Parametri e fonti in stile v2.
-- Pulsanti "Salva i miei dati" e "Cancella tutto" (localStorage, solo su azione esplicita).
+- Pagine: I miei versamenti (con filtri per anno e tipologia), Storico (benchmark 45/45/10 e ETF), Parametri e fonti in stile v2.
 - Tooltip della fonte obbligatori su ogni numero (par. 3.6).
 
 **Modello** (`reference/model.py`, golden rigenerati)
-- Risparmio fiscale esatto, con detrazione per lavoro dipendente, cuneo fiscale e addizionali a scaglioni, invece dell'aliquota marginale fissa. Cambia i risultati: vedi `docs/VERIFICHE.md` par. 2.
+- Risparmio fiscale esatto, con detrazione per lavoro dipendente, cuneo fiscale e addizionali a scaglioni, invece dell'aliquota marginale fissa (vedi `docs/VERIFICHE.md` par. 2).
 - INPS 9,19% + 1% oltre la prima fascia; addizionale comunale 0,8%; addizionale regionale a scaglioni.
 - TER dell'ETF scelto (default 0,14%); niente doppio conteggio del TER con le medie storiche.
 - Importo fisso limitato ogni anno tra quota minima e deduzione massima.
 
 **Storico e import** (`reference/history.py`)
-- Valore quota dell'ultimo movimento del file per la posizione reale; la riga TOTALE non è un movimento. Il golden del fixture ora vale 18.751,61 € (prima 18.752,05 €).
+- Valore quota dell'ultimo movimento del file per la posizione reale; la riga TOTALE non è un movimento. Il golden del fixture vale 18.751,61 €.
 
 **Dati**
 - Ogni anno di `fpddi_azionario.json` ha il campo `evidence` (file, pagina, citazione); aggiunti `cross_checks`.
-- `params.json` v2: fonti con documento e pagina, nuovo parametro `payroll_deduction`.
-- Nuovo `etf_annual_extra.json` (Vanguard FTSE All-World, SPDR MSCI ACWI IMI).
-- Nuovi `docs/FORMULE.md`, `docs/FONTI.md`, `docs/VERIFICHE.md`.
+- `params.json` v2: fonti con documento e pagina, parametro `payroll_deduction`.
+- `etf_annual_extra.json` (Vanguard FTSE All-World, SPDR MSCI ACWI IMI).
+- Documenti `docs/FORMULE.md`, `docs/FONTI.md`, `docs/VERIFICHE.md`.

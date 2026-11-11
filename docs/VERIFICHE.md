@@ -1,6 +1,6 @@
-# Verifiche su dati, formule e calcoli (23/10/2026)
+# Verifiche su dati, formule e calcoli
 
-Registro delle verifiche fatte: cosa è stato controllato, come, e cosa è cambiato. Da aggiornare a ogni revisione.
+Registro delle verifiche tecniche sui dati ufficiali, sulle formule fiscali/finanziarie e sulla parità tra modello di riferimento Python (`spec/reference/`) e implementazione TypeScript (`src/model/`).
 
 ## 1. Dati del fondo
 
@@ -69,16 +69,15 @@ Controlli puntuali (`tests/golden_model_example.json`, campo `tax_checks`): impo
 
 `npm test` confronta l'app con `tests/golden_history.json` (CAGR uguali entro 1e-12) e con le statistiche di FORMULE par. 8 (media −6,16%, mediana −6,82%, deviazione standard campionaria 6,96%, intervallo [−9,81%; −2,51%], 3 anni positivi su 14). Verifica anche la scomposizione −2,1 / −2,7 / −1,0, i preset del prototipo (−5,81 / −5,04 / −3,95 / −4,80) e i cumulati dell'Assicurativo 2018-2025 (+18,0%, ISTAT +20,4%, TFR +24,0%; Azionario +45,6%). Sul fixture coincidono con `tests/golden_fixture_ok.json` la posizione reale, l'ETF dentro e fuori dal fondo e la data di valutazione; le serie mensili coincidono al centesimo con quelle del prototipo `design/v2/Versamenti.dc.html` per ACWI, MSCI World e MSCI Europe.
 
-### Privacy e accessibilità dell'app (23/10/2026)
+### Privacy e accessibilità dell'app
 
 `npm run test:e2e` sulla build con la CSP:
-- nessuna richiesta esterna su tutte le pagine, anche con import e slider; nessun cookie, nessun dato in `localStorage` senza "Salva i miei dati";
+- nessuna richiesta esterna su tutte le pagine, anche con import e slider; nessun cookie, nessun dato in `localStorage` finché l'utente non modifica un parametro;
 - axe-core WCAG 2.1 AA senza violazioni su tutte le pagine, a 1280 e a 390 px;
 - Lighthouse: Accessibility 100 e Best Practices 100 su simulatore, Storico, Parametri e fonti, I miei versamenti;
 - aggiornamento della risposta dopo uno slider: mediana sotto i 100 ms.
 
-
-## 7. Anomalie riscontrate nei documenti del fondo e punti aperti
+## 6. Anomalie riscontrate nei documenti del fondo e punti aperti
 
 1. **Refuso nella tabella web di maggio 2026 (`comparto_azionario.html` / `comp_azionario.pdf`)**: la riga `05/2026` riporta un valore quota di `20,352` con rendimento da inizio 2009 `+105,32%` e rendimento da inizio 2026 `+4,61%`, valori matematicamente corrispondenti a una quota di **`20,532`** (cifre `3` e `5` invertite).
 2. **Incoerenza interna nella Nota informativa 2026 (p. 24)**: la Tav. 5 dichiara un rendimento medio composto a 10 anni (2016–2025) del benchmark pari a `5,23%`, mentre i rendimenti annui della Tav. 4 nella stessa pagina danno esattamente `5,03%`.

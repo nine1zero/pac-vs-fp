@@ -1,6 +1,6 @@
-# PAC vs Fondo Pensione: specifica della web app
+# PAC vs Fondo Pensione: specifica tecnica dell'applicazione web
 
-Documento di specifica. Obiettivo: costruire una web app statica, ospitata su GitHub Pages nel repository `https://github.com/nine1zero/pac-vs-fp`, che replica e calcola il confronto Fondo pensione vs PAC ETF.
+Specifica tecnica e architetturale della web app statica ospitata su GitHub Pages nel repository `https://github.com/nine1zero/pac-vs-fp`.
 
 Il simulatore confronta tre modi di usare lo stesso risparmio annuo per un iscritto al Fondo Pensione per i Dipendenti e Dirigenti IBM (FPDDI), comparto Azionario. Le alternative sono più o meno versamenti nel fondo e un PAC su un ETF azionario globale passivo. Il risultato principale è **il punto di pareggio**: per quale differenziale di rendimento tra fondo ed ETF, e per quanti anni di permanenza, conviene una strategia rispetto all'altra.
 
@@ -8,56 +8,48 @@ Lingua dell'interfaccia: **italiano**. Formati numerici: `it-IT` (1.234,56 €; 
 
 ---
 
-## 0. Come usare questo pacchetto
-
-Contenuto della cartella `pac-vs-fp-spec/`:
+## 0. Struttura dei dati, dei modelli di riferimento e dei test
 
 | Percorso | Contenuto |
 |---|---|
-| `SPEC.md` | Questo documento: requisiti, formule, interfaccia, test |
-| `CLAUDE.md` | Istruzioni brevi da copiare nella radice del repository |
-| `data/fpddi_azionario.json` | Rendimenti annui pubblicati del comparto Azionario e del benchmark, con fonti |
-| `data/fpddi_assicurativo.json` | Rendimenti netti del comparto Assicurativo, inflazione ISTAT, rivalutazione TFR |
-| `data/etf_monthly.csv` + `etf_monthly.sources.json` | Prezzi di fine mese 12/2011-10/2026 di ACWI, MSCI World, MSCI Europe, liquidità €STR |
-| `data/params.json` | Catalogo completo dei parametri (id, etichetta, gruppo, unità, default, limiti, fonte, tag di ricerca) |
-| `data/profile_example.json` | Profilo d'esempio pubblico, usato come default dell'app |
-| `reference/model.py` | Implementazione di riferimento del modello (fa fede in caso di dubbio) |
-| `reference/history.py` | Riferimento per statistiche storiche, parser del file contribuzioni e confronto con l'ETF |
-| `tests/golden_model_example.json` | Valori attesi del modello per il profilo d'esempio |
-| `tests/golden_history.json` | Valori attesi delle statistiche storiche |
-| `tests/golden_fixture_ok.json` | Valori attesi per il file sintetico di test |
-| `tests/fixtures/*.xls` | File contribuzioni sintetici: uno valido e due non validi |
-| `docs/FORMULE.md` | Metodo: tutte le formule, con esempi numerici e fonti normative |
-| `docs/FONTI.md` | Provenienza di ogni dato (file del fondo e pagina, norma, emittente) |
-| `docs/VERIFICHE.md` | Registro delle verifiche su dati e calcoli, correzioni fatte, punti aperti |
-| `docs/CHANGELOG.md` | Modifiche a spec, design e modello, con il motivo |
-| `data/etf_annual_extra.json` | Rendimenti annui di Vanguard FTSE All-World e SPDR MSCI ACWI IMI |
-| `tests/make_golden.py` | Rigenera `golden_model_example.json` dal modello (solo per modifiche volute) |
-| `tests/parity_prototype.js` | Confronta il codice del prototipo v2 con `reference/model.py` |
-| `design/v2/*.dc.html` | **Prototipi in vigore** (par. 3.0): Landing (simulatore a sezioni), Versamenti, Storico, Fonti |
-| `design/v1/*.dc.html` | Prima versione (percorso guidato e parametri), solo per confronto |
-
-Procedura:
-1. Clonare `nine1zero/pac-vs-fp` e creare un branch, ad esempio `spec-v2`.
-2. Copiare il pacchetto: `SPEC.md` e `docs/*.md` in `docs/`, `CLAUDE.md` nella radice, `data/` in `public/data/` (o `src/data/`), `reference/`, `tests/` e `design/` in `spec/`. Rinominare `.gitignore.suggested` in `.gitignore` (o unirlo a quello esistente).
-3. **Prima del commit**, verificare che non entrino dati personali: niente cartelle private, niente `.xls` fuori da `tests/fixtures/`, niente PDF, niente `profilo*.json` (vedi CLAUDE.md).
-4. Commit, push del branch e pull request; poi implementare per fasi (par. 8), una pull request per fase.
+| `docs/SPEC.md` | Questo documento: requisiti, formule, interfaccia, test |
+| `CLAUDE.md` | Guida tecnica sintetica e regole di sviluppo |
+| `public/data/fpddi_azionario.json` | Rendimenti annui pubblicati del comparto Azionario e del benchmark, con fonti |
+| `public/data/fpddi_assicurativo.json` | Rendimenti netti del comparto Assicurativo, inflazione ISTAT, rivalutazione TFR |
+| `public/data/etf_monthly.csv` + `etf_monthly.sources.json` | Prezzi di fine mese 12/2011-10/2026 di ACWI, MSCI World, MSCI Europe, liquidità €STR |
+| `public/data/params.json` | Catalogo completo dei parametri (id, etichetta, gruppo, unità, default, limiti, fonte, tag di ricerca) |
+| `public/data/profile_example.json` | Profilo sintetico d'esempio, usato come configurazione di default dell'app |
+| `spec/reference/model.py` | Implementazione di riferimento in Python del modello matematico e fiscale (fa fede in caso di dubbio) |
+| `spec/reference/history.py` | Riferimento in Python per statistiche storiche, parser del file contribuzioni e confronto con l'ETF |
+| `spec/tests/golden_model_example.json` | Valori di controllo attesi del modello per il profilo d'esempio |
+| `spec/tests/golden_history.json` | Valori di controllo attesi delle statistiche storiche |
+| `spec/tests/golden_fixture_ok.json` | Valori di controllo attesi per il file sintetico di test |
+| `spec/tests/fixtures/*.xls` | File contribuzioni sintetici: uno valido e due non validi |
+| `docs/FORMULE.md` | Metodo matematico e fiscale: tutte le formule, con esempi numerici e fonti normative |
+| `docs/FONTI.md` | Provenienza di ogni dato (documenti ufficiali del fondo e pagina, norma, emittente) |
+| `docs/VERIFICHE.md` | Registro delle verifiche su dati e calcoli, correzioni effettuate, punti aperti |
+| `docs/CHANGELOG.md` | Registro cronologico delle modifiche a specifica, design e modello |
+| `public/data/etf_annual_extra.json` | Rendimenti annui di Vanguard FTSE All-World e SPDR MSCI ACWI IMI |
+| `spec/tests/make_golden.py` | Rigenera `golden_model_example.json` dal modello di riferimento (solo per modifiche volute) |
+| `spec/tests/parity_prototype.js` | Confronta il codice del prototipo v2 con `spec/reference/model.py` |
+| `spec/design/v2/*.dc.html` | **Prototipi in vigore** (par. 3.0): Landing (simulatore a sezioni), Versamenti, Storico, Fonti |
+| `spec/design/v1/*.dc.html` | Prima versione (percorso guidato e parametri), mantenuta per riferimento storico |
 
 ---
 
 ## 1. Vincoli non negoziabili
 
 ### 1.1 Privacy: tutto in locale
-- **Nessun dato inserito o importato lascia il browser.** Calcolo, lettura del file e grafici avvengono in JavaScript lato client.
+- **Nessun dato inserito o importato lascia il browser.** Calcolo, lettura del file e grafici avvengono interamente in JavaScript lato client.
 - Dopo il caricamento della pagina, nessuna chiamata di rete:
   - niente analytics, telemetria, font o CDN esterni, niente `fetch` verso domini terzi;
   - tutte le librerie sono incluse nel bundle;
   - i dati storici sono file statici serviti dallo stesso dominio.
 - Meta tag Content-Security-Policy restrittivo: `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'`.
 - Il file contribuzioni si legge solo con `FileReader`/`File.text()` nel browser e non viene mai inviato.
-- **Salvataggio automatico** (dal 26/10/2026, sostituisce il pulsante "Salva i miei dati" del prototipo): ogni dato inserito si salva da solo in `localStorage`, dalla prima modifica, solo su questo dispositivo. Anche il file delle operazioni si salva, in una voce a parte (`pacfondo.v1.file`), e alla riapertura viene riletto. Finché non si inserisce nulla non si salva nulla. Nell'header uno stato "Salvato · gg/mm hh:mm" con tooltip "Restano solo su questo dispositivo, non vengono inviati a nessuno"; il pulsante **"Cancella tutto"** torna al profilo d'esempio e svuota la memoria, file compreso. Niente cookie.
+- **Salvataggio automatico**: ogni dato inserito si salva automaticamente in `localStorage`, dalla prima modifica, solo sul dispositivo in uso. Anche il file delle operazioni si salva in una voce separata (`pacfondo.v1.file`) e alla riapertura viene riletto. Finché non si inserisce nulla non viene salvato nulla. Nell'header uno stato "Salvato · gg/mm hh:mm" con tooltip "Restano solo su questo dispositivo, non vengono inviati a nessuno"; il pulsante **"Cancella tutto"** ripristina il profilo d'esempio e svuota la memoria locale, file compreso. Niente cookie.
 - Link di condivisione dei parametri (hash dell'URL): opzionale, generato solo su richiesta, con avviso che contiene i valori inseriti (RAL, posizione). Non include mai dati del file importato.
-- **Disclaimer all'apertura** (modale, da accettare una volta per sessione, poi richiamabile dal footer). Testo:
+- **Disclaimer all'apertura** (sezione 0, poi richiamabile dal footer). Testo:
 
 > **Questo strumento funziona interamente sul tuo dispositivo.** I dati che inserisci e il file delle contribuzioni che carichi non vengono inviati a nessun server: il calcolo avviene nel tuo browser e i dati e il file restano salvati solo nella memoria di questo browser, finché non premi "Cancella tutto".
 >
@@ -70,23 +62,22 @@ Procedura:
 ### 1.2 Hosting
 - Sito statico su GitHub Pages, repository `nine1zero/pac-vs-fp`, base path `/pac-vs-fp/`.
 - Deploy con GitHub Actions: build, poi `actions/deploy-pages`.
-- Funziona anche aperto da file locale dopo la build (`npm run build` e `npm run preview`).
+- Funziona anche in anteprima locale dopo la build (`npm run build` e `npm run preview`).
 
-### 1.3 Dati personali nel repository
-- I default pubblici sono quelli di `data/profile_example.json`, un profilo inventato.
-- Un eventuale profilo personale si usa solo in locale, con "Importa profilo JSON", e non va mai committato.
-- I test sui valori reali leggono il file privato solo se esiste (skip altrimenti).
+### 1.3 Profilo predefinito e assenza di dati personali nel repository
+- I valori predefiniti pubblici sono quelli di `public/data/profile_example.json`, un profilo sintetico di esempio.
+- Eventuali profili esportati o importati in JSON dall'utente restano esclusivamente sul dispositivo locale e non devono mai essere committati nel repository.
 
 ---
 
-## 2. Stack tecnico consigliato
+## 2. Stack tecnico
 
-- **Vite + TypeScript + React 18** (o Svelte: l'importante è il modello in TypeScript puro, separato dalla UI).
-- **Grafici: Apache ECharts** (npm `echarts`, incluso nel bundle). Serve per heatmap, linee con `markLine`/`markPoint`/`markArea` per evidenziare i pareggi, area impilata, waterfall, tooltip ricchi, animazioni e tema scuro.
-- **Stile:** Tailwind CSS e componenti accessibili (Radix UI o equivalente). Font di sistema (`system-ui`, `Inter` incluso localmente se serve).
+- **Vite + TypeScript + React 18**: modello matematico e fiscale in TypeScript puro (`src/model/`), completamente separato dalla UI.
+- **Grafici: SVG e CSS nativi** (leggeri, conformi alla CSP restrittiva e navigabili da tastiera).
+- **Stile:** CSS con design system dedicato ("lime") e font `Onest` incluso localmente nel bundle (`@fontsource/onest`).
 - **Ricerca parametri:** Fuse.js (incluso nel bundle) su `label`, `description`, `tags`, `id`.
-- **Parsing del file contribuzioni:** `DOMParser` nativo (il file `.xls` è HTML, vedi par. 6). In opzione SheetJS da npm, per accettare anche un vero `.xlsx` con le stesse colonne.
-- **Test:** Vitest (modello e parser, confronto con i golden), Playwright (end-to-end: drag & drop dei fixture, assenza di richieste di rete esterne).
+- **Parsing del file contribuzioni:** `DOMParser` nativo (il file `.xls` esportato dall'area riservata Previnet è una tabella HTML, vedi par. 6).
+- **Test:** Vitest (modello matematico/fiscale, parser e parità coi golden), Playwright (end-to-end, accessibilità WCAG AA con axe-core, Lighthouse, assenza di richieste di rete esterne).
 - **Struttura:**
 
 ```
@@ -260,7 +251,7 @@ In tutti e tre gli scenari la posizione attuale e il TFR restano nel fondo.
   - **linee orizzontali tratteggiate** per lo storico del fondo, lo storico del benchmark e il differenziale scelto;
   - un **mirino "Tu sei qui"** (anni di permanenza previsti × differenziale scelto).
 - Tooltip su ogni cella: "Uscita nel 2040, differenziale −5%: scenario 2 = … €, scenario 1 = … €, scenario 3 = … €".
-- Solo lettura (decisione di progetto): la mappa si ricalcola a ogni cambio dei parametri, ma non li modifica; passando sopra una cella, o con le frecce, se ne leggono i valori.
+- Solo lettura: la mappa si ricalcola a ogni cambio dei parametri, ma non li modifica; passando sopra una cella, o con le frecce, se ne leggono i valori.
 - Modalità di uscita selezionabile direttamente sopra il grafico.
 - Versione compatta sulla home, versione completa nella pagina "Per quanti anni conviene".
 
@@ -362,7 +353,7 @@ Tutti i parametri sono in `data/params.json` (id tra parentesi). Le percentuali 
 - Anno di uscita `Y_exit = birth_year + exit_age`. Anni simulati `n = Y_exit − start_year + 1` (default `start_year` = 2027). Indice dell'anno `k = 1..n`, anno di calendario `y_k = start_year + k − 1`.
 - Fattore di crescita `g_k = (1 + growth)^(k−1)`.
 - Rendimento ETF dopo il TER: `r_e = etf_gross_return − etf_ter`. `etf_gross_return` è **prima del TER**; le medie storiche degli ETF (già nette del TER) si convertono sommando il TER. `etf_ter` segue l'ETF scelto (default Vanguard 0,14%).
-- Rendimento del fondo prima dell'imposta: `r_f = r_e + δ`, dove `δ = delta` (differenziale). Netto annuo: `r_n = r_f · (1 − fund_return_tax)`.
+- Rendimento del fondo prima dell'imposta: `r_f = (etf_gross_return − 0,14%) + δ`, dove `δ = delta` (differenziale). Netto annuo: `r_n = r_f · (1 − fund_return_tax)`.
 - Frazione d'anno sui versamenti: `φ = contribution_year_fraction` (0,5).
 
 **Risparmio fiscale di una deduzione** (`tax_saving` in `reference/model.py`, dettagli e fonti in `docs/FORMULE.md` par. 2):
@@ -434,7 +425,7 @@ Colonne della tabella anno per anno (vista avanzata), in ordine:
 Per un orizzonte `h < n` si interrompe la simulazione dopo h anni e si applica `t_exit(Y, m)`. Nella pagina "Per quanti anni conviene" il default è `m = Riscatto` (uscita prima della pensione), con un selettore per `Pensione`. Mostrare la nota: "Il riscatto totale per dimissioni senza i requisiti dell'art. 14 D.Lgs. 252/2005 è tassato al 23%; le anticipazioni per ulteriori esigenze sono possibili dopo 8 anni, fino al 30% della posizione, sempre al 23%."
 
 ### 4.5 Forma chiusa (per sensibilità e mappa)
-Poiché i flussi non dipendono da δ, posto `a = 1 + (r_e + δ)·(1 − fund_return_tax)`:
+Poiché i flussi non dipendono da δ, posto `a = 1 + ((etf_gross_return − 0,14%) + δ)·(1 − fund_return_tax)`:
 
 `Fond_h(δ) = Fond_0 · a^h + Σ_{k=1..h} Q^s_k · a^(h − k + φ)`
 
@@ -455,7 +446,7 @@ Per una coppia di scenari (A, B), un orizzonte h e una modalità m, il pareggio 
   - capitale netto [S1, S2, S3] = [521.784,98; 485.459,81; 493.509,33];
   - pareggi [2-3, 1-3, 2-1] = [−5,4825%; −9,2812%; −3,6063%];
   - risparmio fiscale effettivo sulla deduzione massima del primo anno (4.390 €): 54,2403%.
-  Sono incluse anche le curve di pareggio per riscatto a 1, 5, 10, 20 e 30 anni, la prima riga dei flussi e i controlli fiscali per sei livelli di RAL (`tax_checks`). Si rigenera con `python3 tests/make_golden.py`, solo per modifiche volute del modello, da annotare in `docs/CHANGELOG.md`.
+  Sono incluse anche le curve di pareggio per riscatto a 1, 5, 10, 20 e 30 anni, la prima riga dei flussi e i controlli fiscali per sei livelli di RAL (`tax_checks`). Si rigenera con `python3 spec/tests/make_golden.py`, solo per modifiche volute del modello, da annotare in `docs/CHANGELOG.md`.
 - Tolleranza: 0,01 € sui capitali, 1e-6 sui differenziali di pareggio.
 
 ---
@@ -485,7 +476,7 @@ Fonte: `data/fpddi_azionario.json` (anni 2012-2026; il 2026 va da gennaio ad ago
 ### 5.3 Scomposizione del ritardo, 2014-2025
 In punti l'anno, CAGR su CAGR:
 - `ricostruito − ETF` = −2,1 (pesi del benchmark: Europa al 45% e 10% di liquidità);
-- `pubblicato prima dell'imposta − ricostruito` = −2,7 (ipotesi: indici di prezzo senza dividendi e altri scostamenti; da confermare col fondo);
+- `pubblicato prima dell'imposta − ricostruito` = −2,7 (indici azionari di prezzo Price Index senza dividendi: `MSWRLDE(PI)` / `MSEROPE(PI)`, Documento sulla politica di investimento par. 4.2.4, p. 18);
 - `fondo prima dell'imposta − pubblicato prima dell'imposta` = −1,0 (gestore e costi).
 
 ### 5.4 Comparto Assicurativo
@@ -506,7 +497,7 @@ Rendimento reale cumulato dell'Assicurativo: −2,0% (−7,2% nel 2021-2025). I 
 
 ### 6.1 Formato
 Il file `DettaglioOperazioni_*.xls` si scarica dall'area riservata FPDDI (gestita da Previnet).
-- **Non è un file binario di foglio di calcolo:** è una tabella HTML (`<table><thead>…<tbody>…<tfoot>`), in UTF-8, con commenti Angular (`<!-- ngIf: ... -->`) e attributi `pnet-i18n`.
+- **Non è un file binario proprietario:** è una tabella HTML (`<table><thead>…<tbody>…<tfoot>`), in UTF-8, con commenti Angular (`<!-- ngIf: ... -->`) e attributi `pnet-i18n`.
 - Va letto con `DOMParser`: righe `tbody tr`, intestazioni `thead th`, riga dei totali `tfoot tr`.
 
 Intestazioni attese, nell'ordine (il confronto va fatto sul testo ripulito dagli spazi):
@@ -564,8 +555,7 @@ Esito positivo (verde): "N movimenti letti, dal mm/aaaa al mm/aaaa, totali coere
   - `NI(y) = Π_{j ≤ y} (1 + r_ETF,j·(1 − t_j))`.
 - **Fuori dal fondo, prima del 26%**: `Importo Netto · P(valutazione)/P(d)`.
 - **Serie nel tempo** (grafico G): per ogni fine mese, la posizione reale (quote cumulate × valore quota dell'ultimo movimento noto in quella data) e la posizione con l'ETF.
-- Valori attesi:
-  - `tests/golden_fixture_ok.json` per il fixture sintetico: 43 movimenti, valore quota dell'ultimo movimento 20,930, posizione reale 18.751,61; ETF dentro il fondo 20.691,45; fuori prima del 26% 21.983,58;
+- Valori attesi (`tests/golden_fixture_ok.json` per il fixture sintetico): 43 movimenti, valore quota dell'ultimo movimento 20,930, posizione reale 18.751,61; ETF dentro il fondo 20.691,45; fuori prima del 26% 21.983,58.
 - **Precompilazione dal file**:
   - anno di prima adesione = anno della `Data Competenza` più vecchia;
   - contributi mensili = valori dell'ultima riga `Contributo` di un mese non di dicembre;
@@ -605,9 +595,9 @@ Esito positivo (verde): "N movimenti letti, dal mm/aaaa al mm/aaaa, totali coere
 
 Elenco completo, con file, pagine e citazioni: **`docs/FONTI.md`** (fa fede). Qui sotto il riepilogo per la pagina.
 
-**Documenti del fondo** (sito https://www.fondopensioneibm.it):
+**Documenti del fondo** (pubblicati su https://www.fondopensioneibm.it/docs/):
 
-| Documento sul sito | File locale | Dati usati |
+| Documento sul sito | File ufficiale (`/docs/`) | Dati usati |
 |---|---|---|
 | Rendimenti dei Comparti – "Comparto Azionario" | `comp_azionario.pdf` | Rendimento netto, benchmark netto, valore quota, cumulato dal 2009, 2018-2026 |
 | Rendimenti dei Comparti – "Comparti assicurativi GESAV, Euroforte RE, RISPAV e Genris" | `comp_assicurativo.pdf` | Rendimenti netti, ISTAT, rivalutazione TFR, costi delle gestioni, 2018-2026 |
@@ -620,7 +610,7 @@ Elenco completo, con file, pagine e citazioni: **`docs/FONTI.md`** (fa fede). Qu
 | Schemi contributivi 2026 | `schemi_contributivi.pdf` | Percentuali aderente/azienda, fascia INPS 56.224 € |
 | Regime fiscale | `regime_fiscale.pdf` | Deducibilità 5.300 €, recupero 2.650 €, tassazione delle prestazioni |
 | Comunicazione contributi non dedotti | `com_contributi_non_dedotti.pdf` | Obbligo di comunicazione entro il 31/12 dell'anno successivo |
-| Accordo aziendale 04/07/2023 | `04072023.pdf` | Contributo dell'azienda uguale per tutti dal 2024 (non incluso nel pacchetto; schema confermato dalla Nota informativa 2026 p. 9) |
+| Accordo aziendale 04/07/2023 | `04072023.pdf` | Contributo dell'azienda uguale per tutti dal 2024 (schema confermato anche dalla Nota informativa 2026 p. 9) |
 
 **Norme:**
 - D.Lgs. 252/2005: art. 8 (deducibilità e recupero), art. 11 (tassazione delle prestazioni e delle anticipazioni), art. 14 (riscatti), art. 17 (imposta sui rendimenti).

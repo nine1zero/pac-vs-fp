@@ -2,7 +2,7 @@
 
 Regola del progetto: ogni numero mostrato o usato nei calcoli viene da (1) un documento del fondo FPDDI, citato con file e pagina; (2) una norma o una fonte istituzionale; (3) l'emittente o un fornitore di dati di mercato; oppure (4) è un'ipotesi dichiarata come tale. Nient'altro. Nell'interfaccia ogni valore ha un tooltip con questa fonte (SPEC par. 3.6).
 
-I documenti del fondo sono pubblici su https://www.fondopensioneibm.it e non sono nel repository: i PDF sono scaricabili dal sito ufficiale del fondo. Le pagine citate sono quelle del PDF. Tipo di fonte, usato per il colore dell'etichetta: `Doc. FPDDI`, `Norma`, `Emittente`, `Calcolo storico`, `Ipotesi`, `Tuo dato`.
+I documenti ufficiali del fondo sono pubblicati su https://www.fondopensioneibm.it (con link diretti in `https://www.fondopensioneibm.it/docs/`). Le pagine citate si riferiscono ai PDF ufficiali. Tipo di fonte, usato per il colore dell'etichetta: `Doc. FPDDI`, `Norma`, `Emittente`, `Calcolo storico`, `Ipotesi`, `Tuo dato`.
 
 ---
 
@@ -77,4 +77,4 @@ Crescita di contributi e retribuzione 2% l'anno · inflazione 2% (obiettivo BCE)
 
 ## 6. Profilo d'esempio
 
-`data/profile_example.json` è un profilo **inventato** e verosimile (nato nel 1990, RAL 45.000 €, iscritto dal 2015, posizione 20.000 €). Non contiene dati reali. Eventuali profili personali restano sul dispositivo e non vanno nel repository.
+`public/data/profile_example.json` è un profilo **sintetico** di esempio (nato nel 1990, RAL 45.000 €, iscritto dal 2015, posizione 20.000 €) usato come configurazione predefinita dell'applicazione e non contiene dati personali reali.

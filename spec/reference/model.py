@@ -131,7 +131,7 @@ def simulate(p, delta=None, horizon=None, mode=None):
     rows = yearly_flows(p)
     H = len(rows) if horizon is None else horizon
     re = p["etf_gross_return"] - p["etf_ter"]
-    ref_re = p["etf_gross_return"] - EXAMPLE_PARAMS["etf_ter"]
+    ref_re = p["etf_gross_return"] - DEFAULTS["etf_ter"]
     rn = (ref_re + delta) * (1 - p["fund_return_tax"])
     fz = p["contribution_year_fraction"]
     exit_year = p["start_year"] + H - 1
@@ -170,7 +170,7 @@ def breakeven(p, a, b, horizon=None, mode=None, lo=-0.95, hi=0.5):
 if __name__ == "__main__":
     import sys
     p = dict(DEFAULTS)
-    if len(sys.argv) > 1:   # es. profilo.json (solo in locale)
+    if len(sys.argv) > 1:   # percorso opzionale a un file JSON di profilo
         prof = json.load(open(sys.argv[1]))
         if len(prof) == 1 and isinstance(next(iter(prof.values())), dict):   # file con un solo profilo annidato
             prof = next(iter(prof.values()))
