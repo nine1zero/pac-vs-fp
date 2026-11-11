@@ -32,7 +32,11 @@ export function Landing() {
           <p className="lead">
             Sei sezioni, ognuna si può saltare. Senza i tuoi dati usa un profilo d'esempio con dati verosimili.
             <br />
-            SOLO per gli iscritti FPDDI IBM <span className="mark lead-mark">100% azionario</span>.
+            SOLO per gli iscritti{' '}
+            <a href="https://www.fondopensioneibm.it/" target="_blank" rel="noopener noreferrer">
+              FPDDI IBM
+            </a>{' '}
+            <span className="mark lead-mark">100% azionario</span>.
           </p>
         </div>
       </section>
