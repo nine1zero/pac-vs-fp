@@ -6,6 +6,7 @@ import { useStore } from '../../state/store';
 import { LegendItem, TimeChart } from '../charts/TimeChart';
 import { Segmented } from '../controls';
 import { dec, euro, euro2, int, itDate, num } from '../format';
+import { BackLink } from '../BackLink';
 import { Src } from '../Tip';
 import { useImport } from '../useImport';
 
@@ -36,9 +37,12 @@ export function Versamenti() {
   if (!ok) {
     return (
       <main className="wrap main" id="contenuto">
-        <h1 className="h1">
-          I miei <span className="mark">versamenti</span>
-        </h1>
+        <section className="page-head">
+          <h1 className="h1">
+            I miei <span className="mark">versamenti</span>
+          </h1>
+          <BackLink top />
+        </section>
         <label className="drop big">
           <span className="drop-title">{busy ? 'Lettura in corso…' : 'Trascina qui il file DettaglioOperazioni scaricato dall’area riservata del fondo (.xls)'}</span>
           <span className="drop-sub lock">Il file viene letto solo nel tuo browser</span>
@@ -60,9 +64,6 @@ export function Versamenti() {
           <button type="button" className="btn ghost" onClick={useSample}>
             Usa un file d'esempio
           </button>
-          <a href="#/" className="btn ghost">
-            <span aria-hidden="true">←</span> Torna al simulatore
-          </a>
         </span>
       </main>
     );
@@ -92,10 +93,13 @@ export function Versamenti() {
             investiti nell'ETF che scegli.
           </p>
         </div>
-        <span className="file-line lock">
-          {movs.length} movimenti importati
-          {res.period ? ` · competenza dal ${mm(res.period[0])} al ${mm(res.period[1])}` : ''} · {file.name}
-        </span>
+        <div className="page-head-side">
+          <BackLink top />
+          <span className="file-line lock">
+            {movs.length} movimenti importati
+            {res.period ? ` · competenza dal ${mm(res.period[0])} al ${mm(res.period[1])}` : ''} · {file.name}
+          </span>
+        </div>
       </section>
       {warnings.length > 0 && (
         <ul className="checks" aria-label="Avvisi sul file">
@@ -203,9 +207,7 @@ export function Versamenti() {
         </div>
         <div className="sec-foot">
           <span className="muted text-sm">Posizione, ultimo contributo mensile e anno di prima adesione sono già nel simulatore dal momento del caricamento.</span>
-          <a href="#/" className="btn ghost">
-            <span aria-hidden="true">←</span> Torna al simulatore
-          </a>
+          <BackLink />
         </div>
       </section>
     </main>

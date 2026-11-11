@@ -35,39 +35,51 @@ body{margin:0;background:#F4F4F2}
 .tbl th:first-child,.tbl td:first-child{text-align:left}
 .tbl td{text-align:right;padding:9px 12px;border-bottom:1px solid #EFEFED;white-space:nowrap}
 .tbl tr:hover td{background:#FAFBEF}
+.tip{position:relative;display:inline-flex;align-items:center}
+.tip .bubble{display:none;position:absolute;z-index:30;right:0;top:calc(100% + 8px);width:300px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,11,11,.2);white-space:normal;text-align:left}
+.tip.left .bubble{right:auto;left:0}
+.tip:hover .bubble,.tip:focus-within .bubble{display:block}
+.ib{width:18px;height:18px;border-radius:99px;border:1px solid #9A9EA3;background:#FFFFFF;font-size:10.5px;font-weight:700;color:#3A3D42;cursor:help;padding:0;line-height:16px;letter-spacing:0}
 @media (max-width:900px){.g4{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.g2{grid-template-columns:1fr !important}.h1{font-size:36px !important}}
 </style>
 </helmet>
 <div class="lp" style="min-height: 100vh; background: #F4F4F2">
 
   <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
-    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · i rendimenti passati non garantiscono quelli futuri
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo
   </div>
 
   <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
-    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
-    <nav style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
-      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+    <a href="Landing.dc.html" aria-label="pac/fondo IBM, torna al simulatore" style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px; text-decoration: none">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></a>
+    <nav aria-label="Principale" style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 4px; background: #F4F4F2; border: none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>100% locale</span>
+      <span class="tip"><span tabindex="0" style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 4px; background: #F4F4F2; border: none; cursor: help; font-variant-numeric: tabular-nums"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ saveLabel }}</span><span class="bubble" role="tooltip">{{ saveTip }}</span></span>
+      <span class="tip"><button type="button" onClick="{{ resetAll }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip">Torna al profilo d’esempio e cancella dalla memoria di questo browser tutti i dati inseriti e il file delle operazioni.</span></span>
+      <a href="Storico.dc.html" class="btn ghost" aria-current="page">Storico</a>
       <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+      <a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer" class="btn ghost" aria-label="Codice sorgente su GitHub" title="Codice sorgente su GitHub" style="padding: 8px 10px"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
     </nav>
   </header>
 
   <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
 
-    <section style="display: flex; flex-direction: column; gap: 12px; max-width: 820px; padding: 10px 0 6px">
-      <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">Lo storico del <span class="mark">comparto Azionario</span></h1>
-      <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Dal 2012 a oggi, anno per anno: quanto ha reso il fondo, quanto il suo benchmark e ciascuna delle sue tre componenti, e quanto avrebbe reso un ETF azionario globale.</p>
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
+      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 820px; flex: 1 1 520px; min-width: 0">
+        <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">Lo storico del <span class="mark">comparto Azionario</span></h1>
+        <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Dal 2012 a oggi, anno per anno: quanto ha reso il fondo, quanto il suo benchmark e ciascuna delle sue tre componenti, e quanto avrebbe reso un ETF azionario globale.</p>
+      </div>
+      <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 6px"><span aria-hidden="true">←</span> Torna al simulatore</a>
     </section>
 
     <section class="card" style="gap: 14px">
-      <span class="cap">Com'è fatto il benchmark del fondo</span>
-      <div style="display: flex; height: 64px; border-radius: 16px; overflow: hidden; border: 1.5px solid #0B0B0B; font-weight: 600">
-        <div style="flex: 45; background: #0E7490; color: #FFFFFF; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; min-width: 0"><span style="font-size: 22px; line-height: 1">45%</span><span style="font-size: 13px; font-weight: 500">MSCI World · azioni dei paesi sviluppati</span></div>
-        <div style="flex: 45; background: #B45309; color: #FFFFFF; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; min-width: 0; border-left: 1.5px solid #0B0B0B"><span style="font-size: 22px; line-height: 1">45%</span><span style="font-size: 13px; font-weight: 500">MSCI Europe · azioni europee</span></div>
-        <div style="flex: 10; background: #D3D5D7; color: #0B0B0B; display: flex; flex-direction: column; justify-content: center; padding: 0 10px; min-width: 0; border-left: 1.5px solid #0B0B0B"><span style="font-size: 22px; line-height: 1">10%</span><span style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">liquidità</span></div>
+      <span class="cap">Com'è fatto il benchmark del fondo <span class="tip left"><button type="button" class="ib" aria-label="Fonte: composizione del benchmark">i</button><span class="bubble" role="tooltip">Doc. FPDDI · FPDDI, Documento sulla politica di investimento, par. 4.2 (codici Datastream MSWRLDE(PI), MSEROPE(PI), JPEC3ML(RI)) <a href="https://www.fondopensioneibm.it/docs/politica_investimento.pdf" rel="noopener noreferrer" style="color: #D4EE36; font-weight: 600">↗ politica_investimento.pdf</a></span></span></span>
+      <div role="img" aria-label="Benchmark: 45% MSCI World, 45% MSCI Europe, 10% liquidità" style="display: flex; gap: 4px; min-height: 70px; border-radius: 14px; overflow: hidden">
+        <div style="flex: 45; background: #CFFAFE; color: #0B0B0B; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 10px 12px; min-width: 0"><span style="font-size: 22px; font-weight: 700; line-height: 1.1">45%</span><span style="font-size: 12.5px">MSCI World · azioni dei paesi sviluppati</span></div>
+        <div style="flex: 45; background: #FDE68A; color: #0B0B0B; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 10px 12px; min-width: 0"><span style="font-size: 22px; font-weight: 700; line-height: 1.1">45%</span><span style="font-size: 12.5px">MSCI Europe · azioni europee</span></div>
+        <div style="flex: 10; background: #ECECEA; color: #0B0B0B; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 10px 12px; min-width: 0"><span style="font-size: 22px; font-weight: 700; line-height: 1.1">10%</span><span style="font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">liquidità</span></div>
       </div>
-      <span style="font-size: 14.5px; line-height: 1.6; color: #26282B"><strong>Benchmark = 45% MSCI World + 45% MSCI Europe + 10% JPM Cash Euro 3M</strong>, ribilanciato ogni anno (Documento sulla politica di investimento FPDDI, par. 4.2). Le azioni europee pesano due volte: sono già circa il 15% del MSCI World e in più hanno un 45% dedicato. Il 10% è liquidità, che rende quasi zero. Nessuna esposizione ai mercati emergenti.</span>
-      <span class="sub">Per ricostruirlo usiamo ETF che replicano le stesse componenti: iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80) e, per la liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici Datastream del documento finiscono in (PI): se sono indici di prezzo, senza dividendi, il benchmark pubblicato parte svantaggiato di circa 2–3 punti l'anno rispetto agli ETF, che includono i dividendi. È un'ipotesi da confermare con il fondo.</span>
+      <span style="font-size: 14.5px; line-height: 1.6; color: #26282B"><strong>Benchmark = 45% MSCI World + 45% MSCI Europe + 10% JPM Cash Euro 3M</strong>, ribilanciato ogni anno. Le azioni europee pesano due volte: sono già dentro il MSCI World e in più hanno un 45% dedicato. Il 10% è liquidità, che rende quasi zero. Nessuna esposizione ai mercati emergenti.</span>
+      <span class="sub">Per ricostruirlo usiamo ETF che replicano le stesse componenti: iShares Core MSCI World (IE00B4L5Y983), iShares Core MSCI Europe (IE00B4K48X80) e, per la liquidità, Xtrackers EUR Overnight Rate Swap (LU0290358497, segue l'€STR, non l'Euribor 3 mesi). I codici ufficiali della <a href="https://www.fondopensioneibm.it/docs/politica_investimento.pdf" rel="noopener noreferrer">Politica di investimento (par. 4.2.4, p. 18)</a> (Datastream MSWRLDE(PI) e MSEROPE(PI), Bloomberg MSERWI e MSEREURP) confermano che le componenti azionarie sono indici Price Index (senza dividendi): il benchmark pubblicato esclude ~2,5–2,8% annuo di dividendi che invece entrano negli ETF ad accumulazione.</span>
     </section>
 
     <section class="card">
@@ -116,7 +128,7 @@ body{margin:0;background:#F4F4F2}
               <path d="{{ c1.grid }}" fill="none" stroke="#E6E6E3" stroke-width="1" vector-effect="non-scaling-stroke"></path>
               <path d="{{ c1.gap }}" fill="#D4EE36" fill-opacity="0.55"></path>
               <path d="{{ c1.l0 }}" fill="none" stroke="#3A3D42" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              <path d="{{ c1.l1 }}" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c1.l1 }}" fill="none" stroke="#7C3AED" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               <path d="{{ c1.l2 }}" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
             </svg>
             <sc-if value="{{ c1.hasHover }}" hint-placeholder-val="{{ false }}">
@@ -133,7 +145,7 @@ body{margin:0;background:#F4F4F2}
           </div>
         </div>
       </div>
-      <span class="sub">Valore di 100 € investiti all'inizio, anno per anno. In lime la distanza tra l'ETF e il fondo. "Prima dell'imposta" toglie dal fondo e dal benchmark l'imposta annua sui rendimenti (20%, 11% nel 2012–2013): è il confronto corretto con l'ETF, che le imposte le paga solo alla vendita. 2026: gennaio–agosto.</span>
+      <span class="sub">Valore di 100 € investiti all'inizio, anno per anno. In lime la distanza tra l'ETF e il fondo. "Prima dell'imposta" toglie dal fondo e dal benchmark l'imposta annua sui rendimenti (20%, 11% nel 2012–2013, 11,5% nel 2014) <span class="tip left"><button type="button" class="ib" aria-label="Fonte: imposta sui rendimenti">i</button><span class="bubble" role="tooltip">Norma · Imposta sostitutiva annua: 11% fino al 2013 (D.Lgs. 252/2005 art. 17, testo previgente), 11,5% nel 2014 e 20% dal 2015 (L. 190/2014 art. 1 cc. 621-622; FPDDI 'Regime fiscale' p. 5). Aliquota nominale: la quota di titoli pubblici (tassata 12,5%) nel comparto Azionario è marginale; l'aliquota effettiva dell'anno non è pubblicata.</span></span>: è il confronto corretto con l'ETF, che le imposte le paga solo alla vendita. 2026: gennaio–agosto.</span>
     </section>
 
     <section class="card">
@@ -145,7 +157,7 @@ body{margin:0;background:#F4F4F2}
         <span class="leg"><span class="ln" style="background: #0E7490"></span>MSCI World (45%)</span>
         <span class="leg"><span class="ln" style="background: #B45309"></span>MSCI Europe (45%)</span>
         <span class="leg"><span class="ln" style="background: #9A9EA3"></span>Liquidità €STR (10%)</span>
-        <span class="leg"><span class="ln" style="background: #0B0B0B"></span>Benchmark ricostruito 45/45/10</span>
+        <span class="leg"><span class="ln" style="background: repeating-linear-gradient(90deg, #7C3AED 0 6px, transparent 6px 10px); border-radius: 0"></span>Benchmark ricostruito 45/45/10</span>
         <span class="leg"><span class="ln" style="background: #7C3AED"></span>Benchmark pubblicato, prima dell'imposta</span>
       </div>
       <div style="display: flex; gap: 10px">
@@ -159,8 +171,8 @@ body{margin:0;background:#F4F4F2}
               <path d="{{ c2.l0 }}" fill="none" stroke="#0E7490" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               <path d="{{ c2.l1 }}" fill="none" stroke="#B45309" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               <path d="{{ c2.l2 }}" fill="none" stroke="#9A9EA3" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              <path d="{{ c2.l3 }}" fill="none" stroke="#0B0B0B" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              <path d="{{ c2.l4 }}" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l3 }}" fill="none" stroke="#7C3AED" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5" vector-effect="non-scaling-stroke"></path>
+              <path d="{{ c2.l4 }}" fill="none" stroke="#7C3AED" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
             </svg>
             <sc-if value="{{ c2.hasHover }}" hint-placeholder-val="{{ false }}">
               <span style="{{ c2.hv.line }}"></span>
@@ -176,7 +188,7 @@ body{margin:0;background:#F4F4F2}
           </div>
         </div>
       </div>
-      <span class="sub">100 € a fine 2011, con i dividendi reinvestiti (prezzi degli ETF). Il ricostruito pesa le tre linee 45/45/10 e si ribilancia ogni gennaio. Se il pubblicato resta sotto il ricostruito anche se hanno gli stessi pesi, la differenza sta nel modo di calcolarlo (probabilmente indici senza dividendi).</span>
+      <span class="sub">100 € a fine 2011, con i dividendi reinvestiti (prezzi degli ETF). Il ricostruito pesa le tre linee 45/45/10 e si ribilancia ogni gennaio. Il pubblicato resta sotto il ricostruito anche a parità di pesi perché calcolato su indici Price Index senza dividendi (MSWRLDE(PI) e MSEROPE(PI)).</span>
     </section>
 
     <div class="g2" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 18px">
@@ -232,7 +244,7 @@ body{margin:0;background:#F4F4F2}
       </div>
       <div class="g4" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
         <sc-for list="{{ stats }}" as="t" hint-placeholder-count="5">
-          <div class="tile"><span class="cap">{{ t.cap }}</span><span class="big">{{ t.val }}</span><span class="sub">{{ t.sub }}</span></div>
+          <div class="tile"><span class="cap">{{ t.cap }}</span><span class="big" style="font-size: 24px; line-height: 1.15; white-space: normal; overflow-wrap: anywhere">{{ t.val }}</span><span class="sub">{{ t.sub }}</span></div>
         </sc-for>
       </div>
     </section>
@@ -242,6 +254,7 @@ body{margin:0;background:#F4F4F2}
         <span class="h2">Tabella annuale</span>
         <span class="sub">Rendimenti in euro. Clicca su un'intestazione per ordinare. 2026*: gennaio–agosto. "n.d.": l'ETF non esisteva o la sua quotazione non è affidabile.</span>
       </div>
+      <button type="button" class="btn ghost" style="align-self: flex-start" title="Nell'app scarica la tabella come file CSV">Esporta CSV</button>
       <div style="max-height: 460px; overflow: auto; border: 1px solid #E6E6E3; border-radius: 16px">
         <table class="tbl">
           <thead><tr><sc-for list="{{ cols }}" as="c" hint-placeholder-count="10"><th><button type="button" onClick="{{ c.sort }}" title="{{ c.title }}">{{ c.label }}</button></th></sc-for></tr></thead>
@@ -251,13 +264,19 @@ body{margin:0;background:#F4F4F2}
         </table>
       </div>
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
-        <span style="font-size: 14px; color: #3A3D42">Il differenziale del periodo scelto alimenta l'ipotesi del simulatore</span>
+        <span style="font-size: 14px; color: #3A3D42">Il differenziale storico 2014–2025 alimenta l'ipotesi del simulatore.</span>
         <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
       </div>
     </section>
 
-    <span class="sub">Fonti: rendimenti del fondo e del benchmark dai bilanci FPDDI 2012–2025 e dalla pagina del comparto (2026 gennaio–agosto, parziale); imposta annua dai bilanci. ETF: Yahoo Finance, prezzi di fine mese rettificati per i dividendi (iShares MSCI ACWI calcolato da ISAC.L in dollari e cambio EUR/USD; Vanguard FTSE All-World da VGWL.DE; SPDR MSCI ACWI IMI da SPYI.DE dal 2017, prima la quotazione Xetra non è affidabile).</span>
+    <span class="sub">Fonti: rendimenti del fondo e del benchmark dai bilanci FPDDI 2012–2025 e dalla pagina del comparto (2026 gennaio–agosto, parziale); imposta annua dai bilanci. Documenti diretti FPDDI: <a href="https://www.fondopensioneibm.it/docs/comp_azionario.pdf" rel="noopener noreferrer">comp_azionario.pdf</a>, <a href="https://www.fondopensioneibm.it/docs/nota_informativa.pdf" rel="noopener noreferrer">nota_informativa.pdf</a>, <a href="https://www.fondopensioneibm.it/docs/politica_investimento.pdf" rel="noopener noreferrer">politica_investimento.pdf</a>, <a href="https://www.fondopensioneibm.it/bilanci.htm" rel="noopener noreferrer">bilanci 2012–2025</a>. ETF: Yahoo Finance, prezzi di fine mese rettificati per i dividendi (iShares MSCI ACWI calcolato da ISAC.L in dollari e cambio EUR/USD; Vanguard FTSE All-World da VGWL.DE; SPDR MSCI ACWI IMI da SPYI.DE dal 2017, prima la quotazione Xetra non è affidabile).</span>
   </main>
+
+  <footer style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #5C6168">
+    <span>pac/fondo · strumento indipendente · calcolo 100% locale, nessun dato inviato</span>
+    <nav aria-label="Piè di pagina" style="display: inline-flex; flex-wrap: wrap; gap: 14px"><a href="Landing.dc.html">Privacy e avvertenze</a><a href="Fonti.dc.html">Metodo e fonti</a><a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer">Codice sorgente</a></nav>
+    <span>Dati storici: bilanci e pagine pubbliche di fondopensioneibm.it; prezzi ETF di fine mese</span>
+  </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2600}}'>
@@ -289,6 +308,15 @@ class Component extends DCLogic {
         box: 'position:absolute;top:8px;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:5px;min-width:230px;padding:12px 14px;border-radius:14px;background:#0B0B0B;color:#F4F4F2;font-size:13px;font-variant-numeric:tabular-nums;box-shadow:0 10px 30px rgba(11,11,11,.18);left:' + pc.toFixed(2) + '%;transform:translateX(' + (h > n * 0.55 ? 'calc(-100% - 14px)' : '14px') + ')',
         rows: lines.map(function (l, j) { return { name: names[j], val: new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(l[h]) + ' €', dot: 'display:inline-flex;align-items:center;gap:8px;border-left:4px solid ' + (colors[j] === '#0B0B0B' ? '#F4F4F2' : colors[j]) + ';padding-left:8px' }; }) }; }
     return { lines: lines, Y: Y, X: X, path: path, grid: grid, yTicks: yTicks, xTicks: xTicks, hits: hits, hasHover: h >= 0 && h < n, hv: hv };
+  }
+  // stato del salvataggio automatico (SPEC par. 1.1), lo stesso dell'header del simulatore
+  hdr() {
+    var self = this, at = null, err = false;
+    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) at = JSON.parse(raw).at || null; } catch (e) { err = true; }
+    return { saveLabel: err ? 'Salvataggio non disponibile' : at ? 'Salvato · ' + new Date(at).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salvataggio automatico',
+      saveTip: err ? 'Questo browser non permette di salvare (ad esempio in navigazione privata): i dati restano finché non chiudi la pagina.'
+        : 'Ogni dato che inserisci si salva da solo nella memoria di questo browser (localStorage, non cookie). Resta solo su questo dispositivo, non viene inviato a nessuno, e al prossimo accesso ritrovi tutto com’era. Anche il file delle operazioni si salva qui. Per cancellare tutto usa «Cancella tutto».',
+      resetAll: function () { try { window.localStorage.removeItem('pacfondo.v1'); window.localStorage.removeItem('pacfondo.v1.file'); } catch (e) { } self.setState({ cleared: Date.now() }); } };
   }
   renderVals() {
     var self = this, s = this.state, D = this.D, ink = '#0B0B0B', lime = '#D4EE36', Y = D.years, last = Y.length - 1;
@@ -324,7 +352,7 @@ class Component extends DCLogic {
     var endF = ch1.lines[0][ch1.lines[0].length - 1], endE = ch1.lines[2][ch1.lines[2].length - 1], endB = ch1.lines[1][ch1.lines[1].length - 1];
     var fmt0 = function (v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(v) + ' €'; };
     // chart 2 (always from 2012)
-    var c2n = ['MSCI World', 'MSCI Europe', 'Liquidità', 'Ricostruito', 'Pubblicato'], c2c = ['#0E7490', '#B45309', '#9A9EA3', '#0B0B0B', '#7C3AED'];
+    var c2n = ['MSCI World', 'MSCI Europe', 'Liquidità', 'Ricostruito', 'Pubblicato'], c2c = ['#0E7490', '#B45309', '#9A9EA3', '#7C3AED', '#7C3AED'];
     var ch2 = this.chart([D.world, D.europe, D.cash, D.rebuilt, D.benchGross], 0, last, 320, 'h2', c2n, c2c);
     var e2 = ch2.lines.map(function (l) { return l[l.length - 1]; });
     // bars
@@ -341,13 +369,13 @@ class Component extends DCLogic {
     var d1 = cR - cE, d2 = cB - cR, d3 = cF - cB, tot = cF - cE, mx = Math.max(Math.abs(d1), Math.abs(d2), Math.abs(d3), Math.abs(tot), 0.001);
     var wfRow = function (name, v, strong) { var wpc = Math.abs(v) / mx * 100, col = v >= 0 ? '#15803D' : '#B91C1C';
       return { name: name, val: self.pts(v), nameStyle: strong ? 'font-weight:700' : 'color:#26282B', bar: 'position:absolute;top:0;bottom:0;right:0;width:' + wpc.toFixed(1) + '%;border-radius:6px;background:' + (strong ? ink : col) }; };
-    var wf = [wfRow('Pesi del benchmark (Europa 45%, liquidità 10%, niente emergenti) contro ' + ETFS[s.etf].short, d1), wfRow('Calcolo del benchmark pubblicato contro il ricostruito (indici senza dividendi?)', d2), wfRow('Gestore e costi contro il benchmark pubblicato', d3), wfRow('Totale: fondo prima dell’imposta contro ETF', tot, true)];
+    var wf = [wfRow('Pesi del benchmark (Europa 45%, liquidità 10%, niente emergenti) contro ' + ETFS[s.etf].short, d1), wfRow('Calcolo del benchmark pubblicato contro il ricostruito (indici Price Index senza dividendi)', d2), wfRow('Gestore e costi contro il benchmark pubblicato', d3), wfRow('Totale: fondo prima dell’imposta contro ETF', tot, true)];
     // stats
     var sel = []; for (var i = i0; i <= i1; i++) sel.push(D.fundGross[i] - E[i]);
     var nS = sel.length, mean = sel.reduce(function (a, b) { return a + b; }, 0) / nS, srt = sel.slice().sort(function (a, b) { return a - b; });
     var med = nS % 2 ? srt[(nS - 1) / 2] : (srt[nS / 2 - 1] + srt[nS / 2]) / 2, sd = nS > 1 ? Math.sqrt(sel.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (nS - 1)) : 0, se = sd / Math.sqrt(nS), pos = sel.filter(function (v) { return v > 0; }).length;
     var stats = [{ cap: 'Media', val: this.pct(mean, 2), sub: 'differenza media dei singoli anni' }, { cap: 'Mediana', val: this.pct(med, 2), sub: 'metà degli anni sopra, metà sotto' }, { cap: 'Deviazione standard', val: this.pct(sd, 2), sub: 'quanto varia da un anno all’altro' },
-      { cap: 'Intervallo al 95%', val: this.pct(mean - 1.96 * se, 1) + ' / ' + this.pct(mean + 1.96 * se, 1), sub: 'dove sta la media vera, con il 95% di probabilità' }, { cap: 'Anni migliori dell’ETF', val: pos + ' su ' + nS, sub: per }];
+      { cap: 'Intervallo al 95%', val: this.pct(mean - 1.96 * se, 1) + ' … ' + this.pct(mean + 1.96 * se, 1), sub: 'dove sta la media vera, con il 95% di probabilità' }, { cap: 'Anni migliori dell’ETF', val: pos + ' su ' + nS, sub: per }];
     // table
     var cols = [['year', 'Anno', 'Anno'], ['fundNet', 'Fondo netto', 'Rendimento pubblicato, dopo l’imposta annua'], ['fundGross', 'Fondo lordo', 'Prima dell’imposta annua'], ['benchGross', 'Bench. pubbl.', 'Benchmark pubblicato, prima dell’imposta'], ['rebuilt', 'Ricostruito', '45% World + 45% Europe + 10% €STR'], ['world', 'MSCI World', 'iShares Core MSCI World'], ['europe', 'MSCI Europe', 'iShares Core MSCI Europe'], ['cash', 'Liquidità', 'Xtrackers EUR Overnight Rate Swap'], ['etf', ETFS[s.etf].short, ETFS[s.etf].name], ['diff', 'Fondo − ETF', 'Fondo lordo meno ETF, in punti']];
     var val = function (k, i) { return k === 'year' ? Y[i] : k === 'etf' ? E[i] : k === 'diff' ? (E[i] === null ? null : D.fundGross[i] - E[i]) : D[k][i]; };
@@ -356,7 +384,9 @@ class Component extends DCLogic {
       if (c[0] === 'year') return { v: Y[i] + (Y[i] === 2026 ? '*' : ''), style: 'font-weight:600' + (inW ? ';box-shadow:inset 4px 0 0 ' + lime : '') };
       var st = ''; if (c[0] === 'diff' && v !== null) st = 'font-weight:700;color:' + (v >= 0 ? '#15803D' : '#B91C1C'); if (c[0] === 'etf') st = 'font-weight:600;color:#2563EB';
       return { v: c[0] === 'diff' ? (v === null ? 'n.d.' : (v > 0 ? '+' : '') + (v * 100).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 })) : self.pct(v), style: st }; }) }; });
+    var H = this.hdr();
     return {
+      saveLabel: H.saveLabel, saveTip: H.saveTip, resetAll: H.resetAll,
       etfChips: etfChips, winChips: winChips, etfShort: ETFS[s.etf].short,
       etfInfo: ETFS[s.etf].name + ' · ' + ETFS[s.etf].isin + ' · TER ' + ETFS[s.etf].ter + ' · ' + ETFS[s.etf].idx,
       winNote: cut ? 'L’ETF scelto ha dati dal ' + Y[first] + ': le statistiche partono da lì (' + per + ').' : 'Statistiche calcolate sul ' + per + '.',

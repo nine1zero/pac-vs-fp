@@ -25,6 +25,9 @@ import { annualTable, deltaPresets, diffStats, lastFullYear } from '../model/his
 export const SCENARIO_NAMES = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'] as const;
 export const SCENARIO_SHORT = ['Minimo per l’azienda', 'Deduzione massima', 'Solo TFR'] as const;
 export const SCENARIO_ROLE = ['Ibrido · Match + PAC', 'Max fisco nel Fondo', '100% autonomo nel PAC'] as const;
+/** Nomi e ruoli nelle tre card in alto della Landing (prototipo spec/design/v2/Landing.dc.html). */
+export const CARD_NAMES = ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'] as const;
+export const CARD_ROLE = ['Ibrido · Match + PAC', 'Solo Fondo', 'Solo PAC'] as const;
 export const SCENARIO_DESC = [
   'Dal tuo budget versi nel Fondo solo il minimo che sblocca il contributo IBM; tutto il resto del budget più il rimborso IRPEF vanno nel PAC ETF.',
   'Dal tuo budget versi nel Fondo fino al tetto massimo deducibile (incluso il contributo IBM); nel PAC ETF investi il rimborso IRPEF ottenuto.',
@@ -76,6 +79,8 @@ export interface Results {
   /** importo fisso: minimo (quota minima per il contributo dell'azienda) e massimo */
   savingMin: number;
   savingMax: number;
+  /** estremo dello slider: savingMin più un multiplo di 50 € che copre savingMax (il valore resta limitato a savingMax) */
+  savingSliderMax: number;
   /** quota minima mensile stimata dalla RAL */
   minMonthlyFromRal: number;
 }
@@ -122,6 +127,8 @@ export function computeResults(p: ModelParams): Results {
 
   const maxDeduction = rows[0]!.J;
   const floor = Math.max(minMemberFromRal(p.ral, p.inps_first_band), rows[0]!.E);
+  // il minimo coincide con la quota minima per il contributo dell'azienda, arrotondata solo all'euro
+  const savingMin = Math.min(maxDeduction, Math.ceil(floor));
   return {
     p,
     n,
@@ -139,8 +146,9 @@ export function computeResults(p: ModelParams): Results {
     byDelta,
     maxDeduction,
     effectiveRate: taxSaving(p, p.ral, maxDeduction) / maxDeduction,
-    savingMin: Math.min(maxDeduction, Math.ceil(floor / 50) * 50),
+    savingMin,
     savingMax: maxDeduction,
+    savingSliderMax: savingMin + Math.ceil((maxDeduction - savingMin) / 50) * 50,
     minMonthlyFromRal: minMemberFromRal(p.ral, p.inps_first_band) / p.months,
   };
 }

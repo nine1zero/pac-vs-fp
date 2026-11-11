@@ -36,34 +36,44 @@ body{margin:0;background:#F4F4F2}
 .tbl th:first-child,.tbl td:first-child,.tbl th:nth-child(2),.tbl td:nth-child(2),.tbl th:nth-child(3),.tbl td:nth-child(3){text-align:left}
 .tbl td{text-align:right;padding:9px 12px;border-bottom:1px solid #EFEFED;white-space:nowrap}
 .tbl tr:hover td{background:#FAFBEF}
+.tip{position:relative;display:inline-flex;align-items:center}
+.tip .bubble{display:none;position:absolute;z-index:30;right:0;top:calc(100% + 8px);width:300px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,11,11,.2);white-space:normal;text-align:left}
+.tip:hover .bubble,.tip:focus-within .bubble{display:block}
 @media (max-width:900px){.g5{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.h1{font-size:36px !important}}
 </style>
 </helmet>
 <div class="lp" style="min-height: 100vh; background: #F4F4F2">
 
   <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
-    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il file è letto solo sul tuo dispositivo
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo
   </div>
 
   <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
-    <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
-    <nav style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
-      <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
+    <a href="Landing.dc.html" aria-label="pac/fondo IBM, torna al simulatore" style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px; text-decoration: none">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></a>
+    <nav aria-label="Principale" style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 4px; background: #F4F4F2; border: none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>100% locale</span>
+      <span class="tip"><span tabindex="0" style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 4px; background: #F4F4F2; border: none; cursor: help; font-variant-numeric: tabular-nums"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ saveLabel }}</span><span class="bubble" role="tooltip">{{ saveTip }}</span></span>
+      <span class="tip"><button type="button" onClick="{{ resetAll }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip">Torna al profilo d’esempio e cancella dalla memoria di questo browser tutti i dati inseriti e il file delle operazioni.</span></span>
+      <a href="Storico.dc.html" class="btn ghost">Storico</a>
       <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+      <a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer" class="btn ghost" aria-label="Codice sorgente su GitHub" title="Codice sorgente su GitHub" style="padding: 8px 10px"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
     </nav>
   </header>
 
   <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
 
-    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
+    <section style="display: flex; flex-wrap: wrap; align-items: stretch; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
       <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
         <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">I miei <span class="mark">versamenti</span></h1>
         <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Quanto hai versato tu, quanto l'azienda e quanto il TFR, mese per mese, e quanto vale oggi la posizione. Accanto, gli stessi versamenti, alle stesse date, investiti nell'ETF che scegli.</p>
       </div>
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; font-weight: 600">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-        {{ fileLine }}
-      </span>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px">
+        <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 6px"><span aria-hidden="true">←</span> Torna al simulatore</a>
+        <span style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; font-weight: 600">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          {{ fileLine }}
+        </span>
+      </div>
     </section>
 
     <div class="g5" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
@@ -135,7 +145,7 @@ body{margin:0;background:#F4F4F2}
           </div>
         </div>
       </div>
-      <span class="sub">Fondo: quote accumulate × valore quota dell'ultimo movimento del mese. ETF: ogni versamento netto comprato al prezzo di fine mese della sua data valore. "Dentro il fondo" applica ogni anno la stessa imposta del 20% sui rendimenti; "fuori" mostra il valore prima del 26% sulle plusvalenze. Passa il mouse sul grafico per i valori di ogni mese.</span>
+      <span class="sub">Fondo: quote accumulate × valore quota dell'ultimo movimento del mese. ETF: ogni versamento netto comprato al prezzo di fine mese della sua data valore. "Dentro il fondo" applica ogni anno la stessa imposta sui rendimenti del fondo; "fuori" mostra il valore prima del 26% sulle plusvalenze. Passa il mouse sul grafico per i valori di ogni mese.</span>
     </section>
 
     <section class="card">
@@ -166,13 +176,19 @@ body{margin:0;background:#F4F4F2}
         </table>
       </div>
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
-        <span style="font-size: 14px; color: #3A3D42">Posizione, ultimo contributo mensile e anno di prima adesione sono già nel simulatore dal momento del caricamento</span>
+        <span style="font-size: 14px; color: #3A3D42">Posizione, ultimo contributo mensile e anno di prima adesione sono già nel simulatore dal momento del caricamento.</span>
         <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
       </div>
     </section>
 
-    <span class="sub">Dati d'esempio sintetici (file DettaglioOperazioni di prova): con il tuo file grafico e tabella si costruiscono dai tuoi movimenti, nel browser, senza salvarli. Prezzi ETF: Yahoo Finance, ultimo prezzo di ogni mese, in euro. I risultati passati non garantiscono quelli futuri.</span>
+    <span class="sub">Dati d'esempio sintetici (file DettaglioOperazioni di prova): con il tuo file grafico e tabella si costruiscono dai tuoi movimenti, nel browser; il file resta salvato solo su questo dispositivo finché non premi «Cancella tutto». Prezzi ETF: Yahoo Finance, ultimo prezzo di ogni mese, in euro. I risultati passati non garantiscono quelli futuri.</span>
   </main>
+
+  <footer style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #5C6168">
+    <span>pac/fondo · strumento indipendente · calcolo 100% locale, nessun dato inviato</span>
+    <nav aria-label="Piè di pagina" style="display: inline-flex; flex-wrap: wrap; gap: 14px"><a href="Landing.dc.html">Privacy e avvertenze</a><a href="Fonti.dc.html">Metodo e fonti</a><a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer">Codice sorgente</a></nav>
+    <span>Dati storici: bilanci e pagine pubbliche di fondopensioneibm.it; prezzi ETF di fine mese</span>
+  </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
@@ -185,6 +201,15 @@ class Component extends DCLogic {
   fmtE(v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(Math.round(v)) + ' €'; }
   fmt2(v, d) { return new Intl.NumberFormat('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v); }
   signE(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + this.fmtE(Math.abs(v)); }
+  // stato del salvataggio automatico (SPEC par. 1.1), lo stesso dell'header del simulatore
+  hdr() {
+    var self = this, at = null, err = false;
+    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) at = JSON.parse(raw).at || null; } catch (e) { err = true; }
+    return { saveLabel: err ? 'Salvataggio non disponibile' : at ? 'Salvato · ' + new Date(at).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salvataggio automatico',
+      saveTip: err ? 'Questo browser non permette di salvare (ad esempio in navigazione privata): i dati restano finché non chiudi la pagina.'
+        : 'Ogni dato che inserisci si salva da solo nella memoria di questo browser (localStorage, non cookie). Resta solo su questo dispositivo, non viene inviato a nessuno, e al prossimo accesso ritrovi tutto com’era. Anche il file delle operazioni si salva qui. Per cancellare tutto usa «Cancella tutto».',
+      resetAll: function () { try { window.localStorage.removeItem('pacfondo.v1'); window.localStorage.removeItem('pacfondo.v1.file'); } catch (e) { } self.setState({ cleared: Date.now() }); } };
+  }
   renderVals() {
     var self = this, s = this.state, D = this.D, n = D.months.length, ink = '#0B0B0B', lime = '#D4EE36';
     var ETFS = { acwi: ['MSCI ACWI', 'iShares MSCI ACWI UCITS ETF (Acc) · IE00B6R52259'], world: ['MSCI World', 'iShares Core MSCI World UCITS ETF (Acc) · IE00B4L5Y983'], europe: ['MSCI Europe', 'iShares Core MSCI Europe UCITS ETF (Acc) · IE00B4K48X80'] };
@@ -229,8 +254,10 @@ class Component extends DCLogic {
     var sel = D.mov.filter(function (r) { return okY(r) && okT(r); });
     var sum = function (k) { return sel.reduce(function (a, r) { return a + r[k]; }, 0); };
     var first = D.mov[D.mov.length - 1], last = D.mov[0];
+    var H = this.hdr();
     return {
-      fileLine: D.mov.length + ' movimenti importati · competenza dal ' + first[1] + ' al ' + last[1] + ' · file d’esempio',
+      saveLabel: H.saveLabel, saveTip: H.saveTip, resetAll: H.resetAll,
+      fileLine: D.mov.length + ' movimenti importati · competenza dal ' + first[1] + ' al ' + last[1] + ' · sample_dettaglio_ok.xls',
       tAd: this.fmtE(D.ad[L]), tAz: this.fmtE(D.az[L]), tTfr: this.fmtE(D.tfr[L]), tTot: this.fmtE(T), tReal: this.fmtE(real[L]), tGain: this.signE(real[L] - T), tEtf: this.fmtE(ser[L]), tEtfDiff: this.signE(diff),
       pAd: this.fmt2(D.ad[L] / T * 100, 0) + '%', pAz: this.fmt2(D.az[L] / T * 100, 0) + '%', pTfr: this.fmt2(D.tfr[L] / T * 100, 0) + '%',
       headPre: 'Hai versato ' + this.fmtE(T) + ' e oggi nel fondo hai ' + this.fmtE(real[L]) + '. Con gli stessi versamenti nell’ETF ' + ETFS[s.etf][0] + ' ' + modeTxt + ', avresti ',

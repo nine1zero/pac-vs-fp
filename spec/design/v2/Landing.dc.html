@@ -34,6 +34,9 @@ input[type=range].r{-webkit-appearance:none;appearance:none;width:100%;height:6p
 input[type=range].r::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#FFFFFF;border:3px solid #0B0B0B;cursor:pointer}
 input[type=range].r::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#FFFFFF;border:3px solid #0B0B0B;cursor:pointer}
 input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4EE36}
+input[type=range].r.mini{height:4px;margin:6px 0 2px}
+input[type=range].r.mini::-webkit-slider-thumb{width:18px;height:18px;border-width:2.5px}
+input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2.5px}
 .tip{position:relative;display:inline-flex}
 .tip .bubble{display:none;position:absolute;z-index:20;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:280px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px}
 .tip:hover .bubble,.tip:focus-within .bubble{display:block}
@@ -41,7 +44,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
 .drop:hover{border-color:#0B0B0B;background:#FFFFFF}
 .tab:hover{border-color:#0B0B0B}
 .zone{flex:1}
-@media (max-width:900px){.g3{grid-template-columns:1fr !important}.g2{grid-template-columns:1fr !important}.sumrow{display:none !important}.h1{font-size:36px !important}}
+@media (max-width:900px){.g3{grid-template-columns:1fr !important}.g2{grid-template-columns:1fr !important}.sumrow{display:none !important}.h1{font-size:36px !important}.etfbox{flex-wrap:wrap !important;white-space:normal !important;width:auto !important}}
 </style>
 </helmet>
 <div class="lp" style="min-height: 100vh; background: #F4F4F2">
@@ -53,14 +56,12 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
   <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px">
     <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></span>
     <nav style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
-      <span class="tip"><button type="button" onClick="{{ saveData }}" style="{{ saveStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"></path><path d="M8 3v6h8V3"></path><path d="M8 21v-7h8v7"></path></svg>{{ saveLabel }}</button><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">Salva i dati inseriti nella memoria di questo browser (localStorage, non cookie). Restano solo su questo dispositivo, non vengono inviati a nessuno, e al prossimo accesso ritrovi tutto com’era.</span></span>
-      <span class="tip"><button type="button" onClick="{{ resetData }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">Torna al profilo d’esempio e cancella anche i dati salvati in questo browser.</span></span>
-      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2DF">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-        100% locale
-      </span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 4px; background: #F4F4F2; border: none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>100% locale</span>
+      <span class="tip"><span tabindex="0" style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 4px; background: #F4F4F2; border: none; cursor: help; font-variant-numeric: tabular-nums"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ saveLabel }}</span><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">{{ saveTip }}</span></span>
+      <span class="tip"><button type="button" onClick="{{ resetData }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip" style="left: auto; right: 0; bottom: auto; top: calc(100% + 8px); transform: none">Torna al profilo d’esempio e cancella dalla memoria di questo browser tutti i dati inseriti e il file delle operazioni.</span></span>
       <a href="Storico.dc.html" class="btn ghost">Storico</a>
       <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+      <a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer" class="btn ghost" aria-label="Codice sorgente su GitHub" title="Codice sorgente su GitHub" style="padding: 8px 10px"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
     </nav>
   </header>
 
@@ -68,9 +69,9 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
 
     <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
       <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
-        <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px; width: 759px">Simulatore strategie <span style="position: relative; display: inline-block"><button type="button" onClick="{{ toggleEtfMenu }}" aria-expanded="{{ etfMenu }}" aria-haspopup="listbox" title="Scegli l'ETF del PAC" style="font: inherit; letter-spacing: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline dotted 3px; text-underline-offset: 9px">PAC ETF globale<span aria-hidden="true" style="font-size: 24px; margin-left: 8px; vertical-align: middle; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 10px; background: #D4EE36; border: 1.5px solid #0B0B0B">▾</span></button><sc-if value="{{ etfMenu }}" hint-placeholder-val="{{ false }}"><span role="listbox" aria-label="ETF del PAC" style="position: absolute; left: 0; top: calc(100% + 10px); z-index: 30; width: 480px; display: flex; flex-direction: column; gap: 6px; padding: 8px; background: #FFFFFF; border: 1.5px solid #0B0B0B; border-radius: 18px; box-shadow: 0 16px 40px rgba(11,11,11,.16); font-size: 14px; letter-spacing: .2px; line-height: 1.4; font-weight: 400"><sc-for list="{{ etfOpts }}" as="o" hint-placeholder-count="4"><button type="button" role="option" aria-selected="{{ o.on }}" onClick="{{ o.pick }}" style="{{ o.style }}"><span style="display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 15px"><span>{{ o.name }}</span><span style="white-space: nowrap">TER {{ o.ter }}</span></span><span style="font-size: 12px; color: #5C6168">{{ o.isin }}</span><span style="display: grid; grid-template-columns: 86px 1fr; gap: 2px 10px; font-size: 13px; line-height: 1.45"><sc-for list="{{ o.facts }}" as="f" hint-placeholder-count="6"><span style="color: #5C6168">{{ f.k }}</span><span style="color: #0B0B0B; font-weight: 500">{{ f.v }}</span></sc-for></span></button></sc-for></span></sc-if></span> vs <span class="mark">Fondo Pensione IBM</span></h1>
-        <span style="display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; align-self: flex-start; padding: 8px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; color: #26282B"><span class="cap">ETF del PAC</span><strong>{{ etfName }}</strong><span>{{ etfIsin }} · TER {{ etfTer }}</span><span style="color: #5C6168">usato in tutta la simulazione</span></span>
-        <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Sei sezioni, ognuna si può saltare. Senza i tuoi dati usa un profilo d'esempio con dati verosimili.<br>SOLO per gli iscritti FPDDI IBM <span class="mark" style="color: #0B0B0B; font-weight: 600">a comparto Azionario</span>.</p>
+        <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px; width: 759px">Simulatore strategie <span style="position: relative; display: inline-block"><button type="button" onClick="{{ toggleEtfMenu }}" aria-expanded="{{ etfMenu }}" aria-haspopup="listbox" title="Scegli l'ETF del PAC" style="font: inherit; letter-spacing: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline dotted 3px; text-underline-offset: 9px">PAC ETF globale<span aria-hidden="true" style="font-size: 24px; margin-left: 8px; vertical-align: middle; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 10px; background: #D4EE36; border: 1.5px solid #0B0B0B">▾</span></button><sc-if value="{{ etfMenu }}" hint-placeholder-val="{{ false }}"><span role="listbox" aria-label="ETF del PAC" style="position: absolute; left: 0; top: calc(100% + 10px); z-index: 30; width: 480px; display: flex; flex-direction: column; gap: 6px; padding: 8px; background: #FFFFFF; border: 1.5px solid #0B0B0B; border-radius: 18px; box-shadow: 0 16px 40px rgba(11,11,11,.16); font-size: 14px; letter-spacing: .2px; line-height: 1.4; font-weight: 400"><sc-for list="{{ etfOpts }}" as="o" hint-placeholder-count="4"><button type="button" role="option" aria-selected="{{ o.on }}" onClick="{{ o.pick }}" style="{{ o.style }}"><span style="display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 15px"><span>{{ o.name }}</span><span style="white-space: nowrap">TER {{ o.ter }}</span></span><span style="font-size: 12px; color: #5C6168">{{ o.isin }}</span><span style="display: grid; grid-template-columns: 86px 1fr; gap: 2px 10px; font-size: 13px; line-height: 1.45"><sc-for list="{{ o.facts }}" as="f" hint-placeholder-count="6"><span style="color: #5C6168">{{ f.k }}</span><span style="color: #0B0B0B; font-weight: 500">{{ f.v }}</span></sc-for></span></button></sc-for></span></sc-if></span> vs <span class="mark">Fondo Pensione IBM</span> <span style="font-size: 24px; font-weight: 500; letter-spacing: -.3px; color: #5C6168; white-space: nowrap">(comparto azionario)</span></h1>
+        <span class="etfbox" style="display: inline-flex; flex-wrap: nowrap; white-space: nowrap; width: max-content; max-width: none; align-items: center; gap: 8px; align-self: flex-start; padding: 8px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; color: #26282B"><span class="cap">ETF del PAC</span><strong>{{ etfName }}</strong><span>{{ etfIsin }} · TER {{ etfTer }}</span><span style="color: #5C6168">usato in tutta la simulazione</span></span>
+        <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Sei sezioni, ognuna si può saltare. Senza i tuoi dati usa un profilo d'esempio con dati verosimili.<br>SOLO per gli iscritti FPDDI IBM <span class="mark" style="color: #0B0B0B; font-weight: 600">100% azionario</span>.</p>
       </div>
       
     </section>
@@ -79,13 +80,39 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
 
     <!-- 0 · AVVERTENZE -->
     <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+      <div style="grid-column: 1 / -1; background: #FFFFFF; border: 1.5px solid #0B0B0B; border-radius: 20px; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px">
+        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 520px; min-width: 0">
+          <span style="align-self: flex-start; padding: 3px 10px; border-radius: 99px; background: #0B0B0B; color: #D4EE36; font-size: 11.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase">La domanda</span>
+          <h2 style="margin: 0; font-size: 26px; line-height: 1.25; font-weight: 600; letter-spacing: -.5px">Dove conviene mettere <span class="mark">il risparmio in più</span>: nel Fondo o in un PAC su ETF?</h2>
+          <p style="margin: 0; font-size: 14.5px; line-height: 1.55; color: #26282B"><strong style="color: #0B0B0B">Stessa cifra, tre modi di investirla.</strong> Decidi solo dove va il tuo risparmio aggiuntivo (qui accanto): <strong>tutto nel Fondo</strong>, <strong>tutto nel PAC</strong> o <strong>il minimo nel Fondo e il resto nel PAC</strong>. Il rimborso IRPEF, quando c'è, va nel PAC. TFR ({{ bud.tfr }}/anno) e posizione già maturata ({{ bud.pos }}) restano comunque nel Fondo.</p>
+        </div>
+        <div style="flex: 0 1 320px; min-width: 250px; box-sizing: border-box; background: #F4F4F2; border: 1px solid #E2E2DF; border-radius: 16px; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 4px">
+          <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><span class="cap" style="font-size: 11.5px">Risparmio aggiuntivo · 1° anno</span><span style="font-size: 12.5px; color: #5C6168; font-variant-numeric: tabular-nums">{{ bud.month }}/mese</span></span>
+          <span style="font-size: 36px; line-height: 1.1; font-weight: 700; letter-spacing: -.8px; font-variant-numeric: tabular-nums; white-space: nowrap">{{ bud.year }}<span style="font-size: 16px; font-weight: 600; letter-spacing: 0; color: #5C6168">/anno</span></span>
+          <input class="r mini" type="range" min="{{ savMinV }}" max="{{ savMaxV }}" step="50" value="{{ budSavV }}" onInput="{{ setBudSav }}" aria-label="Risparmio aggiuntivo annuo" style="{{ trBud }}">
+          <span class="ticks" style="font-size: 11.5px"><span>min {{ budMinTxt }}</span><span>max {{ budMaxTxt }}</span></span>
+          <sc-if value="{{ savMax }}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; color: #5C6168; line-height: 1.4">Ora: deduzione massima. Sposta lo slider per un importo fisso.</span></sc-if>
+          <sc-if value="{{ savFix }}" hint-placeholder-val="{{ false }}"><span style="display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: #5C6168">Ora: importo fisso.<button type="button" onClick="{{ pickMax }}" style="border: 1px solid #D6D6D4; background: #FFFFFF; border-radius: 99px; padding: 3px 10px; font: inherit; font-size: 12px; font-weight: 600; color: #0B0B0B; cursor: pointer">Torna al massimo</button></span></sc-if>
+        </div>
+      </div>
       <sc-for list="{{ topCards }}" as="c" hint-placeholder-count="3">
         <div style="{{ c.box }}">
-          <span style="display: flex; align-items: center; gap: 10px"><span style="{{ c.num }}">{{ c.n }}</span><span style="font-size: 18px; font-weight: 600; letter-spacing: -.2px">{{ c.name }}</span></span>
+          <span style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px"><span style="display: inline-flex; align-items: center; gap: 10px"><span style="{{ c.num }}">{{ c.n }}</span><span style="font-size: 16px; font-weight: 600">{{ c.name }}</span></span><span style="font-size: 11.5px; font-weight: 600; color: #3A3D42; background: #F7F7F5; border: 1px solid #E6E6E3; border-radius: 99px; padding: 2px 9px; white-space: nowrap">{{ c.role }}</span></span>
           <span style="{{ c.descStyle }}">{{ c.desc }}</span>
+          <div style="margin-top: auto; background: #F7F7F5; border: 1px solid #E6E6E3; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px">
+            <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><span style="font-size: 11.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #5C6168">Il tuo risparmio aggiuntivo</span><strong style="font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap">sempre {{ bud.year }}/anno</strong></span>
+            <span role="img" aria-label="{{ c.barLabel }}" style="display: flex; height: 30px; border-radius: 10px; border: 1.5px solid #0B0B0B; overflow: hidden; background: #FFFFFF"><span style="{{ c.segFund }}">{{ c.fundLab }}</span><span style="{{ c.segPac }}">{{ c.pacLab }}</span></span>
+            <span style="display: flex; justify-content: space-between; gap: 4px 10px; font-size: 12.5px; color: #26282B; font-variant-numeric: tabular-nums"><span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; background: #3A3D42"></span>Fondo <strong>{{ c.fundEur }}</strong></span><span>PAC <strong>{{ c.pacEur }}</strong><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-left: 5px; background: #D4EE36; box-shadow: inset 0 0 0 1px #0B0B0B"></span></span></span>
+            <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 8px; padding-top: 10px; border-top: 1px dashed #D6D6D4"><span style="font-size: 11.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #5C6168">Nel Fondo</span><span style="font-size: 12px; color: #5C6168; white-space: nowrap">tetto deducibile <strong style="color: #0B0B0B">{{ c.limTxt }}</strong></span></span>
+            <span role="img" aria-label="{{ c.fundBarLabel }}" style="display: flex; height: 20px; border-radius: 7px; border: 1.5px solid #0B0B0B; overflow: hidden; background: repeating-linear-gradient(135deg, #FFFFFF 0 6px, #F1F1EE 6px 12px)"><span style="{{ c.fundTuo }}"></span><span style="{{ c.fundIbm }}">{{ c.ibmLab }}</span></span>
+            <span style="display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: #26282B; font-variant-numeric: tabular-nums"><span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; background: #3A3D42"></span>tuo <strong>{{ c.fundEur }}</strong></span><span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; background: #22C3D6; box-shadow: inset 0 0 0 1px #0B0B0B"></span>IBM <strong style="{{ c.empStyle }}">{{ c.emp }}</strong></span></span>
+            <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 6px"><span style="font-size: 11.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #5C6168">Rimborso IRPEF → PAC</span><strong style="font-size: 12.5px; font-variant-numeric: tabular-nums; {{ c.irpStyle }}">{{ c.irp }}</strong></span>
+            <span role="img" aria-label="{{ c.refBarLabel }}" style="display: flex; height: 10px; border-radius: 99px; background: #E6E6E3; overflow: hidden"><span style="{{ c.refBar }}"></span></span>
+          </div>
         </div>
       </sc-for>
-    </div><nav aria-label="Sezioni" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
+    </div>
+<nav aria-label="Sezioni" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
       <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="7">
         <button type="button" class="tab" onClick="{{ t.go }}" aria-current="{{ t.current }}" style="{{ t.style }}">
           <span style="{{ t.numStyle }}">{{ t.mark }}</span>
@@ -106,7 +133,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
         <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px">
           <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
             <div class="panel"><span class="cap">Indipendente</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">Non è uno strumento del Fondo Pensione per i Dipendenti e Dirigenti IBM, né di IBM, né di un gestore o di un intermediario. Non vende nulla e non riceve commissioni.</span></div>
-            <div class="panel"><span class="cap">I tuoi dati restano qui</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">Calcolo e lettura del file avvengono nel tuo browser. Nessun dato viene inviato, nessun account, nessun tracciamento. Chiudendo la pagina tutto si cancella.</span></div>
+            <div class="panel"><span class="cap">I tuoi dati restano qui</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">Calcolo e lettura del file avvengono nel tuo browser. Nessun dato viene inviato, nessun account, nessun tracciamento. I dati che inserisci e il file delle operazioni si salvano da soli in questo browser, solo su questo dispositivo: «Cancella tutto» li elimina.</span></div>
             <div class="panel"><span class="cap">Non è consulenza</span><span style="font-size: 15px; line-height: 1.55; color: #26282B">È una simulazione informativa su dati storici pubblicati e ipotesi che puoi cambiare. I rendimenti passati non garantiscono quelli futuri. Le norme fiscali possono cambiare.</span></div>
           </div>
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
@@ -197,7 +224,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
                 <a href="Versamenti.dc.html" class="btn dark" style="justify-content: center">Vedi i miei versamenti e il grafico <span aria-hidden="true">→</span></a>
               </sc-if>
               <span style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between">
-                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: #3A3D42"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Letto solo nel browser, mai salvato</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: #3A3D42"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Letto solo nel browser e salvato solo su questo dispositivo</span>
                 <button type="button" class="btn ghost" onClick="{{ useSample }}">Usa un file d'esempio</button>
               </span>
               <sc-if value="{{ fileErr }}" hint-placeholder-val="{{ false }}"><span style="padding: 10px 12px; border-radius: 12px; background: #FDECEC; color: #8A1C1C; font-size: 13.5px; font-weight: 600">{{ fileError }}</span></sc-if>
@@ -321,7 +348,10 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
       </div>
       <sc-if value="{{ sec5.open }}" hint-placeholder-val="{{ false }}">
         <div style="border-top: 1px solid #ECECEA; padding: 26px 28px; display: flex; flex-direction: column; gap: 24px">
-          <h2 aria-live="polite" style="margin: 0; font-size: 28px; line-height: 1.3; font-weight: 500; letter-spacing: -.5px">{{ headPre }}<span class="mark">{{ headWin }}</span>{{ headPost }}</h2>
+          <div style="background: #0B0B0B; color: #F4F4F2; border-radius: 20px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px">
+            <h2 aria-live="polite" style="margin: 0; font-size: 24px; line-height: 1.35; font-weight: 500; letter-spacing: -.4px"><span class="cap" style="color: #D4EE36; margin-right: 10px; vertical-align: middle">Risposta</span>{{ headPre }}<strong class="mark" style="color: #0B0B0B">{{ headWin }}</strong>: {{ ans.total }} netti, {{ ans.gap }} più della seconda.</h2>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #D6D8DB">Pareggi: {{ ans.breaks }}. Poi {{ ans.horizon }}</p>
+          </div>
           <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
             <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
               <div style="{{ c.box }}">
@@ -376,7 +406,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
             <div class="panel" style="gap: 18px">
               <div style="display: flex; flex-direction: column; gap: 6px">
                 <span class="cap">Per quanti anni conviene</span>
-                <span style="font-size: 15px; line-height: 1.55; color: #26282B">Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno, più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; clicca una casella per provare quell’uscita e quel differenziale.</span>
+                <span style="font-size: 15px; line-height: 1.55; color: #26282B">Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno, più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; passa sopra una casella per leggerne i valori.</span>
               </div>
               <span style="font-size: 13px; color: #5C6168">{{ hm.note }}</span>
               <div style="display: flex; gap: 8px">
@@ -386,7 +416,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
                 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
                   <div style="position: relative">
                     <div role="img" aria-label="{{ hm.label }}" style="{{ hm.grid }}">
-                      <sc-for list="{{ hm.cells }}" as="c" hint-placeholder-count="120"><button type="button" title="{{ c.title }}" onClick="{{ c.pick }}" style="{{ c.style }}" aria-label="{{ c.title }}"></button></sc-for>
+                      <sc-for list="{{ hm.cells }}" as="c" hint-placeholder-count="120"><span title="{{ c.title }}" style="{{ c.style }}"></span></sc-for>
                     </div>
                     <span style="{{ hm.histLine }}"></span>
                     <span style="{{ hm.histLab }}">storico fondo −5,8%</span>
@@ -409,9 +439,9 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
                 <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ ln.text }}</span>
               </div>
               <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #2563EB"></span>1 · Minimo per l'azienda + PAC</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #15803D"></span>2 · Deduzione massima + PAC</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 20px; height: 3px; border-radius: 2px; background: #C2410C"></span>3 · Solo TFR + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 7px; border-radius: 99px; background: #2563EB"></span>1 · Minimo per l'azienda + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 4.5px; border-radius: 99px; background: #15803D"></span>2 · Deduzione massima + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 2.5px; border-radius: 99px; background: #C2410C"></span>3 · Solo TFR + PAC</span>
                 <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #D4EE36; border: 2px solid #0B0B0B"></span>pareggio</span>
               </span>
               <div style="display: flex; gap: 8px">
@@ -422,9 +452,9 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
                   <div style="position: relative; height: 320px">
                     <svg viewBox="0 0 1000 320" preserveAspectRatio="none" width="100%" height="320" role="img" aria-label="{{ ln.label }}" style="display: block; overflow: visible">
                       <path d="{{ ln.grid }}" fill="none" stroke="#E2E2DF" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-                      <path d="{{ ln.l0 }}" fill="none" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                      <path d="{{ ln.l1 }}" fill="none" stroke="#15803D" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                      <path d="{{ ln.l2 }}" fill="none" stroke="#C2410C" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l0 }}" fill="none" stroke="#2563EB" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l1 }}" fill="none" stroke="#15803D" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{ ln.l2 }}" fill="none" stroke="#C2410C" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
                     </svg>
                     <span style="{{ ln.cur }}"></span>
                     <span style="{{ ln.curLab }}">tu: {{ deltaTxt }}</span>
@@ -452,7 +482,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
           <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px"><span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Assunzioni, fonti e avvertenze</span><span style="font-size: 12.5px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: #ECECEA">Verificabile</span></span>
           <span style="font-size: 14.5px; color: #5C6168">Ogni numero ha una fonte; ogni ipotesi si può cambiare</span>
         </div>
-        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">40 parametri <span style="color: #9A9EA3">·</span> 10 assunzioni <span style="color: #9A9EA3">·</span> fonti citate</span>
+        <span class="sumrow" style="display: flex; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #F4F4F2; font-size: 13.5px; font-weight: 600; white-space: nowrap">46 parametri <span style="color: #9A9EA3">·</span> 10 assunzioni <span style="color: #9A9EA3">·</span> fonti citate</span>
         <button type="button" class="btn ghost" onClick="{{ sec6.toggle }}" aria-expanded="{{ sec6.open }}">{{ sec6.btn }}</button>
       </div>
       <sc-if value="{{ sec6.open }}" hint-placeholder-val="{{ false }}">
@@ -462,11 +492,10 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
               <span class="cap">Parametri chiave</span>
               <sc-for list="{{ keyParams }}" as="k" hint-placeholder-count="8">
                 <span style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #ECECEA; font-size: 13.5px">
-                  <span><span style="font-weight: 600">{{ k.name }}</span><span style="color: #5C6168"> · {{ k.src }}</span></span>
-                  <span style="font-weight: 600; font-variant-numeric: tabular-nums">{{ k.val }}</span>
+                  <span><span style="font-weight: 600">{{ k.name }}</span><span style="color: #5C6168"> · {{ k.kind }}</span></span>
+                  <span style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-variant-numeric: tabular-nums">{{ k.val }}<span class="tip"><button type="button" class="ib" aria-label="Fonte: {{ k.name }}">i</button><span class="bubble" role="tooltip" style="left: auto; right: 0; transform: none">{{ k.kind }} · {{ k.src }}<span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px"><sc-for list="{{ k.links }}" as="l" hint-placeholder-count="1"><a href="{{ l.url }}" rel="noopener noreferrer" style="font-size: 11.5px; font-weight: 600; color: #D4EE36">↗ {{ l.label }}</a></sc-for></span></span></span></span>
                 </span>
               </sc-for>
-              <a href="Fonti.dc.html" style="font-size: 13.5px; font-weight: 600">Tutti i 40 parametri con le fonti →</a>
             </div>
             <div style="display: flex; flex-direction: column; gap: 16px">
               <div class="panel" style="gap: 10px">
@@ -483,6 +512,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
               </div>
             </div>
           </div>
+          <a href="Fonti.dc.html" class="btn dark" style="align-self: flex-start">Tutti i 46 parametri con le fonti <span aria-hidden="true">→</span></a>
         </div>
       </sc-if>
     </section>
@@ -490,6 +520,7 @@ input[type=range].r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 5px #D4
 
   <footer style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #5C6168">
     <span>pac/fondo · strumento indipendente · calcolo 100% locale, nessun dato inviato</span>
+    <nav aria-label="Piè di pagina" style="display: inline-flex; flex-wrap: wrap; gap: 14px"><a href="Landing.dc.html" onClick="{{ openSec0 }}">Privacy e avvertenze</a><a href="Fonti.dc.html">Metodo e fonti</a><a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer">Codice sorgente</a></nav>
     <span>Dati storici: bilanci e pagine pubbliche di fondopensioneibm.it; prezzi ETF di fine mese</span>
   </footer>
 </div>
@@ -499,19 +530,29 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = { open: 0, done: [], birth: 1990, exitAge: 67, joined: 2015, ral: 45000, minM: 75, azM: 70, tfrM: 230, pos: 20000, base: 16000, recov: 0,
-      etfId: 'vanguard', etfMenu: false, lnMode: 'time', savMode: 'max', saving: 4000, delta: -0.0581, etf: 0.07, mode: 'Pensione', source: 'esempio', fileError: '', fileInfo: null, mine: {} };
+      etfId: 'vanguard', etfMenu: false, lnMode: 'time', savMode: 'max', saving: 4000, delta: -0.05808330715699661, etf: 0.07, mode: 'Pensione', source: 'esempio', fileError: '', fileInfo: null, mine: {} };
     this.KEYS = ['done', 'birth', 'exitAge', 'joined', 'ral', 'minM', 'azM', 'tfrM', 'pos', 'base', 'recov', 'etfId', 'savMode', 'saving', 'delta', 'etf', 'mode', 'source', 'fileInfo', 'mine', 'lnMode'];
     this.DEF = JSON.parse(JSON.stringify(this.state));
-    this.state.savedAt = null; this.state.storeErr = false;
-    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) { var o = JSON.parse(raw), st = this.state; this.KEYS.forEach(function (k) { if (o.data && o.data[k] !== undefined) st[k] = o.data[k]; }); st.savedAt = o.at || null; st.open = -1; this.savedSnap = this.snapshot(); } } catch (e) { }
+    // Salvataggio automatico (SPEC par. 1.1): ogni modifica si salva da sola
+    // in localStorage dalla prima modifica; aprire la pagina senza inserire nulla non salva niente.
+    this.savedAt = null; this.storeErr = false;
+    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) { var o = JSON.parse(raw), st = this.state; this.KEYS.forEach(function (k) { if (o.data && o.data[k] !== undefined) st[k] = o.data[k]; }); this.savedAt = o.at || null; st.open = -1; } } catch (e) { }
+    this.lastSnap = this.snapshot();
+  }
+  autoSave() {
+    var snap = this.snapshot();
+    if (snap === this.lastSnap) return;
+    this.lastSnap = snap;
+    var at = new Date().toISOString();
+    try { window.localStorage.setItem('pacfondo.v1', JSON.stringify({ at: at, data: JSON.parse(snap) })); this.savedAt = at; this.storeErr = false; } catch (e) { this.storeErr = true; }
   }
   snapshot() { var s = this.state, d = {}; this.KEYS.forEach(function (k) { d[k] = s[k]; }); return JSON.stringify(d); }
-  fmtE(v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(v) + ' €'; }
+  fmtE(v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0, useGrouping: 'always' }).format(v) + ' €'; }
   fmtK(v) { return Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' mln €' : Math.round(v / 1000).toLocaleString('it-IT') + 'k €'; }
-  fmtP(v, d) { var s = (v * 100).toLocaleString('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }); return (v > 0 ? '+' : '') + s + '%'; }
+  fmtP(v, d) { var s = (v * 100).toLocaleString('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }); return (v > 0 ? '+' : '') + s.replace('-', '−') + '%'; }
   params() { var s = this.state; return { birth: s.birth, exitAge: s.exitAge, joined: s.joined, ral: s.ral, minM: s.minM, azM: s.azM, tfrM: s.tfrM, pos: s.pos, base: s.base, recov: s.recov, saving: s.savMode === 'max' ? null : s.saving, delta: s.delta, etf: s.etf, ter: this.etfSel().ter, mode: s.mode }; }
   minRal() { var r = this.state.ral; return 0.02 * Math.min(r, 56224) + 0.07 * Math.max(0, r - 56224); }
-  minFloor() { return Math.min(this.dedMax(), Math.ceil(Math.max(this.minRal(), this.state.minM * 13) / 50) * 50); }
+  minFloor() { return Math.min(this.dedMax(), Math.ceil(Math.max(this.minRal(), this.state.minM * 13))); }
   dedMax() { var s = this.state; return Math.max(s.minM * 13, 5300 + Math.min(2650, s.recov) - s.azM * 13); }
   etfList() { return [
     { id: 'vanguard', name: 'Vanguard FTSE All-World UCITS ETF Acc', isin: 'IE00BK5BQT80', ter: 0.0014, facts: [['Indice', 'FTSE All-World'], ['Società', 'grandi + medie'], ['Copertura', 'circa 90–95% del mercato'], ['Titoli', '3.755'], ['Patrimonio', '76,9 mld €'], ['Storia', 'dal 07/2019 (classe a distribuzione dal 2012)']], hist: { y5: 0.1132, y10: 0.1211, all: 0.1315, since: '07/2019' } },
@@ -535,13 +576,16 @@ class Component extends DCLogic {
       var J = Math.max(E, 5300 + I - F), K = p.saving === null ? J : Math.min(J, Math.max(fl, p.saving * g));
       var N = Math.max(0, Math.min(E, 5300 - F)), O = this.taxSave(ry, N);
       var S = Math.max(E, Math.min(J, K)), U = Math.max(0, Math.min(S, 5300 + I - F)), V = Math.max(0, U + F - 5300), W = this.taxSave(ry, U);
-      rows.push([{ pac: Math.max(0, K - E + O), fund: E + F + G, tax: N + F + G }, { pac: Math.max(0, K - S + W), fund: S + F + G, tax: U + F + G }, { pac: K, fund: G, tax: G }]);
+      rows.push([{ pac: Math.max(0, K - E + O), fund: E + F + G, tax: N + F + G, member: E, employer: F, irpef: O, K: K, G: G, lim: 5300 + I },
+        { pac: Math.max(0, K - S + W), fund: S + F + G, tax: U + F + G, member: S, employer: F, irpef: W, K: K, G: G, lim: 5300 + I },
+        { pac: K, fund: G, tax: G, member: 0, employer: 0, irpef: 0, K: K, G: G, lim: 5300 + I }]);
       H = Math.max(0, H - V);
     }
     return rows;
   }
   sim(p, rows, d, h, mode) {
-    var re = p.etf - p.ter, rn = (re + d) * 0.8, Y = 2026 + h, t;
+    // il fondo resta ancorato all'ETF di riferimento (TER 0,14%) su cui è calibrato δ: cambiare l'ETF del PAC cambia solo il PAC
+    var re = p.etf - p.ter, rn = (p.etf - 0.0014 + d) * 0.8, Y = 2026 + h, t;
     t = mode === 'Riscatto' ? 0.23 : Math.max(0.09, 0.15 - 0.003 * Math.max(0, Y - p.joined - 15));
     var out = [];
     for (var s = 0; s < 3; s++) {
@@ -554,17 +598,17 @@ class Component extends DCLogic {
   }
   best(r) { var b = 0; for (var i = 1; i < 3; i++) if (r[i].tot > r[b].tot) b = i; return b; }
   heat(p, rows, n) {
-    var self = this, s = this.state, colors = ['#2563EB', '#15803D', '#C2410C'], ink = '#0B0B0B', lime = '#D4EE36', R = 31, cells = [];
-    var dOf = function (k) { return 0.03 - 0.005 * k; }, fE = function (v) { return self.fmtK(v); };
+    // passo 0,25 punti (SPEC par. 4.6), solo lettura: la mappa non modifica i parametri
+    var self = this, s = this.state, colors = ['#2563EB', '#15803D', '#C2410C'], ink = '#0B0B0B', lime = '#D4EE36', R = 61, cells = [];
+    var dOf = function (k) { return 0.03 - 0.0025 * k; }, fE = function (v) { return self.fmtK(v); };
     for (var k = 0; k < R; k++) { for (var h = 1; h <= n; h++) { (function (k, h) { var d = dOf(k), md = h < n ? 'Riscatto' : p.mode, r = self.sim(p, rows, d, h, md), b = self.best(r);
       var srt = [r[0].tot, r[1].tot, r[2].tot].sort(function (a, c) { return c - a; }), m = srt[0] > 0 ? (srt[0] - srt[1]) / srt[0] : 0, op = 0.3 + 0.7 * Math.min(1, m / 0.08);
       cells.push({ title: 'Uscita nel ' + (2026 + h) + ', differenziale ' + self.fmtP(d, 1) + ': vince ' + (b + 1) + ' · 1 = ' + fE(r[0].tot) + ', 2 = ' + fE(r[1].tot) + ', 3 = ' + fE(r[2].tot),
-        style: 'display:block;border:none;padding:0;margin:0;cursor:pointer;height:10px;min-width:0;background:' + colors[b] + ';opacity:' + op.toFixed(2),
-        pick: function () { self.setState({ exitAge: Math.max(45, Math.min(72, 2026 + h - s.birth)), delta: Math.round(d * 1000) / 1000 }); } }); })(k, h); } }
-    var topOf = function (d) { return ((0.03 - d) / 0.005 + 0.5) / R * 100; }, leftOf = function (h) { return (h - 0.5) / n * 100; };
+        style: 'display:block;height:4px;min-width:0;background:' + colors[b] + ';opacity:' + op.toFixed(2) }); })(k, h); } }
+    var topOf = function (d) { return ((0.03 - d) / 0.0025 + 0.5) / R * 100; }, leftOf = function (h) { return (h - 0.5) / n * 100; };
     var yLab = [0.03, 0, -0.03, -0.06, -0.09, -0.12].map(function (d) { return { label: self.fmtP(d, 0), style: 'position:absolute;right:0;transform:translateY(-50%);top:' + topOf(d).toFixed(2) + '%' }; });
     var xLab = [], stepY = n > 30 ? 5 : n > 12 ? 3 : 1; for (var h = 1; h <= n; h++) if (h === 1 || h === n || (2026 + h) % stepY === 0 && h > 2 && h < n - 1) xLab.push({ label: String(2026 + h), style: 'position:absolute;top:0;white-space:nowrap;transform:translateX(-50%);left:' + leftOf(h).toFixed(2) + '%' });
-    var dT = Math.max(-0.12, Math.min(0.03, s.delta)), hist = -0.0581;
+    var dT = Math.max(-0.12, Math.min(0.03, s.delta)), hist = -0.05808330715699661;
     return { cells: cells, yLab: yLab, xLab: xLab, grid: 'display:grid;gap:1px;background:#F7F7F5;border-radius:8px;overflow:hidden;grid-template-columns:repeat(' + n + ',minmax(0,1fr))',
       label: 'Mappa: anni di uscita da ' + 2027 + ' a ' + (2026 + n) + ' e differenziale da +3% a −12%, colorata con lo scenario migliore',
       note: n + ' anni di uscita · prima dell’ultimo anno uscita con riscatto 23%',
@@ -585,7 +629,7 @@ class Component extends DCLogic {
     var grid = '', yLab = []; for (var v = y0; v <= y1 + 1e-6; v += step) { grid += 'M0 ' + Y(v).toFixed(1) + ' H1000 '; yLab.push({ label: Math.abs(v) < 1 ? '0 €' : this.fmtK(v), style: 'position:absolute;right:0;transform:translateY(-50%);top:' + (Y(v) / H * 100).toFixed(2) + '%' }); }
     var pts = [], txt = [];
     [[0, 1], [1, 2], [0, 2]].forEach(function (pr) { for (var k = 1; k < n; k++) { var a0 = vals[pr[0]][k - 1] - vals[pr[1]][k - 1], a1 = vals[pr[0]][k] - vals[pr[1]][k];
-      if (a0 === 0 || a0 * a1 < 0) { var t = a0 === 0 ? 0 : a0 / (a0 - a1), xk = k - 1 + t, yv = vals[pr[0]][k - 1] + (vals[pr[0]][k] - vals[pr[0]][k - 1]) * t, yr = Math.round(2027 + xk);
+      if ((a0 === 0 && k === 1) || (a0 !== 0 && (a1 === 0 || a0 * a1 < 0))) { var t = a0 === 0 ? 0 : a0 / (a0 - a1), xk = k - 1 + t, yv = vals[pr[0]][k - 1] + (vals[pr[0]][k] - vals[pr[0]][k - 1]) * t, yr = Math.round(2027 + xk);
         var lab = 'Pareggio ' + (pr[0] + 1) + ' = ' + (pr[1] + 1) + ' nel ' + yr, xp = X(xk) / W * 100, yp = Y(yv) / H * 100;
         txt.push(lab + ' (' + self.fmtK(yv) + '): da lì in poi, tra le due, è meglio la ' + (a1 > 0 ? pr[0] + 1 : pr[1] + 1));
         pts.push({ label: lab, dot: 'position:absolute;width:16px;height:16px;border-radius:50%;background:' + lime + ';border:2.5px solid ' + ink + ';box-sizing:border-box;transform:translate(-50%,-50%);left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%',
@@ -594,7 +638,15 @@ class Component extends DCLogic {
     return { l0: path(vals[0]), l1: path(vals[1]), l2: path(vals[2]), grid: grid, yLab: yLab, pts: pts.slice(0, 4), xt: xt, xAxis: 'anno di uscita',
       cur: 'display:none', curLab: 'display:none',
       label: 'Capitale netto nei tre scenari se esci in ciascun anno dal 2027 al ' + (2026 + n) + ', differenziale ' + this.fmtP(d, 1) + ', con i punti di pareggio',
-      text: 'Capitale netto se esci in quell’anno, con differenziale ' + this.fmtP(d, 1) + ' e uscita per ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. ' + (txt.length ? txt.join(' · ') + '.' : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.') };
+      text: 'Capitale netto se esci in quell’anno, con differenziale ' + this.fmtP(d, 1) + ' e uscita per ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. ' + (txt.length ? txt.join(' · ') + '.' : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.') + this.overlapNote(vals) };
+  }
+  // due scenari quasi uguali (meno dell'1%): le linee si sovrappongono e lo diciamo nel testo
+  overlapNote(vals) {
+    var self = this, out = [];
+    [[0, 1], [1, 2], [0, 2]].forEach(function (pr) { var A = vals[pr[0]], B = vals[pr[1]], md = 0, top = 0;
+      for (var k = 0; k < A.length; k++) { md = Math.max(md, Math.abs(A[k] - B[k])); top = Math.max(top, Math.abs(A[k]), Math.abs(B[k])); }
+      if (top > 0 && md / top < 0.01) out.push('Le linee ' + (pr[0] + 1) + ' e ' + (pr[1] + 1) + ' quasi coincidono (al massimo ' + self.fmtE(md) + ' di differenza), per questo si vedono una sopra l’altra.'); });
+    return out.length ? ' ' + out.join(' ') : '';
   }
   lines(p, rows, n) {
     var self = this, s = this.state, colors = ['#2563EB', '#15803D', '#C2410C'], ink = '#0B0B0B', lime = '#D4EE36', W = 1000, H = 320, N = 61;
@@ -616,7 +668,7 @@ class Component extends DCLogic {
       cur: 'position:absolute;top:0;bottom:0;width:0;border-left:2px dashed ' + ink + ';pointer-events:none;left:' + cx.toFixed(2) + '%',
       curLab: 'position:absolute;top:-2px;transform:translateX(-50%);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';border:1px solid ' + ink + ';white-space:nowrap;left:' + cx.toFixed(2) + '%',
       label: 'Capitale netto all’uscita nel ' + (2026 + n) + ' nei tre scenari al variare del differenziale, con i punti di pareggio',
-      text: 'Uscita nel ' + (2026 + n) + ' con ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. Dove due linee si incrociano i due scenari danno lo stesso capitale: ' + (txt.length ? txt.join(' · ') + '.' : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.') };
+      text: 'Uscita nel ' + (2026 + n) + ' con ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. Dove due linee si incrociano i due scenari danno lo stesso capitale: ' + (txt.length ? txt.join(' · ') + '.' : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.') + this.overlapNote(vals) };
   }
   breakeven(p, rows, a, b, h, mode) {
     var self = this, f = function (d) { var r = self.sim(p, rows, d, h, mode); return r[a].tot - r[b].tot; };
@@ -657,6 +709,7 @@ class Component extends DCLogic {
     } catch (err) { this.setState({ fileError: err.message }); }
   }
   renderVals() {
+    this.autoSave();
     var self = this, s = this.state, p = this.params(), rows = this.flows(p), n = rows.length, res = this.sim(p, rows, p.delta, n, p.mode);
     var colors = ['#2563EB', '#15803D', '#C2410C'], names = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'];
     var b = this.best(res), worst = [0, 1, 2].reduce(function (a, i) { return res[i].tot < res[a].tot ? i : a; }, 0);
@@ -684,8 +737,13 @@ class Component extends DCLogic {
         style: 'display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font:inherit;color:' + ink + ';cursor:pointer;text-align:left;min-width:0;background:#FFFFFF;border:' + (on ? '1.5px solid ' + ink : '1px solid #E2E2DF') }; });
     var zones = [];
     for (var i = 0; i <= 60; i++) { var d = -0.12 + i * 0.0025, w = this.best(this.sim(p, rows, d, n, p.mode)); zones.push({ style: 'background:' + colors[w], title: this.fmtP(d, 2) + ': vince ' + names[w] }); }
-    var strip = [];
-    for (var h = 1; h <= n; h++) { var rr = this.sim(p, rows, p.delta, h, h < n ? 'Riscatto' : p.mode), bb = this.best(rr); strip.push({ style: 'flex:1;border-radius:4px;background:' + colors[bb], title: (2026 + h) + ': conviene ' + names[bb] }); }
+    var strip = [], h21 = null;
+    for (var h = 1; h <= n; h++) { var rr = this.sim(p, rows, p.delta, h, h < n ? 'Riscatto' : p.mode), bb = this.best(rr); strip.push({ style: 'flex:1;border-radius:4px;background:' + colors[bb], title: (2026 + h) + ': conviene ' + names[bb] });
+      if (h21 === null && rr[0].tot >= rr[1].tot) h21 = h; }
+    // orizzonte di pareggio 2-1 (SPEC par. 8 punto 6): primo anno di uscita (riscatto prima dell'ultimo) da cui conviene la 1
+    var dTxt = this.fmtP(p.delta, 1), horizon = h21 === null ? 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per l’azienda (1) per qualsiasi uscita fino al ' + (2026 + n) + '.'
+      : h21 === 1 ? 'con ' + dTxt + ' il minimo per l’azienda (1) batte la deduzione massima (2) per qualsiasi uscita.'
+      : 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per l’azienda (1) se esci entro ' + (h21 - 1) + (h21 - 1 === 1 ? ' anno' : ' anni') + ' (entro il ' + (2025 + h21) + '); oltre conviene la 1.';
     var bePhrase = function (a, c, label) { var v = self.breakeven(p, rows, a, c, n, p.mode);
       if (v === 'always') return label + ': vince sempre la ' + (a + 1) + '.'; if (v === 'never') return label + ': vince sempre la ' + (c + 1) + '.';
       return label + ': pareggio a ' + self.fmtP(v, 1) + ' (sopra vince la ' + (a + 1) + ', sotto la ' + (c + 1) + ').'; };
@@ -695,21 +753,43 @@ class Component extends DCLogic {
     var J0 = Math.max(p.minM * 13, 5300 + Math.min(2650, p.recov) - p.azM * 13), tau = this.marg(p);
     var A = [['Stesso budget netto', 'I tre scenari usano ogni anno gli stessi soldi del tuo stipendio netto. Cambia solo dove li metti.'], ['Rimborso IRPEF nel PAC', 'Il risparmio fiscale della deduzione è investito nel PAC nello stesso anno.'], ['Differenziale costante', 'Il fondo rende ogni anno come l’ETF più il differenziale scelto.'], ['Costi già nel differenziale', 'Il differenziale storico è calcolato sui valori quota, già al netto dei costi del fondo.'], ['Versamenti a metà anno', 'I contributi mensili rendono in media mezzo anno nell’anno in cui arrivano.'], ['Contributi +2% l’anno', 'Contributi e TFR crescono con lo stipendio; il limite di 5.300 € resta fisso.'], ['Uscita in capitale', 'Confrontiamo il capitale netto all’uscita; la rendita non è simulata.'], ['Riscatto anticipato 23%', 'Nella striscia, ogni uscita prima dell’ultimo anno è trattata come riscatto per dimissioni.'], ['PAC tassato alla fine', 'Il PAC paga il bollo 0,2% ogni anno e il 26% sulle plusvalenze solo alla vendita.'], ['Norme 2026', 'Scaglioni, limiti e aliquote restano quelli del 2026 per tutto l’orizzonte.']];
     return {
-      saveData: function () { var at = new Date(), d = JSON.parse(self.snapshot());
-        try { window.localStorage.setItem('pacfondo.v1', JSON.stringify({ at: at.toISOString(), data: d })); self.savedSnap = self.snapshot(); self.setState({ savedAt: at.toISOString(), storeErr: false }); } catch (e) { self.setState({ storeErr: true }); } },
-      resetData: function () { try { window.localStorage.removeItem('pacfondo.v1'); } catch (e) { } self.savedSnap = null; self.setState(Object.assign(JSON.parse(JSON.stringify(self.DEF)), { savedAt: null, storeErr: false, open: 0 })); },
-      saveLabel: s.storeErr ? 'Salvataggio non disponibile' : (s.savedAt ? (self.savedSnap === undefined || self.savedSnap === self.snapshot() ? 'Salvato · ' + new Date(s.savedAt).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salva le modifiche') : 'Salva i miei dati'),
-      saveStyle: 'display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:8px 12px;border-radius:12px;color:' + ink + ';' + (s.savedAt && (self.savedSnap === undefined || self.savedSnap === self.snapshot()) ? 'background:#FFFFFF;border:1px solid #D6D6D4' : 'background:' + lime + ';border:1px solid ' + ink),
+      resetData: function () { try { window.localStorage.removeItem('pacfondo.v1'); window.localStorage.removeItem('pacfondo.v1.file'); } catch (e) { }
+        self.savedAt = null; self.storeErr = false; var def = Object.assign(JSON.parse(JSON.stringify(self.DEF)), { open: 0 }), d = {}; self.KEYS.forEach(function (k) { d[k] = def[k]; }); self.lastSnap = JSON.stringify(d); self.setState(def); },
+      saveLabel: self.storeErr ? 'Salvataggio non disponibile' : (self.savedAt ? 'Salvato · ' + new Date(self.savedAt).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salvataggio automatico'),
+      saveTip: self.storeErr ? 'Questo browser non permette di salvare (ad esempio in navigazione privata): i dati restano finché non chiudi la pagina.'
+        : 'Ogni dato che inserisci si salva da solo nella memoria di questo browser (localStorage, non cookie). Resta solo su questo dispositivo, non viene inviato a nessuno, e al prossimo accesso ritrovi tutto com’era. Anche il file delle operazioni si salva qui. Per cancellare tutto usa «Cancella tutto».',
+      openSec0: function () { self.setState({ open: 0 }); },
+      ans: { win: (b + 1) + ' · ' + names[b], total: this.fmtE(res[b].tot), gap: this.fmtE(res[b].tot - res[second].tot),
+        breaks: [bePhrase(1, 0, '2 contro 1'), bePhrase(1, 2, '2 contro 3'), bePhrase(0, 2, '1 contro 3')].map(function (t) { return t.replace(/\.$/, ''); }).join(' · '), horizon: horizon },
       tabs: tabs, sec0: sec(0), sec1: sec(1), sec2: sec(2), sec3: sec(3), sec4: sec(4), sec5: sec(5), sec6: sec(6),
       skipAll: function () { self.setState({ open: 5, done: [0] }); },
-      topCards: [0, 1, 2].map(function (i) { var win = i === b, dk = win;
-        var desc = ['Nel fondo versi solo il minimo che ti dà il contributo dell’azienda. Tutto il resto del risparmio va nel PAC.', 'Nel fondo versi fino al limite deducibile, contando anche il contributo dell’azienda. Il rimborso IRPEF che ottieni lo investi nel PAC.', 'Nel fondo va solo il TFR, senza contributo tuo né dell’azienda. Tutto il risparmio va nel PAC.'][i];
-        return { n: String(i + 1), name: names[i], desc: desc, val: self.fmtE(res[i].tot), badge: win ? 'Conviene' : (i === worst ? 'La peggiore' : 'Seconda'),
+      // budget del 1° anno identico nei tre scenari (K) e sua ripartizione tra fondo e PAC
+      bud: { year: this.fmtE(rows[0][0].K), month: this.fmtE(Math.round(rows[0][0].K / 12)), tfr: this.fmtE(rows[0][0].G), pos: this.fmtE(s.pos) },
+      topCards: [0, 1, 2].map(function (i) { var win = i === b, dk = win, f = rows[0][i], K = f.K;
+        var desc = ['Dal tuo budget versi nel Fondo solo il minimo che sblocca il contributo IBM; tutto il resto del budget più il rimborso IRPEF vanno nel PAC ETF.', 'Dal tuo budget versi nel Fondo fino al tetto massimo deducibile (incluso il contributo IBM); nel PAC ETF investi il rimborso IRPEF ottenuto.', 'Dal tuo budget versi 0 € nel Fondo (rinunciando a contributo IBM e deduzione IRPEF): il 100% del tuo budget va direttamente nel PAC ETF.'][i];
+        var fs = K > 0 ? Math.min(1, Math.max(0, f.member / K)) : 0, ps = 1 - fs, pc0 = function (x) { return Math.round(x * 100) + '%'; };
+        return { n: String(i + 1), name: ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'][i], desc: desc, val: self.fmtE(res[i].tot), badge: win ? 'Conviene' : (i === worst ? 'La peggiore' : 'Seconda'),
+          role: ['Ibrido · Match + PAC', 'Solo Fondo', 'Solo PAC'][i],
+          fundPct: pc0(fs), pacPct: pc0(ps), fundEur: self.fmtE(f.member), pacEur: self.fmtE(Math.max(0, K - f.member)),
+          segFund: fs > 0 ? 'display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden;white-space:nowrap;font-size:12px;font-weight:700;color:#FFFFFF;background:#3A3D42;width:' + (fs * 100).toFixed(1) + '%' + (ps > 0 ? ';border-right:1.5px solid #0B0B0B' : '') : 'display:none',
+          segPac: ps > 0 ? 'display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden;white-space:nowrap;font-size:12px;font-weight:700;color:#0B0B0B;background:#D4EE36;width:' + (ps * 100).toFixed(1) + '%' : 'display:none',
+          fundLab: fs >= 0.16 ? 'Fondo ' + pc0(fs) : (fs > 0 ? pc0(fs) : ''), pacLab: ps >= 0.16 ? 'PAC ' + pc0(ps) : (ps > 0.06 ? pc0(ps) : ''),
+          barLabel: 'Risparmio aggiuntivo ' + self.fmtE(K) + ': Fondo ' + pc0(fs) + ', PAC ' + pc0(ps),
+          emp: f.employer > 0 ? self.fmtE(f.employer) : '0 € · perso', empStyle: 'color:' + (f.employer > 0 ? '#0B0B0B' : '#B91C1C'),
+          limTxt: self.fmtE(f.lim),
+          fundTuo: f.member > 0 ? 'display:block;height:100%;background:#3A3D42;width:' + Math.min(100, f.member / f.lim * 100).toFixed(1) + '%' : 'display:none',
+          fundIbm: f.employer > 0 ? 'display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden;white-space:nowrap;font-size:11px;font-weight:700;color:#0B0B0B;background:#22C3D6;border-left:1.5px solid #0B0B0B;' + (f.member + f.employer < f.lim - 1 ? 'border-right:1.5px solid #0B0B0B;' : '') + 'width:' + Math.min(100, f.employer / f.lim * 100).toFixed(1) + '%' : 'display:none',
+          ibmLab: f.employer / f.lim >= 0.12 ? 'IBM' : '',
+          fundBarLabel: 'Nel Fondo: tuo ' + self.fmtE(f.member) + ' e azienda ' + self.fmtE(f.employer) + ' su un tetto deducibile di ' + self.fmtE(f.lim),
+          refBar: f.irpef > 0 ? 'display:block;height:100%;border-radius:99px;background:#D4EE36;box-shadow:inset 0 0 0 1px #0B0B0B;width:' + Math.min(100, f.irpef / f.lim * 100).toFixed(1) + '%' : 'display:none',
+          refBarLabel: 'Rimborso IRPEF reinvestito nel PAC: ' + self.fmtE(f.irpef) + ' (stessa scala del tetto deducibile)',
+          irp: f.irpef > 0 ? '+' + self.fmtE(f.irpef) : '0 €', irpStyle: 'color:' + (f.irpef > 0 ? '#0B0B0B' : '#5C6168'),
+          flowFund: self.fmtE(f.fund), flowPac: self.fmtE(f.pac),
           sub: win ? self.fmtE(res[i].tot - res[second].tot) + ' più della seconda · netti all’uscita' : self.fmtE(res[b].tot - res[i].tot) + ' meno della migliore',
-          box: 'border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0;background:#FFFFFF;color:#0B0B0B;border:1px solid #E2E2DF',
+          box: 'border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0;background:#FFFFFF;color:#0B0B0B;border:2px solid ' + colors[i],
           num: 'width:30px;height:30px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#FFFFFF;background:' + colors[i],
           badgeStyle: 'font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;' + (win ? 'background:' + lime + ';color:' + ink : 'background:#ECECEA;color:#3A3D42'),
-          descStyle: 'font-size:14px;line-height:1.55;color:#3A3D42',
+          descStyle: 'font-size:13.5px;line-height:1.5;color:#3A3D42',
           valStyle: 'font-size:26px;font-weight:600;letter-spacing:-.6px;font-variant-numeric:tabular-nums;margin-top:auto;color:' + (dk ? lime : ink),
           subStyle: 'font-size:12.5px;font-variant-numeric:tabular-nums;color:' + (dk ? '#B9BCC0' : '#5C6168') }; }),
       topWinner: (b + 1) + ' · ' + names[b], topWinnerVal: this.fmtE(res[b].tot) + ' netti · ' + this.fmtE(res[b].tot - res[second].tot) + ' più della seconda',
@@ -731,14 +811,14 @@ class Component extends DCLogic {
       ral: s.ral, ralTxt: this.fmtE(s.ral), setRal: function (e) { self.setState({ ral: parseInt(e.target.value, 10) }); }, trRal: track(s.ral, 15000, 150000),
       chRal: mkChips([['30k', 30000], ['45k', 45000], ['60k', 60000], ['90k', 90000]], s.ral, 'ral'),
       savMax: s.savMode === 'max', savFix: s.savMode === 'fix', pickMax: function () { self.setState({ savMode: 'max' }); }, pickFix: function () { self.setState({ savMode: 'fix' }); },
-      segMax: seg(s.savMode === 'max'), segFix: seg(s.savMode === 'fix'), saving: Math.max(this.minFloor(), Math.min(s.saving, J0)), savMinV: this.minFloor(), savMaxV: J0, minSugg: this.fmtE(this.minRal() / 13) + ' al mese', setSaving: function (e) { self.setState({ saving: parseInt(e.target.value, 10) }); }, trSav: track(Math.max(this.minFloor(), Math.min(s.saving, J0)), this.minFloor(), J0),
+      segMax: seg(s.savMode === 'max'), segFix: seg(s.savMode === 'fix'), saving: Math.max(this.minFloor(), Math.min(s.saving, J0)), savMinV: this.minFloor(), savMaxV: this.minFloor() + Math.ceil((J0 - this.minFloor()) / 50) * 50, minSugg: this.fmtE(this.minRal() / 13) + ' al mese', setSaving: function (e) { self.setState({ saving: Math.min(J0, parseInt(e.target.value, 10)) }); }, budSavV: s.savMode === 'max' ? this.minFloor() + Math.ceil((J0 - this.minFloor()) / 50) * 50 : Math.max(this.minFloor(), Math.min(s.saving, J0)), setBudSav: function (e) { self.setState({ savMode: 'fix', saving: Math.min(J0, parseInt(e.target.value, 10)) }); }, trBud: track(s.savMode === 'max' ? J0 : Math.max(this.minFloor(), Math.min(s.saving, J0)), this.minFloor(), J0), budMinTxt: this.fmtE(this.minFloor()), budMaxTxt: this.fmtE(J0), trSav: track(Math.max(this.minFloor(), Math.min(s.saving, J0)), this.minFloor(), J0),
       savingTxt: this.fmtE(s.savMode === 'max' ? J0 : Math.max(this.minFloor(), Math.min(s.saving, J0))),
       savNote: s.savMode === 'max' ? 'Quanto ti manca per arrivare al limite deducibile (5.300 € con il contributo dell’azienda): ' + this.fmtE(J0) + ' il primo anno, +2% l’anno. È lo stesso budget nei tre scenari: il simulatore ti dice dove mettere ogni euro, fondo o ETF.' : 'Da ' + this.fmtE(this.minFloor()) + ' a ' + this.fmtE(J0) + ', cresce del 2% l’anno. Il minimo segue la RAL (' + this.fmtE(p.ral) + '): è la quota minima a tuo carico per avere il contributo dell’azienda, 2% fino a 56.224 € e 7% oltre. Sotto la quota minima si eliminerebbe uno dei tre scenari, “Minimo per l’azienda + PAC”. Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell’ETF, perché nel fondo non avrebbe più il vantaggio fiscale.',
       recov: s.recov, recovTxt: this.fmtE(s.recov), setRecov: function (e) { self.setState({ recov: +e.target.value || 0 }); },
       margTxt: (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%', margEuro: Math.round(tau * 100),
       sum3: 'RAL ' + this.fmtK(s.ral) + ' · aliquota ' + (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '% · ' + (s.savMode === 'max' ? 'deduzione max' : this.fmtE(s.saving) + '/anno'),
       deltaTxt: this.fmtP(s.delta, 1), deltaPct: Math.round(s.delta * 1000) / 10, setDelta: function (e) { self.setState({ delta: parseFloat(e.target.value) / 100 }); }, trDelta: track(s.delta, -0.12, 0.03),
-      chDelta: mkChips([['Storico −5,8', -0.0581], ['10 anni −5,0', -0.0504], ['5 anni −4,0', -0.0395], ['Benchmark −4,8', -0.0480], ['Passivo 0', 0]], s.delta, 'delta', null, 0.0004),
+      chDelta: mkChips([['Storico −5,8', -0.05808330715699661], ['10 anni −5,0', -0.0504], ['5 anni −4,0', -0.0395], ['Benchmark −4,8', -0.0480], ['Passivo 0,0', 0]], s.delta, 'delta', null, 0.0004),
       etfTxt: (s.etf * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%', etfPct: s.etf * 100, setEtf: function (e) { self.setState({ etf: parseFloat(e.target.value) / 100 }); }, trEtf: track(s.etf, 0.02, 0.21),
       etfMenu: s.etfMenu, toggleEtfMenu: function () { self.setState({ etfMenu: !self.state.etfMenu }); },
       etfName: this.etfSel().name, etfIsin: this.etfSel().isin, etfTer: this.fmtP(this.etfSel().ter, 2).replace('+', ''),
@@ -769,11 +849,17 @@ class Component extends DCLogic {
       breaks: [bePhrase(1, 0, '2 contro 1'), bePhrase(1, 2, '2 contro 3'), bePhrase(0, 2, '1 contro 3')],
       strip: strip, stripLabel: 'Scenario migliore per ogni anno di uscita dal 2027 al ' + (s.birth + s.exitAge),
       keyParams: [
-        { name: 'Limite deducibile', val: '5.300 €', src: 'D.Lgs. 252/2005 art. 8' }, { name: 'Imposta sui rendimenti del fondo', val: '20%', src: 'L. 190/2014' },
-        { name: 'Aliquota d’uscita', val: '15% → 9%', src: 'D.Lgs. 252/2005 art. 11' }, { name: 'Riscatto per dimissioni', val: '23%', src: 'art. 14' },
-        { name: 'Plusvalenze PAC', val: '26%', src: 'D.L. 66/2014' }, { name: 'Bollo conto titoli', val: '0,2%', src: 'D.L. 201/2011' },
-        { name: 'TER ETF (' + this.etfSel().name.split(' UCITS')[0] + ')', val: this.fmtP(this.etfSel().ter, 2).replace('+', ''), src: 'scheda emittente' }, { name: 'TER comparto 2025', val: '0,47%', src: 'Nota informativa FPDDI' }
-      ],
+        { name: 'Limite deducibile', val: '5.300 €', kind: 'Doc. FPDDI', src: 'FPDDI, \'Regime fiscale\' p. 3: 5.300 € dall\'annualità 2026 (5.164,57 € fino al 2025); D.Lgs. 252/2005 art. 8 c. 4 come modificato dalla L. 199/2025' },
+        { name: 'Imposta sui rendimenti del fondo', val: '20%', kind: 'Norma', src: 'FPDDI, \'Regime fiscale\' p. 5: imposta sostitutiva del 20% sul risultato netto annuo; titoli pubblici al 12,5% effettivo (L. 190/2014 art. 1 cc. 621-622)' },
+        { name: 'Aliquota d’uscita', val: '15% → 9%', kind: 'Norma', src: 'FPDDI, \'Regime fiscale\' pp. 6-7: 15% ridotta di 0,3 punti per ogni anno oltre il 15° di partecipazione, massimo 6 punti (minimo 9%); D.Lgs. 252/2005 art. 11 c. 6' },
+        { name: 'Riscatto per dimissioni', val: '23%', kind: 'Norma', src: 'FPDDI, \'Regime fiscale\' pp. 6-7: riscatto per cause diverse (es. dimissioni) e anticipazioni per ulteriori esigenze al 23% a titolo d\'imposta; D.Lgs. 252/2005 art. 14 c. 5 e art. 11 c. 7' },
+        { name: 'Plusvalenze PAC', val: '26%', kind: 'Norma', src: 'D.L. 66/2014 (26%)' }, { name: 'Bollo conto titoli', val: '0,2%', kind: 'Norma', src: 'D.L. 201/2011 art. 19 (0,20%)' },
+        { name: 'TER ETF (' + this.etfSel().name.split(' UCITS')[0] + ')', val: this.fmtP(this.etfSel().ter, 2).replace('+', ''), kind: 'Emittente', src: 'TER da scheda emittente: Vanguard 0,14%, SPDR 0,17%, iShares 0,20%. Segue l\'ETF scelto' },
+        { name: 'TER comparto 2025', val: '0,47%', kind: 'Doc. FPDDI', src: 'FPDDI, Nota informativa 2026, p. 24, Tav. 7 (TER 2025): 0,473% = 0,414% commissioni di gestione finanziaria + 0,059% compensi depositario; oneri amministrativi NA' }
+      ].map(function (k) { var d = 'https://www.fondopensioneibm.it/docs/', t = k.src.toLowerCase(), l = [];
+        if (t.indexOf('regime fiscale') >= 0) l.push({ label: 'regime_fiscale.pdf', url: d + 'regime_fiscale.pdf' });
+        if (t.indexOf('nota informativa') >= 0) { l.push({ label: 'nota_informativa.pdf', url: d + 'nota_informativa.pdf' }); l.push({ label: 'nota_informativa_opzioni_di_investimento.pdf', url: d + 'nota_informativa_opzioni_di_investimento.pdf' }); }
+        k.links = l; return k; }),
       assumptions: A.map(function (a) { return { t: a[0], d: a[1] }; })
     };
   }

@@ -76,9 +76,10 @@ test('tastiera: link per saltare al contenuto, focus visibile, tooltip delle fon
 
 test('la risposta principale è annunciata (aria-live) e si aggiorna in meno di 100 ms', async ({ page }) => {
   await page.goto('./');
+  await page.locator('#sezione-5 .sec-head > button').click();
   await expect(page.getByTestId('answer').locator('[aria-live="polite"]')).toHaveCount(1);
-  await page.locator('#sezione-4 .sec-head > button').click();
-  const slider = page.getByRole('slider', { name: /Differenziale annuo/ });
+  // lo slider del differenziale nella stessa sezione del Risultato
+  const slider = page.locator('#sezione-5').getByRole('slider', { name: 'Differenziale', exact: true });
   await slider.focus();
   // tempo dall'input al cambio del testo della risposta, mediana di 7 prove (SPEC par. 8 punto 5)
   const times: number[] = [];

@@ -28,18 +28,23 @@ test.describe('Parametri e fonti', () => {
 
   test('una modifica cambia il simulatore; "Ripristina tutti" la annulla', async ({ page }) => {
     await page.goto('./');
-    const before = await page.getByTestId('best-total').innerText();
+    const best = async () => {
+      const btn = page.locator('#sezione-5 .sec-head > button');
+      if ((await btn.getAttribute('aria-expanded')) !== 'true') await btn.click();
+      return page.getByTestId('best-total');
+    };
+    const before = await (await best()).innerText();
     await page.goto('./#/parametri/capital_gain_tax');
     const field = page.locator('#param-capital_gain_tax input');
     await expect(field).toBeFocused();
     await field.fill('20');
     await expect(page.getByRole('button', { name: /Ripristina tutti \(1\)/ })).toBeEnabled();
     await page.goto('./#/');
-    await expect(page.getByTestId('best-total')).not.toHaveText(before);
+    await expect(await best()).not.toHaveText(before);
     await page.goto('./#/parametri');
     await page.getByRole('button', { name: /Ripristina tutti/ }).click();
     await page.goto('./#/');
-    await expect(page.getByTestId('best-total')).toHaveText(before);
+    await expect(await best()).toHaveText(before);
   });
 
   test('importa un profilo JSON', async ({ page }) => {

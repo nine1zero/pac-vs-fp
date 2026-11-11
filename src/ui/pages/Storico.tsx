@@ -5,6 +5,7 @@ import { FUND_SOURCE, TAX_RATE_SOURCE } from '../../data/catalog';
 import { LegendItem, TimeChart } from '../charts/TimeChart';
 import { Segmented } from '../controls';
 import { euro, int, pct } from '../format';
+import { BackLink } from '../BackLink';
 import { Src } from '../Tip';
 import { cagrOf, etfReturns, indexFrom, ROWS, STORICO_ETFS, WINDOWS, YEARS, type EtfKey } from './storicoData';
 
@@ -140,14 +141,17 @@ export function Storico() {
 
   return (
     <main className="wrap main" id="contenuto">
-      <section className="hero-text">
-        <h1 className="h1">
-          Lo storico del <span className="mark">comparto Azionario</span>
-        </h1>
-        <p className="lead">
-          Dal 2012 a oggi, anno per anno: quanto ha reso il fondo, quanto il suo benchmark e ciascuna delle sue tre componenti, e quanto avrebbe reso un ETF azionario
-          globale.
-        </p>
+      <section className="page-head">
+        <div className="hero-text">
+          <h1 className="h1">
+            Lo storico del <span className="mark">comparto Azionario</span>
+          </h1>
+          <p className="lead">
+            Dal 2012 a oggi, anno per anno: quanto ha reso il fondo, quanto il suo benchmark e ciascuna delle sue tre componenti, e quanto avrebbe reso un ETF azionario
+            globale.
+          </p>
+        </div>
+        <BackLink top />
       </section>
 
       <section className="card col">
@@ -249,14 +253,14 @@ export function Storico() {
         </div>
         <span className="legend">
           <LegendItem color="#3a3d42" label="Fondo, comparto Azionario" />
-          <LegendItem color="#7c3aed" dash label="Benchmark pubblicato" />
+          <LegendItem color="#7c3aed" label="Benchmark pubblicato" />
           <LegendItem color="#2563eb" label={meta.short} />
         </span>
         <TimeChart
           labels={labels1}
           lines={[
             { name: 'Fondo', color: '#3a3d42', values: l1[0]! },
-            { name: 'Benchmark', color: '#7c3aed', values: l1[1]!, dash: true, width: 2.5 },
+            { name: 'Benchmark', color: '#7c3aed', values: l1[1]!, width: 3 },
             { name: meta.short, color: '#2563eb', values: l1[2]! },
           ]}
           areas={[{ lo: l1[0]!, hi: l1[2]!, color: '#d4ee36', opacity: 0.55 }]}
@@ -289,8 +293,8 @@ export function Storico() {
           <LegendItem color="#0e7490" label="MSCI World (45%)" />
           <LegendItem color="#b45309" label="MSCI Europe (45%)" />
           <LegendItem color="#9a9ea3" label="Liquidità €STR (10%)" />
-          <LegendItem color="#0b0b0b" label="Benchmark ricostruito 45/45/10" />
-          <LegendItem color="#7c3aed" dash label="Benchmark pubblicato, prima dell'imposta" />
+          <LegendItem color="#7c3aed" dash label="Benchmark ricostruito 45/45/10" />
+          <LegendItem color="#7c3aed" label="Benchmark pubblicato, prima dell'imposta" />
         </span>
         <TimeChart
           labels={labels2}
@@ -299,8 +303,8 @@ export function Storico() {
             { name: 'MSCI World', color: '#0e7490', values: comps[0]!, width: 2.5 },
             { name: 'MSCI Europe', color: '#b45309', values: comps[1]!, width: 2.5 },
             { name: 'Liquidità', color: '#9a9ea3', values: comps[2]!, width: 2.5 },
-            { name: 'Ricostruito', color: '#0b0b0b', values: comps[3]!, width: 3.5 },
-            { name: 'Pubblicato', color: '#7c3aed', values: comps[4]!, dash: true, width: 2.5 },
+            { name: 'Ricostruito', color: '#7c3aed', values: comps[3]!, dash: true, width: 3 },
+            { name: 'Pubblicato', color: '#7c3aed', values: comps[4]!, width: 3 },
           ]}
           xTicks={ticks(labels2)}
           yFormat={(v) => `${int(v)} €`}
@@ -310,7 +314,7 @@ export function Storico() {
             { name: 'MSCI World', value: euro(comps[0]![i]!), color: '#22d3ee' },
             { name: 'MSCI Europe', value: euro(comps[1]![i]!), color: '#f59e0b' },
             { name: 'Liquidità', value: euro(comps[2]![i]!), color: '#9a9ea3' },
-            { name: 'Ricostruito', value: euro(comps[3]![i]!), color: '#f4f4f2' },
+            { name: 'Ricostruito', value: euro(comps[3]![i]!), color: '#a78bfa' },
             { name: 'Pubblicato', value: euro(comps[4]![i]!), color: '#a78bfa' },
           ]}
         />
@@ -412,7 +416,7 @@ export function Storico() {
           <StatTile cap="Media" val={pct(mean, 2, true)} sub="differenza media dei singoli anni" />
           <StatTile cap="Mediana" val={pct(med, 2, true)} sub="metà degli anni sopra, metà sotto" />
           <StatTile cap="Deviazione standard" val={pct(sd, 2)} sub="quanto varia da un anno all’altro" />
-          <StatTile cap="Intervallo al 95%" val={`${pct(mean - 1.96 * se, 1, true)} / ${pct(mean + 1.96 * se, 1, true)}`} sub="dove sta la media vera, con il 95% di probabilità" />
+          <StatTile cap="Intervallo al 95%" val={`${pct(mean - 1.96 * se, 1, true)} … ${pct(mean + 1.96 * se, 1, true)}`} sub="dove sta la media vera, con il 95% di probabilità" />
           <StatTile cap="Anni migliori dell’ETF" val={`${pos} su ${nS}`} sub={per} />
         </div>
       </section>
@@ -470,9 +474,7 @@ export function Storico() {
         </div>
         <div className="sec-foot">
           <span className="muted text-sm">Il differenziale storico 2014–{YEARS[last - 1]} alimenta l'ipotesi del simulatore.</span>
-          <a href="#/" className="btn ghost">
-            <span aria-hidden="true">←</span> Torna al simulatore
-          </a>
+          <BackLink />
         </div>
       </section>
       <p className="text-sm muted">

@@ -19,16 +19,17 @@ test.beforeEach(async ({ page }) => {
   await page.goto('./');
 });
 
-test('senza dati: risposta sempre visibile con i valori golden del profilo d’esempio (SPEC par. 8 punti 6 e 8a)', async ({ page }) => {
+test('senza dati: risposta in testa al Risultato con i valori golden del profilo d’esempio (SPEC par. 8 punti 6 e 8a)', async ({ page }) => {
+  // vincitore e totale sono sempre visibili nella testata della sezione 5
+  await expect(page.locator('#sezione-5 .sec-head')).toContainText('Vince la 1');
+  // salta tutte le sezioni e guarda il risultato
+  await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
   const answer = page.getByTestId('answer');
-  await expect(answer).toContainText(`Oggi conviene 1 · Minimo per l’azienda + PAC: ${euro(golden.pensione_delta_default[0]!)} netti`);
+  await expect(answer).toContainText(`conviene 1 · Minimo per l’azienda + PAC: ${euro(golden.pensione_delta_default[0]!)} netti`);
   await expect(answer).toContainText('2 contro 1: pareggio a −3,6%');
   await expect(answer).toContainText('2 contro 3: pareggio a −5,5%');
   await expect(answer).toContainText('1 contro 3: pareggio a −9,3%');
   await expect(answer).toContainText('se esci entro');
-
-  // salta tutte le sezioni e guarda il risultato
-  await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
   const s5 = page.locator('#sezione-5');
   for (const v of golden.pensione_delta_default) await expect(s5).toContainText(euro(v));
   for (const v of golden.pensione_delta_default_real) await expect(s5).toContainText(`${euro(v)} in euro di oggi`);
@@ -113,6 +114,7 @@ test('anche il file delle operazioni si salva: dopo il ricaricamento i versament
 });
 
 test('cambiare l’ETF aggiorna il TER e il risultato', async ({ page }) => {
+  await openSection(page, 5);
   const before = await page.getByTestId('best-total').innerText();
   await page.getByRole('button', { name: 'PAC ETF globale' }).click();
   await page.getByRole('option', { name: /iShares MSCI ACWI/ }).click();
@@ -126,7 +128,8 @@ test('slider da tastiera: il differenziale aggiorna la risposta', async ({ page 
   await slider.focus();
   for (let i = 0; i < 58; i++) await page.keyboard.press('ArrowRight');
   await expect(page.locator('#sezione-4 .val').first()).toHaveText('+0,0%'.replace('+', ''));
-  await expect(page.getByTestId('answer')).toContainText('Oggi conviene 2 · Deduzione massima + PAC');
+  await openSection(page, 5);
+  await expect(page.getByTestId('answer')).toContainText('conviene 2 · Deduzione massima + PAC');
 });
 
 test('ogni fonte nei tooltip ha un testo', async ({ page }) => {
@@ -148,4 +151,16 @@ test('la mappa "Per quanti anni conviene" è di sola lettura', async ({ page }) 
   await expect(page.locator('.heat-live')).toContainText('Uscita nel');
   await expect(page.getByTestId('answer')).toHaveText(answer);
   await expect(page.locator('#sezione-5 .band-field').first()).toContainText('−5,8%');
+});
+
+test('il mini slider della domanda va dalla quota minima per il contributo alla deduzione massima', async ({ page }) => {
+  const box = page.locator('.budget-box');
+  await expect(box).toContainText('min 975 €');
+  const slider = box.getByRole('slider', { name: 'Risparmio aggiuntivo annuo' });
+  await slider.focus();
+  await page.keyboard.press('Home');
+  await expect(page.getByTestId('budget-year')).toHaveText('975 €/anno');
+  await expect(box).toContainText('Ora: importo fisso.');
+  await box.getByRole('button', { name: 'Torna al massimo' }).click();
+  await expect(box).toContainText('Ora: deduzione massima.');
 });

@@ -379,7 +379,15 @@ export function Sec3({ r }: { r: Results }) {
             ]}
           />
           {i.saving_mode === 'fix' && (
-            <Range label="Importo annuo" min={r.savingMin} max={r.savingMax} step={50} value={fixValue} valueText={euro(fixValue)} onChange={(v) => set({ saving: v })} />
+            <Range
+              label="Importo annuo"
+              min={r.savingMin}
+              max={r.savingSliderMax}
+              step={50}
+              value={fixValue}
+              valueText={euro(fixValue)}
+              onChange={(v) => set({ saving: Math.min(r.savingMax, v) })}
+            />
           )}
           <span className="text-sm">
             {i.saving_mode === 'max' ? (
@@ -539,7 +547,7 @@ export function Sec5({ r }: { r: Results }) {
   const { state, dispatch } = useStore();
   const set = useSet();
   const i = state.inputs;
-  const [b, , worst] = r.rank as [number, number, number];
+  const [b] = r.rank as [number];
   const res = r.res;
   const firstYear = P.start_year;
   const histDelta = HISTORY.presets[0]!.value;
@@ -625,13 +633,7 @@ export function Sec5({ r }: { r: Results }) {
         </>
       }
     >
-      <p className="result-head" aria-live="polite">
-        Con un differenziale di {pct(i.delta, 1, true)} e uscita nel {r.exitYear} conviene{' '}
-        <span className="mark">
-          {b + 1} · {SCENARIO_NAMES[b]}
-        </span>
-        : {euro(res[b]!.total_net)} netti, {euro(res[b]!.total_net - res[worst]!.total_net)} più della peggiore.
-      </p>
+      <AnswerBox r={r} />
       <div className="g3">
         {[0, 1, 2].map((k) => {
           const on = k === b;
@@ -766,6 +768,41 @@ export function Sec5({ r }: { r: Results }) {
         <LineChart xs={line.xs} series={line.series} markers={line.markers} xTicks={line.xTicks} xLabel={line.xLabel} ariaLabel={line.aria} cursor={line.cursor} />
       </div>
     </Section>
+  );
+}
+
+/** Risposta in testa al Risultato (SPEC par. 8 punto 6, spostata qui dalla cima della pagina l'11/11/2026). */
+function AnswerBox({ r }: { r: Results }) {
+  const { state } = useStore();
+  const [b, second] = r.rank as [number, number];
+  const d = state.inputs.delta;
+  const h = r.horizon21;
+  const first = P.start_year;
+  let horizon: string;
+  if (h === null) horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) per qualsiasi uscita fino al ${r.exitYear}`;
+  else if (h === 1) horizon = `con ${pct(d, 1, true)} il minimo per l'azienda (1) batte la deduzione massima (2) per qualsiasi uscita`;
+  else
+    horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) se esci entro ${h - 1} ${h - 1 === 1 ? 'anno' : 'anni'} (entro il ${
+      first + h - 2
+    }); oltre conviene la 1`;
+  return (
+    <div className="answer" data-testid="answer">
+      <h2 className="answer-head" aria-live="polite">
+        <span className="cap">Risposta</span>Con un differenziale di {pct(d, 1, true)} e uscita nel {r.exitYear} conviene{' '}
+        <strong className="mark">
+          {b + 1} · {SCENARIO_NAMES[b]}
+        </strong>
+        : <strong data-testid="best-total">{euro(r.res[b]!.total_net)}</strong> netti, {euro(r.res[b]!.total_net - r.res[second]!.total_net)} più della seconda.
+      </h2>
+      <p className="answer-sub">
+        Pareggi: {r.breakevens.map(({ pair, value }) => breakPhrase(pair, value).replace(/\.$/, '')).join(' · ')}. Poi {horizon}{' '}
+        <Src
+          kind="Calcolo"
+          source="Pareggio: differenziale per cui i due scenari danno lo stesso capitale netto, con la bisezione; orizzonte: primo anno di uscita (riscatto prima dell'ultimo) da cui conviene la 1 con il differenziale scelto (docs/FORMULE.md par. 9, SPEC par. 4.6)."
+          what="pareggi e orizzonte"
+        />
+      </p>
+    </div>
   );
 }
 

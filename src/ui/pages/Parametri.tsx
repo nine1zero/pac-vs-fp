@@ -19,6 +19,7 @@ import {
 } from '../../state/paramRows';
 import { useStore } from '../../state/store';
 import { NumField } from '../controls';
+import { BackLink } from '../BackLink';
 import { Tip } from '../Tip';
 
 const GROUPS = ['Dati personali', 'Ipotesi di mercato', 'Fisco', 'PAC ETF', 'Fondo pensione', 'Tecnici'];
@@ -61,14 +62,17 @@ export function Parametri({ anchor }: { anchor?: string }) {
 
   return (
     <main className="wrap main" id="contenuto">
-      <section className="hero-text">
-        <h1 className="h1">
-          Parametri e <span className="mark">fonti</span>
-        </h1>
-        <p className="lead">
-          Ogni numero usato dal calcolo, con la sua fonte. Passa sopra la <span className="ib inline">i</span> per la spiegazione e sull'etichetta della fonte per il
-          riferimento esatto. Puoi modificare i valori: si salvano da soli, solo sul tuo dispositivo.
-        </p>
+      <section className="page-head">
+        <div className="hero-text">
+          <h1 className="h1">
+            Parametri e <span className="mark">fonti</span>
+          </h1>
+          <p className="lead">
+            Ogni numero usato dal calcolo, con la sua fonte. Passa sopra la <span className="ib inline">i</span> per la spiegazione e sull'etichetta della fonte per il
+            riferimento esatto. Puoi modificare i valori: si salvano da soli, solo sul tuo dispositivo.
+          </p>
+        </div>
+        <BackLink top />
       </section>
 
       <div className="toolbar">
@@ -279,9 +283,7 @@ export function Parametri({ anchor }: { anchor?: string }) {
         <span className="muted text-sm">
           I valori predefiniti sono un profilo d'esempio verosimile. Le modifiche si salvano da sole su questo dispositivo; «Cancella tutto» le elimina.
         </span>
-        <a href="#/" className="btn ghost">
-          <span aria-hidden="true">←</span> Torna al simulatore
-        </a>
+        <BackLink />
       </div>
     </main>
   );

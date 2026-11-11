@@ -1,5 +1,26 @@
 # Registro delle modifiche
 
+## 2026-11-11 · interfaccia dal canvas di design: la domanda, card con le barre del 1° anno, risposta nel Risultato
+
+Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/design/v2/`. Il modello non cambia: golden e parità con il prototipo invariati.
+
+- **Header** (tutte le pagine): nuovo ordine 100% locale · stato del salvataggio · Cancella tutto · Storico · Parametri e fonti · GitHub. "100% locale" e lo stato del salvataggio non hanno più il bordo, perché non sono cliccabili. Il logo GitHub porta al repository.
+- **Titolo e introduzione**: "(comparto azionario)" accanto al titolo, più piccolo e grigio. Il riquadro dell'ETF sta su una riga. Nel testo, "100% azionario" al posto di "a comparto Azionario".
+- **Riquadro "La domanda"** al posto del banner "Stesso identico budget". Contiene la domanda e una frase più diretta sulla scelta. A destra c'è un box con il risparmio aggiuntivo del 1° anno in grande e un mini slider, collegato allo stesso dato della sezione 3: spostandolo si passa a "Importo fisso", con "Torna al massimo" si torna alla deduzione massima.
+- **Card delle strategie**:
+  - bordo nel colore dello scenario;
+  - nuovi nomi, per ora solo nelle card: "Minimo per contributo + PAC", "Deduzione massima (no PAC)", "Assenza deduzione e contributo (solo PAC)";
+  - etichette "Ibrido · Match + PAC", "Solo Fondo", "Solo PAC" sotto il nome;
+  - tre barre del 1° anno: risparmio aggiuntivo (uguale nelle tre card) diviso tra Fondo e PAC; nel Fondo, quota tua e contributo IBM in ciano sulla scala del tetto deducibile; rimborso IRPEF verso il PAC sulla stessa scala;
+  - tolte le righe di testo "Contributo IBM", "Rimborso IRPEF" e "Flusso 1° anno".
+- **Risposta**: tolta dalla cima della pagina. Ora è un riquadro nero in testa alla sezione Risultato, con pareggi e orizzonte. Aggiornato SPEC par. 8 punto 6: senza aprire nulla, la testata del Risultato mostra lo scenario migliore e i tre capitali.
+- **Slider dell'importo fisso**: il minimo coincide con la quota minima per il contributo dell'azienda, arrotondata all'euro (975 € nel profilo d'esempio, prima 1.000 €). Il massimo arriva alla deduzione massima: prima, con scatti di 50 € dal minimo, si fermava sotto.
+- **Storico**:
+  - nel grafico delle componenti il benchmark pubblicato e quello ricostruito sono entrambi viola, il pubblicato pieno e il ricostruito tratteggiato; nel grafico "100 €" il pubblicato è viola pieno;
+  - i valori delle statistiche vanno a capo dentro il riquadro; l'intervallo al 95% è scritto "−10,2% … −1,7%".
+- **Pagine di dettaglio** (Storico, I miei versamenti, Parametri e fonti): "← Torna al simulatore" anche in cima, a destra del titolo.
+- **Test**: Playwright aggiornati (risposta letta nella sezione Risultato, latenza misurata con lo slider del differenziale della stessa sezione) e nuovo test del mini slider.
+
 ## 2026-11-09 · verifiche integrali sui Bilanci FPDDI, disaccoppiamento TER e confronto grafico dei 3 scenari
 
 - **Landing — Confronto grafico dei 3 scenari a parità di budget** (`src/ui/landing/Landing.tsx`, `src/ui/results.ts`, `src/styles/base.css`):

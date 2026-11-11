@@ -1,114 +1,176 @@
 import { useMemo } from 'react';
+import { paramSource } from '../../data/catalog';
 import { toModelParams, useStore } from '../../state/store';
-import { EXAMPLE_PARAMS } from '../../model';
-import { euro, pct } from '../format';
-import { computeResults, SCENARIO_DESC, SCENARIO_NAMES, SCENARIO_ROLE, type Results } from '../results';
+import { Range } from '../controls';
+import { euro } from '../format';
+import { CARD_NAMES, CARD_ROLE, computeResults, SCENARIO_DESC } from '../results';
 import { Src } from '../Tip';
 import { EtfBox, EtfMenu } from './EtfMenu';
 import { SectionNav } from './Section';
-import { breakPhrase, Sec0, Sec1, Sec2, Sec3, Sec4, Sec5, Sec6 } from './Sections';
+import { Sec0, Sec1, Sec2, Sec3, Sec4, Sec5, Sec6 } from './Sections';
 
 export function Landing() {
-  const { state } = useStore();
+  const { state, dispatch } = useStore();
   const p = useMemo(() => toModelParams(state.inputs, state.overrides), [state.inputs, state.overrides]);
   const r = useMemo(() => computeResults(p), [p]);
   const row1 = r.firstRow;
   const budget = row1.K;
+  const i = state.inputs;
+  const isMax = i.saving_mode === 'max';
+  const fixValue = Math.max(r.savingMin, Math.min(i.saving ?? r.savingMax, r.savingMax));
+  const lim = p.deduction_limit + row1.I;
+  const set = (inputs: Partial<typeof i>) => dispatch({ type: 'set', inputs });
   return (
     <main className="wrap main" id="contenuto">
       <section className="hero">
         <div className="hero-text">
           <h1 className="h1">
-            Simulatore strategie <EtfMenu /> vs <span className="mark">Fondo Pensione IBM</span>
+            Simulatore strategie <EtfMenu /> vs <span className="mark">Fondo Pensione IBM</span> <span className="h1-sub">(comparto azionario)</span>
           </h1>
           <EtfBox />
           <p className="lead">
             Sei sezioni, ognuna si può saltare. Senza i tuoi dati usa un profilo d'esempio con dati verosimili.
             <br />
-            SOLO per gli iscritti FPDDI IBM <span className="mark">a comparto Azionario</span>.
+            SOLO per gli iscritti FPDDI IBM <span className="mark lead-mark">100% azionario</span>.
           </p>
         </div>
       </section>
-      <section className="scenarios-intro" aria-label="I tre scenari confrontati a parità di budget">
+      <section className="scenarios-intro" aria-label="I tre scenari confrontati a parità di risparmio">
         <div className="budget-banner">
           <div className="budget-banner-main">
-            <span className="budget-pill">Stesso identico budget nei 3 scenari</span>
+            <span className="budget-pill">La domanda</span>
+            <h2 className="budget-q">
+              Dove conviene mettere <span className="mark">il risparmio in più</span>: nel Fondo o in un PAC su ETF?
+            </h2>
             <p className="budget-text">
-              In tutte e tre le strategie metti di tasca tua <strong>esattamente la stessa cifra</strong>: nel 1° anno{' '}
-              <strong>{euro(budget)}/anno</strong> ({euro(Math.round(budget / 12))}/mese), oltre al <strong>TFR ({euro(row1.G)}/anno)</strong> e alla{' '}
-              <strong>posizione già maturata ({euro(p.current_position)})</strong> che restano sempre nel Fondo.{' '}
-              <span className="mark">L’unica scelta è quanto del tuo budget allocare nel Fondo e quanto nel PAC ETF autonomo</span> (più il rimborso IRPEF reinvestito nel PAC).
+              <strong className="ink">Stessa cifra, tre modi di investirla.</strong> Decidi solo dove va il tuo risparmio aggiuntivo (qui accanto):{' '}
+              <strong>tutto nel Fondo</strong>, <strong>tutto nel PAC</strong> o <strong>il minimo nel Fondo e il resto nel PAC</strong>. Il rimborso IRPEF, quando
+              c'è, va nel PAC. TFR ({euro(row1.G)}/anno) e posizione già maturata ({euro(p.current_position)}) restano comunque nel Fondo.
             </p>
           </div>
-          <div className="budget-legend" aria-hidden="true">
-            <span className="budget-leg-item">
-              <span className="scard-dot fund" /> Quota budget nel Fondo
+          <div className="budget-box">
+            <span className="budget-box-head">
+              <span className="cap">Risparmio aggiuntivo · 1° anno</span>
+              <span className="budget-box-month">{euro(Math.round(budget / 12))}/mese</span>
             </span>
-            <span className="budget-leg-item">
-              <span className="scard-dot pac" /> Quota budget nel PAC ETF
+            <span className="budget-box-val" data-testid="budget-year">
+              {euro(budget)}
+              <span>/anno</span>
             </span>
+            <Range
+              label="Risparmio aggiuntivo annuo"
+              className="mini"
+              min={r.savingMin}
+              max={r.savingSliderMax}
+              step={50}
+              value={isMax ? r.savingSliderMax : fixValue}
+              valueText={`${euro(budget)} l'anno`}
+              onChange={(v) => set({ saving_mode: 'fix', saving: Math.min(r.savingMax, v) })}
+            />
+            <span className="ticks budget-ticks">
+              <span>min {euro(r.savingMin)}</span>
+              <span>max {euro(r.savingMax)}</span>
+            </span>
+            {isMax ? (
+              <span className="budget-box-note">Ora: deduzione massima. Sposta lo slider per un importo fisso.</span>
+            ) : (
+              <span className="budget-box-note row">
+                Ora: importo fisso.
+                <button type="button" className="pill-btn" onClick={() => set({ saving_mode: 'max' })}>
+                  Torna al massimo
+                </button>
+              </span>
+            )}
           </div>
         </div>
         <div className="g3">
           {[0, 1, 2].map((k) => {
             const s = row1.s[k]!;
-            const fromBudgetToFund = s.member;
-            const fromBudgetToPac = Math.max(0, budget - s.member);
-            const fundShare = budget > 0 ? Math.min(1, Math.max(0, fromBudgetToFund / budget)) : 0;
-            const pacShare = Math.max(0, 1 - fundShare);
+            const fs = budget > 0 ? Math.min(1, Math.max(0, s.member / budget)) : 0;
+            const ps = 1 - fs;
+            const pc0 = (x: number) => `${Math.round(x * 100)}%`;
+            const w = (x: number) => `${Math.min(100, (x / lim) * 100).toFixed(1)}%`;
+            const fundLab = fs >= 0.16 ? `Fondo ${pc0(fs)}` : fs > 0 ? pc0(fs) : '';
+            const pacLab = ps >= 0.16 ? `PAC ${pc0(ps)}` : ps > 0.06 ? pc0(ps) : '';
             return (
-              <div key={k} className="scard">
+              <div key={k} className={`scard s${k + 1}`}>
                 <div className="scard-top">
                   <span className="row-gap">
                     <span className={`tag s${k + 1}`}>{k + 1}</span>
-                    <span className="scard-name">{SCENARIO_NAMES[k]}</span>
+                    <span className="scard-name">{CARD_NAMES[k]}</span>
                   </span>
-                  <span className="scard-role">{SCENARIO_ROLE[k]}</span>
+                  <span className="scard-role">{CARD_ROLE[k]}</span>
                 </div>
                 <span className="scard-desc">{SCENARIO_DESC[k]}</span>
                 <div className="scard-alloc">
-                  <div className="scard-alloc-title">Come dividi il tuo budget ({euro(budget)}/a)</div>
-                  <div className="scard-alloc-labels">
+                  <span className="scard-alloc-head">
+                    <span className="scard-alloc-title">Il tuo risparmio aggiuntivo</span>
+                    <strong>sempre {euro(budget)}/anno</strong>
+                  </span>
+                  <span className="scard-bar" role="img" aria-label={`Risparmio aggiuntivo ${euro(budget)}: Fondo ${pc0(fs)}, PAC ${pc0(ps)}`}>
+                    {fs > 0 && (
+                      <span className={`scard-seg fund${ps > 0 ? ' split' : ''}`} style={{ width: `${(fs * 100).toFixed(1)}%` }}>
+                        {fundLab}
+                      </span>
+                    )}
+                    {ps > 0 && (
+                      <span className="scard-seg pac" style={{ width: `${(ps * 100).toFixed(1)}%` }}>
+                        {pacLab}
+                      </span>
+                    )}
+                  </span>
+                  <span className="scard-alloc-labels">
                     <span>
                       <span className="scard-dot fund" aria-hidden="true" />
-                      Fondo <strong>{pct(fundShare, 0)}</strong> ({euro(fromBudgetToFund)})
+                      Fondo <strong>{euro(s.member)}</strong>
                     </span>
                     <span>
-                      <span className="scard-dot pac" aria-hidden="true" />
-                      PAC <strong>{pct(pacShare, 0)}</strong> ({euro(fromBudgetToPac)})
+                      PAC <strong>{euro(Math.max(0, budget - s.member))}</strong>
+                      <span className="scard-dot pac after" aria-hidden="true" />
                     </span>
-                  </div>
-                  <div className="scard-alloc-bar" aria-hidden="true">
-                    {fundShare > 0 && <span className="scard-seg fund" style={{ width: `${fundShare * 100}%` }} />}
-                    {pacShare > 0 && <span className="scard-seg pac" style={{ width: `${pacShare * 100}%` }} />}
-                  </div>
-                </div>
-                <div className="scard-flows">
-                  <div className="scard-flow-row">
-                    <span className="scard-flow-k">Contributo IBM (Fondo)</span>
-                    <strong className={s.employer > 0 ? 'scard-pos' : 'scard-neg'}>
-                      {s.employer > 0 ? `+${euro(s.employer)}/a` : '0 € · perso'}
-                    </strong>
-                  </div>
-                  <div className="scard-flow-row">
-                    <span className="scard-flow-k">Rimborso IRPEF (→ PAC)</span>
-                    <strong className={s.irpef_saving > 0 ? 'scard-pos' : 'scard-muted'}>
-                      {s.irpef_saving > 0 ? `+${euro(s.irpef_saving)}/a` : '0 €'}
-                    </strong>
-                  </div>
-                  <div className="scard-flow-row tot">
-                    <span className="scard-flow-k">Flusso 1° anno (+TFR)</span>
+                  </span>
+                  <span className="scard-alloc-head sep">
+                    <span className="scard-alloc-title">Nel Fondo</span>
+                    <span className="scard-lim">
+                      tetto deducibile <strong>{euro(lim)}</strong>{' '}
+                      <Src kind={paramSource('deduction_limit').kind} source={paramSource('deduction_limit').source} what="tetto deducibile" align="right" />
+                    </span>
+                  </span>
+                  <span
+                    className="scard-fundbar"
+                    role="img"
+                    aria-label={`Nel Fondo: tuo ${euro(s.member)} e azienda ${euro(s.employer)} su un tetto deducibile di ${euro(lim)}`}
+                  >
+                    {s.member > 0 && <span className="scard-seg fund" style={{ width: w(s.member) }} />}
+                    {s.employer > 0 && (
+                      <span className={`scard-seg ibm${s.member + s.employer < lim - 1 ? ' open' : ''}`} style={{ width: w(s.employer) }}>
+                        {s.employer / lim >= 0.12 ? 'IBM' : ''}
+                      </span>
+                    )}
+                  </span>
+                  <span className="scard-alloc-labels start">
                     <span>
-                      Fondo <strong>{euro(s.fund)}</strong> · PAC <strong>{euro(s.pac)}</strong>
+                      <span className="scard-dot fund" aria-hidden="true" />
+                      tuo <strong>{euro(s.member)}</strong>
                     </span>
-                  </div>
+                    <span>
+                      <span className="scard-dot ibm" aria-hidden="true" />
+                      IBM <strong className={s.employer > 0 ? '' : 'scard-neg'}>{s.employer > 0 ? euro(s.employer) : '0 € · perso'}</strong>
+                    </span>
+                  </span>
+                  <span className="scard-alloc-head">
+                    <span className="scard-alloc-title">Rimborso IRPEF → PAC</span>
+                    <strong className={s.irpef_saving > 0 ? '' : 'scard-muted'}>{s.irpef_saving > 0 ? `+${euro(s.irpef_saving)}` : '0 €'}</strong>
+                  </span>
+                  <span className="scard-refbar" role="img" aria-label={`Rimborso IRPEF reinvestito nel PAC: ${euro(s.irpef_saving)} (stessa scala del tetto deducibile)`}>
+                    {s.irpef_saving > 0 && <span style={{ width: w(s.irpef_saving) }} />}
+                  </span>
                 </div>
               </div>
             );
           })}
         </div>
       </section>
-      <AnswerLine r={r} />
       <SectionNav />
       <Sec0 />
       <Sec1 r={r} />
@@ -118,39 +180,5 @@ export function Landing() {
       <Sec5 r={r} />
       <Sec6 />
     </main>
-  );
-}
-
-/** Risposta sempre visibile (SPEC par. 8 punto 6). */
-export function AnswerLine({ r }: { r: Results }) {
-  const { state } = useStore();
-  const [b, second] = r.rank as [number, number];
-  const d = state.inputs.delta;
-  const h = r.horizon21;
-  const first = EXAMPLE_PARAMS.start_year;
-  let horizon: string;
-  if (h === null) horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) per qualsiasi uscita fino al ${r.exitYear}`;
-  else if (h === 1) horizon = `con ${pct(d, 1, true)} il minimo per l'azienda (1) batte la deduzione massima (2) per qualsiasi uscita`;
-  else
-    horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) se esci entro ${h - 1} ${h - 1 === 1 ? 'anno' : 'anni'} (entro il ${
-      first + h - 2
-    }); oltre conviene la 1`;
-  return (
-    <div className="answer" data-testid="answer">
-      <p aria-live="polite">
-        <span className="cap">Risposta</span> Oggi conviene <strong className="mark">
-          {b + 1} · {SCENARIO_NAMES[b]}
-        </strong>
-        : <strong data-testid="best-total">{euro(r.res[b]!.total_net)}</strong> netti, {euro(r.res[b]!.total_net - r.res[second]!.total_net)} più della seconda.
-      </p>
-      <p className="answer-sub">
-        Pareggi: {r.breakevens.map(({ pair, value }) => breakPhrase(pair, value).replace(/\.$/, '')).join(' · ')}. Poi {horizon}{' '}
-        <Src
-          kind="Calcolo"
-          source="Pareggio: differenziale per cui i due scenari danno lo stesso capitale netto, con la bisezione; orizzonte: primo anno di uscita (riscatto prima dell'ultimo) da cui conviene la 1 con il differenziale scelto (docs/FORMULE.md par. 9, SPEC par. 4.6)."
-          what="pareggi e orizzonte"
-        />
-      </p>
-    </div>
   );
 }
