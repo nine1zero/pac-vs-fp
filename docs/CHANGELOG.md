@@ -20,6 +20,11 @@ Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/
   - i valori delle statistiche vanno a capo dentro il riquadro; l'intervallo al 95% è scritto "−10,2% … −1,7%".
 - **Pagine di dettaglio** (Storico, I miei versamenti, Parametri e fonti): "← Torna al simulatore" anche in cima, a destra del titolo.
 - **Slider fermo**: quando la quota minima per il contributo IBM arriva già alla deduzione massima, minimo e massimo coincidono. In quel caso lo slider si disattiva, la traccia non sparisce più e una nota spiega perché è fermo. Succede, per esempio, quando «Tuo contributo minimo» viene dal file delle operazioni ed è l'ultimo versamento mensile, che comprende anche i versamenti oltre il minimo.
+- **Risultato** (seconda tornata dal canvas):
+  - nomi nuovi degli scenari in tutta la pagina (risposta, card, legende, tooltip, nota dello slider), non più solo nelle card in alto;
+  - card compatte con la stessa intestazione delle card in alto; barra dei montanti netti Fondo/PAC sulla stessa scala; solo la migliore è evidenziata, le altre hanno il fondo grigio;
+  - striscia "Se esci nel… conviene": etichette con gli anni dove cambia lo scenario, frase di sintesi, tooltip di lettura, legenda con un nome per riga;
+  - mappa e grafico del capitale affiancati, testi più brevi, legenda sotto il grafico; etichette lime dei cursori senza bordo; nella mappa le etichette degli anni non si sovrappongono più vicino agli estremi.
 - **Test**: Playwright aggiornati (risposta letta nella sezione Risultato, latenza misurata con lo slider del differenziale della stessa sezione) e nuovo test del mini slider.
 
 ## 2026-11-09 · verifiche integrali sui Bilanci FPDDI, disaccoppiamento TER e confronto grafico dei 3 scenari

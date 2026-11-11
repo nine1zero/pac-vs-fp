@@ -38,7 +38,7 @@ export function HeatMap({ map, firstYear, delta, histDelta }: Props) {
   const stepY = n > 30 ? 5 : n > 12 ? 3 : 1;
   for (let h = 1; h <= n; h++) {
     const y = firstYear + h - 1;
-    if (h === 1 || h === n || (y % stepY === 0 && h > 2 && h < n - 1)) xTicks.push(h);
+    if (h === 1 || h === n || (y % stepY === 0 && h > 3 && h < n - 2)) xTicks.push(h);
   }
   const yTicks = [0.03, 0, -0.03, -0.06, -0.09, -0.12];
   return (

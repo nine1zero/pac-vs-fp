@@ -357,10 +357,11 @@ input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2
           <div class="g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
             <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
               <div style="{{ c.box }}">
-                <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="display: inline-flex; align-items: center; gap: 10px"><span style="{{ c.tag }}">{{ c.n }}</span><span style="font-size: 15px; font-weight: 600">{{ c.name }}</span></span><span style="{{ c.badgeStyle }}">{{ c.badge }}</span></span>
-                <span style="font-size: 34px; font-weight: 600; letter-spacing: -1px; font-variant-numeric: tabular-nums">{{ c.total }}</span>
-                <span style="font-size: 13.5px; color: #5C6168; font-variant-numeric: tabular-nums">{{ c.real }} in euro di oggi</span>
-                <span style="font-size: 13.5px; color: #3A3D42; font-variant-numeric: tabular-nums">{{ c.split }}</span>
+                <span style="display: flex; align-items: center; gap: 10px; min-height: 42px"><span style="{{ c.tag }}">{{ c.n }}</span><span style="font-size: 16px; line-height: 1.3; font-weight: 600">{{ c.name }}</span></span>
+                <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-size: 11.5px; font-weight: 600; color: #3A3D42; background: #F7F7F5; border: 1px solid #E6E6E3; border-radius: 99px; padding: 2px 9px; white-space: nowrap">{{ c.role }}</span><span style="{{ c.badgeStyle }}">{{ c.badge }}</span></span>
+                <span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px"><span style="font-size: 28px; font-weight: 600; letter-spacing: -.8px; font-variant-numeric: tabular-nums">{{ c.total }}</span><span style="font-size: 12.5px; color: #5C6168; font-variant-numeric: tabular-nums">{{ c.real }} in euro di oggi</span></span>
+                <span role="img" aria-label="{{ c.netLabel }}" style="display: flex; height: 18px; border-radius: 7px; border: 1.5px solid #0B0B0B; overflow: hidden; background: #F7F7F5"><span style="{{ c.netFund }}"></span><span style="{{ c.netPac }}"></span></span>
+                <span style="display: flex; justify-content: space-between; gap: 4px 10px; font-size: 12.5px; color: #26282B; font-variant-numeric: tabular-nums"><span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; background: #3A3D42"></span>Fondo <strong>{{ c.fundNet }}</strong></span><span>PAC <strong>{{ c.pacNet }}</strong><span style="display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-left: 5px; background: #D4EE36; box-shadow: inset 0 0 0 1px #0B0B0B"></span></span></span>
               </div>
             </sc-for>
           </div>
@@ -379,15 +380,19 @@ input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2
               </span>
             </div>
             <div class="panel">
-              <span class="cap">Se esci nel… conviene</span>
-              <div role="img" aria-label="{{ stripLabel }}" style="display: flex; gap: 2px; height: 40px; margin-top: 18px">
-                <sc-for list="{{ strip }}" as="b" hint-placeholder-count="30"><div title="{{ b.title }}" style="{{ b.style }}"></div></sc-for>
+              <span class="cap">Se esci nel… conviene <span class="tip"><button type="button" class="ib" aria-label="Come si legge la striscia">i</button><span class="bubble" role="tooltip">Ogni casella è un anno in cui potresti uscire dal fondo, a partire da oggi. Il colore dice quale scenario ti conviene aver seguito sempre, da oggi fino a quell'anno: se esci dopo 9 anni, conta chi ha il capitale netto più alto dopo 9 anni di quella strategia. Prima dell'ultimo anno l'uscita è un riscatto (23%), nell'ultimo vale la modalità scelta. Le etichette segnano dopo quanti anni cambia lo scenario che conviene. Passa sopra una casella per l'anno esatto.</span></span></span>
+              <div style="position: relative; padding-top: 22px">
+                <sc-for list="{{ stripPills }}" as="q" hint-placeholder-count="1"><span title="{{ q.title }}" style="{{ q.style }}">{{ q.label }}</span></sc-for>
+                <div role="img" aria-label="{{ stripLabel }}" style="display: flex; gap: 2px; height: 40px">
+                  <sc-for list="{{ strip }}" as="b" hint-placeholder-count="30"><div title="{{ b.title }}" style="{{ b.style }}"></div></sc-for>
+                </div>
               </div>
               <span class="ticks"><span>2027</span><span>prima dell'ultimo anno: riscatto 23%</span><span>{{ exitYear }}</span></span>
-              <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #2563EB"></span>1 · Minimo per l'azienda</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #15803D"></span>2 · Deduzione massima</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 11px; height: 11px; border-radius: 3px; background: #C2410C"></span>3 · Solo TFR</span>
+              <span style="font-size: 13.5px; line-height: 1.5; color: #26282B">{{ stripNote }}</span>
+              <span style="display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: #26282B">
+                <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 11px; height: 11px; border-radius: 3px; flex: none; background: #2563EB"></span>1 · Minimo per contributo + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 11px; height: 11px; border-radius: 3px; flex: none; background: #15803D"></span>2 · Deduzione massima (no PAC)</span>
+                <span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 11px; height: 11px; border-radius: 3px; flex: none; background: #C2410C"></span>3 · Assenza deduzione e contributo (solo PAC)</span>
               </span>
             </div>
 
@@ -405,12 +410,12 @@ input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2
               </div>
             </div>
 
-            <div class="panel" style="gap: 18px">
+            <div class="panel" style="gap: 12px">
               <div style="display: flex; flex-direction: column; gap: 6px">
                 <span class="cap">Per quanti anni conviene</span>
-                <span style="font-size: 15px; line-height: 1.55; color: #26282B">Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno, più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; passa sopra una casella per leggerne i valori.</span>
+                <span style="font-size: 13.5px; line-height: 1.45; color: #3A3D42">Ogni casella è un anno di uscita (in orizzontale) con un differenziale fondo − ETF (in verticale): il colore è lo scenario che vince, più pieno se vince di più. Passa sopra una casella per i valori.</span>
               </div>
-              <span style="font-size: 13px; color: #5C6168">{{ hm.note }}</span>
+              <span style="font-size: 12.5px; color: #5C6168">{{ hm.note }}</span>
               <div style="display: flex; gap: 8px">
                 <div style="position: relative; width: 44px; flex: none; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
                   <sc-for list="{{ hm.yLab }}" as="t" hint-placeholder-count="6"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
@@ -434,18 +439,12 @@ input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2
               </div>
             </div>
 
-            <div class="panel" style="gap: 16px">
+            <div class="panel" style="gap: 12px">
               <div style="display: flex; flex-direction: column; gap: 6px">
                 <span style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px"><span class="cap">Capitale netto nei tre scenari e punti di pareggio</span>
                   <span role="radiogroup" aria-label="Asse orizzontale" style="display: flex; gap: 4px; background: #ECECEA; padding: 3px; border-radius: 10px"><button type="button" role="radio" aria-checked="{{ lnIsTime }}" onClick="{{ pickLnTime }}" style="{{ segLnTime }}">Nel tempo</button><button type="button" role="radio" aria-checked="{{ lnIsDelta }}" onClick="{{ pickLnDelta }}" style="{{ segLnDelta }}">Al variare del differenziale</button></span></span>
-                <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ ln.text }}</span>
+                <span style="font-size: 13.5px; line-height: 1.45; color: #3A3D42">{{ ln.text }}</span>
               </div>
-              <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 7px; border-radius: 99px; background: #2563EB"></span>1 · Minimo per l'azienda + PAC</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 4.5px; border-radius: 99px; background: #15803D"></span>2 · Deduzione massima + PAC</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 2.5px; border-radius: 99px; background: #C2410C"></span>3 · Solo TFR + PAC</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #D4EE36; border: 2px solid #0B0B0B"></span>pareggio</span>
-              </span>
               <div style="display: flex; gap: 8px">
                 <div style="position: relative; width: 64px; flex: none; height: 320px; font-size: 11.5px; color: #5C6168; font-variant-numeric: tabular-nums">
                   <sc-for list="{{ ln.yLab }}" as="t" hint-placeholder-count="5"><span style="{{ t.style }}">{{ t.label }}</span></sc-for>
@@ -466,6 +465,12 @@ input[type=range].r.mini::-moz-range-thumb{width:14px;height:14px;border-width:2
                   <span style="font-size: 12.5px; color: #5C6168; text-align: center">{{ ln.xAxis }}</span>
                 </div>
               </div>
+              <span style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #26282B">
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 7px; border-radius: 99px; background: #2563EB"></span>1 · Minimo per contributo + PAC</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 4.5px; border-radius: 99px; background: #15803D"></span>2 · Deduzione massima (no PAC)</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 22px; height: 2.5px; border-radius: 99px; background: #C2410C"></span>3 · Assenza deduzione e contributo (solo PAC)</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #D4EE36; border: 2px solid #0B0B0B"></span>pareggio</span>
+              </span>
             </div>
           </div>
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid #ECECEA">
@@ -633,14 +638,14 @@ class Component extends DCLogic {
     [[0, 1], [1, 2], [0, 2]].forEach(function (pr) { for (var k = 1; k < n; k++) { var a0 = vals[pr[0]][k - 1] - vals[pr[1]][k - 1], a1 = vals[pr[0]][k] - vals[pr[1]][k];
       if ((a0 === 0 && k === 1) || (a0 !== 0 && (a1 === 0 || a0 * a1 < 0))) { var t = a0 === 0 ? 0 : a0 / (a0 - a1), xk = k - 1 + t, yv = vals[pr[0]][k - 1] + (vals[pr[0]][k] - vals[pr[0]][k - 1]) * t, yr = Math.round(2027 + xk);
         var lab = 'Pareggio ' + (pr[0] + 1) + ' = ' + (pr[1] + 1) + ' nel ' + yr, xp = X(xk) / W * 100, yp = Y(yv) / H * 100;
-        txt.push(lab + ' (' + self.fmtK(yv) + '): da lì in poi, tra le due, è meglio la ' + (a1 > 0 ? pr[0] + 1 : pr[1] + 1));
+        txt.push(lab + ' (' + self.fmtK(yv) + '), poi meglio la ' + (a1 > 0 ? pr[0] + 1 : pr[1] + 1));
         pts.push({ label: lab, dot: 'position:absolute;width:16px;height:16px;border-radius:50%;background:' + lime + ';border:2.5px solid ' + ink + ';box-sizing:border-box;transform:translate(-50%,-50%);left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%',
           lab: 'position:absolute;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;background:' + ink + ';color:' + lime + ';white-space:nowrap;pointer-events:none;left:' + xp.toFixed(2) + '%;top:' + yp.toFixed(2) + '%;transform:translate(' + (xp > 70 ? 'calc(-100% - 12px)' : '12px') + ',' + (pts.length % 2 ? '8px' : 'calc(-100% - 8px)') + ')' }); } } });
     var xt = []; for (var i = 0; i < 6; i++) xt.push(String(2027 + Math.round(i / 5 * (n - 1))));
     return { l0: path(vals[0]), l1: path(vals[1]), l2: path(vals[2]), grid: grid, yLab: yLab, pts: pts.slice(0, 4), xt: xt, xAxis: 'anno di uscita',
       cur: 'display:none', curLab: 'display:none',
       label: 'Capitale netto nei tre scenari se esci in ciascun anno dal 2027 al ' + (2026 + n) + ', differenziale ' + this.fmtP(d, 1) + ', con i punti di pareggio',
-      text: 'Capitale netto se esci in quell’anno, con differenziale ' + this.fmtP(d, 1) + ' e uscita per ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. ' + (txt.length ? txt.join(' · ') + '.' : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.') + this.overlapNote(vals) };
+      text: 'Capitale netto se esci in quell’anno (differenziale ' + this.fmtP(d, 1) + ', ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '). ' + (txt.length ? txt.join(' · ') + '.' : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.') + this.overlapNote(vals) };
   }
   // due scenari quasi uguali (meno dell'1%): le linee si sovrappongono e lo diciamo nel testo
   overlapNote(vals) {
@@ -668,9 +673,9 @@ class Component extends DCLogic {
     var cx = X(Math.max(-0.12, Math.min(0.03, s.delta))) / W * 100;
     return { l0: path(vals[0]), l1: path(vals[1]), l2: path(vals[2]), grid: grid, yLab: yLab, pts: pts, xt: ['−12%', '−9%', '−6%', '−3%', '0', '+3%'], xAxis: 'differenziale annuo fondo − ETF',
       cur: 'position:absolute;top:0;bottom:0;width:0;border-left:2px dashed ' + ink + ';pointer-events:none;left:' + cx.toFixed(2) + '%',
-      curLab: 'position:absolute;top:-2px;transform:translateX(-50%);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';border:1px solid ' + ink + ';white-space:nowrap;left:' + cx.toFixed(2) + '%',
+      curLab: 'position:absolute;top:-2px;transform:translateX(-50%);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';white-space:nowrap;left:' + cx.toFixed(2) + '%',
       label: 'Capitale netto all’uscita nel ' + (2026 + n) + ' nei tre scenari al variare del differenziale, con i punti di pareggio',
-      text: 'Uscita nel ' + (2026 + n) + ' con ' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '. Dove due linee si incrociano i due scenari danno lo stesso capitale: ' + (txt.length ? txt.join(' · ') + '.' : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.') + this.overlapNote(vals) };
+      text: 'Uscita nel ' + (2026 + n) + ' (' + (p.mode === 'Riscatto' ? 'riscatto' : 'pensione') + '). Dove due linee si incrociano danno lo stesso capitale: ' + (txt.length ? txt.join(' · ') + '.' : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.') + this.overlapNote(vals) };
   }
   breakeven(p, rows, a, b, h, mode) {
     var self = this, f = function (d) { var r = self.sim(p, rows, d, h, mode); return r[a].tot - r[b].tot; };
@@ -713,7 +718,7 @@ class Component extends DCLogic {
   renderVals() {
     this.autoSave();
     var self = this, s = this.state, p = this.params(), rows = this.flows(p), n = rows.length, res = this.sim(p, rows, p.delta, n, p.mode);
-    var colors = ['#2563EB', '#15803D', '#C2410C'], names = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'];
+    var colors = ['#2563EB', '#15803D', '#C2410C'], names = ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'];
     var b = this.best(res), worst = [0, 1, 2].reduce(function (a, i) { return res[i].tot < res[a].tot ? i : a; }, 0);
     var second = [0, 1, 2].filter(function (i) { return i !== b; }).reduce(function (a, i) { return res[i].tot > res[a].tot ? i : a; }, b === 0 ? 1 : 0);
     var ink = '#0B0B0B', lime = '#D4EE36';
@@ -739,13 +744,21 @@ class Component extends DCLogic {
         style: 'display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font:inherit;color:' + ink + ';cursor:pointer;text-align:left;min-width:0;background:#FFFFFF;border:' + (on ? '1.5px solid ' + ink : '1px solid #E2E2DF') }; });
     var zones = [];
     for (var i = 0; i <= 60; i++) { var d = -0.12 + i * 0.0025, w = this.best(this.sim(p, rows, d, n, p.mode)); zones.push({ style: 'background:' + colors[w], title: this.fmtP(d, 2) + ': vince ' + names[w] }); }
-    var strip = [], h21 = null;
-    for (var h = 1; h <= n; h++) { var rr = this.sim(p, rows, p.delta, h, h < n ? 'Riscatto' : p.mode), bb = this.best(rr); strip.push({ style: 'flex:1;border-radius:4px;background:' + colors[bb], title: (2026 + h) + ': conviene ' + names[bb] });
+    var strip = [], h21 = null, sBest = [], cNames = ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'];
+    for (var h = 1; h <= n; h++) { var rr = this.sim(p, rows, p.delta, h, h < n ? 'Riscatto' : p.mode), bb = this.best(rr); sBest.push(bb);
+      strip.push({ style: 'flex:1;border-radius:4px;background:' + colors[bb], title: 'Se esci nel ' + (2026 + h) + ' (dopo ' + h + (h === 1 ? ' anno' : ' anni') + ' da oggi): conviene aver seguito sempre la ' + (bb + 1) + ' · ' + cNames[bb] });
       if (h21 === null && rr[0].tot >= rr[1].tot) h21 = h; }
+    // dove cambia lo scenario che conviene: pill con gli anni, come il cursore del differenziale
+    var stripPills = [], segs = [{ from: 1, s: sBest[0] }];
+    for (var h2 = 2; h2 <= n; h2++) if (sBest[h2 - 1] !== sBest[h2 - 2]) { segs.push({ from: h2, s: sBest[h2 - 1] });
+      stripPills.push({ label: h2 + ' anni', title: 'Da ' + h2 + ' anni (uscita nel ' + (2026 + h2) + ') conviene la ' + (sBest[h2 - 1] + 1) + ' · ' + cNames[sBest[h2 - 1]],
+        style: 'position:absolute;top:-2px;left:' + ((h2 - 1) / n * 100).toFixed(2) + '%;transform:translateX(-50%);font-size:12px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';white-space:nowrap;font-variant-numeric:tabular-nums' }); }
+    var stripNote = segs.length === 1 ? 'Con questo differenziale conviene sempre la ' + (segs[0].s + 1) + ', qualunque sia l’anno di uscita.'
+      : segs.map(function (g, j) { var to = j + 1 < segs.length ? segs[j + 1].from - 1 : n; return (j === 0 ? 'Se esci entro ' + to + (to === 1 ? ' anno' : ' anni') : (j + 1 < segs.length ? 'tra ' + g.from + ' e ' + to + ' anni' : 'da ' + g.from + ' anni in poi')) + ' conviene la ' + (g.s + 1); }).join('; ') + '.';
     // orizzonte di pareggio 2-1 (SPEC par. 8 punto 6): primo anno di uscita (riscatto prima dell'ultimo) da cui conviene la 1
-    var dTxt = this.fmtP(p.delta, 1), horizon = h21 === null ? 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per l’azienda (1) per qualsiasi uscita fino al ' + (2026 + n) + '.'
-      : h21 === 1 ? 'con ' + dTxt + ' il minimo per l’azienda (1) batte la deduzione massima (2) per qualsiasi uscita.'
-      : 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per l’azienda (1) se esci entro ' + (h21 - 1) + (h21 - 1 === 1 ? ' anno' : ' anni') + ' (entro il ' + (2025 + h21) + '); oltre conviene la 1.';
+    var dTxt = this.fmtP(p.delta, 1), horizon = h21 === null ? 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per il contributo (1) per qualsiasi uscita fino al ' + (2026 + n) + '.'
+      : h21 === 1 ? 'con ' + dTxt + ' il minimo per il contributo (1) batte la deduzione massima (2) per qualsiasi uscita.'
+      : 'con ' + dTxt + ' la deduzione massima (2) batte il minimo per il contributo (1) se esci entro ' + (h21 - 1) + (h21 - 1 === 1 ? ' anno' : ' anni') + ' (entro il ' + (2025 + h21) + '); oltre conviene la 1.';
     var bePhrase = function (a, c, label) { var v = self.breakeven(p, rows, a, c, n, p.mode);
       if (v === 'always') return label + ': vince sempre la ' + (a + 1) + '.'; if (v === 'never') return label + ': vince sempre la ' + (c + 1) + '.';
       return label + ': pareggio a ' + self.fmtP(v, 1) + ' (sopra vince la ' + (a + 1) + ', sotto la ' + (c + 1) + ').'; };
@@ -817,7 +830,7 @@ class Component extends DCLogic {
       savLocked: this.minFloor() >= J0, savFixLocked: s.savMode === 'fix' && this.minFloor() >= J0, budNoteMax: s.savMode === 'max' && this.minFloor() < J0, budNoteFix: s.savMode === 'fix' && this.minFloor() < J0,
       lockNote: 'Lo slider è fermo: la quota minima per avere il contributo IBM (' + this.fmtE(Math.ceil(Math.max(this.minRal(), s.minM * 13))) + ' l\'anno) arriva già alla deduzione massima (' + this.fmtE(J0) + '), quindi non c\'è un importo da scegliere e gli scenari 1 e 2 coincidono. ' + (s.minM * 13 >= this.minRal() ? 'La quota viene da «Tuo contributo minimo» nella sezione 2 (× 13 mensilità). Se l\'hai preso dal file delle operazioni è il tuo ultimo versamento mensile: se versi più del minimo, scrivi lì solo il minimo.' : 'La quota viene dalla regola sulla RAL (2% fino a 56.224 €, 7% oltre): con questa RAL il minimo supera lo spazio deducibile che resta dopo il contributo dell’azienda.'), trSav: track(Math.max(this.minFloor(), Math.min(s.saving, J0)), this.minFloor(), J0),
       savingTxt: this.fmtE(s.savMode === 'max' ? J0 : Math.max(this.minFloor(), Math.min(s.saving, J0))),
-      savNote: s.savMode === 'max' ? 'Quanto ti manca per arrivare al limite deducibile (5.300 € con il contributo dell’azienda): ' + this.fmtE(J0) + ' il primo anno, +2% l’anno. È lo stesso budget nei tre scenari: il simulatore ti dice dove mettere ogni euro, fondo o ETF.' : 'Da ' + this.fmtE(this.minFloor()) + ' a ' + this.fmtE(J0) + ', cresce del 2% l’anno. Il minimo segue la RAL (' + this.fmtE(p.ral) + '): è la quota minima a tuo carico per avere il contributo dell’azienda, 2% fino a 56.224 € e 7% oltre. Sotto la quota minima si eliminerebbe uno dei tre scenari, “Minimo per l’azienda + PAC”. Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell’ETF, perché nel fondo non avrebbe più il vantaggio fiscale.',
+      savNote: s.savMode === 'max' ? 'Quanto ti manca per arrivare al limite deducibile (5.300 € con il contributo dell’azienda): ' + this.fmtE(J0) + ' il primo anno, +2% l’anno. È lo stesso budget nei tre scenari: il simulatore ti dice dove mettere ogni euro, fondo o ETF.' : 'Da ' + this.fmtE(this.minFloor()) + ' a ' + this.fmtE(J0) + ', cresce del 2% l’anno. Il minimo segue la RAL (' + this.fmtE(p.ral) + '): è la quota minima a tuo carico per avere il contributo dell’azienda, 2% fino a 56.224 € e 7% oltre. Sotto la quota minima si eliminerebbe uno dei tre scenari, “Minimo per contributo + PAC”. Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell’ETF, perché nel fondo non avrebbe più il vantaggio fiscale.',
       recov: s.recov, recovTxt: this.fmtE(s.recov), setRecov: function (e) { self.setState({ recov: +e.target.value || 0 }); },
       margTxt: (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '%', margEuro: Math.round(tau * 100),
       sum3: 'RAL ' + this.fmtK(s.ral) + ' · aliquota ' + (tau * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + '% · ' + (s.savMode === 'max' ? 'deduzione max' : this.fmtE(s.saving) + '/anno'),
@@ -839,19 +852,22 @@ class Component extends DCLogic {
       bestVal: 'Vince la ' + (b + 1) + ' · ' + this.fmtK(res[b].tot),
       sum5: [0, 1, 2].map(function (k) { return { text: (k + 1) + ' · ' + self.fmtK(res[k].tot), style: 'color:' + colors[k] + (k === b ? ';text-decoration:underline;text-decoration-color:' + lime + ';text-decoration-thickness:4px;text-underline-offset:4px' : '') }; }),
       headPre: 'Con un differenziale di ' + this.fmtP(p.delta, 1) + ' e uscita nel ' + (s.birth + s.exitAge) + ' conviene ', headWin: (b + 1) + ' · ' + names[b], headPost: ': ' + this.fmtE(res[b].tot) + ' netti, ' + this.fmtE(res[b].tot - res[worst].tot) + ' più della peggiore.',
-      cards: [0, 1, 2].map(function (k) { var on = k === b;
-        return { n: String(k + 1), name: names[k], total: self.fmtE(res[k].tot), real: self.fmtE(res[k].real), split: 'Fondo ' + self.fmtE(res[k].fund) + ' · PAC ' + self.fmtE(res[k].pac),
+      cards: [0, 1, 2].map(function (k) { var on = k === b, mx = Math.max(res[0].tot, res[1].tot, res[2].tot), wf = Math.max(0, res[k].fund) / mx * 100, wp = Math.max(0, res[k].pac) / mx * 100;
+        return { n: String(k + 1), name: ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'][k], role: ['Ibrido · Match + PAC', 'Solo Fondo', 'Solo PAC'][k], total: self.fmtE(res[k].tot), real: self.fmtE(res[k].real), split: 'Fondo ' + self.fmtE(res[k].fund) + ' · PAC ' + self.fmtE(res[k].pac), fundNet: self.fmtE(res[k].fund), pacNet: self.fmtE(res[k].pac),
+          netFund: wf > 0 ? 'display:block;height:100%;background:#3A3D42;width:' + wf.toFixed(1) + '%' + (wp > 0 ? ';border-right:1.5px solid #0B0B0B' : '') : 'display:none',
+          netPac: wp > 0 ? 'display:block;height:100%;background:#D4EE36;width:' + wp.toFixed(1) + '%' + (wf + wp < 99.5 ? ';border-right:1.5px solid #0B0B0B' : '') : 'display:none',
+          netLabel: 'Capitale netto ' + self.fmtE(res[k].tot) + ': Fondo ' + self.fmtE(res[k].fund) + ', PAC ' + self.fmtE(res[k].pac) + ' (stessa scala nelle tre card)',
           badge: on ? 'Conviene' : '−' + self.fmtE(res[b].tot - res[k].tot).replace('-', ''),
           badgeStyle: 'font-size:12.5px;font-weight:600;padding:4px 9px;border-radius:99px;white-space:nowrap;' + (on ? 'background:' + lime + ';color:' + ink : 'background:#ECECEA;color:#3A3D42'),
-          tag: 'width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;background:' + colors[k],
-          box: 'display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:20px;background:' + (on ? '#FFFFFF' : '#F7F7F5') + ';border:' + (on ? '3px solid ' : '1.5px solid ') + colors[k] + (on ? ';box-shadow:0 10px 28px rgba(11,11,11,.10)' : '') }; }),
+          tag: 'width:30px;height:30px;border-radius:9px;flex:none;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;background:' + colors[k],
+          box: 'display:flex;flex-direction:column;gap:10px;min-width:0;padding:18px 20px;border-radius:20px;' + (on ? 'background:#FFFFFF;border:3px solid ' + colors[k] + ';box-shadow:0 10px 28px rgba(11,11,11,.10)' : 'background:#F7F7F5;border:1px solid #E6E6E3') }; }),
       hm: this.heat(p, rows, n), ln: s.lnMode === 'delta' ? this.lines(p, rows, n) : this.linesTime(p, rows, n),
       lnIsTime: s.lnMode !== 'delta', lnIsDelta: s.lnMode === 'delta', pickLnTime: function () { self.setState({ lnMode: 'time' }); }, pickLnDelta: function () { self.setState({ lnMode: 'delta' }); },
       segLnTime: seg(s.lnMode !== 'delta') + ';flex:none;padding:6px 10px;font-size:13px', segLnDelta: seg(s.lnMode === 'delta') + ';flex:none;padding:6px 10px;font-size:13px',
       zones: zones, zoneLabel: 'Barra del differenziale da −12% a +3%, colorata con lo scenario che vince a ogni valore',
-      cursorStyle: 'position:absolute;top:-4px;left:' + cursorPc + '%;transform:translateX(-50%);font-size:12px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';border:1px solid ' + ink + ';white-space:nowrap',
+      cursorStyle: 'position:absolute;top:-4px;left:' + cursorPc + '%;transform:translateX(-50%);font-size:12px;font-weight:700;padding:2px 7px;border-radius:7px;background:' + lime + ';white-space:nowrap',
       breaks: [bePhrase(1, 0, '2 contro 1'), bePhrase(1, 2, '2 contro 3'), bePhrase(0, 2, '1 contro 3')],
-      strip: strip, stripLabel: 'Scenario migliore per ogni anno di uscita dal 2027 al ' + (s.birth + s.exitAge),
+      strip: strip, stripPills: stripPills, stripNote: stripNote, stripLabel: 'Scenario migliore per ogni anno di uscita dal 2027 al ' + (s.birth + s.exitAge),
       keyParams: [
         { name: 'Limite deducibile', val: '5.300 €', kind: 'Doc. FPDDI', src: 'FPDDI, \'Regime fiscale\' p. 3: 5.300 € dall\'annualità 2026 (5.164,57 € fino al 2025); D.Lgs. 252/2005 art. 8 c. 4 come modificato dalla L. 199/2025' },
         { name: 'Imposta sui rendimenti del fondo', val: '20%', kind: 'Norma', src: 'FPDDI, \'Regime fiscale\' p. 5: imposta sostitutiva del 20% sul risultato netto annuo; titoli pubblici al 12,5% effettivo (L. 190/2014 art. 1 cc. 621-622)' },

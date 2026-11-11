@@ -22,12 +22,9 @@ import {
 } from '../model';
 import { annualTable, deltaPresets, diffStats, lastFullYear } from '../model/history';
 
-export const SCENARIO_NAMES = ['Minimo per l’azienda + PAC', 'Deduzione massima + PAC', 'Solo TFR + PAC'] as const;
-export const SCENARIO_SHORT = ['Minimo per l’azienda', 'Deduzione massima', 'Solo TFR'] as const;
-export const SCENARIO_ROLE = ['Ibrido · Match + PAC', 'Max fisco nel Fondo', '100% autonomo nel PAC'] as const;
-/** Nomi e ruoli nelle tre card in alto della Landing (prototipo spec/design/v2/Landing.dc.html). */
-export const CARD_NAMES = ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'] as const;
-export const CARD_ROLE = ['Ibrido · Match + PAC', 'Solo Fondo', 'Solo PAC'] as const;
+/** Nomi ed etichette degli scenari, uguali in tutta la pagina (prototipo spec/design/v2/Landing.dc.html). */
+export const SCENARIO_NAMES = ['Minimo per contributo + PAC', 'Deduzione massima (no PAC)', 'Assenza deduzione e contributo (solo PAC)'] as const;
+export const SCENARIO_ROLE = ['Ibrido · Match + PAC', 'Solo Fondo', 'Solo PAC'] as const;
 export const SCENARIO_DESC = [
   'Dal tuo budget versi nel Fondo solo il minimo che sblocca il contributo IBM; tutto il resto del budget più il rimborso IRPEF vanno nel PAC ETF.',
   'Dal tuo budget versi nel Fondo fino al tetto massimo deducibile (incluso il contributo IBM); nel PAC ETF investi il rimborso IRPEF ottenuto.',

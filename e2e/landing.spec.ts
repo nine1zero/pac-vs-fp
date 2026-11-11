@@ -25,7 +25,7 @@ test('senza dati: risposta in testa al Risultato con i valori golden del profilo
   // salta tutte le sezioni e guarda il risultato
   await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
   const answer = page.getByTestId('answer');
-  await expect(answer).toContainText(`conviene 1 · Minimo per l’azienda + PAC: ${euro(golden.pensione_delta_default[0]!)} netti`);
+  await expect(answer).toContainText(`conviene 1 · Minimo per contributo + PAC: ${euro(golden.pensione_delta_default[0]!)} netti`);
   await expect(answer).toContainText('2 contro 1: pareggio a −3,6%');
   await expect(answer).toContainText('2 contro 3: pareggio a −5,5%');
   await expect(answer).toContainText('1 contro 3: pareggio a −9,3%');
@@ -129,7 +129,7 @@ test('slider da tastiera: il differenziale aggiorna la risposta', async ({ page 
   for (let i = 0; i < 58; i++) await page.keyboard.press('ArrowRight');
   await expect(page.locator('#sezione-4 .val').first()).toHaveText('+0,0%'.replace('+', ''));
   await openSection(page, 5);
-  await expect(page.getByTestId('answer')).toContainText('conviene 2 · Deduzione massima + PAC');
+  await expect(page.getByTestId('answer')).toContainText('conviene 2 · Deduzione massima (no PAC)');
 });
 
 test('ogni fonte nei tooltip ha un testo', async ({ page }) => {
@@ -172,4 +172,11 @@ test('se la quota minima arriva alla deduzione massima lo slider si ferma e una 
   await expect(box.getByRole('slider', { name: 'Risparmio aggiuntivo annuo' })).toBeDisabled();
   await expect(box.locator('.lock-note')).toContainText('Lo slider è fermo');
   await expect(box.locator('.lock-note')).toContainText('Tuo contributo minimo');
+});
+
+test('striscia "Se esci nel…": etichetta dove cambia lo scenario e frase di sintesi', async ({ page }) => {
+  await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
+  const s5 = page.locator('#sezione-5');
+  await expect(s5.locator('.strip-pill')).toHaveText(['17 anni']);
+  await expect(s5).toContainText('Se esci entro 16 anni conviene la 2; da 17 anni in poi conviene la 1.');
 });

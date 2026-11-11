@@ -5,12 +5,12 @@ import { etfById, etfCatalog, paramSource } from '../../data/catalog';
 import { successMessage } from '../../import/dettaglio';
 import { EXAMPLE_PARAMS } from '../../model';
 import { useStore, type Inputs } from '../../state/store';
-import { DeltaZones, ExitStrip } from '../charts/Bars';
+import { DeltaZones, ExitStrip, stripSentence } from '../charts/Bars';
 import { HeatMap } from '../charts/HeatMap';
 import { LineChart, type Marker } from '../charts/LineChart';
 import { Chips, NumField, Range, Segmented } from '../controls';
 import { euro, euroK, pct, pctShort } from '../format';
-import { HISTORY, LINE_DELTAS, MAP_DELTAS, SCENARIO_NAMES, type Results } from '../results';
+import { HISTORY, LINE_DELTAS, MAP_DELTAS, SCENARIO_NAMES, SCENARIO_ROLE, type Results } from '../results';
 import { SavingLockNote } from '../SavingLockNote';
 import { Src, Tip } from '../Tip';
 import { useImport } from '../useImport';
@@ -403,7 +403,7 @@ export function Sec3({ r }: { r: Results }) {
               <>
                 Da {euro(r.savingMin)} a {euro(r.savingMax)}, cresce del {pctShort(P.growth)} l'anno. Il minimo segue la RAL ({euro(i.ral)}): è la quota minima a
                 tuo carico per avere il contributo dell'azienda, 2% fino a {euro(P.inps_first_band)} e 7% oltre. Sotto la quota minima si eliminerebbe uno dei tre
-                scenari, «Minimo per l'azienda + PAC». Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell'ETF, perché nel fondo non
+                scenari, «Minimo per contributo + PAC». Il massimo è la deduzione massima: ogni euro oltre il limite va comunque nell'ETF, perché nel fondo non
                 avrebbe più il vantaggio fiscale.
               </>
             )}
@@ -559,7 +559,7 @@ export function Sec5({ r }: { r: Results }) {
     const xs = r.time.map((_, k) => k);
     const markers = r.timeCrossings.slice(0, 4).map((c) => ({ x: c.x, y: c.value, label: `Pareggio ${c.pair[0] + 1} = ${c.pair[1] + 1} nel ${Math.round(firstYear + c.x)}` }));
     const txt = r.timeCrossings.map(
-      (c) => `Pareggio ${c.pair[0] + 1} = ${c.pair[1] + 1} nel ${Math.round(firstYear + c.x)} (${euroK(c.value)}): da lì in poi, tra le due, è meglio la ${c.winnerAfter + 1}`,
+      (c) => `Pareggio ${c.pair[0] + 1} = ${c.pair[1] + 1} nel ${Math.round(firstYear + c.x)} (${euroK(c.value)}), poi meglio la ${c.winnerAfter + 1}`,
     );
     line = {
       xs,
@@ -571,7 +571,7 @@ export function Sec5({ r }: { r: Results }) {
       }),
       xLabel: 'anno di uscita',
       aria: `Capitale netto nei tre scenari se esci in ciascun anno dal ${firstYear} al ${r.exitYear}, differenziale ${pct(i.delta, 1, true)}, con i punti di pareggio`,
-      text: `Capitale netto se esci in quell’anno, con differenziale ${pct(i.delta, 1, true)} e uscita per ${i.exit_mode === 'Riscatto' ? 'riscatto' : 'pensione'}. ${
+      text: `Capitale netto se esci in quell’anno (differenziale ${pct(i.delta, 1, true)}, ${i.exit_mode === 'Riscatto' ? 'riscatto' : 'pensione'}). ${
         txt.length ? `${txt.join(' · ')}.` : 'Le linee non si incrociano: lo stesso scenario vince in ogni anno.'
       }`,
     };
@@ -595,7 +595,7 @@ export function Sec5({ r }: { r: Results }) {
       xTicks: [-0.12, -0.09, -0.06, -0.03, 0, 0.03].map((x) => ({ x, label: x === 0 ? '0' : pct(x, 0, true) })),
       xLabel: 'differenziale annuo fondo − ETF',
       aria: `Capitale netto all’uscita nel ${r.exitYear} nei tre scenari al variare del differenziale, con i punti di pareggio`,
-      text: `Uscita nel ${r.exitYear} con ${i.exit_mode === 'Riscatto' ? 'riscatto' : 'pensione'}. Dove due linee si incrociano i due scenari danno lo stesso capitale: ${
+      text: `Uscita nel ${r.exitYear} (${i.exit_mode === 'Riscatto' ? 'riscatto' : 'pensione'}). Dove due linee si incrociano danno lo stesso capitale: ${
         txt.length ? `${txt.join(' · ')}.` : 'nessun pareggio tra −12% e +3%: vince sempre lo stesso scenario.'
       }`,
       cursor: { x: Math.max(-0.12, Math.min(0.03, i.delta)), label: `tu: ${pct(i.delta, 1, true)}` },
@@ -639,22 +639,43 @@ export function Sec5({ r }: { r: Results }) {
       <div className="g3">
         {[0, 1, 2].map((k) => {
           const on = k === b;
+          const mx = Math.max(...res.map((x) => x.total_net));
+          const wf = (Math.max(0, res[k]!.fund_net) / mx) * 100;
+          const wp = (Math.max(0, res[k]!.pac_net) / mx) * 100;
           return (
             <div key={k} className={`rcard s${k + 1}${on ? ' best' : ''}`}>
+              <span className="rcard-title">
+                <span className={`tag s${k + 1}`}>{k + 1}</span>
+                <span className="rcard-name">{SCENARIO_NAMES[k]}</span>
+              </span>
               <span className="rcard-head">
-                <span className="row-gap">
-                  <span className={`tag s${k + 1}`}>{k + 1}</span>
-                  <span className="rcard-name">{SCENARIO_NAMES[k]}</span>
-                </span>
+                <span className="scard-role">{SCENARIO_ROLE[k]}</span>
                 <span className={`badge-pill${on ? ' lime' : ''}`}>{on ? 'Conviene' : `−${euro(res[b]!.total_net - res[k]!.total_net)}`}</span>
               </span>
-              <span className="rcard-total">{euro(res[k]!.total_net)}</span>
-              <span className="text-sm">
-                {euro(res[k]!.total_real)} in euro di oggi{' '}
-                <Src kind="Ipotesi" source={`Inflazione ${pctShort(P.inflation)} l'anno dal ${P.base_year_real}: ${ps('inflation').source}`} what="euro di oggi" />
+              <span className="rcard-totrow">
+                <span className="rcard-total">{euro(res[k]!.total_net)}</span>
+                <span className="rcard-real">
+                  {euro(res[k]!.total_real)} in euro di oggi{' '}
+                  <Src kind="Ipotesi" source={`Inflazione ${pctShort(P.inflation)} l'anno dal ${P.base_year_real}: ${ps('inflation').source}`} what="euro di oggi" />
+                </span>
               </span>
-              <span className="text-sm muted">
-                Fondo {euro(res[k]!.fund_net)} · PAC {euro(res[k]!.pac_net)}
+              <span
+                className="rcard-bar"
+                role="img"
+                aria-label={`Capitale netto ${euro(res[k]!.total_net)}: Fondo ${euro(res[k]!.fund_net)}, PAC ${euro(res[k]!.pac_net)} (stessa scala nelle tre card)`}
+              >
+                {wf > 0 && <span className={`fund${wp > 0 ? ' split' : ''}`} style={{ width: `${wf.toFixed(1)}%` }} />}
+                {wp > 0 && <span className={`pac${wf + wp < 99.5 ? ' split' : ''}`} style={{ width: `${wp.toFixed(1)}%` }} />}
+              </span>
+              <span className="scard-alloc-labels">
+                <span>
+                  <span className="scard-dot fund" aria-hidden="true" />
+                  Fondo <strong>{euro(res[k]!.fund_net)}</strong>
+                </span>
+                <span>
+                  PAC <strong>{euro(res[k]!.pac_net)}</strong>
+                  <span className="scard-dot pac after" aria-hidden="true" />
+                </span>
               </span>
             </div>
           );
@@ -682,14 +703,23 @@ export function Sec5({ r }: { r: Results }) {
           </ul>
         </div>
         <div className="panel">
-          <span className="cap">Se esci nel… conviene</span>
+          <span className="cap">
+            Se esci nel… conviene{' '}
+            <Tip label="Come si legge la striscia">
+              Ogni casella è un anno in cui potresti uscire dal fondo, a partire da oggi. Il colore dice quale scenario ti conviene aver seguito sempre, da oggi fino a
+              quell'anno: se esci dopo 9 anni, conta chi ha il capitale netto più alto dopo 9 anni di quella strategia. Prima dell'ultimo anno l'uscita è un riscatto (
+              {pctShort(P.redemption_tax)}), nell'ultimo vale la modalità scelta. Le etichette segnano dopo quanti anni cambia lo scenario che conviene. Passa sopra una
+              casella per l'anno esatto.
+            </Tip>
+          </span>
           <ExitStrip firstYear={firstYear} winners={r.strip} />
           <span className="ticks">
             <span>{firstYear}</span>
             <span>prima dell'ultimo anno: riscatto {pctShort(P.redemption_tax)}</span>
             <span>{r.exitYear}</span>
           </span>
-          <Legend />
+          <span className="text-sm">{stripSentence(r.strip)}</span>
+          <Legend column />
         </div>
       </div>
 
@@ -724,11 +754,12 @@ export function Sec5({ r }: { r: Results }) {
         <ExitModeSeg small />
       </div>
 
-      <div className="panel">
+      <div className="g2 charts2">
+      <div className="panel tight">
         <span className="cap">Per quanti anni conviene</span>
-        <span className="text-sm">
-          Ogni casella è un anno di uscita (in orizzontale) e un differenziale fondo − ETF (in verticale), colorata con lo scenario che vince. Più il colore è pieno,
-          più il vantaggio sul secondo è grande. Muovi i parametri e la mappa si ricalcola; passa sopra una casella, o usa le frecce, per leggerne i valori.
+        <span className="text-sm compact">
+          Ogni casella è un anno di uscita (in orizzontale) con un differenziale fondo − ETF (in verticale): il colore è lo scenario che vince, più pieno se vince di più.
+          Passa sopra una casella, o usa le frecce, per i valori.
         </span>
         <span className="text-sm muted">
           {r.n} anni di uscita · prima dell’ultimo anno uscita con riscatto {pctShort(P.redemption_tax)}
@@ -742,7 +773,7 @@ export function Sec5({ r }: { r: Results }) {
         <span className="sr-only">Differenziali della mappa da {pct(MAP_DELTAS[0]!, 0, true)} a {pct(MAP_DELTAS[MAP_DELTAS.length - 1]!, 0, true)}, passo 0,25 punti.</span>
       </div>
 
-      <div className="panel">
+      <div className="panel tight">
         <span className="panel-head wrap">
           <span className="cap">Capitale netto nei tre scenari e punti di pareggio</span>
           <Segmented
@@ -756,10 +787,11 @@ export function Sec5({ r }: { r: Results }) {
             ]}
           />
         </span>
-        <span className="text-sm">
+        <span className="text-sm compact">
           {line.text}
           {overlaps.length > 0 && ` ${overlaps.join(' ')}`}
         </span>
+        <LineChart xs={line.xs} series={line.series} markers={line.markers} xTicks={line.xTicks} xLabel={line.xLabel} ariaLabel={line.aria} cursor={line.cursor} />
         <span className="legend">
           <Legend inline lines />
           <span className="leg">
@@ -767,7 +799,7 @@ export function Sec5({ r }: { r: Results }) {
             pareggio
           </span>
         </span>
-        <LineChart xs={line.xs} series={line.series} markers={line.markers} xTicks={line.xTicks} xLabel={line.xLabel} ariaLabel={line.aria} cursor={line.cursor} />
+      </div>
       </div>
     </Section>
   );
@@ -781,10 +813,10 @@ function AnswerBox({ r }: { r: Results }) {
   const h = r.horizon21;
   const first = P.start_year;
   let horizon: string;
-  if (h === null) horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) per qualsiasi uscita fino al ${r.exitYear}`;
-  else if (h === 1) horizon = `con ${pct(d, 1, true)} il minimo per l'azienda (1) batte la deduzione massima (2) per qualsiasi uscita`;
+  if (h === null) horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per il contributo (1) per qualsiasi uscita fino al ${r.exitYear}`;
+  else if (h === 1) horizon = `con ${pct(d, 1, true)} il minimo per il contributo (1) batte la deduzione massima (2) per qualsiasi uscita`;
   else
-    horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per l'azienda (1) se esci entro ${h - 1} ${h - 1 === 1 ? 'anno' : 'anni'} (entro il ${
+    horizon = `con ${pct(d, 1, true)} la deduzione massima (2) batte il minimo per il contributo (1) se esci entro ${h - 1} ${h - 1 === 1 ? 'anno' : 'anni'} (entro il ${
       first + h - 2
     }); oltre conviene la 1`;
   return (
@@ -815,13 +847,13 @@ export function breakPhrase(pair: [number, number], v: number | string): string 
   return `${label}: pareggio a ${pct(v as number, 1, true)} (sopra vince la ${pair[0] + 1}, sotto la ${pair[1] + 1}).`;
 }
 
-function Legend({ inline, lines }: { inline?: boolean; lines?: boolean }) {
+function Legend({ inline, lines, column }: { inline?: boolean; lines?: boolean; column?: boolean }) {
   return (
-    <span className={inline ? 'legend-inline' : 'legend'}>
+    <span className={inline ? 'legend-inline' : `legend${column ? ' column' : ''}`}>
       {[0, 1, 2].map((k) => (
         <span key={k} className="leg">
           <span className={`${lines ? `leg-ln w${k + 1}` : 'leg-sw'} s${k + 1}`} />
-          {k + 1} · {inline ? SCENARIO_NAMES[k] : SCENARIO_NAMES[k]!.replace(' + PAC', '')}
+          {k + 1} · {SCENARIO_NAMES[k]}
         </span>
       ))}
     </span>

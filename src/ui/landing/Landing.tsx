@@ -3,7 +3,7 @@ import { paramSource } from '../../data/catalog';
 import { toModelParams, useStore } from '../../state/store';
 import { Range } from '../controls';
 import { euro } from '../format';
-import { CARD_NAMES, CARD_ROLE, computeResults, SCENARIO_DESC } from '../results';
+import { computeResults, SCENARIO_DESC, SCENARIO_NAMES, SCENARIO_ROLE } from '../results';
 import { SavingLockNote } from '../SavingLockNote';
 import { Src } from '../Tip';
 import { EtfBox, EtfMenu } from './EtfMenu';
@@ -100,9 +100,9 @@ export function Landing() {
                 <div className="scard-top">
                   <span className="row-gap">
                     <span className={`tag s${k + 1}`}>{k + 1}</span>
-                    <span className="scard-name">{CARD_NAMES[k]}</span>
+                    <span className="scard-name">{SCENARIO_NAMES[k]}</span>
                   </span>
-                  <span className="scard-role">{CARD_ROLE[k]}</span>
+                  <span className="scard-role">{SCENARIO_ROLE[k]}</span>
                 </div>
                 <span className="scard-desc">{SCENARIO_DESC[k]}</span>
                 <div className="scard-alloc">
