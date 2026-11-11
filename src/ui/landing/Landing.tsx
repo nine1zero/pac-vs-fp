@@ -158,7 +158,7 @@ export function Landing() {
                     </span>
                     <span>
                       <span className="scard-dot ibm" aria-hidden="true" />
-                      IBM <strong className={s.employer > 0 ? '' : 'scard-neg'}>{s.employer > 0 ? euro(s.employer) : '0 € · perso'}</strong>
+                      IBM <strong className={s.employer > 0 ? '' : 'scard-neg'}>{s.employer > 0 ? euro(s.employer) : '0 €'}</strong>
                     </span>
                   </span>
                   <span className="scard-alloc-head">

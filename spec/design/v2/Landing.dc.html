@@ -792,7 +792,7 @@ class Component extends DCLogic {
           segPac: ps > 0 ? 'display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden;white-space:nowrap;font-size:12px;font-weight:700;color:#0B0B0B;background:#D4EE36;width:' + (ps * 100).toFixed(1) + '%' : 'display:none',
           fundLab: fs >= 0.16 ? 'Fondo ' + pc0(fs) : (fs > 0 ? pc0(fs) : ''), pacLab: ps >= 0.16 ? 'PAC ' + pc0(ps) : (ps > 0.06 ? pc0(ps) : ''),
           barLabel: 'Risparmio aggiuntivo ' + self.fmtE(K) + ': Fondo ' + pc0(fs) + ', PAC ' + pc0(ps),
-          emp: f.employer > 0 ? self.fmtE(f.employer) : '0 € · perso', empStyle: 'color:' + (f.employer > 0 ? '#0B0B0B' : '#B91C1C'),
+          emp: f.employer > 0 ? self.fmtE(f.employer) : '0 €', empStyle: 'color:' + (f.employer > 0 ? '#0B0B0B' : '#B91C1C'),
           limTxt: self.fmtE(f.lim),
           fundTuo: f.member > 0 ? 'display:block;height:100%;background:#3A3D42;width:' + Math.min(100, f.member / f.lim * 100).toFixed(1) + '%' : 'display:none',
           fundIbm: f.employer > 0 ? 'display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden;white-space:nowrap;font-size:11px;font-weight:700;color:#0B0B0B;background:#22C3D6;border-left:1.5px solid #0B0B0B;' + (f.member + f.employer < f.lim - 1 ? 'border-right:1.5px solid #0B0B0B;' : '') + 'width:' + Math.min(100, f.employer / f.lim * 100).toFixed(1) + '%' : 'display:none',
