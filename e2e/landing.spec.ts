@@ -180,3 +180,15 @@ test('striscia "Se esci nel…": etichetta dove cambia lo scenario e frase di si
   await expect(s5.locator('.strip-pill')).toHaveText(['17 anni']);
   await expect(s5).toContainText('Se esci entro 16 anni conviene la 2; da 17 anni in poi conviene la 1.');
 });
+
+test('fumetto "Migliora il repo": stella, pull request e issue precompilata', async ({ page }) => {
+  const g = page.getByRole('group', { name: 'Migliora il progetto su GitHub' });
+  await expect(g).toBeVisible();
+  await expect(g.getByRole('link', { name: 'stella' })).toHaveAttribute('href', 'https://github.com/nine1zero/pac-vs-fp');
+  await expect(g.getByRole('link', { name: 'pull request' })).toHaveAttribute('href', 'https://github.com/nine1zero/pac-vs-fp/fork');
+  const issue = await g.getByRole('link', { name: 'issue' }).getAttribute('href');
+  const u = new URL(issue!);
+  expect(u.pathname).toBe('/nine1zero/pac-vs-fp/issues/new');
+  expect(u.searchParams.get('labels')).toBe('enhancement');
+  expect(u.searchParams.get('body')).toContain('Cosa proporresti');
+});

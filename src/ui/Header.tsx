@@ -5,6 +5,13 @@ function itDateTime(iso: string) {
   return new Date(iso).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
 }
 
+/** Issue precompilata con un modello (prototipo design/v2/Landing.dc.html, fumetto "Migliora il repo"). */
+const ISSUE_URL = `${REPO_URL}/issues/new?${new URLSearchParams({
+  title: 'Suggerimento: ',
+  labels: 'enhancement',
+  body: '**Cosa hai notato**\n\n\n**Cosa proporresti**\n\n\n**Pagina o sezione** (es. Risultato, Storico, Parametri e fonti)\n',
+}).toString()}`;
+
 export function Header() {
   const { state, dispatch } = useStore();
   const label = state.storeErr
@@ -62,17 +69,48 @@ export function Header() {
           <a href="#/parametri" className="btn ghost">
             Parametri e fonti
           </a>
-          <a
-            href={REPO_URL}
-            rel="noopener noreferrer"
-            className="btn ghost btn-icon"
-            aria-label="Codice sorgente su GitHub"
-            title="Codice sorgente su GitHub"
-          >
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-          </a>
+          <span className="gh-wrap">
+            <a
+              href={REPO_URL}
+              rel="noopener noreferrer"
+              className="btn ghost btn-icon"
+              aria-label="Codice sorgente su GitHub"
+              title="Codice sorgente su GitHub"
+            >
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+            </a>
+            <span className="ghb" role="group" aria-label="Migliora il progetto su GitHub">
+              <span className="ghb-arrow" aria-hidden="true" />
+              <strong className="ghb-title">Migliora il repo</strong>
+              <span className="ghb-sep" aria-hidden="true" />
+              <a className="ghb-it" href={REPO_URL} rel="noopener noreferrer" title="Apri il repository e premi Star">
+                <svg className="ghb-star" width="13" height="13" viewBox="0 0 24 24" fill="#D4EE36" aria-hidden="true">
+                  <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" />
+                </svg>
+                stella
+              </a>
+              <a className="ghb-it" href={`${REPO_URL}/fork`} rel="noopener noreferrer" title="Crea un fork per proporre una modifica con una pull request">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="6" cy="5" r="2.5" />
+                  <circle cx="6" cy="19" r="2.5" />
+                  <circle cx="18" cy="19" r="2.5" />
+                  <path d="M6 7.5v9" />
+                  <path d="M18 16.5V9a3 3 0 0 0-3-3h-4" />
+                  <path d="M13 3.5 10.5 6 13 8.5" />
+                </svg>
+                pull request
+              </a>
+              <a className="ghb-it" href={ISSUE_URL} rel="noopener noreferrer" title="Apri una issue già impostata con un modello">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8.5" />
+                  <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
+                </svg>
+                issue
+              </a>
+            </span>
+          </span>
         </nav>
       </header>
     </>

@@ -1,5 +1,12 @@
 # Registro delle modifiche
 
+
+## 2026-11-11 · fumetto "Migliora il repo" nell'app
+
+- Implementato nell'header il fumetto del prototipo (`design/v2/Landing.dc.html`) accanto all'icona di GitHub: "Migliora il repo" con i link stella, pull request (fork) e issue precompilata con il modello. Ha la stessa animazione, ferma con "riduci movimento"; si nasconde sotto i 760 px.
+- Scenario 3: "IBM 0 €" senza "· perso" (anche nel prototipo e nella SPEC).
+- Tolta la doppia spunta nello stato del salvataggio.
+
 ## 2026-11-11 · interfaccia dal canvas di design: la domanda, card con le barre del 1° anno, risposta nel Risultato
 
 Modifiche definite sul canvas di design, portate nell'app e nei prototipi `spec/design/v2/`. Il modello non cambia: golden e parità con il prototipo invariati.

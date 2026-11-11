@@ -3,6 +3,9 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
 
+// animazioni ferme: axe misura il contrasto degli elementi nello stato finale, non a metà dissolvenza
+test.use({ reducedMotion: 'reduce' });
+
 async function axe(page: Page) {
   const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   return r.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
