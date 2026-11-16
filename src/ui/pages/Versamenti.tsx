@@ -2,11 +2,12 @@
 import { AreaRiservata } from '../AreaRiservata';
 import { useMemo, useState } from 'react';
 import { azionario, etfMonthly, etfMonthlySources, type PriceColumn } from '../../data';
+import { etfCatalog } from '../../data/catalog';
 import { monthlySeries } from '../../model/contributions';
 import { useStore } from '../../state/store';
 import { LegendItem, TimeChart } from '../charts/TimeChart';
 import { Segmented } from '../controls';
-import { dec, euro, euro2, int, itDate, num } from '../format';
+import { dec, euro, euro2, int, itDate, num, pct } from '../format';
 import { BackLink } from '../BackLink';
 import { Src } from '../Tip';
 import { useImport } from '../useImport';
@@ -16,24 +17,33 @@ const mLabel = (iso: string) => `${MES[Number(iso.slice(5, 7)) - 1]} ${iso.slice
 const mm = (iso: string) => `${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
 const sign = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '') + euro(Math.abs(v));
 
-const ETFS: { id: PriceColumn; label: string; isin: string }[] = [
-  { id: 'acwi_eur', label: 'MSCI ACWI', isin: 'iShares MSCI ACWI UCITS ETF (Acc) · IE00B6R52259' },
-  { id: 'msci_world_eur', label: 'MSCI World', isin: 'iShares Core MSCI World UCITS ETF (Acc) · IE00B4L5Y983' },
-  { id: 'msci_europe_eur', label: 'MSCI Europe', isin: 'iShares Core MSCI Europe UCITS ETF (Acc) · IE00B4K48X80' },
-];
+/** Serie mensile dei prezzi di ogni ETF del simulatore in etf_monthly.csv (null = non ancora nei dati). */
+const PRICE_COLUMN: Record<string, PriceColumn | null> = { vanguard: null, spdrimi: null, ishares: 'acwi_eur' };
+
+/** Gli stessi tre ETF del menù del simulatore, nello stesso ordine (SPEC par. 3.0, pagina G). */
+const ETFS = etfCatalog.etfs.map((e) => ({
+  id: e.id,
+  label: e.short,
+  title: `${e.name} · ${e.isin} · TER ${pct(e.ter, 2)}`,
+  col: PRICE_COLUMN[e.id] ?? null,
+}));
+type EtfOption = (typeof ETFS)[number];
+const MISSING_SERIES = 'serie mensile dei prezzi non ancora nei dati: da aggiungere con la sua fonte';
 const PRICE_SOURCE = `${etfMonthlySources['etf_monthly.csv'].source}.`;
 
 export function Versamenti() {
   const { state } = useStore();
   const { readFile, useSample, busy } = useImport();
-  const [etf, setEtf] = useState<PriceColumn>('acwi_eur');
+  // preselezionato l'ETF scelto nel simulatore, se ha la serie mensile dei prezzi
+  const [etf, setEtf] = useState(() => (ETFS.find((e) => e.id === state.inputs.etf_id)?.col ? state.inputs.etf_id : 'ishares'));
   const [mode, setMode] = useState<'in' | 'out'>('in');
   const [year, setYear] = useState('all');
   const [tipo, setTipo] = useState('all');
   const file = state.file;
   const res = file?.result;
   const ok = res && res.status !== 'error';
-  const series = useMemo(() => (ok ? monthlySeries(res.movements, azionario, etfMonthly, etf) : null), [ok, res, etf]);
+  const opt = ETFS.find((e) => e.id === etf && e.col) ?? ETFS.find((e) => e.col)!;
+  const series = useMemo(() => (ok ? monthlySeries(res.movements, azionario, etfMonthly, opt.col!) : null), [ok, res, opt]);
 
   if (!ok) {
     return (
@@ -83,11 +93,10 @@ export function Versamenti() {
   const tipi = [...new Set(movs.map((m) => m.tipo))];
   const sum = (k: 'aderente' | 'azienda' | 'tfr' | 'netto') => sel.reduce((a, m) => a + m[k], 0);
   const sumQ = sel.reduce((a, m) => a + (m.quote ?? 0), 0);
-  const name = ETFS.find((e) => e.id === etf)!;
 
   return (
     <main className="wrap main" id="contenuto">
-      <section className="hero">
+      <section className="hero hero-top">
         <div className="hero-text">
           <h1 className="h1">
             I miei <span className="mark">versamenti</span>
@@ -96,14 +105,12 @@ export function Versamenti() {
             Quanto hai versato tu, quanto l'azienda e quanto il TFR, mese per mese, e quanto vale oggi la posizione. Accanto, gli stessi versamenti, alle stesse date,
             investiti nell'ETF che scegli.
           </p>
-        </div>
-        <div className="page-head-side">
-          <BackLink top />
           <span className="file-line lock">
             {movs.length} movimenti importati
             {res.period ? ` · competenza dal ${mm(res.period[0])} al ${mm(res.period[1])}` : ''} · {file.name}
           </span>
         </div>
+        <BackLink top />
       </section>
       {warnings.length > 0 && (
         <ul className="checks" aria-label="Avvisi sul file">
@@ -114,7 +121,7 @@ export function Versamenti() {
           ))}
         </ul>
       )}
-      {series && !res.reduced ? <Chart series={series} etf={name} mode={mode} setEtf={setEtf} setMode={setMode} etfId={etf} /> : (
+      {series && !res.reduced ? <Chart series={series} etf={opt} mode={mode} setEtf={setEtf} setMode={setMode} /> : (
         <p className="card">Il file non ha le colonne delle quote (fondo solo assicurativo): niente posizione reale né confronto con l'ETF, solo i movimenti.</p>
       )}
       <section className="card col">
@@ -221,16 +228,14 @@ export function Versamenti() {
 function Chart({
   series,
   etf,
-  etfId,
   mode,
   setEtf,
   setMode,
 }: {
   series: NonNullable<ReturnType<typeof monthlySeries>>;
-  etf: (typeof ETFS)[number];
-  etfId: PriceColumn;
+  etf: EtfOption;
   mode: 'in' | 'out';
-  setEtf: (v: PriceColumn) => void;
+  setEtf: (v: string) => void;
   setMode: (v: 'in' | 'out') => void;
 }) {
   const s = series;
@@ -276,13 +281,26 @@ function Chart({
               ({euro(ser[L]!)}).
             </span>
           </div>
-          <div className="col tight">
+          <div className="col tight controls-left">
             <span className="chips" role="radiogroup" aria-label="ETF di confronto">
-              {ETFS.map((e) => (
-                <button key={e.id} type="button" role="radio" aria-checked={etfId === e.id} className="chip" title={e.isin} onClick={() => setEtf(e.id)}>
-                  {e.label}
-                </button>
-              ))}
+              {ETFS.map((e) => {
+                const avail = e.col !== null;
+                return (
+                  <button
+                    key={e.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={etf.id === e.id}
+                    aria-disabled={!avail || undefined}
+                    className={`chip${avail ? '' : ' unavailable'}`}
+                    title={avail ? e.title : `${e.title} · ${MISSING_SERIES}`}
+                    onClick={() => avail && setEtf(e.id)}
+                  >
+                    {e.label}
+                    {!avail && <span className="sr-only"> ({MISSING_SERIES})</span>}
+                  </button>
+                );
+              })}
             </span>
             <Segmented
               small

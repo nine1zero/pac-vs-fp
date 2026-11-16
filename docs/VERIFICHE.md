@@ -29,6 +29,8 @@ Il modello precedente calcolava il risparmio della deduzione come `deduzione × 
 | Capitale netto scenario 1 | 507.406,95 € | 521.784,98 € |
 | Capitale netto scenario 2 | 444.103,35 € | 485.459,81 € |
 | Capitale netto scenario 3 | 488.619,24 € | 493.509,33 € |
+
+Valori con l'ETF di allora (Vanguard, TER 0,14%). Dal 16/11/2026 l'ETF di default è iShares MSCI ACWI (TER 0,20%) e i golden valgono [518.778,51; 483.801,66; 489.986,19] €: vedi `docs/CHANGELOG.md`.
 | Pareggio 2-3 | −4,17% | −5,48% |
 | Pareggio 1-3 | −7,93% | −9,28% |
 | Pareggio 2-1 | −2,35% | −3,61% |

@@ -72,6 +72,7 @@ export function Header() {
           <span className="gh-wrap">
             <a
               href={REPO_URL}
+              target="_blank"
               rel="noopener noreferrer"
               className="btn ghost btn-icon"
               aria-label="Codice sorgente su GitHub"

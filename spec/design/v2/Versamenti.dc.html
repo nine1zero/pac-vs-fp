@@ -62,18 +62,16 @@ body{margin:0;background:#F4F4F2}
 
   <main style="max-width: 1180px; margin: 0 auto; padding: 18px 24px 56px; display: flex; flex-direction: column; gap: 18px">
 
-    <section style="display: flex; flex-wrap: wrap; align-items: stretch; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
-      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 10px 0 6px">
+      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 820px; flex: 1 1 520px; min-width: 0">
         <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">I miei <span class="mark">versamenti</span></h1>
         <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Quanto hai versato tu, quanto l'azienda e quanto il TFR, mese per mese, e quanto vale oggi la posizione. Accanto, gli stessi versamenti, alle stesse date, investiti nell'ETF che scegli.</p>
+          <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; font-weight: 600">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+            {{ fileLine }}
+          </span>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px">
-        <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 6px"><span aria-hidden="true">←</span> Torna al simulatore</a>
-        <span style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E2DF; font-size: 13.5px; font-weight: 600">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-          {{ fileLine }}
-        </span>
-      </div>
+      <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 6px"><span aria-hidden="true">←</span> Torna al simulatore</a>
     </section>
 
     <div class="g5" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
@@ -90,7 +88,7 @@ body{margin:0;background:#F4F4F2}
           <span style="font-size: 22px; font-weight: 600; letter-spacing: -.3px">Versamenti e rendimento nel tempo</span>
           <span style="font-size: 15px; line-height: 1.55; color: #26282B">{{ headPre }}<span class="mark" style="font-weight: 600">{{ headDiff }}</span>{{ headPost }}</span>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end">
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start">
           <span class="chips" role="radiogroup" aria-label="ETF di confronto"><sc-for list="{{ etfChips }}" as="c" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="{{ c.style }}" title="{{ c.isin }}">{{ c.label }}</button></sc-for></span>
           <div role="radiogroup" aria-label="Tassazione dell'ETF" style="display: flex; gap: 6px; background: #ECECEA; padding: 4px; border-radius: 12px">
             <button type="button" role="radio" aria-checked="{{ isIn }}" onClick="{{ pickIn }}" style="{{ segIn }}">Dentro il fondo</button>
@@ -212,7 +210,8 @@ class Component extends DCLogic {
   }
   renderVals() {
     var self = this, s = this.state, D = this.D, n = D.months.length, ink = '#0B0B0B', lime = '#D4EE36';
-    var ETFS = { acwi: ['MSCI ACWI', 'iShares MSCI ACWI UCITS ETF (Acc) · IE00B6R52259'], world: ['MSCI World', 'iShares Core MSCI World UCITS ETF (Acc) · IE00B4L5Y983'], europe: ['MSCI Europe', 'iShares Core MSCI Europe UCITS ETF (Acc) · IE00B4K48X80'] };
+    // gli stessi tre ETF del menù della pagina simulatore, nello stesso ordine; serve la serie mensile dei prezzi (oggi c'è solo per iShares MSCI ACWI)
+    var ETFS = { vanguard: ['Vanguard FTSE All-World', 'Vanguard FTSE All-World UCITS ETF Acc · IE00BK5BQT80 · TER 0,14%'], spdr: ['SPDR MSCI ACWI IMI', 'SPDR MSCI ACWI IMI UCITS ETF · IE00B3YLTY66 · TER 0,17%'], acwi: ['iShares MSCI ACWI', 'iShares MSCI ACWI UCITS ETF Acc · IE00B6R52259 · TER 0,20%'] };
     var MES = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
     var mLabel = function (m) { var p = m.split('-'); return MES[+p[1] - 1] + ' ' + p[0]; };
     var ser = D.etf[s.etf][s.mode], real = D.real;
@@ -242,7 +241,8 @@ class Component extends DCLogic {
     var L = n - 1, T = tot[L], diff = ser[L] - real[L], modeTxt = s.mode === 'in' ? 'dentro il fondo, con la stessa imposta' : 'fuori dal fondo, prima del 26%';
     var chip = function (on) { return 'font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;border:1px solid ' + (on ? ink : '#D6D6D4') + ';background:' + (on ? lime : '#FFFFFF') + ';color:' + ink; };
     var seg = function (on) { return 'padding:9px 14px;border-radius:9px;border:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:' + ink + ';background:' + (on ? lime : 'transparent') + ';box-shadow:' + (on ? 'inset 0 0 0 1px ' + ink : 'none'); };
-    var etfChips = Object.keys(ETFS).map(function (k) { return { label: ETFS[k][0], isin: ETFS[k][1], on: s.etf === k, style: chip(s.etf === k), pick: function () { self.setState({ etf: k }); } }; });
+    var etfChips = Object.keys(ETFS).map(function (k) { var ok = !!D.etf[k];
+      return { label: ETFS[k][0], isin: ETFS[k][1] + (ok ? '' : ' · serie mensile dei prezzi non ancora nei dati: da aggiungere con la sua fonte'), on: s.etf === k, style: chip(s.etf === k) + (ok ? '' : ';opacity:.45;cursor:not-allowed;border-style:dashed'), pick: function () { if (ok) self.setState({ etf: k }); } }; });
     var yOf = function (r) { return r[0].slice(6); }, okY = function (r) { return s.year === 'all' || yOf(r) === s.year; }, okT = function (r) { return s.tipo === 'all' || r[8] === s.tipo; };
     var uniq = function (a) { return a.filter(function (v, i) { return a.indexOf(v) === i; }); };
     var optStyle = function (on) { return 'display:flex;justify-content:space-between;gap:14px;width:100%;text-align:left;padding:9px 12px;border-radius:10px;cursor:pointer;font:inherit;font-size:14px;font-weight:600;color:' + ink + ';border:1px solid ' + (on ? ink : 'transparent') + ';background:' + (on ? lime : '#F7F7F5'); };

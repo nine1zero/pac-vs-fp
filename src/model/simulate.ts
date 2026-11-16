@@ -1,7 +1,10 @@
 // Valori nel tempo e all'uscita (SPEC par. 4.3-4.4; docs/FORMULE.md par. 6-7).
-import { EXAMPLE_PARAMS } from './params';
 import { exitTax } from './tax';
 import type { ExitMode, FlowRow, ModelParams, ScenarioResult } from './types';
+
+/** TER dell'ETF di riferimento su cui è ancorato il rendimento del fondo (Vanguard FTSE All-World, 0,14%),
+ * indipendente dall'ETF scelto per il PAC (reference/model.py FUND_REFERENCE_TER). */
+export const FUND_REFERENCE_TER = 0.0014;
 
 /** Rendimento annuo dell'ETF scelto per il PAC dopo il suo TER. */
 export function etfNetReturn(p: ModelParams): number {
@@ -14,7 +17,7 @@ export function etfNetReturn(p: ModelParams): number {
  * così che cambiare l'ETF scelto per il PAC modifichi solo il PAC e non il montante del Fondo.
  */
 export function fundNetReturn(p: ModelParams, delta: number): number {
-  const refMarketNet = p.etf_gross_return - EXAMPLE_PARAMS.etf_ter;
+  const refMarketNet = p.etf_gross_return - FUND_REFERENCE_TER;
   return (refMarketNet + delta) * (1 - p.fund_return_tax);
 }
 

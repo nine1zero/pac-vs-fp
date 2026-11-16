@@ -18,7 +18,7 @@ export function Footer() {
           Privacy e avvertenze
         </a>
         <a href="#/parametri">Metodo e fonti</a>
-        <a href={REPO_URL} rel="noopener noreferrer">
+        <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
           Codice sorgente
         </a>
       </nav>

@@ -1,5 +1,25 @@
 # Registro delle modifiche
 
+
+## 2026-11-16 · ETF di default iShares MSCI ACWI; pagina I miei versamenti dal canvas; link al repository in nuova scheda
+
+- **ETF di default: iShares MSCI ACWI UCITS ETF Acc** (IE00B6R52259, TER 0,20%), su richiesta dell'autore, al posto di Vanguard FTSE All-World (0,14%). Aggiornati `data/etf_catalog.json`, `data/params.json`, `data/profile_example.json` e il prototipo.
+- **Modello di riferimento**: `reference/model.py` DEFAULTS `etf_ter` 0,0020. Il rendimento del fondo resta ancorato al TER dell'ETF di riferimento (0,14%), ora in una costante esplicita, `FUND_REFERENCE_TER` (anche in `src/model/simulate.ts`). Il montante del fondo quindi non cambia; cambia solo il PAC, con lo 0,06% di costo in più.
+- **Golden rigenerati** (`make_golden.py`, `make_golden_parity.py`). Profilo d'esempio a pensione con δ storico: capitale netto [518.778,51; 483.801,66; 489.986,19] € (prima [521.784,98; 485.459,81; 493.509,33]); pareggi 2-3 −5,5565%, 1-3 −9,3642%, 2-1 −3,6750%. Il prototipo coincide di nuovo al centesimo. Il test e2e ricava ora i pareggi dal golden, invece di averli scritti nel codice.
+- **Pagina I miei versamenti, come nel canvas** (commit di design `cf7f981`):
+  - ETF di confronto: gli stessi tre ETF del simulatore, nello stesso ordine, con preselezionato quello scelto nel simulatore;
+  - Vanguard e SPDR sono disattivati (tratteggiati, con tooltip "serie mensile dei prezzi non ancora nei dati"), perché `etf_monthly.csv` non ha ancora le loro serie mensili: nessun valore stimato;
+  - controlli allineati a sinistra; in testata "← Torna al simulatore" a destra sulla riga del titolo e il riquadro del file sotto il testo, largo quanto il suo contenuto.
+- **Link al repository sempre in una nuova scheda**: icona GitHub nell'header, "Codice sorgente" nel footer, fumetto "Migliora il repo".
+
+## 2026-11-16 · design: pagina I miei versamenti (prototipo)
+
+Solo prototipo `spec/design/v2/Versamenti.dc.html` e SPEC par. 3.0; l'app non cambia. Da implementare:
+
+- **ETF di confronto**: gli stessi tre ETF del menù della Landing, nello stesso ordine, al posto di MSCI ACWI / World / Europe; preselezionato l'ETF scelto nel simulatore. Servono le serie mensili dei prezzi di Vanguard FTSE All-World e SPDR MSCI ACWI IMI, con fonte: finché mancano, la voce è disattivata.
+- **Controlli** (ETF e "dentro il fondo / fuori"): allineati a sinistra, uno sotto l'altro.
+- **Testata**: `← Torna al simulatore` a destra sulla riga del titolo, allineato a quello in fondo; il riquadro del file sotto il testo introduttivo.
+
 ## 2026-11-11 · documentazione pubblica e guida per sviluppatori
 
 - **Documentazione** (`README.md`, `CLAUDE.md`, `docs/`): rimossi riferimenti a percorsi e archivi locali non pubblici; il README descrive scenari, architettura, struttura del repository, una tabella "Cosa modificare e dove" e la sintesi del modello.

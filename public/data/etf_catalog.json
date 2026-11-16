@@ -1,6 +1,6 @@
 {
   "description": "ETF proposti per il PAC (SPEC par. 3.0). Valori trascritti dal prototipo design/v2/Landing.dc.html, rilevati tra il 20 e il 23/10/2026 (docs/FONTI.md par. 4). Da aggiornare dalle schede ufficiali degli emittenti quando possibile.",
-  "default": "vanguard",
+  "default": "ishares",
   "sources": {
     "issuer": "Schede degli emittenti (Vanguard, State Street SPDR, iShares); valori letti su Finanzfluss ed extraETF tra il 20 e il 23/10/2026",
     "returns": "Finanzfluss, medie annue in euro su prezzi Xetra al 20/10/2026, già al netto del TER",

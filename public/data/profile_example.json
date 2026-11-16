@@ -43,7 +43,7 @@
  "redemption_tax": 0.23,
  "exit_mode": "Pensione",
  "etf_gross_return": 0.07,
- "etf_ter": 0.0014,
+ "etf_ter": 0.002,
  "stamp_duty": 0.002,
  "capital_gain_tax": 0.26,
  "delta": -0.05808330715699661,
