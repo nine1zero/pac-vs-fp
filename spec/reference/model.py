@@ -17,9 +17,13 @@ DEFAULTS = dict(
     deduction_limit=5300.0, recovery_cap=2650.0, recovery_from_year_offset=5, recovery_last_year_offset=24,
     fund_return_tax=0.20, exit_tax_max=0.15, exit_tax_reduction=0.003, exit_tax_min=0.09, exit_tax_threshold_years=15,
     redemption_tax=0.23, exit_mode="Pensione",
-    etf_gross_return=0.07, etf_ter=0.0014, stamp_duty=0.002, capital_gain_tax=0.26,   # TER: Vanguard FTSE All-World Acc
+    etf_gross_return=0.07, etf_ter=0.0020, stamp_duty=0.002, capital_gain_tax=0.26,   # TER: iShares MSCI ACWI Acc (ETF di default)
     delta=-0.05808330715699661, contribution_year_fraction=0.5,   # storico fondo 2014-2025
 )
+
+# TER dell'ETF di riferimento su cui è ancorato il rendimento del fondo (Vanguard FTSE All-World, 0,14%):
+# indipendente dall'ETF scelto per il PAC, così cambiare ETF cambia solo il PAC.
+FUND_REFERENCE_TER = 0.0014
 
 def progressive(x, brackets):
     """Imposta a scaglioni: brackets = [(limite_superiore|None, aliquota), ...]."""
@@ -131,7 +135,7 @@ def simulate(p, delta=None, horizon=None, mode=None):
     rows = yearly_flows(p)
     H = len(rows) if horizon is None else horizon
     re = p["etf_gross_return"] - p["etf_ter"]
-    ref_re = p["etf_gross_return"] - DEFAULTS["etf_ter"]
+    ref_re = p["etf_gross_return"] - FUND_REFERENCE_TER
     rn = (ref_re + delta) * (1 - p["fund_return_tax"])
     fz = p["contribution_year_fraction"]
     exit_year = p["start_year"] + H - 1

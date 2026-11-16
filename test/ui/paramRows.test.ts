@@ -42,8 +42,8 @@ describe('righe dei parametri', () => {
   it('il TER modificato torna quello dell’ETF quando si cambia ETF', () => {
     let s = apply(s0, setAction('etf_ter', 0.003));
     expect(currentValue(s, 'etf_ter')).toBe(0.003);
-    s = apply(s, setAction('etf_name', 'ishares'));
-    expect(currentValue(s, 'etf_ter')).toBe(0.002);
+    s = apply(s, setAction('etf_name', 'vanguard'));
+    expect(currentValue(s, 'etf_ter')).toBe(0.0014);
   });
 
   it('scaglioni e valori informativi sono testo', () => {

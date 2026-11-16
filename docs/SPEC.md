@@ -123,9 +123,9 @@ Riferimento: `design/v2/` (prototipi funzionanti, stile e comportamento). **Fa f
 
 **Landing = simulatore a sezioni comprimibili** (`Landing.dc.html`):
 - Titolo "Simulatore strategie **PAC ETF globale** vs Fondo Pensione IBM (comparto azionario)", con "(comparto azionario)" più piccolo e grigio: "PAC ETF globale" apre un **menù a tendina dell'ETF**, usato in tutta la simulazione. Le voci sono confrontabili riga per riga (indice, società coperte, quota del mercato, numero di titoli, patrimonio, storia, TER):
-  - Vanguard FTSE All-World UCITS ETF Acc, IE00BK5BQT80, TER 0,14% (**default**);
+  - Vanguard FTSE All-World UCITS ETF Acc, IE00BK5BQT80, TER 0,14%;
   - SPDR MSCI ACWI IMI UCITS ETF, IE00B3YLTY66, TER 0,17%;
-  - iShares MSCI ACWI UCITS ETF Acc, IE00B6R52259, TER 0,20%.
+  - iShares MSCI ACWI UCITS ETF Acc, IE00B6R52259, TER 0,20% (**default**, decisione dell'autore del 16/11/2026).
   Sotto il titolo, un riquadro con l'ETF scelto (nome, ISIN, TER) su una sola riga (va a capo solo sotto i 900 px). Dati in `docs/FONTI.md` par. 4. Nel testo introduttivo: "SOLO per gli iscritti FPDDI IBM **100% azionario**".
 - Riquadro **"La domanda"**: "Dove conviene mettere il risparmio in più: nel Fondo o in un PAC su ETF?" e una frase che spiega la scelta (stessa cifra, tre modi di investirla: tutto nel Fondo, tutto nel PAC o il minimo nel Fondo e il resto nel PAC; rimborso IRPEF nel PAC; TFR e posizione maturata restano nel Fondo). A destra un box con il **risparmio aggiuntivo del 1° anno** in grande (e al mese) e un **mini slider** con gli stessi estremi e lo stesso dato dello slider della sezione 3: spostarlo passa a `Importo fisso`; `Torna al massimo` riporta alla deduzione massima.
 - Tre card delle strategie, con il bordo nel colore dello scenario, nome ("Minimo per contributo + PAC", "Deduzione massima (no PAC)", "Assenza deduzione e contributo (solo PAC)"), etichetta sotto il nome e descrizione. In basso tre barre del 1° anno:
@@ -352,7 +352,7 @@ Tutti i parametri sono in `data/params.json` (id tra parentesi). Le percentuali 
 
 - Anno di uscita `Y_exit = birth_year + exit_age`. Anni simulati `n = Y_exit − start_year + 1` (default `start_year` = 2027). Indice dell'anno `k = 1..n`, anno di calendario `y_k = start_year + k − 1`.
 - Fattore di crescita `g_k = (1 + growth)^(k−1)`.
-- Rendimento ETF dopo il TER: `r_e = etf_gross_return − etf_ter`. `etf_gross_return` è **prima del TER**; le medie storiche degli ETF (già nette del TER) si convertono sommando il TER. `etf_ter` segue l'ETF scelto (default Vanguard 0,14%).
+- Rendimento ETF dopo il TER: `r_e = etf_gross_return − etf_ter`. `etf_gross_return` è **prima del TER**; le medie storiche degli ETF (già nette del TER) si convertono sommando il TER. `etf_ter` segue l'ETF scelto (default iShares MSCI ACWI 0,20%).
 - Rendimento del fondo prima dell'imposta: `r_f = (etf_gross_return − 0,14%) + δ`, dove `δ = delta` (differenziale). Netto annuo: `r_n = r_f · (1 − fund_return_tax)`.
 - Frazione d'anno sui versamenti: `φ = contribution_year_fraction` (0,5).
 
@@ -443,8 +443,8 @@ Per una coppia di scenari (A, B), un orizzonte h e una modalità m, il pareggio 
 
 ### 4.7 Valori di controllo (golden)
 - `tests/golden_model_example.json`, profilo pubblico (`reference/model.py` DEFAULTS). Con δ = −5,808330715699661% e uscita a pensione:
-  - capitale netto [S1, S2, S3] = [521.784,98; 485.459,81; 493.509,33];
-  - pareggi [2-3, 1-3, 2-1] = [−5,4825%; −9,2812%; −3,6063%];
+  - capitale netto [S1, S2, S3] = [518.778,51; 483.801,66; 489.986,19] (ETF di default iShares MSCI ACWI, TER 0,20%; fondo ancorato al TER di riferimento 0,14%);
+  - pareggi [2-3, 1-3, 2-1] = [−5,5565%; −9,3642%; −3,6750%];
   - risparmio fiscale effettivo sulla deduzione massima del primo anno (4.390 €): 54,2403%.
   Sono incluse anche le curve di pareggio per riscatto a 1, 5, 10, 20 e 30 anni, la prima riga dei flussi e i controlli fiscali per sei livelli di RAL (`tax_checks`). Si rigenera con `python3 spec/tests/make_golden.py`, solo per modifiche volute del modello, da annotare in `docs/CHANGELOG.md`.
 - Tolleranza: 0,01 € sui capitali, 1e-6 sui differenziali di pareggio.

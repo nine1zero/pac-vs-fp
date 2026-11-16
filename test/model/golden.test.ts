@@ -81,7 +81,7 @@ describe('scomposizione del profilo d’esempio (FORMULE par. 2)', () => {
 
   it('cambiare il TER dell’ETF scelto per il PAC aggiorna il montante PAC senza alterare il montante del Fondo', () => {
     const base = simulate(p, rows);
-    const higherTer = simulate({ ...p, etf_ter: 0.002 }, rows);
+    const higherTer = simulate({ ...p, etf_ter: 0.003 }, rows);
     for (const s of [0, 1, 2]) {
       expect(higherTer[s]!.fund_net).toBe(base[s]!.fund_net);
       expect(higherTer[s]!.pac_net).toBeLessThan(base[s]!.pac_net);

@@ -3,7 +3,13 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const json = (p: string) => JSON.parse(readFileSync(resolve(p), 'utf8'));
-const golden = json('spec/tests/golden_model_example.json') as { pensione_delta_default: number[]; pensione_delta_default_real: number[] };
+const golden = json('spec/tests/golden_model_example.json') as {
+  pensione_delta_default: number[];
+  pensione_delta_default_real: number[];
+  breakeven_pensione_full: Record<'2vs1' | '2vs3' | '1vs3', number>;
+};
+/** −3,7% come nell'interfaccia */
+const pct1 = (v: number) => `${v < 0 ? '−' : '+'}${Math.abs(v * 100).toFixed(1).replace('.', ',')}%`;
 const goldenFixture = json('spec/tests/golden_fixture_ok.json') as { n_rows: number; real_position: number };
 
 const fixture = (name: string) => resolve('spec/tests/fixtures', name);
@@ -26,9 +32,10 @@ test('senza dati: risposta in testa al Risultato con i valori golden del profilo
   await page.getByRole('button', { name: 'Mostrami subito l\'esempio' }).click();
   const answer = page.getByTestId('answer');
   await expect(answer).toContainText(`conviene 1 · Minimo per contributo + PAC: ${euro(golden.pensione_delta_default[0]!)} netti`);
-  await expect(answer).toContainText('2 contro 1: pareggio a −3,6%');
-  await expect(answer).toContainText('2 contro 3: pareggio a −5,5%');
-  await expect(answer).toContainText('1 contro 3: pareggio a −9,3%');
+  const be = golden.breakeven_pensione_full;
+  await expect(answer).toContainText(`2 contro 1: pareggio a ${pct1(be['2vs1'])}`);
+  await expect(answer).toContainText(`2 contro 3: pareggio a ${pct1(be['2vs3'])}`);
+  await expect(answer).toContainText(`1 contro 3: pareggio a ${pct1(be['1vs3'])}`);
   await expect(answer).toContainText('se esci entro');
   const s5 = page.locator('#sezione-5');
   for (const v of golden.pensione_delta_default) await expect(s5).toContainText(euro(v));
@@ -113,12 +120,14 @@ test('anche il file delle operazioni si salva: dopo il ricaricamento i versament
   await expect(page.locator('.mov-tbl')).toHaveCount(0);
 });
 
-test('cambiare l’ETF aggiorna il TER e il risultato', async ({ page }) => {
+test('ETF di default iShares MSCI ACWI; cambiarlo aggiorna il TER e il risultato', async ({ page }) => {
+  await expect(page.locator('.etf-box')).toContainText('iShares MSCI ACWI UCITS ETF Acc');
+  await expect(page.locator('.etf-box')).toContainText('IE00B6R52259 · TER 0,20%');
   await openSection(page, 5);
   const before = await page.getByTestId('best-total').innerText();
   await page.getByRole('button', { name: 'PAC ETF globale' }).click();
-  await page.getByRole('option', { name: /iShares MSCI ACWI/ }).click();
-  await expect(page.locator('.etf-box')).toContainText('IE00B6R52259 · TER 0,20%');
+  await page.getByRole('option', { name: /Vanguard FTSE All-World/ }).click();
+  await expect(page.locator('.etf-box')).toContainText('IE00BK5BQT80 · TER 0,14%');
   await expect(page.getByTestId('best-total')).not.toHaveText(before);
 });
 

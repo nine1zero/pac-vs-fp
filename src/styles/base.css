@@ -2619,3 +2619,25 @@ input[type='range'].r:disabled {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* pagina I miei versamenti: controlli allineati a sinistra, ETF senza serie mensile disattivato */
+.controls-left {
+  align-items: flex-start;
+}
+.chip.unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+/* testata con "Torna al simulatore" sulla riga del titolo (pagina I miei versamenti, dal canvas) */
+.hero.hero-top {
+  align-items: flex-start;
+}
+.hero-top .hero-text {
+  flex: 1 1 520px;
+  min-width: 0;
+}
+.hero-top .file-line {
+  align-self: flex-start;
+}
