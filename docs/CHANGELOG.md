@@ -1,5 +1,13 @@
 # Registro delle modifiche
 
+## 2026-11-16 · design: pagina I miei versamenti (prototipo)
+
+Solo prototipo `spec/design/v2/Versamenti.dc.html` e SPEC par. 3.0; l'app non cambia. Da implementare:
+
+- **ETF di confronto**: gli stessi tre ETF del menù della Landing, nello stesso ordine, al posto di MSCI ACWI / World / Europe; preselezionato l'ETF scelto nel simulatore. Servono le serie mensili dei prezzi di Vanguard FTSE All-World e SPDR MSCI ACWI IMI, con fonte: finché mancano, la voce è disattivata.
+- **Controlli** (ETF e "dentro il fondo / fuori"): allineati a sinistra, uno sotto l'altro.
+- **Testata**: `← Torna al simulatore` a destra sulla riga del titolo, allineato a quello in fondo; il riquadro del file sotto il testo introduttivo.
+
 ## 2026-11-11 · documentazione pubblica e guida per sviluppatori
 
 - **Documentazione** (`README.md`, `CLAUDE.md`, `docs/`): rimossi riferimenti a percorsi e archivi locali non pubblici; il README descrive scenari, architettura, struttura del repository, una tabella "Cosa modificare e dove" e la sintesi del modello.
