@@ -55,12 +55,12 @@ interface GhDiscussionItem {
   category?: { name: string; slug: string };
 }
 
-function getGiscusThemeUrl(): string {
+export function getGiscusThemeUrl(file = 'giscus-theme.css'): string {
   if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
     const base = import.meta.env.BASE_URL || '/';
-    return `${window.location.origin}${base.endsWith('/') ? base : `${base}/`}giscus-theme.css`;
+    return `${window.location.origin}${base.endsWith('/') ? base : `${base}/`}${file}`;
   }
-  return 'light';
+  return `https://nine1zero.github.io/pac-vs-fp/${file}`;
 }
 
 export function Feedback() {
@@ -115,11 +115,11 @@ export function Feedback() {
         ? activeTarget.term
         : activeCategory.defaultTerm;
 
-  // Monta o aggiorna contestualmente Giscus (casella commento sempre in alto, reazioni abilitate in cima)
+  // Monta o aggiorna contestualmente Giscus (casella commento sempre in alto, senza barra reazioni ripetuta per categoria)
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
-    const theme = getGiscusThemeUrl();
+    const theme = getGiscusThemeUrl('giscus-theme.css');
 
     const iframe = host.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
     if (iframe && iframe.contentWindow) {
@@ -135,7 +135,7 @@ export function Feedback() {
               mapping,
               term,
               strict: false,
-              reactionsEnabled: true,
+              reactionsEnabled: false,
               emitMetadata: false,
               inputPosition: 'top',
               lang: 'it',
@@ -159,7 +159,7 @@ export function Feedback() {
     script.setAttribute('data-mapping', mapping);
     script.setAttribute('data-term', term);
     script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-reactions-enabled', '0');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'top');
     script.setAttribute('data-theme', theme);
@@ -178,7 +178,7 @@ export function Feedback() {
             Discussioni e <span className="mark">feedback</span>
           </h1>
           <p className="lead">
-            Rifai i conti dell’interesse composto alle 2 di notte o hai trovato un centesimo fuori posto? Scegli una categoria, sgancia un’emoticon in cima o
+            Rifai i conti dell’interesse composto alle 2 di notte o hai trovato un centesimo fuori posto? Scegli una categoria, apri un nuovo argomento o
             dì la tua qui sotto.
           </p>
         </div>

@@ -2680,7 +2680,12 @@ input[type='range'].r:disabled {
   background: var(--card);
   border: 1px solid var(--line-2);
   border-radius: 14px;
-  padding: 9px 14px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.foot-giscus-top {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -2718,6 +2723,17 @@ input[type='range'].r:disabled {
   border-radius: 10px;
   border: 1px solid var(--ink);
   white-space: nowrap;
+}
+.foot-giscus-reactions {
+  padding-top: 6px;
+  border-top: 1px solid var(--line-soft);
+  min-height: 30px;
+  width: 100%;
+}
+.foot-giscus-reactions iframe.giscus-frame {
+  width: 100%;
+  border: none;
+  display: block;
 }
 
 /* Pagina #/feedback minimale e contestuale */

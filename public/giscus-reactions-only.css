@@ -1,0 +1,149 @@
+/*!
+ * Tema Giscus "solo barra reazioni" per il footer della Landing di pac-vs-fp.
+ * Nasconde i commenti (.gsc-comments) e mostra su una sola riga "0 reazioni" + selettore emoticon.
+ */
+main {
+  --color-prettylights-syntax-comment: #5c6168;
+  --color-prettylights-syntax-constant: #1d4ed8;
+  --color-prettylights-syntax-entity: #6d28d9;
+  --color-prettylights-syntax-storage-modifier-import: #0b0b0b;
+  --color-prettylights-syntax-entity-tag: #15803d;
+  --color-prettylights-syntax-keyword: #b91c1c;
+  --color-prettylights-syntax-string: #1e40af;
+  --color-prettylights-syntax-variable: #c2410c;
+  --color-btn-text: #0b0b0b;
+  --color-btn-bg: #ffffff;
+  --color-btn-border: #d6d6d4;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #f7f7f5;
+  --color-btn-hover-border: #0b0b0b;
+  --color-btn-active-bg: #ececea;
+  --color-btn-active-border: #0b0b0b;
+  --color-btn-selected-bg: #f4f4f2;
+  --color-btn-primary-text: #0b0b0b;
+  --color-btn-primary-bg: #d4ee36;
+  --color-btn-primary-border: #0b0b0b;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #c6e21f;
+  --color-btn-primary-hover-border: #0b0b0b;
+  --color-btn-primary-selected-bg: #c6e21f;
+  --color-btn-primary-disabled-text: #5c6168;
+  --color-btn-primary-disabled-bg: #ececea;
+  --color-btn-primary-disabled-border: #d6d6d4;
+  --color-action-list-item-default-hover-bg: #f7f7f5;
+  --color-segmented-control-bg: #f4f4f2;
+  --color-segmented-control-button-bg: #ffffff;
+  --color-segmented-control-button-selected-border: #0b0b0b;
+  --color-fg-default: #0b0b0b;
+  --color-fg-muted: #5c6168;
+  --color-fg-subtle: #5c6168;
+  --color-canvas-default: transparent;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #f7f7f5;
+  --color-canvas-subtle: #f7f7f5;
+  --color-border-default: #d6d6d4;
+  --color-border-muted: #e6e6e3;
+  --color-neutral-muted: rgba(11, 11, 11, 0.05);
+  --color-accent-fg: #0b0b0b;
+  --color-accent-emphasis: #0b0b0b;
+  --color-accent-muted: #d4ee36;
+  --color-accent-subtle: #fafbef;
+  --color-success-fg: #15803d;
+  --color-attention-fg: #7a4b00;
+  --color-attention-muted: #d97706;
+  --color-attention-subtle: #fff3d6;
+  --color-danger-fg: #9b1c1c;
+  --color-danger-muted: #ef4444;
+  --color-danger-subtle: #fde8e8;
+  --color-primer-shadow-inset: 0 0 transparent;
+  --color-scale-gray-1: #f4f4f2;
+  --color-scale-blue-1: #d4ee36;
+  --color-social-reaction-bg-hover: #f4f4f2;
+  --color-social-reaction-bg-reacted-hover: #c6e21f;
+  font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.gsc-comments {
+  display: none !important;
+}
+
+.gsc-loading {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  padding: 2px 0 !important;
+}
+.gsc-loading-image {
+  width: 16px !important;
+  height: 16px !important;
+}
+.gsc-loading-text {
+  width: auto !important;
+  font-size: 12.5px !important;
+}
+
+.gsc-main {
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.gsc-reactions {
+  margin: 0 !important;
+  padding: 2px 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+}
+
+.gsc-reactions-count {
+  margin: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+}
+
+.gsc-reactions > div {
+  margin: 0 !important;
+  display: inline-flex !important;
+  flex: 0 1 auto !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+}
+
+.gsc-social-reaction-summary-item {
+  border-radius: 99px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border: 1px solid #d6d6d4 !important;
+  background: #ffffff !important;
+}
+.gsc-reactions-button {
+  width: 28px !important;
+  height: 26px !important;
+  padding: 0 !important;
+}
+.gsc-social-reaction-summary-item.has-reacted {
+  background: #d4ee36 !important;
+  border-color: #0b0b0b !important;
+  color: #0b0b0b !important;
+}
+
+/* Espande l'altezza dell'iframe quando il menu emoticon è aperto, evitando tagli */
+.gsc-reactions-menu[open] {
+  padding-bottom: 124px !important;
+}
+.gsc-reactions-popover.top {
+  top: 2.25rem !important;
+  bottom: auto !important;
+}

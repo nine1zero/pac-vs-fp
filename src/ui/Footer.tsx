@@ -1,4 +1,11 @@
+import { useEffect, useRef } from 'react';
 import { useStore } from '../state/store';
+import {
+  DISCUSSION_CATEGORIES,
+  GISCUS_REPO,
+  GISCUS_REPO_ID,
+  getGiscusThemeUrl,
+} from './pages/Feedback';
 import { useRoute } from './router';
 
 export const REPO_URL = 'https://github.com/nine1zero/pac-vs-fp';
@@ -6,20 +13,56 @@ export const REPO_URL = 'https://github.com/nine1zero/pac-vs-fp';
 export function Footer() {
   const { state, dispatch } = useStore();
   const route = useRoute();
+  const reactionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (route.page !== 'home') return;
+    const host = reactionsRef.current;
+    if (!host) return;
+    if (host.querySelector('iframe.giscus-frame, script[src="https://giscus.app/client.js"]')) return;
+
+    const general = DISCUSSION_CATEGORIES[0]!;
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.setAttribute('data-repo', GISCUS_REPO);
+    script.setAttribute('data-repo-id', GISCUS_REPO_ID);
+    script.setAttribute('data-category', general.name);
+    script.setAttribute('data-category-id', general.id);
+    script.setAttribute('data-mapping', 'specific');
+    script.setAttribute('data-term', general.defaultTerm);
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css'));
+    script.setAttribute('data-lang', 'it');
+    script.setAttribute('data-loading', 'lazy');
+    host.appendChild(script);
+  }, [route.page]);
+
   return (
     <footer className="wrap site-footer-wrap">
       {route.page === 'home' && (
         <div className="foot-giscus-bar" data-testid="foot-giscus-bar">
-          <div className="foot-giscus-info">
-            <span className="foot-giscus-pill">Feedback</span>
-            <span className="foot-giscus-text">
-              <strong>Ti abbiamo salvato da 30 anni di costi nascosti o non ti torna un centesimo?</strong> Vieni a sfogarti, lanciare idee o sganciare
-              un’emoticon nella bacheca.
-            </span>
+          <div className="foot-giscus-top">
+            <div className="foot-giscus-info">
+              <span className="foot-giscus-pill">Feedback</span>
+              <span className="foot-giscus-text">
+                <strong>Ti abbiamo salvato da 30 anni di costi nascosti o non ti torna un centesimo?</strong> Lasciaci una reazione al volo qui sotto o
+                vieni a sfogarti nella bacheca.
+              </span>
+            </div>
+            <a href="#/feedback" className="btn lime btn-sm foot-giscus-cta">
+              Tutti i commenti e discussioni <span aria-hidden="true">→</span>
+            </a>
           </div>
-          <a href="#/feedback" className="btn lime btn-sm foot-giscus-cta">
-            Tutti i commenti e discussioni <span aria-hidden="true">→</span>
-          </a>
+          <div
+            ref={reactionsRef}
+            className="foot-giscus-reactions"
+            data-testid="foot-giscus-reactions"
+          />
         </div>
       )}
       <div className="site-footer">

@@ -235,9 +235,14 @@ test('pill "BETA" nell\'header con tooltip accessibile da tastiera', async ({ pa
   await expect(tip).toContainText('Versione beta: i calcoli seguono i dati e le norme citati nelle fonti');
 });
 
-test('invito nel footer e pagina Discussioni e feedback minimale con Giscus (General, Ideas, Q&A)', async ({ page }) => {
+test('barra reazioni nel footer e pagina Discussioni e feedback senza reazioni ripetute per categoria', async ({ page }) => {
   const bar = page.getByTestId('foot-giscus-bar');
   await expect(bar).toBeVisible();
+  const footReactions = bar.getByTestId('foot-giscus-reactions').locator('script[src="https://giscus.app/client.js"]');
+  await expect(footReactions).toBeAttached();
+  await expect(footReactions).toHaveAttribute('data-reactions-enabled', '1');
+  await expect(footReactions).toHaveAttribute('data-theme', /giscus-reactions-only\.css$/);
+
   const cta = bar.getByRole('link', { name: /Tutti i commenti e discussioni/ });
   await expect(cta).toHaveAttribute('href', '#/feedback');
   await cta.click();
@@ -249,7 +254,9 @@ test('invito nel footer e pagina Discussioni e feedback minimale con Giscus (Gen
     await expect(cats.getByRole('button', { name: new RegExp(name) })).toBeVisible();
   }
   await cats.getByRole('button', { name: /Ideas/ }).click();
-  await expect(page.getByTestId('giscus-host').locator('script[src="https://giscus.app/client.js"]')).toBeAttached();
+  const pageGiscus = page.getByTestId('giscus-host').locator('script[src="https://giscus.app/client.js"]');
+  await expect(pageGiscus).toBeAttached();
+  await expect(pageGiscus).toHaveAttribute('data-reactions-enabled', '0');
 });
 
 

@@ -2,14 +2,18 @@ import { expect, test, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
 import { CSP } from '../src/csp';
 
-// SPEC par. 1.1 e par. 8 punto 4: nessuna richiesta verso altri domini, anche durante l'import e l'uso degli slider.
+// SPEC par. 1.1 e par. 8 punto 4: nessuna richiesta verso altri domini (eccetto il widget Giscus opzionale), anche durante l'import e l'uso degli slider.
 function watch(page: Page, origin: string) {
   const external: string[] = [];
   const problems: string[] = [];
+  void page.context().route('https://giscus.app/**', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
+  );
   page.context().on('request', (req) => {
     const url = req.url();
     if (url.startsWith('data:') || url.startsWith('blob:')) return;
-    if (new URL(url).origin !== origin) external.push(url);
+    const reqOrigin = new URL(url).origin;
+    if (reqOrigin !== origin && reqOrigin !== 'https://giscus.app') external.push(url);
   });
   page.on('console', (msg) => {
     if (msg.type() === 'error') problems.push(msg.text());
