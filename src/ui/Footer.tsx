@@ -69,8 +69,12 @@ export function Footer() {
           >
             Privacy e avvertenze
           </a>
-          <a href="#/parametri">Metodo e fonti</a>
-          <a href="#/feedback">Discussioni e feedback</a>
+          <a href="#/parametri" aria-current={route.page === 'parametri' ? 'page' : undefined}>
+            Metodo e fonti
+          </a>
+          <a href="#/feedback" aria-current={route.page === 'feedback' ? 'page' : undefined}>
+            Discussioni e feedback
+          </a>
           <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
             Codice sorgente
           </a>

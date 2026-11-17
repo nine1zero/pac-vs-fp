@@ -43,6 +43,7 @@ test('simulatore con il file importato e il grafico al variare del differenziale
 for (const [name, hash] of [
   ['Storico', '#/storico'],
   ['Parametri e fonti', '#/parametri'],
+  ['Discussioni e feedback', '#/feedback'],
 ] as const) {
   test(`${name}: nessuna violazione WCAG AA`, async ({ page }) => {
     await page.goto(`./${hash}`);
@@ -123,7 +124,7 @@ test('la risposta principale è annunciata (aria-live) e si aggiorna in meno di 
 test.describe('mobile 390 px', () => {
   test.use({ viewport: { width: 390, height: 844 } });
   test('nessuno scorrimento orizzontale e nessuna violazione WCAG AA', async ({ page }) => {
-    for (const hash of ['#/', '#/storico', '#/parametri', '#/versamenti']) {
+    for (const hash of ['#/', '#/storico', '#/parametri', '#/versamenti', '#/feedback']) {
       await page.goto(`./${hash}`);
       if (hash === '#/versamenti') await page.getByRole('button', { name: "Usa un file d'esempio" }).click();
       expect(await page.evaluate(() => document.documentElement.scrollWidth), hash).toBeLessThanOrEqual(390);

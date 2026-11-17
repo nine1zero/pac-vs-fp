@@ -232,7 +232,7 @@ test('pill "BETA" nell\'header senza tooltip', async ({ page }) => {
   await expect(page.locator('#beta-tip')).toHaveCount(0);
 });
 
-test('barra reazioni nel footer e pagina Discussioni e feedback senza reazioni ripetute per categoria', async ({ page }) => {
+test('barra reazioni nel footer e pagina Discussioni e feedback minimale (SPEC par. 3.0 Pagina I)', async ({ page }) => {
   const bar = page.getByTestId('foot-giscus-bar');
   await expect(bar).toBeVisible();
   const footReactions = bar.getByTestId('foot-giscus-reactions').locator('script[src="https://giscus.app/client.js"]');
@@ -245,15 +245,35 @@ test('barra reazioni nel footer e pagina Discussioni e feedback senza reazioni r
   await cta.click();
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Discussioni e feedback');
-  const cats = page.getByRole('group', { name: 'Categorie di GitHub Discussions' });
-  await expect(cats.locator('.chip')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: /Torna al simulatore/ })).toBeVisible();
+
+  const cats = page.getByRole('radiogroup', { name: 'Categoria' });
+  await expect(cats.getByRole('radio')).toHaveCount(3);
   for (const name of ['General', 'Ideas', 'Q&A']) {
-    await expect(cats.getByRole('button', { name: new RegExp(name) })).toBeVisible();
+    await expect(cats.getByRole('radio', { name: new RegExp(`^${name}`) })).toBeVisible();
   }
-  await cats.getByRole('button', { name: /Ideas/ }).click();
+  await cats.getByRole('radio', { name: /^Ideas/ }).click();
+  await expect(cats.getByRole('radio', { name: /^Ideas/ })).toHaveAttribute('aria-checked', 'true');
+
+  // Menù a tendina Argomento e creazione di un nuovo argomento con campo sottolineato
+  const sel = page.getByLabel('Argomento');
+  await expect(sel).toBeVisible();
+  await expect(sel.locator('option').first()).toHaveText('Argomento: Ideas — Proposte e nuove funzioni');
+  await sel.selectOption('new');
+  const input = page.getByLabel('Titolo del nuovo argomento in Ideas');
+  await expect(input).toBeVisible();
+  await input.fill('Nuova proposta test');
+  await input.press('Enter');
+  await expect(page.getByLabel('Argomento')).toHaveValue('custom:Nuova proposta test');
+
+  // Giscus non è caricato finché l'utente non clicca Mostra i commenti o Accedi con GitHub
+  await expect(page.getByTestId('fb-gate')).toContainText('Commenti pubblici su GitHub · si collega solo se li apri');
+  await expect(page.getByTestId('giscus-host')).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Mostra i commenti' }).click();
   const pageGiscus = page.getByTestId('giscus-host').locator('script[src="https://giscus.app/client.js"]');
   await expect(pageGiscus).toBeAttached();
   await expect(pageGiscus).toHaveAttribute('data-reactions-enabled', '0');
+  await expect(pageGiscus).toHaveAttribute('data-term', 'Nuova proposta test');
+  await expect(pageGiscus).toHaveAttribute('data-theme', /giscus-theme\.css/);
 });
-
-
