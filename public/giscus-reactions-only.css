@@ -1,7 +1,16 @@
 /*!
- * Tema Giscus "solo barra reazioni" per il footer della Landing di pac-vs-fp.
- * Nasconde i commenti (.gsc-comments) e mostra su una sola riga "0 reazioni" + selettore emoticon.
+ * Tema Giscus "solo barra reazioni su singola linea" per il footer della Landing di pac-vs-fp.
+ * Nasconde i commenti (.gsc-comments) e mantiene contatore, pulsante e selettore emoticon su una sola riga di 26px.
  */
+html,
+body,
+#__next,
+main {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
 main {
   --color-prettylights-syntax-comment: #5c6168;
   --color-prettylights-syntax-constant: #1d4ed8;
@@ -64,7 +73,7 @@ main {
   --color-social-reaction-bg-reacted-hover: #c6e21f;
   font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.2;
 }
 
 .gsc-comments {
@@ -74,16 +83,19 @@ main {
 .gsc-loading {
   flex-direction: row !important;
   justify-content: flex-start !important;
+  align-items: center !important;
   gap: 6px !important;
-  padding: 2px 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 26px !important;
 }
 .gsc-loading-image {
-  width: 16px !important;
-  height: 16px !important;
+  width: 14px !important;
+  height: 14px !important;
 }
 .gsc-loading-text {
   width: auto !important;
-  font-size: 12.5px !important;
+  font-size: 12px !important;
 }
 
 .gsc-main {
@@ -94,13 +106,14 @@ main {
 
 .gsc-reactions {
   margin: 0 !important;
-  padding: 2px 0 !important;
+  padding: 0 !important;
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: flex-start !important;
   gap: 8px !important;
+  min-height: 26px !important;
 }
 
 .gsc-reactions-count {
@@ -108,28 +121,37 @@ main {
   font-size: 13px !important;
   font-weight: 700 !important;
   white-space: nowrap !important;
+  line-height: 26px !important;
 }
 
 .gsc-reactions > div {
   margin: 0 !important;
   display: inline-flex !important;
   flex: 0 1 auto !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 6px !important;
+  gap: 5px !important;
+}
+
+.gsc-direct-reaction-buttons {
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 .gsc-social-reaction-summary-item {
   border-radius: 99px !important;
-  padding: 2px 8px !important;
+  padding: 0 8px !important;
+  height: 26px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
   border: 1px solid #d6d6d4 !important;
   background: #ffffff !important;
 }
 .gsc-reactions-button {
-  width: 28px !important;
+  width: 26px !important;
   height: 26px !important;
   padding: 0 !important;
 }
@@ -139,11 +161,53 @@ main {
   color: #0b0b0b !important;
 }
 
-/* Espande l'altezza dell'iframe quando il menu emoticon è aperto, evitando tagli */
-.gsc-reactions-menu[open] {
-  padding-bottom: 124px !important;
+/* Menu emoticon aperto in linea sulla stessa riga, senza espandere l'altezza del footer */
+.gsc-reactions-menu {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  position: relative !important;
 }
-.gsc-reactions-popover.top {
-  top: 2.25rem !important;
-  bottom: auto !important;
+.gsc-reactions-popover.open {
+  position: static !important;
+  visibility: visible !important;
+  transform: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 6px !important;
+  height: 26px !important;
+  border-radius: 99px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: #ffffff !important;
+  border: 1px solid #0b0b0b !important;
+}
+.gsc-reactions-popover.open::before,
+.gsc-reactions-popover.open::after,
+.gsc-reactions-popover > .border-t,
+.gsc-reactions-popover > p.whitespace-nowrap {
+  display: none !important;
+}
+.gsc-reactions-popover > p {
+  margin: 0 !important;
+  font-size: 11.5px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.gsc-reactions-popover > div:last-child {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 1px !important;
+}
+.gsc-emoji-button {
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 99px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }

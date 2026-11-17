@@ -2679,28 +2679,25 @@ input[type='range'].r:disabled {
 .foot-giscus-bar {
   background: var(--card);
   border: 1px solid var(--line-2);
-  border-radius: 14px;
-  padding: 10px 14px;
+  border-radius: 12px;
+  padding: 6px 12px;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.foot-giscus-top {
-  display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 14px;
+  gap: 12px;
 }
 .foot-giscus-info {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
-  flex: 1 1 280px;
+  flex: 0 1 auto;
   min-width: 0;
 }
 .foot-giscus-pill {
+  flex: none;
   display: inline-flex;
   align-items: center;
   padding: 2px 8px;
@@ -2713,27 +2710,47 @@ input[type='range'].r:disabled {
   text-transform: uppercase;
 }
 .foot-giscus-text {
-  font-size: 13.5px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.25;
   color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.foot-giscus-reactions {
+  flex: 1 1 200px;
+  min-width: 170px;
+  height: 26px;
+  min-height: 0 !important;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.foot-giscus-reactions .giscus,
+.foot-giscus-reactions iframe.giscus-frame {
+  width: 100%;
+  height: 26px !important;
+  min-height: 0 !important;
+  max-height: 26px !important;
+  border: none;
+  display: block;
 }
 .foot-giscus-cta {
-  padding: 7px 13px;
-  font-size: 13px;
-  border-radius: 10px;
+  flex: none;
+  padding: 5px 11px;
+  font-size: 12.5px;
+  border-radius: 9px;
   border: 1px solid var(--ink);
   white-space: nowrap;
 }
-.foot-giscus-reactions {
-  padding-top: 6px;
-  border-top: 1px solid var(--line-soft);
-  min-height: 30px;
-  width: 100%;
-}
-.foot-giscus-reactions iframe.giscus-frame {
-  width: 100%;
-  border: none;
-  display: block;
+@media (max-width: 900px) {
+  .foot-giscus-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .foot-giscus-text {
+    white-space: normal;
+  }
 }
 
 /* Pagina #/feedback minimale e contestuale */

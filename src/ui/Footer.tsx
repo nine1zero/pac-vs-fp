@@ -36,7 +36,7 @@ export function Footer() {
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css'));
+    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css?v=2'));
     script.setAttribute('data-lang', 'it');
     script.setAttribute('data-loading', 'lazy');
     host.appendChild(script);
@@ -46,23 +46,20 @@ export function Footer() {
     <footer className="wrap site-footer-wrap">
       {route.page === 'home' && (
         <div className="foot-giscus-bar" data-testid="foot-giscus-bar">
-          <div className="foot-giscus-top">
-            <div className="foot-giscus-info">
-              <span className="foot-giscus-pill">Feedback</span>
-              <span className="foot-giscus-text">
-                <strong>Ti abbiamo salvato da 30 anni di costi nascosti o non ti torna un centesimo?</strong> Lasciaci una reazione al volo qui sotto o
-                vieni a sfogarti nella bacheca.
-              </span>
-            </div>
-            <a href="#/feedback" className="btn lime btn-sm foot-giscus-cta">
-              Tutti i commenti e discussioni <span aria-hidden="true">→</span>
-            </a>
+          <div className="foot-giscus-info">
+            <span className="foot-giscus-pill">Feedback</span>
+            <span className="foot-giscus-text">
+              <strong>Ti abbiamo salvato da 30 anni di costi nascosti o non ti torna un centesimo?</strong>
+            </span>
           </div>
           <div
             ref={reactionsRef}
             className="foot-giscus-reactions"
             data-testid="foot-giscus-reactions"
           />
+          <a href="#/feedback" className="btn lime btn-sm foot-giscus-cta">
+            Tutti i commenti e discussioni <span aria-hidden="true">→</span>
+          </a>
         </div>
       )}
       <div className="site-footer">

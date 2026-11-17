@@ -241,7 +241,7 @@ test('barra reazioni nel footer e pagina Discussioni e feedback senza reazioni r
   const footReactions = bar.getByTestId('foot-giscus-reactions').locator('script[src="https://giscus.app/client.js"]');
   await expect(footReactions).toBeAttached();
   await expect(footReactions).toHaveAttribute('data-reactions-enabled', '1');
-  await expect(footReactions).toHaveAttribute('data-theme', /giscus-reactions-only\.css$/);
+  await expect(footReactions).toHaveAttribute('data-theme', /giscus-reactions-only\.css/);
 
   const cta = bar.getByRole('link', { name: /Tutti i commenti e discussioni/ });
   await expect(cta).toHaveAttribute('href', '#/feedback');
