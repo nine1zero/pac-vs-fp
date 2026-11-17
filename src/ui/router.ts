@@ -1,12 +1,12 @@
-// Navigazione con l'hash dell'URL (GitHub Pages): #/, #/versamenti, #/storico, #/parametri[/id].
+// Navigazione con l'hash dell'URL (GitHub Pages): #/, #/versamenti, #/storico, #/parametri[/id], #/feedback[/ancora].
 import { useEffect, useState } from 'react';
 
-export type Route = { page: 'home' | 'versamenti' | 'storico' | 'parametri'; anchor?: string };
+export type Route = { page: 'home' | 'versamenti' | 'storico' | 'parametri' | 'feedback'; anchor?: string };
 
 export function parseHash(hash: string): Route {
   const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   const page = parts[0];
-  if (page === 'versamenti' || page === 'storico' || page === 'parametri') return { page, anchor: parts[1] };
+  if (page === 'versamenti' || page === 'storico' || page === 'parametri' || page === 'feedback') return { page, anchor: parts[1] };
   return { page: 'home' };
 }
 

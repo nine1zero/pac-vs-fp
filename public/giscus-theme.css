@@ -1,0 +1,141 @@
+/*!
+ * Tema Giscus compatto "lime" per pac-vs-fp (ispirato a src/styles/base.css).
+ * Colori: sfondo #ffffff / #f7f7f5, testo #0b0b0b, accento lime #d4ee36, bordi #e2e2df / #0b0b0b.
+ */
+main {
+  --color-prettylights-syntax-comment: #5c6168;
+  --color-prettylights-syntax-constant: #1d4ed8;
+  --color-prettylights-syntax-entity: #6d28d9;
+  --color-prettylights-syntax-storage-modifier-import: #0b0b0b;
+  --color-prettylights-syntax-entity-tag: #15803d;
+  --color-prettylights-syntax-keyword: #b91c1c;
+  --color-prettylights-syntax-string: #1e40af;
+  --color-prettylights-syntax-variable: #c2410c;
+  --color-btn-text: #0b0b0b;
+  --color-btn-bg: #ffffff;
+  --color-btn-border: #d6d6d4;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #f7f7f5;
+  --color-btn-hover-border: #0b0b0b;
+  --color-btn-active-bg: #ececea;
+  --color-btn-active-border: #0b0b0b;
+  --color-btn-selected-bg: #f4f4f2;
+  --color-btn-primary-text: #0b0b0b;
+  --color-btn-primary-bg: #d4ee36;
+  --color-btn-primary-border: #0b0b0b;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #c6e21f;
+  --color-btn-primary-hover-border: #0b0b0b;
+  --color-btn-primary-selected-bg: #c6e21f;
+  --color-btn-primary-disabled-text: #5c6168;
+  --color-btn-primary-disabled-bg: #ececea;
+  --color-btn-primary-disabled-border: #d6d6d4;
+  --color-action-list-item-default-hover-bg: #f7f7f5;
+  --color-segmented-control-bg: #f4f4f2;
+  --color-segmented-control-button-bg: #ffffff;
+  --color-segmented-control-button-selected-border: #0b0b0b;
+  --color-fg-default: #0b0b0b;
+  --color-fg-muted: #5c6168;
+  --color-fg-subtle: #5c6168;
+  --color-canvas-default: #ffffff;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #f7f7f5;
+  --color-canvas-subtle: #f7f7f5;
+  --color-border-default: #e2e2df;
+  --color-border-muted: #e6e6e3;
+  --color-neutral-muted: rgba(11, 11, 11, 0.06);
+  --color-accent-fg: #0b0b0b;
+  --color-accent-emphasis: #0b0b0b;
+  --color-accent-muted: #d4ee36;
+  --color-accent-subtle: #fafbef;
+  --color-success-fg: #15803d;
+  --color-attention-fg: #7a4b00;
+  --color-attention-muted: #d97706;
+  --color-attention-subtle: #fff3d6;
+  --color-danger-fg: #9b1c1c;
+  --color-danger-muted: #ef4444;
+  --color-danger-subtle: #fde8e8;
+  --color-primer-shadow-inset: 0 0 transparent;
+  --color-scale-gray-1: #f4f4f2;
+  --color-scale-blue-1: #d4ee36;
+  -- color-social-reaction-bg-hover: #f4f4f2;
+  --color-social-reaction-bg-reacted-hover: #c6e21f;
+  font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Layout ultra-compatto per commenti e reazioni */
+.gsc-main {
+  gap: 10px !important;
+}
+.gsc-reactions {
+  margin-bottom: 4px !important;
+}
+.gsc-reactions-count {
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+}
+.gsc-social-reaction-summary-item {
+  border-radius: 99px !important;
+  padding: 2px 9px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  border: 1px solid #d6d6d4 !important;
+  background: #ffffff !important;
+}
+.gsc-social-reaction-summary-item.has-reacted {
+  background: #d4ee36 !important;
+  border-color: #0b0b0b !important;
+  color: #0b0b0b !important;
+}
+.gsc-comment-box {
+  border-radius: 14px !important;
+  border: 1px solid #d6d6d4 !important;
+  overflow: hidden;
+}
+.gsc-comment-box-tabs {
+  padding: 4px 8px 0 !important;
+  background: #f7f7f5 !important;
+}
+.gsc-comment-box-textarea {
+  min-height: 68px !important;
+  padding: 8px 10px !important;
+  font-size: 13.5px !important;
+}
+.gsc-comment-box-bottom {
+  padding: 6px 10px !important;
+}
+.gsc-timeline {
+  gap: 8px !important;
+}
+.gsc-comment > .color-bg-primary {
+  border-radius: 14px !important;
+  border: 1px solid #e2e2df !important;
+}
+.gsc-comment-header {
+  padding: 6px 12px 2px !important;
+  font-size: 12.5px !important;
+}
+.gsc-comment-content {
+  padding: 4px 12px 6px !important;
+  font-size: 13.5px !important;
+}
+.gsc-comment-footer {
+  padding: 2px 12px 6px !important;
+}
+.gsc-replies {
+  padding: 4px 10px 8px !important;
+  background: #f7f7f5 !important;
+  border-bottom-left-radius: 14px !important;
+  border-bottom-right-radius: 14px !important;
+}
+.gsc-reply {
+  padding: 4px 0 !important;
+}
+.btn-primary {
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+}

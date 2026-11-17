@@ -2,6 +2,7 @@ import { StoreProvider } from './state/store';
 import { Footer } from './ui/Footer';
 import { Header } from './ui/Header';
 import { Landing } from './ui/landing/Landing';
+import { Feedback } from './ui/pages/Feedback';
 import { Parametri } from './ui/pages/Parametri';
 import { Storico } from './ui/pages/Storico';
 import { Versamenti } from './ui/pages/Versamenti';
@@ -16,6 +17,8 @@ function Page() {
       return <Storico />;
     case 'parametri':
       return <Parametri anchor={route.anchor} />;
+    case 'feedback':
+      return <Feedback anchor={route.anchor} />;
     default:
       return <Landing />;
   }

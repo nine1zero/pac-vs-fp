@@ -45,7 +45,7 @@ Lingua dell'interfaccia: **italiano**. Formati numerici: `it-IT` (1.234,56 €; 
   - niente analytics, telemetria, font o CDN esterni, niente `fetch` verso domini terzi;
   - tutte le librerie sono incluse nel bundle;
   - i dati storici sono file statici serviti dallo stesso dominio.
-- Meta tag Content-Security-Policy restrittivo: `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'`.
+- Meta tag Content-Security-Policy restrittivo: `default-src 'self'; script-src 'self' https://giscus.app; style-src 'self' 'unsafe-inline' https://giscus.app; img-src 'self' data: blob:; connect-src 'self' https://api.github.com https://giscus.app; frame-src https://giscus.app; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'`.
 - Il file contribuzioni si legge solo con `FileReader`/`File.text()` nel browser e non viene mai inviato.
 - **Salvataggio automatico**: ogni dato inserito si salva automaticamente in `localStorage`, dalla prima modifica, solo sul dispositivo in uso. Anche il file delle operazioni si salva in una voce separata (`pacfondo.v1.file`) e alla riapertura viene riletto. Finché non si inserisce nulla non viene salvato nulla. Nell'header uno stato "Salvato · gg/mm hh:mm" con tooltip "Restano solo su questo dispositivo, non vengono inviati a nessuno"; il pulsante **"Cancella tutto"** ripristina il profilo d'esempio e svuota la memoria locale, file compreso. Niente cookie.
 - Link di condivisione dei parametri (hash dell'URL): opzionale, generato solo su richiesta, con avviso che contiene i valori inseriti (RAL, posizione). Non include mai dati del file importato.
