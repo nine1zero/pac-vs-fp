@@ -103,23 +103,19 @@ export function Header() {
                 </svg>
                 stella
               </a>
-              <a className="ghb-it" href={`${REPO_URL}/fork`} target="_blank" rel="noopener noreferrer" title="Crea un fork per proporre una modifica con una pull request">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="6" cy="5" r="2.5" />
-                  <circle cx="6" cy="19" r="2.5" />
-                  <circle cx="18" cy="19" r="2.5" />
-                  <path d="M6 7.5v9" />
-                  <path d="M18 16.5V9a3 3 0 0 0-3-3h-4" />
-                  <path d="M13 3.5 10.5 6 13 8.5" />
-                </svg>
-                pull request
-              </a>
               <a className="ghb-it" href={ISSUE_URL} target="_blank" rel="noopener noreferrer" title="Apri una issue già impostata con un modello">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                   <circle cx="12" cy="12" r="8.5" />
                   <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
                 </svg>
-                issue
+                issues
+              </a>
+              <a className="ghb-it" href={`${REPO_URL}/discussions`} target="_blank" rel="noopener noreferrer" title="Partecipa alle discussioni e lascia un feedback">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M16 10a2 2 0 0 1-2 2H6l-3 3V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2z" />
+                  <path d="M19 9h1a2 2 0 0 1 2 2v10l-3-3h-6a2 2 0 0 1-2-2v-1" />
+                </svg>
+                feedbacks
               </a>
             </span>
           </span>

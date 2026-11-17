@@ -190,18 +190,19 @@ test('striscia "Se esci nel…": etichetta dove cambia lo scenario e frase di si
   await expect(s5).toContainText('Se esci entro 16 anni conviene la 2; da 17 anni in poi conviene la 1.');
 });
 
-test('fumetto "Migliora il repo": stella, pull request e issue precompilata', async ({ page }) => {
+test('fumetto "Migliora il repo": stella, issues precompilata e feedbacks (Discussions)', async ({ page }) => {
   const g = page.getByRole('group', { name: 'Migliora il progetto su GitHub' });
   await expect(g).toBeVisible();
+  await expect(g.locator('.ghb-it')).toHaveText(['stella', 'issues', 'feedbacks']);
   await expect(g.getByRole('link', { name: 'stella' })).toHaveAttribute('href', 'https://github.com/nine1zero/pac-vs-fp');
-  await expect(g.getByRole('link', { name: 'pull request' })).toHaveAttribute('href', 'https://github.com/nine1zero/pac-vs-fp/fork');
-  const issue = await g.getByRole('link', { name: 'issue' }).getAttribute('href');
+  const issue = await g.getByRole('link', { name: 'issues' }).getAttribute('href');
   const u = new URL(issue!);
   expect(u.pathname).toBe('/nine1zero/pac-vs-fp/issues/new');
   expect(u.searchParams.get('labels')).toBe('enhancement');
   expect(u.searchParams.get('body')).toContain('Cosa proporresti');
+  await expect(g.getByRole('link', { name: 'feedbacks' })).toHaveAttribute('href', 'https://github.com/nine1zero/pac-vs-fp/discussions');
   // i link del fumetto si aprono sempre in una nuova scheda
-  for (const name of ['stella', 'pull request', 'issue']) await expect(g.getByRole('link', { name })).toHaveAttribute('target', '_blank');
+  for (const name of ['stella', 'issues', 'feedbacks']) await expect(g.getByRole('link', { name })).toHaveAttribute('target', '_blank');
 });
 
 test('"FPDDI IBM" porta al sito del fondo in una nuova scheda', async ({ page }) => {

@@ -1,8 +1,9 @@
 # Registro delle modifiche
 
-## 2026-11-16 · pill "BETA" nell'header
+## 2026-11-16 · pill "BETA" nell'header e link Discussions nel fumetto GitHub
 
 - Implementata nell'header (`src/ui/Header.tsx`, `src/styles/base.css`) la pill "BETA" accanto al logo in tutte le pagine (bordo nero sottile, puntino lime, maiuscoletto), con tooltip accessibile da tastiera (`#beta-tip`) come da prototipi `spec/design/v2/` e SPEC par. 3.0.
+- Aggiornato il fumetto "Migliora il repo" nell'header: voci nell'ordine `stella`, `issues` (issue precompilata) e `feedbacks` (con icona Discussions e link a `https://github.com/nine1zero/pac-vs-fp/discussions`).
 
 ## 2026-11-16 · ETF di default iShares MSCI ACWI; pagina I miei versamenti dal canvas; link al repository in nuova scheda
 
