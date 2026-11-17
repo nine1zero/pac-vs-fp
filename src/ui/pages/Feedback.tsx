@@ -123,7 +123,7 @@ export function Feedback() {
     if (!loaded) return;
     const host = hostRef.current;
     if (!host) return;
-    const theme = getGiscusThemeUrl('giscus-theme.css?v=5');
+    const theme = getGiscusThemeUrl('giscus-theme.css?v=6');
 
     const iframe = host.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
     if (iframe && iframe.contentWindow) {

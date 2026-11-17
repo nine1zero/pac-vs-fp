@@ -219,16 +219,53 @@ main {
   border-radius: 0 !important;
   padding: 14px 0 !important;
 }
-.gsc-comment-header {
-  padding: 0 !important;
+.gsc-comment-header,
+.gsc-reply-header {
+  position: relative !important;
+  padding: 0 78px 0 0 !important;
   font-size: 13.5px !important;
 }
-.gsc-comment-author-avatar img {
+.gsc-comment-author > a.link-secondary,
+.gsc-reply-author > a.link-secondary {
+  overflow: visible !important;
+  text-decoration: none !important;
+  color: #5c6168 !important;
+}
+.gsc-comment-author > a.link-secondary:hover time,
+.gsc-reply-author > a.link-secondary:hover time {
+  color: #0b0b0b !important;
+  text-decoration: underline !important;
+}
+.gsc-comment-author > a.link-secondary::after,
+.gsc-reply-author > a.link-secondary::after {
+  content: "Cancella ↗" !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #5c6168 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+.gsc-comment-author > a.link-secondary:hover::after,
+.gsc-reply-author > a.link-secondary:hover::after {
+  color: #0b0b0b !important;
+  text-decoration-color: #d4ee36 !important;
+  text-decoration-thickness: 2.5px !important;
+}
+.gsc-comment-Author-avatar img,
+.gsc-comment-author-avatar img,
+.gsc-reply-author-avatar img {
   width: 24px !important;
   height: 24px !important;
 }
 .gsc-comment-header .border.label,
-.gsc-comment-header span.ml-1 {
+.gsc-comment-header span.ml-1,
+.gsc-reply-header span.color-box-border-info {
   font-size: 11.5px !important;
   font-weight: 600 !important;
   padding: 0 7px !important;
