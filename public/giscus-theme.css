@@ -1,6 +1,5 @@
 /*!
- * Tema Giscus compatto "lime" per pac-vs-fp (ispirato a src/styles/base.css).
- * Colori: sfondo #ffffff / #f7f7f5, testo #0b0b0b, accento lime #d4ee36, bordi #e2e2df / #0b0b0b.
+ * Tema Giscus ultra-compatto e minimale "lime" per pac-vs-fp.
  */
 main {
   --color-prettylights-syntax-comment: #5c6168;
@@ -45,7 +44,7 @@ main {
   --color-canvas-subtle: #f7f7f5;
   --color-border-default: #e2e2df;
   --color-border-muted: #e6e6e3;
-  --color-neutral-muted: rgba(11, 11, 11, 0.06);
+  --color-neutral-muted: rgba(11, 11, 11, 0.05);
   --color-accent-fg: #0b0b0b;
   --color-accent-emphasis: #0b0b0b;
   --color-accent-muted: #d4ee36;
@@ -60,28 +59,28 @@ main {
   --color-primer-shadow-inset: 0 0 transparent;
   --color-scale-gray-1: #f4f4f2;
   --color-scale-blue-1: #d4ee36;
-  -- color-social-reaction-bg-hover: #f4f4f2;
+  --color-social-reaction-bg-hover: #f4f4f2;
   --color-social-reaction-bg-reacted-hover: #c6e21f;
   font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 13.5px;
+  line-height: 1.4;
 }
 
-/* Layout ultra-compatto per commenti e reazioni */
+/* Stile minimalista e super compatto per reazioni, box e messaggi */
 .gsc-main {
-  gap: 10px !important;
+  gap: 8px !important;
 }
 .gsc-reactions {
-  margin-bottom: 4px !important;
+  margin-bottom: 2px !important;
 }
 .gsc-reactions-count {
   font-weight: 700 !important;
-  font-size: 13.5px !important;
+  font-size: 13px !important;
 }
 .gsc-social-reaction-summary-item {
   border-radius: 99px !important;
-  padding: 2px 9px !important;
-  font-size: 12.5px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   border: 1px solid #d6d6d4 !important;
   background: #ffffff !important;
@@ -92,50 +91,53 @@ main {
   color: #0b0b0b !important;
 }
 .gsc-comment-box {
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   border: 1px solid #d6d6d4 !important;
   overflow: hidden;
 }
 .gsc-comment-box-tabs {
-  padding: 4px 8px 0 !important;
+  padding: 3px 8px 0 !important;
   background: #f7f7f5 !important;
 }
 .gsc-comment-box-textarea {
-  min-height: 68px !important;
-  padding: 8px 10px !important;
+  min-height: 56px !important;
+  padding: 6px 10px !important;
   font-size: 13.5px !important;
 }
 .gsc-comment-box-bottom {
-  padding: 6px 10px !important;
+  padding: 5px 10px !important;
+}
+.gsc-header {
+  padding-bottom: 2px !important;
 }
 .gsc-timeline {
-  gap: 8px !important;
+  gap: 6px !important;
 }
 .gsc-comment > .color-bg-primary {
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   border: 1px solid #e2e2df !important;
 }
 .gsc-comment-header {
-  padding: 6px 12px 2px !important;
-  font-size: 12.5px !important;
+  padding: 5px 10px 2px !important;
+  font-size: 12px !important;
 }
 .gsc-comment-content {
-  padding: 4px 12px 6px !important;
+  padding: 2px 10px 4px !important;
   font-size: 13.5px !important;
 }
 .gsc-comment-footer {
-  padding: 2px 12px 6px !important;
+  padding: 2px 10px 5px !important;
 }
 .gsc-replies {
-  padding: 4px 10px 8px !important;
+  padding: 3px 10px 6px !important;
   background: #f7f7f5 !important;
-  border-bottom-left-radius: 14px !important;
-  border-bottom-right-radius: 14px !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
 }
 .gsc-reply {
-  padding: 4px 0 !important;
+  padding: 3px 0 !important;
 }
 .btn-primary {
   font-weight: 700 !important;
-  border-radius: 10px !important;
+  border-radius: 9px !important;
 }

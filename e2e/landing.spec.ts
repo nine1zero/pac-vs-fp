@@ -235,21 +235,20 @@ test('pill "BETA" nell\'header con tooltip accessibile da tastiera', async ({ pa
   await expect(tip).toContainText('Versione beta: i calcoli seguono i dati e le norme citati nelle fonti');
 });
 
-test('barra emoticon nel footer e pagina Discussioni e feedback con Giscus e categorie originali', async ({ page }) => {
+test('invito nel footer e pagina Discussioni e feedback minimale con Giscus (General, Ideas, Q&A)', async ({ page }) => {
   const bar = page.getByTestId('foot-giscus-bar');
   await expect(bar).toBeVisible();
-  await expect(bar.locator('.foot-rx-btn')).toHaveCount(6);
   const cta = bar.getByRole('link', { name: /Tutti i commenti e discussioni/ });
   await expect(cta).toHaveAttribute('href', '#/feedback');
   await cta.click();
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Discussioni e feedback');
   const cats = page.getByRole('group', { name: 'Categorie di GitHub Discussions' });
-  for (const name of ['General', 'Ideas', 'Q&A', 'Show and tell', 'Polls', 'Announcements']) {
+  await expect(cats.locator('.chip')).toHaveCount(3);
+  for (const name of ['General', 'Ideas', 'Q&A']) {
     await expect(cats.getByRole('button', { name: new RegExp(name) })).toBeVisible();
   }
   await cats.getByRole('button', { name: /Ideas/ }).click();
-  await expect(page.locator('#giscus-bacheca')).toContainText('Idee e nuove funzioni pac/fondo IBM');
   await expect(page.getByTestId('giscus-host').locator('script[src="https://giscus.app/client.js"]')).toBeAttached();
 });
 

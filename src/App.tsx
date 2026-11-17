@@ -18,7 +18,7 @@ function Page() {
     case 'parametri':
       return <Parametri anchor={route.anchor} />;
     case 'feedback':
-      return <Feedback anchor={route.anchor} />;
+      return <Feedback />;
     default:
       return <Landing />;
   }
