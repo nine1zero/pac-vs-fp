@@ -1,5 +1,11 @@
 # Registro delle modifiche
 
+## 2026-11-17 · design: pagina Discussioni e feedback, versione minimal (prototipi)
+
+- Nuovo prototipo `spec/design/v2/Feedback.dc.html` dal canvas: una colonna senza riquadri, categorie a segmenti con conteggi, menù "Argomento" con `+ Nuovo argomento…`, widget Giscus caricato solo dopo `Mostra i commenti` o `Accedi con GitHub`, e restilizzato con i selettori del tema già usati in `public/giscus-theme.css`. Regole in SPEC par. 3.0 (pagina I e footer).
+- Footer dei prototipi: link `Discussioni e feedback`; nella Landing la barra "Feedback" come nell'app.
+- Punto aperto in SPEC: la barra delle reazioni nel footer della Landing carica Giscus all'apertura, in contrasto con il par. 1.1.
+
 ## 2026-11-16 · pill "BETA" nell'header e link Discussions nel fumetto GitHub
 
 - Implementata nell'header (`src/ui/Header.tsx`, `src/styles/base.css`) la pill "BETA" accanto al logo in tutte le pagine (bordo nero sottile, puntino lime, maiuscoletto), con tooltip accessibile da tastiera (`#beta-tip`) come da prototipi `spec/design/v2/` e SPEC par. 3.0.

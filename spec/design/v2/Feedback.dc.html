@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Discussioni e feedback</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F2}
+.lp{font-family:Onest,system-ui,sans-serif;color:#0B0B0B;letter-spacing:.2px}
+.lp ::selection{background:#D4EE36;color:#0B0B0B}
+.lp a{color:inherit}
+input,select{font:inherit}
+.mark{background:linear-gradient(180deg,transparent 12%,#D4EE36 12% 88%,transparent 88%);padding:0 6px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;padding:14px 22px;border:none}
+.btn.ghost{background:#FFFFFF;color:#0B0B0B;border:1px solid #D6D6D4;padding:9px 14px;font-size:14px;border-radius:12px}
+.btn.ghost:hover{border-color:#0B0B0B}
+.tip{position:relative;display:inline-flex;align-items:center}
+.tip .bubble{display:none;position:absolute;z-index:30;left:0;top:calc(100% + 6px);width:300px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,11,11,.2);white-space:normal;text-align:left}
+.tip.right .bubble{left:auto;right:0}
+.tip:hover .bubble,.tip:focus-within .bubble{display:block}
+.row:hover{background:#FAFBEF}
+.ib{width:20px;height:20px;flex:none;border-radius:99px;border:1px solid #9A9EA3;background:#FFFFFF;font-size:11px;font-weight:700;color:#3A3D42;cursor:help;padding:0;line-height:18px;text-align:center}
+.ib:hover,.ib:focus{border-color:#0B0B0B;background:#D4EE36;color:#0B0B0B;outline:none}
+.num{width:100%;box-sizing:border-box;padding:6px 10px;border-radius:10px;border:1px solid #D6D6D4;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;background:#FFFFFF}
+.num:focus{outline:3px solid #D4EE36;border-color:#0B0B0B}
+.sel{width:100%;padding:6px 8px;border-radius:10px;border:1px solid #D6D6D4;font-size:13.5px;font-weight:600;background:#FFFFFF}
+.sel:focus{outline:3px solid #D4EE36;border-color:#0B0B0B}
+.chipb:hover{border-color:#0B0B0B}
+.fb-row{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:11px 4px;border:none;border-bottom:1px solid #E2E2DF;background:transparent;font:inherit;font-size:14.5px;color:#26282B;text-align:left;cursor:pointer}
+.fb-row:hover{color:#0B0B0B;background:#EFEFEC}
+.fb-row:focus-visible,.fb-seg:focus-visible,.fb-load:focus-visible{outline:3px solid #D4EE36;outline-offset:2px}
+.fb-seg{flex:none;padding:8px 16px;border-radius:9px;border:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:#0B0B0B;background:transparent;transition:background .15s}
+.fb-load:hover{background:#26282B}
+.fb-back{font-size:13.5px;font-weight:600;color:#5C6168;text-decoration:none}
+.fb-back:hover{color:#0B0B0B}
+.fx-txt{font:inherit;font-size:13px;font-weight:600;padding:2px 0;border:none;background:transparent;color:#5C6168;cursor:pointer}
+.fx-txt:hover{color:#0B0B0B}
+.fx-txt[aria-checked=true],.fx-txt[aria-selected=true]{color:#0B0B0B;text-decoration:underline;text-decoration-color:#D4EE36;text-decoration-thickness:3px;text-underline-offset:5px}
+.fx-line{width:100%;box-sizing:border-box;font:inherit;font-size:14.5px;padding:8px 0;border:none;border-bottom:1.5px solid #D6D6D4;background:transparent;outline:none;color:#0B0B0B;resize:none}
+.fx-line:focus{border-bottom-color:#0B0B0B;box-shadow:0 1.5px 0 #D4EE36}
+.fx-sel{font:inherit;font-size:14px;font-weight:600;padding:7px 30px 7px 10px;border-radius:10px;border:1px solid #D6D6D4;background:#FFFFFF;color:#0B0B0B;max-width:100%;cursor:pointer}
+.fx-sel:focus-visible,.fx-txt:focus-visible{outline:3px solid #D4EE36;outline-offset:2px}
+.ghb{position:absolute;top:calc(100% + 12px);right:0;z-index:25;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;padding:7px 11px 7px 12px;border-radius:12px;background:#0B0B0B;color:#F4F4F2;font-size:12.5px;font-weight:500;text-decoration:none;box-shadow:0 10px 24px rgba(11,11,11,.18);animation:ghIn .5s cubic-bezier(.2,.8,.2,1) .7s both,ghFloat 3.2s ease-in-out 1.2s infinite}.ghb-it:hover{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px}.ghb-it:focus-visible{outline:2px solid #D4EE36;outline-offset:3px;border-radius:4px}.ghb-arrow{position:absolute;top:-5px;right:16px;width:10px;height:10px;background:#0B0B0B;transform:rotate(45deg);border-radius:2px}.ghb-sep{width:1px;height:14px;background:#3A3D42}.ghb-it{display:inline-flex;align-items:center;gap:4px;color:#D9DBDE;text-decoration:none}.ghb-star{animation:ghTwinkle 2.4s ease-in-out 1.4s infinite;transform-origin:50% 55%}@keyframes ghIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}@keyframes ghFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}@keyframes ghTwinkle{0%,70%,100%{transform:scale(1) rotate(0)}80%{transform:scale(1.35) rotate(20deg)}90%{transform:scale(.95) rotate(-6deg)}}@media (prefers-reduced-motion:reduce){.ghb,.ghb-star{animation:none !important}}@media (max-width:760px){.ghb{display:none}}
+.fb-tab{font:inherit;font-size:13.5px;font-weight:600;padding:7px 12px;border:none;border-radius:9px 9px 0 0;background:transparent;color:#5C6168;cursor:pointer}
+.fb-ico{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:99px;border:1px solid #D6D6D4;background:#FFFFFF;cursor:pointer;color:#26282B;padding:0}
+.fb-ico:hover,.fb-tab:hover{color:#0B0B0B;border-color:#0B0B0B}
+@media (max-width:760px){.grid4{grid-template-columns:minmax(0,1fr) 130px !important}.hide-s{display:none !important}.h1{font-size:36px !important}}
+</style>
+</helmet>
+<div class="lp" style="min-height: 100vh; background: #F4F4F2">
+
+  <div style="background: #D4EE36; text-align: center; padding: 9px 16px; font-size: 13.5px; font-weight: 500">
+    Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo
+  </div>
+
+  <header style="max-width: 1180px; margin: 0 auto; padding: 20px 24px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+    <span style="display: inline-flex; align-items: center; gap: 10px"><a href="Landing.dc.html" aria-label="pac/fondo IBM, torna al simulatore" style="display: inline-flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.5px; text-decoration: none">pac<span style="color: rgb(154, 158, 163)">/</span>fondo IBM<span style="width: 9px; height: 9px; border-radius: 99px; background: rgb(212, 238, 54); border: 2px solid rgb(11, 11, 11); margin-left: 4px; margin-bottom: 11px"></span></a><span class="tip"><span tabindex="0" aria-describedby="beta-tip" style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 99px; border: 1px solid #0B0B0B; background: #FFFFFF; color: #0B0B0B; font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; line-height: 16px; cursor: help"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 99px; background: #D4EE36; box-shadow: 0 0 0 1px #0B0B0B"></span>Beta</span><span class="bubble" role="tooltip" id="beta-tip" style="left: 0; right: auto; transform: none; bottom: auto; top: calc(100% + 8px)">Versione beta: i calcoli seguono i dati e le norme citati nelle fonti, ma l'interfaccia può cambiare e possono esserci errori. Se ne trovi uno, segnalalo con una issue su GitHub.</span></span></span>
+    <nav aria-label="Principale" style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; font-size: 14px; font-weight: 600">
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 4px; background: #F4F4F2; border: none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>100% locale</span>
+      <span class="tip right"><span tabindex="0" style="display: inline-flex; align-items: center; gap: 7px; padding: 7px 4px; background: #F4F4F2; border: none; cursor: help; font-variant-numeric: tabular-nums"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ saveLabel }}</span><span class="bubble" role="tooltip">{{ saveTip }}</span></span>
+      <span class="tip right"><button type="button" onClick="{{ clearAll }}" class="btn ghost" style="padding: 8px 12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>Cancella tutto</button><span class="bubble" role="tooltip">Torna al profilo d’esempio e cancella dalla memoria di questo browser tutti i dati inseriti e il file delle operazioni.</span></span>
+      <a href="Storico.dc.html" class="btn ghost">Storico</a>
+      <a href="Fonti.dc.html" class="btn ghost">Parametri e fonti</a>
+      <span style="position: relative; display: inline-flex"><a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer" class="btn ghost" aria-label="Codice sorgente su GitHub" title="Codice sorgente su GitHub" style="padding: 8px 10px"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a><span class="ghb" role="group" aria-label="Migliora il progetto su GitHub"><span class="ghb-arrow" aria-hidden="true"></span><strong style="color: #D4EE36; font-weight: 700">Migliora il repo</strong><span class="ghb-sep" aria-hidden="true"></span><a class="ghb-it" href="https://github.com/nine1zero/pac-vs-fp" target="_blank" rel="noopener noreferrer" title="Apri il repository e premi Star"><svg class="ghb-star" width="13" height="13" viewBox="0 0 24 24" fill="#D4EE36" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"></path></svg>stella</a><a class="ghb-it" href="https://github.com/nine1zero/pac-vs-fp/issues/new?title=Suggerimento%3A%20&amp;labels=enhancement&amp;body=%2A%2ACosa%20hai%20notato%2A%2A%0A%0A%0A%2A%2ACosa%20proporresti%2A%2A%0A%0A%0A%2A%2APagina%20o%20sezione%2A%2A%20%28es.%20Risultato%2C%20Storico%2C%20Parametri%20e%20fonti%29%0A" target="_blank" rel="noopener noreferrer" title="Apri una issue già impostata con un modello"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"></circle></svg>issues</a><a class="ghb-it" href="https://github.com/nine1zero/pac-vs-fp/discussions" target="_blank" rel="noopener noreferrer" title="Partecipa alle discussioni e lascia un feedback"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10a2 2 0 0 1-2 2H6l-3 3V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2z"></path><path d="M19 9h1a2 2 0 0 1 2 2v10l-3-3h-6a2 2 0 0 1-2-2v-1"></path></svg>feedbacks</a></span></span>
+    </nav>
+  </header>
+
+  <main style="max-width: 680px; margin: 0 auto; padding: 24px 24px 56px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
+      <h1 class="h1" style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 500; letter-spacing: -.6px">Discussioni e <span class="mark">feedback</span></h1>
+      <a href="Landing.dc.html" class="fb-back"><span aria-hidden="true">←</span> Torna al simulatore</a>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+      <div role="radiogroup" aria-label="Categoria" style="display: flex; gap: 2px; padding: 3px; border-radius: 11px; background: #E6E6E3">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="3"><button type="button" role="radio" class="fb-seg" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.name }} <span style="font-weight: 500; color: #5C6168; font-variant-numeric: tabular-nums">{{ c.n }}</span></button></sc-for>
+      </div>
+      <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
+        <label style="flex: 1 1 220px; min-width: 0; display: flex"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Argomento</span>
+          <select class="fx-sel" value="{{ threadV }}" onChange="{{ pickThread }}" style="flex: 1; min-width: 0">
+            <sc-for list="{{ threads }}" as="t" hint-placeholder-count="1"><option value="{{ t.v }}">{{ t.label }}</option></sc-for>
+            <option value="new">+ Nuovo argomento…</option>
+          </select>
+        </label>
+      </sc-if>
+      <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+        <span style="flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 8px">
+          <input type="text" class="fx-line" value="{{ text }}" onInput="{{ setText }}" onKeyDown="{{ keyNew }}" aria-label="Titolo del nuovo argomento in {{ catName }}" placeholder="Titolo del nuovo argomento, Invio per crearlo" style="flex: 1; min-width: 0">
+          <button type="button" onClick="{{ cancelNew }}" aria-label="Annulla" class="fx-txt" style="font-size: 18px">×</button>
+        </span>
+      </sc-if>
+    </div>
+
+    <div style="height: 1px; background: #E2E2DF"></div>
+
+    <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+        <span style="font-size: 13.5px; color: #5C6168">Commenti pubblici su GitHub · si collega solo se li apri</span>
+        <span style="display: inline-flex; align-items: center; gap: 14px">
+          <button type="button" class="fx-txt" onClick="{{ load }}" style="color: #0B0B0B; text-decoration: underline; text-underline-offset: 4px">Mostra i commenti</button>
+          <button type="button" onClick="{{ login }}" style="display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 10px; border: none; background: #0B0B0B; color: #F4F4F2; cursor: pointer"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Accedi con GitHub</button>
+        </span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ loaded }}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; color: #5C6168">
+          <span><strong style="color: #0B0B0B">{{ countTxt }}</strong> · {{ topic }}</span>
+          <span role="radiogroup" aria-label="Ordine" style="display: inline-flex; gap: 12px"><sc-for list="{{ sorts }}" as="o" hint-placeholder-count="2"><button type="button" role="radio" class="fx-txt" aria-checked="{{ o.on }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></span>
+        </span>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="display: flex; justify-content: space-between; align-items: center">
+            <span role="tablist" aria-label="Commento" style="display: inline-flex; gap: 14px"><sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2"><button type="button" role="tab" class="fx-txt" aria-selected="{{ t.on }}" onClick="{{ t.pick }}">{{ t.label }}</button></sc-for></span>
+            <span title="Markdown supportato" style="font-size: 10.5px; font-weight: 700; padding: 1px 4px; border-radius: 4px; border: 1.5px solid #9A9EA3; color: #5C6168">MD</span>
+          </span>
+          <sc-if value="{{ writing }}" hint-placeholder-val="{{ true }}">
+            <textarea class="fx-line" rows="2" value="{{ draft }}" onInput="{{ setDraft }}" aria-label="Scrivi un commento" placeholder="Scrivi un commento"></textarea>
+          </sc-if>
+          <sc-if value="{{ previewing }}" hint-placeholder-val="{{ false }}">
+            <div style="min-height: 44px; padding: 8px 0; border-bottom: 1.5px solid #D6D6D4; font-size: 14.5px; line-height: 1.5">{{ previewTxt }}</div>
+          </sc-if>
+          <span style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+            <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ login }}" style="display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 10px; border: none; background: #0B0B0B; color: #F4F4F2; cursor: pointer"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Accedi con GitHub</button>
+            </sc-if>
+            <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+              <button type="button" class="fx-txt" onClick="{{ logout }}">Disconnessione</button>
+            </sc-if>
+            <button type="button" onClick="{{ send }}" aria-disabled="{{ cantSend }}" style="{{ sendStyle }}">Commenta</button>
+          </span>
+        </div>
+
+        <div role="list" style="display: flex; flex-direction: column">
+          <sc-for list="{{ comments }}" as="k" hint-placeholder-count="1">
+            <div role="listitem" style="display: flex; flex-direction: column; gap: 6px; padding: 14px 0; border-top: 1px solid #E2E2DF">
+              <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13.5px"><span aria-hidden="true" style="width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; background: #E6E6E3; color: #3A3D42">{{ k.ini }}</span><strong>{{ k.author }}</strong><span style="color: #5C6168">{{ k.when }}</span><span style="font-size: 11.5px; font-weight: 600; padding: 0 7px; border-radius: 99px; background: #D4EE36">{{ k.badge }}</span></span>
+              <span style="padding-left: 32px; font-size: 14.5px; line-height: 1.5">{{ k.body }}</span>
+              <span style="padding-left: 32px; display: flex; align-items: center; gap: 14px; font-size: 12.5px; color: #5C6168">
+                <button type="button" class="fx-txt" aria-pressed="{{ k.voted }}" onClick="{{ k.vote }}" aria-label="Voto positivo, {{ k.votes }}" style="{{ k.voteStyle }}">↑ {{ k.votes }}</button>
+                <button type="button" class="fx-txt" aria-label="Aggiungi una reazione"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"></path></svg></button>
+                <span>{{ k.replies }}</span>
+                <button type="button" class="fx-txt" onClick="{{ k.toggleReply }}">Rispondi</button>
+              </span>
+              <sc-if value="{{ k.replyOpen }}" hint-placeholder-val="{{ false }}">
+                <input type="text" class="fx-line" aria-label="Scrivi una risposta" placeholder="Scrivi una risposta" style="margin-left: 32px; width: calc(100% - 32px)">
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <span style="font-size: 12px; color: #9A9EA3">Anteprima: conteggi e commento d'esempio dalla pagina pubblicata il 17/11; nell'app tutto ciò sotto la linea è Giscus.</span>
+      </div>
+    </sc-if>
+  </main>
+
+  <footer style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #5C6168">
+    <span>pac/fondo · strumento indipendente · calcolo 100% locale, nessun dato inviato</span>
+    <nav aria-label="Piè di pagina" style="display: inline-flex; flex-wrap: wrap; gap: 14px"><a href="Landing.dc.html">Privacy e avvertenze</a><a href="Fonti.dc.html">Metodo e fonti</a><a href="Feedback.dc.html" aria-current="page">Discussioni e feedback</a><a href="https://github.com/nine1zero/pac-vs-fp" rel="noopener noreferrer">Codice sorgente</a></nav>
+    <span>Dati storici: bilanci e pagine pubbliche di fondopensioneibm.it; prezzi ETF di fine mese</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":700}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { cat: 1, editing: false, text: '', custom: [], thread: 0, loaded: false, logged: false, sort: 0, tab: 0, draft: '', voted: false, reply: false }; }
+  renderVals() {
+    var self = this, s = this.state, ink = '#0B0B0B', lime = '#D4EE36';
+    // categorie di GitHub Discussions (branch feat/giscus-feedback); conteggi e commento d'esempio dallo screenshot del 17/11
+    var C = [{ name: 'General', term: 'General — Feedback e commenti sul simulatore', n: 1 }, { name: 'Ideas', term: 'Ideas — Proposte e nuove funzioni', n: 1 }, { name: 'Q&A', term: 'Q&A — Domande sul modello e sul fondo', n: 2 }];
+    var c = C[s.cat], list = [c.term].concat(s.custom), first = s.cat === 1 && s.thread === 0;
+    var add = function () { var t = (self.state.text || '').trim(); if (!t) return; var cu = self.state.custom.concat([t]); self.setState({ custom: cu, thread: cu.length, text: '', editing: false }); };
+    var ok = s.logged && (s.draft || '').trim();
+    var at = null, err = false;
+    try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) at = JSON.parse(raw).at || null; } catch (e) { err = true; }
+    return {
+      saveLabel: err ? 'Salvataggio non disponibile' : at ? 'Salvato · ' + new Date(at).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Salvataggio automatico',
+      saveTip: err ? 'Questo browser non permette di salvare (ad esempio in navigazione privata): i dati restano finché non chiudi la pagina.'
+        : 'Ogni dato che inserisci si salva da solo nella memoria di questo browser (localStorage, non cookie). Resta solo su questo dispositivo, non viene inviato a nessuno, e al prossimo accesso ritrovi tutto com’era. Anche il file delle operazioni si salva qui. Per cancellare tutto usa «Cancella tutto».',
+      clearAll: function () { try { window.localStorage.removeItem('pacfondo.v1'); window.localStorage.removeItem('pacfondo.v1.file'); } catch (e) { } self.setState({}); },
+      cats: C.map(function (x, k) { var on = k === s.cat; return { name: x.name, n: String(x.n), on: on ? 'true' : 'false', pick: function () { self.setState({ cat: k, thread: 0, custom: [], editing: false }); },
+        style: 'padding:6px 13px;font-size:13.5px;' + (on ? 'background:#FFFFFF;box-shadow:inset 0 0 0 1px ' + ink : '') }; }),
+      threadV: String(s.thread), catName: c.name, editing: s.editing, notEditing: !s.editing,
+      threads: list.map(function (t, i) { return { v: String(i), label: (i === 0 ? 'Argomento: ' : '') + t, sel: i === s.thread }; }),
+      pickThread: function (e) { var v = e.target.value; if (v === 'new') self.setState({ editing: true }); else self.setState({ thread: parseInt(v, 10) }); },
+      cancelNew: function () { self.setState({ editing: false, text: '' }); },
+      text: s.text, setText: function (e) { self.setState({ text: e.target.value }); },
+      keyNew: function (e) { if (e.key === 'Enter') add(); if (e.key === 'Escape') self.setState({ editing: false, text: '' }); },
+      topic: list[s.thread] || c.term, countTxt: first ? '1 commento' : 'commenti da GitHub',
+      sorts: ['Vecchio', 'Recente'].map(function (l, k) { return { label: l, on: s.sort === k ? 'true' : 'false', pick: function () { self.setState({ sort: k }); } }; }),
+      tabs: ['Scrivi', 'Anteprima'].map(function (l, k) { return { label: l, on: s.tab === k ? 'true' : 'false', pick: function () { self.setState({ tab: k }); } }; }),
+      writing: s.tab === 0, previewing: s.tab === 1, previewTxt: (s.draft || '').trim() || 'Niente da mostrare in anteprima.',
+      draft: s.draft, setDraft: function (e) { self.setState({ draft: e.target.value }); },
+      loggedIn: s.logged, loggedOut: !s.logged, login: function () { self.setState({ logged: true, loaded: true }); }, logout: function () { self.setState({ logged: false }); },
+      cantSend: ok ? 'false' : 'true', send: function () { if (self.state.logged && (self.state.draft || '').trim()) self.setState({ draft: '' }); },
+      sendStyle: 'font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:10px;border:none;' + (ok ? 'background:' + lime + ';color:' + ink + ';box-shadow:inset 0 0 0 1px ' + ink + ';cursor:pointer' : 'background:#ECECEA;color:#9A9EA3;cursor:not-allowed'),
+      comments: first ? [{ ini: 'N', author: 'nine1zero', when: '1 ora fa', badge: 'Proprietario', body: 'ciao', votes: String(1 + (s.voted ? 1 : 0)), voted: s.voted ? 'true' : 'false', replies: '0 risposte',
+        vote: function () { self.setState({ voted: !self.state.voted }); }, voteStyle: s.voted ? 'color:' + ink + ';background:' + lime + ';padding:1px 7px;border-radius:99px' : 'color:' + ink,
+        replyOpen: s.reply, toggleReply: function () { self.setState({ reply: !self.state.reply }); } }] : [],
+      loaded: s.loaded, notLoaded: !s.loaded, load: function () { self.setState({ loaded: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
