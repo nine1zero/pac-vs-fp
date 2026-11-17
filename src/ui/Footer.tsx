@@ -36,7 +36,7 @@ export function Footer() {
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css?v=2'));
+    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css?v=3'));
     script.setAttribute('data-lang', 'it');
     script.setAttribute('data-loading', 'lazy');
     host.appendChild(script);
