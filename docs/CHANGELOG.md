@@ -1,5 +1,8 @@
 # Registro delle modifiche
 
+## 2026-11-16 · design: pill "BETA" (prototipi)
+
+Solo prototipi `spec/design/v2/` e SPEC par. 3.0; l'app non cambia. Da implementare: pill "BETA" accanto al logo, in tutte le pagine, con tooltip che spiega cosa vuol dire (dati e norme citati, interfaccia che può cambiare, errori da segnalare con una issue).
 
 ## 2026-11-16 · ETF di default iShares MSCI ACWI; pagina I miei versamenti dal canvas; link al repository in nuova scheda
 
@@ -14,7 +17,7 @@
 
 ## 2026-11-16 · design: pagina I miei versamenti (prototipo)
 
-Solo prototipo `spec/design/v2/Versamenti.dc.html` e SPEC par. 3.0; l'app non cambia. Da implementare:
+Solo prototipi `spec/design/v2/` e SPEC par. 3.0; l'app non cambia. Da implementare:
 
 - **ETF di confronto**: gli stessi tre ETF del menù della Landing, nello stesso ordine, al posto di MSCI ACWI / World / Europe; preselezionato l'ETF scelto nel simulatore. Servono le serie mensili dei prezzi di Vanguard FTSE All-World e SPDR MSCI ACWI IMI, con fonte: finché mancano, la voce è disattivata.
 - **Controlli** (ETF e "dentro il fondo / fuori"): allineati a sinistra, uno sotto l'altro.
