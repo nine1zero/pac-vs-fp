@@ -219,29 +219,16 @@ main {
   border-radius: 0 !important;
   padding: 14px 0 !important;
 }
-.gsc-comment-header,
-.gsc-reply-header {
+.gsc-comment-header {
   padding: 0 !important;
   font-size: 13.5px !important;
 }
-.gsc-comment-author > a.link-secondary,
-.gsc-reply-author > a.link-secondary {
-  text-decoration: none !important;
-  color: #5c6168 !important;
-}
-.gsc-comment-author > a.link-secondary:hover time,
-.gsc-reply-author > a.link-secondary:hover time {
-  color: #0b0b0b !important;
-  text-decoration: underline !important;
-}
-.gsc-comment-author-avatar img,
-.gsc-reply-author-avatar img {
+.gsc-comment-author-avatar img {
   width: 24px !important;
   height: 24px !important;
 }
 .gsc-comment-header .border.label,
-.gsc-comment-header span.ml-1,
-.gsc-reply-header span.color-box-border-info {
+.gsc-comment-header span.ml-1 {
   font-size: 11.5px !important;
   font-weight: 600 !important;
   padding: 0 7px !important;
