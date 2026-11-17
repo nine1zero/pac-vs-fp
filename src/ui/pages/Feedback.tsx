@@ -178,7 +178,8 @@ export function Feedback() {
             Discussioni e <span className="mark">feedback</span>
           </h1>
           <p className="lead">
-            Scegli una categoria, reagisci con un’emoticon in cima o scrivi direttamente un commento qui sotto.
+            Rifai i conti dell’interesse composto alle 2 di notte o hai trovato un centesimo fuori posto? Scegli una categoria, sgancia un’emoticon in cima o
+            dì la tua qui sotto.
           </p>
         </div>
         <BackLink top />

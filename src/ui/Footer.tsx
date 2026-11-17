@@ -13,7 +13,7 @@ export function Footer() {
           <div className="foot-giscus-info">
             <span className="foot-giscus-pill">Feedback</span>
             <span className="foot-giscus-text">
-              Domande sul modello, idee o commenti? Partecipa alla bacheca con reazioni e discussioni.
+              Ti tornano i conti o vuoi dire la tua? Passa dalla bacheca per lasciare una reazione o un commento.
             </span>
           </div>
           <a href="#/feedback" className="btn lime btn-sm foot-giscus-cta">
