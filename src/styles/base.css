@@ -267,7 +267,6 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   line-height: 16px;
-  cursor: help;
 }
 .beta-dot {
   width: 6px;
@@ -2674,27 +2673,20 @@ input[type='range'].r:disabled {
 .site-footer-wrap {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 28px;
 }
 .foot-giscus-bar {
+  margin-top: -38px;
   background: var(--card);
   border: 1px solid var(--line-2);
-  border-radius: 12px;
-  padding: 6px 12px;
+  border-radius: 16px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
-.foot-giscus-info {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 8px;
-  flex: 0 1 auto;
-  min-width: 0;
 }
 .foot-giscus-pill {
   flex: none;
@@ -2708,14 +2700,6 @@ input[type='range'].r:disabled {
   font-weight: 700;
   letter-spacing: 0.7px;
   text-transform: uppercase;
-}
-.foot-giscus-text {
-  font-size: 13px;
-  line-height: 1.25;
-  color: var(--ink-2);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .foot-giscus-reactions {
   flex: 1 1 200px;
@@ -2737,19 +2721,16 @@ input[type='range'].r:disabled {
 }
 .foot-giscus-cta {
   flex: none;
-  padding: 5px 11px;
+  padding: 5px 12px;
   font-size: 12.5px;
-  border-radius: 9px;
-  border: 1px solid var(--ink);
+  border-radius: 99px;
+  border: none;
   white-space: nowrap;
 }
 @media (max-width: 900px) {
   .foot-giscus-bar {
     flex-wrap: wrap;
     gap: 8px;
-  }
-  .foot-giscus-text {
-    white-space: normal;
   }
 }
 

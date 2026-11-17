@@ -30,14 +30,9 @@ export function Header() {
           <a href="#/" className="logo" aria-label="pac/fondo IBM, torna al simulatore">
             pac<span className="slash">/</span>fondo IBM<span className="dot" />
           </a>
-          <span className="tip tip-left tip-below">
-            <span className="beta-pill" tabIndex={0} aria-describedby="beta-tip">
-              <span className="beta-dot" aria-hidden="true" />
-              Beta
-            </span>
-            <span className="bubble" role="tooltip" id="beta-tip">
-              Versione beta: i calcoli seguono i dati e le norme citati nelle fonti, ma l'interfaccia può cambiare e possono esserci errori. Se ne trovi uno, segnalalo con una issue su GitHub.
-            </span>
+          <span className="beta-pill">
+            <span className="beta-dot" aria-hidden="true" />
+            Beta
           </span>
         </span>
         <nav className="head-nav" aria-label="Principale">

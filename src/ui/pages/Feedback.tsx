@@ -119,7 +119,7 @@ export function Feedback() {
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
-    const theme = getGiscusThemeUrl('giscus-theme.css?v=3');
+    const theme = getGiscusThemeUrl('giscus-theme.css?v=4');
 
     const iframe = host.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
     if (iframe && iframe.contentWindow) {

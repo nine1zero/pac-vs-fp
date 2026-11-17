@@ -36,7 +36,7 @@ export function Footer() {
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css?v=3'));
+    script.setAttribute('data-theme', getGiscusThemeUrl('giscus-reactions-only.css?v=4'));
     script.setAttribute('data-lang', 'it');
     script.setAttribute('data-loading', 'lazy');
     host.appendChild(script);
@@ -46,12 +46,7 @@ export function Footer() {
     <footer className="wrap site-footer-wrap">
       {route.page === 'home' && (
         <div className="foot-giscus-bar" data-testid="foot-giscus-bar">
-          <div className="foot-giscus-info">
-            <span className="foot-giscus-pill">Feedback</span>
-            <span className="foot-giscus-text">
-              <strong>Non ti torna qualcosa o vuoi dire la tua? Fatti sentire!</strong>
-            </span>
-          </div>
+          <span className="foot-giscus-pill">Feedback</span>
           <div
             ref={reactionsRef}
             className="foot-giscus-reactions"

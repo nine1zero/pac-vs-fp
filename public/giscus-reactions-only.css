@@ -1,6 +1,6 @@
 /*!
  * Tema Giscus "solo barra reazioni su singola linea" per il footer della Landing di pac-vs-fp.
- * Nasconde i commenti (.gsc-comments) e mantiene contatore, pulsante GitHub e selettore emoticon su una sola riga di 26px.
+ * Nasconde i commenti (.gsc-comments) e mantiene contatore, pulsante GitHub e selettore emoticon su una sola riga di 26px senza bordi neri.
  */
 html,
 body,
@@ -21,30 +21,30 @@ main {
   --color-prettylights-syntax-string: #1e40af;
   --color-prettylights-syntax-variable: #c2410c;
   --color-btn-text: #0b0b0b;
-  --color-btn-bg: #ffffff;
-  --color-btn-border: #d6d6d4;
+  --color-btn-bg: #f4f4f2;
+  --color-btn-border: transparent;
   --color-btn-shadow: 0 0 transparent;
   --color-btn-inset-shadow: 0 0 transparent;
-  --color-btn-hover-bg: #f7f7f5;
-  --color-btn-hover-border: #0b0b0b;
-  --color-btn-active-bg: #ececea;
-  --color-btn-active-border: #0b0b0b;
+  --color-btn-hover-bg: #ececea;
+  --color-btn-hover-border: transparent;
+  --color-btn-active-bg: #e2e2df;
+  --color-btn-active-border: transparent;
   --color-btn-selected-bg: #f4f4f2;
   --color-btn-primary-text: #0b0b0b;
   --color-btn-primary-bg: #d4ee36;
-  --color-btn-primary-border: #0b0b0b;
+  --color-btn-primary-border: transparent;
   --color-btn-primary-shadow: 0 0 transparent;
   --color-btn-primary-inset-shadow: 0 0 transparent;
   --color-btn-primary-hover-bg: #c6e21f;
-  --color-btn-primary-hover-border: #0b0b0b;
+  --color-btn-primary-hover-border: transparent;
   --color-btn-primary-selected-bg: #c6e21f;
   --color-btn-primary-disabled-text: #5c6168;
   --color-btn-primary-disabled-bg: #ececea;
-  --color-btn-primary-disabled-border: #d6d6d4;
+  --color-btn-primary-disabled-border: transparent;
   --color-action-list-item-default-hover-bg: #f7f7f5;
   --color-segmented-control-bg: #f4f4f2;
   --color-segmented-control-button-bg: #ffffff;
-  --color-segmented-control-button-selected-border: #0b0b0b;
+  --color-segmented-control-button-selected-border: transparent;
   --color-fg-default: #0b0b0b;
   --color-fg-muted: #5c6168;
   --color-fg-subtle: #5c6168;
@@ -52,13 +52,13 @@ main {
   --color-canvas-overlay: #ffffff;
   --color-canvas-inset: #f7f7f5;
   --color-canvas-subtle: #f7f7f5;
-  --color-border-default: #d6d6d4;
-  --color-border-muted: #e6e6e3;
+  --color-border-default: transparent;
+  --color-border-muted: transparent;
   --color-neutral-muted: rgba(11, 11, 11, 0.05);
   --color-accent-fg: #0b0b0b;
-  --color-accent-emphasis: #0b0b0b;
+  --color-accent-emphasis: transparent;
   --color-accent-muted: #d4ee36;
-  --color-accent-subtle: #fafbef;
+  --color-accent-subtle: #d4ee36;
   --color-success-fg: #15803d;
   --color-attention-fg: #7a4b00;
   --color-attention-muted: #d97706;
@@ -69,7 +69,7 @@ main {
   --color-primer-shadow-inset: 0 0 transparent;
   --color-scale-gray-1: #f4f4f2;
   --color-scale-blue-1: #d4ee36;
-  --color-social-reaction-bg-hover: #f4f4f2;
+  --color-social-reaction-bg-hover: #ececea;
   --color-social-reaction-bg-reacted-hover: #c6e21f;
   font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 13px;
@@ -147,21 +147,30 @@ main {
   height: 26px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  border: 1px solid #d6d6d4 !important;
-  background: #ffffff !important;
+  border: none !important;
+  background: #f4f4f2 !important;
+  color: #0b0b0b !important;
+}
+.gsc-social-reaction-summary-item:hover:enabled {
+  background: #ececea !important;
 }
 .gsc-reactions-button {
   width: 26px !important;
   height: 26px !important;
   padding: 0 !important;
+  border: none !important;
+  background: #f4f4f2 !important;
 }
 .gsc-social-reaction-summary-item.has-reacted {
   background: #d4ee36 !important;
-  border-color: #0b0b0b !important;
+  border: none !important;
   color: #0b0b0b !important;
 }
+.gsc-social-reaction-summary-item.has-reacted:hover:enabled {
+  background: #c6e21f !important;
+}
 
-/* Menu emoticon aperto in linea sulla stessa riga, senza espandere l'altezza del footer */
+/* Menu emoticon aperto in linea sulla stessa riga, senza bordi neri */
 .gsc-reactions-menu {
   display: inline-flex !important;
   align-items: center !important;
@@ -180,8 +189,8 @@ main {
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
-  background: #ffffff !important;
-  border: 1px solid #0b0b0b !important;
+  background: #f4f4f2 !important;
+  border: none !important;
 }
 .gsc-reactions-popover.open::before,
 .gsc-reactions-popover.open::after,
@@ -190,7 +199,7 @@ main {
   display: none !important;
 }
 
-/* Trasforma il link "Accedi" in un vero bottone "Accedi con GitHub" con icona Octocat */
+/* Trasforma il link "Accedi" in un bottone "Accedi con GitHub" con icona Octocat e senza bordo nero */
 .gsc-reactions-popover > p {
   margin: 0 !important;
   font-size: 0 !important;
@@ -202,13 +211,13 @@ main {
 .gsc-reactions-popover a.color-text-link {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
+  gap: 4px !important;
   height: 26px !important;
   padding: 0 10px !important;
   border-radius: 99px !important;
   background: #d4ee36 !important;
   color: #0b0b0b !important;
-  border: 1px solid #0b0b0b !important;
+  border: none !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   text-decoration: none !important;
@@ -230,7 +239,7 @@ main {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230b0b0b'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") !important;
 }
 .gsc-reactions-popover a.color-text-link::after {
-  content: "\00a0con GitHub" !important;
+  content: "con GitHub" !important;
 }
 .gsc-reactions-popover.open:has(.no-token) {
   border: none !important;
@@ -245,15 +254,20 @@ main {
   margin: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 1px !important;
+  gap: 2px !important;
 }
 .gsc-emoji-button {
   width: 22px !important;
   height: 22px !important;
   margin: 0 !important;
   padding: 0 !important;
+  border: none !important;
   border-radius: 99px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+}
+.gsc-emoji-button.has-reacted {
+  background: #d4ee36 !important;
+  border: none !important;
 }
