@@ -1,5 +1,12 @@
 # Registro delle modifiche
 
+## 2026-11-17 · design: Discussioni e feedback con elenco a pagine (prototipi)
+
+- `spec/design/v2/Feedback.dc.html` rifatto dal canvas: testata come le altre pagine, elenco di tutti gli argomenti a pagine in stile GitHub (senza icone di categoria e senza voti), categorie `Tutte`/General/Ideas/Q&A con conteggi, ordine `Più recenti`/`Più commentate`, `+ Nuovo argomento`, un solo pulsante `Mostra le discussioni` (apertura automatica con sessione Giscus salvata), messaggio per il limite di richieste di GitHub.
+- Nuovo `spec/design/v2/FeedbackAperta.dc.html`: la stessa pagina con una discussione aperta e l'accesso fatto (commenti, risposte con `Annulla`/`Rispondi`, commento nuovo in fondo con `Vecchio`).
+- Verificato sulle API il 17/11/2026: l'elenco pubblico ignora ordine e categoria e non dà i voti delle discussioni; per questo una sola richiesta e calcoli nel browser, e niente voti nell'elenco.
+- Modifica e cancellazione dei commenti: solo su GitHub (dalla data del commento); da togliere quelle nella pagina via GraphQL (`2b6da9e`). Niente reazioni sui singoli commenti. Pulsanti pieni senza bordo. Regole in SPEC par. 3.0, pagina I.
+
 ## 2026-11-17 · design: pagina Discussioni e feedback, versione minimal (prototipi)
 
 - Nuovo prototipo `spec/design/v2/Feedback.dc.html` dal canvas: una colonna senza riquadri, categorie a segmenti con conteggi, menù "Argomento" con `+ Nuovo argomento…`, widget Giscus caricato solo dopo `Mostra i commenti` o `Accedi con GitHub`, e restilizzato con i selettori del tema già usati in `public/giscus-theme.css`. Regole in SPEC par. 3.0 (pagina I e footer).
