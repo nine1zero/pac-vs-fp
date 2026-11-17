@@ -49,7 +49,7 @@ export function Footer() {
           <div className="foot-giscus-info">
             <span className="foot-giscus-pill">Feedback</span>
             <span className="foot-giscus-text">
-              <strong>Ti abbiamo salvato da 30 anni di costi nascosti o non ti torna un centesimo?</strong>
+              <strong>Non ti torna qualcosa o vuoi dire la tua? Fatti sentire!</strong>
             </span>
           </div>
           <div
