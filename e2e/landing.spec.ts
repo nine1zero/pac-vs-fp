@@ -223,3 +223,14 @@ test('area di caricamento: "scaricato da Area Riservata" con il link al fondo, c
   });
   expect(onTop).toBe(true);
 });
+
+test('pill "BETA" nell\'header con tooltip accessibile da tastiera', async ({ page }) => {
+  const pill = page.locator('.site-header .beta-pill');
+  await expect(pill).toBeVisible();
+  await expect(pill).toHaveText('Beta');
+  await pill.focus();
+  const tip = page.locator('#beta-tip');
+  await expect(tip).toBeVisible();
+  await expect(tip).toContainText('Versione beta: i calcoli seguono i dati e le norme citati nelle fonti');
+});
+

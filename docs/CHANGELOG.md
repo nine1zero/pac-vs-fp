@@ -1,8 +1,8 @@
 # Registro delle modifiche
 
-## 2026-11-16 · design: pill "BETA" (prototipi)
+## 2026-11-16 · pill "BETA" nell'header
 
-Solo prototipi `spec/design/v2/` e SPEC par. 3.0; l'app non cambia. Da implementare: pill "BETA" accanto al logo, in tutte le pagine, con tooltip che spiega cosa vuol dire (dati e norme citati, interfaccia che può cambiare, errori da segnalare con una issue).
+- Implementata nell'header (`src/ui/Header.tsx`, `src/styles/base.css`) la pill "BETA" accanto al logo in tutte le pagine (bordo nero sottile, puntino lime, maiuscoletto), con tooltip accessibile da tastiera (`#beta-tip`) come da prototipi `spec/design/v2/` e SPEC par. 3.0.
 
 ## 2026-11-16 · ETF di default iShares MSCI ACWI; pagina I miei versamenti dal canvas; link al repository in nuova scheda
 

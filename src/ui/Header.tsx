@@ -26,9 +26,20 @@ export function Header() {
       </a>
       <div className="topbar">Simulatore indipendente · non affiliato al fondo né all'azienda · non è consulenza · il calcolo avviene solo sul tuo dispositivo</div>
       <header className="wrap site-header">
-        <a href="#/" className="logo" aria-label="pac/fondo IBM, torna al simulatore">
-          pac<span className="slash">/</span>fondo IBM<span className="dot" />
-        </a>
+        <span className="logo-wrap">
+          <a href="#/" className="logo" aria-label="pac/fondo IBM, torna al simulatore">
+            pac<span className="slash">/</span>fondo IBM<span className="dot" />
+          </a>
+          <span className="tip tip-left tip-below">
+            <span className="beta-pill" tabIndex={0} aria-describedby="beta-tip">
+              <span className="beta-dot" aria-hidden="true" />
+              Beta
+            </span>
+            <span className="bubble" role="tooltip" id="beta-tip">
+              Versione beta: i calcoli seguono i dati e le norme citati nelle fonti, ma l'interfaccia può cambiare e possono esserci errori. Se ne trovi uno, segnalalo con una issue su GitHub.
+            </span>
+          </span>
+        </span>
         <nav className="head-nav" aria-label="Principale">
           <span className="badge plain">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
