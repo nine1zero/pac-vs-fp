@@ -2500,7 +2500,7 @@ input[type='range'].r.mini::-moz-range-thumb {
 }
 .back-top {
   flex: none;
-  margin-top: 6px;
+  margin-top: 24px;
 }
 .page-head-side {
   display: flex;
