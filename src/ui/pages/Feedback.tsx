@@ -691,9 +691,7 @@ export function Feedback() {
       )}
 
       <div className="sec-foot fb-foot">
-        <span className="fb-foot-note">
-          Una sola richiesta alle API di GitHub all’apertura (fino a 100 discussioni): categorie, conteggi, ordine e pagine si calcolano nel browser. La discussione aperta e i commenti sono Giscus; la data di un commento lo apre su GitHub, dove chi l’ha scritto lo modifica o cancella; «MD» apre la guida alla formattazione. Con l’accesso, chi ha aperto la discussione è l’autore del primo commento (Giscus le crea a nome di giscus[bot]).
-        </span>
+        <span />
         <BackLink />
       </div>
     </main>
