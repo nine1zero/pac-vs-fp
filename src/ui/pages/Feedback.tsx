@@ -50,17 +50,6 @@ const CATEGORY_TABS: readonly [CategoryFilter, string][] = [
 const ALLOWED_SLUGS = new Set<string>(DISCUSSION_CATEGORIES.map((c) => c.slug));
 const ALLOWED_NAMES = new Set<string>(DISCUSSION_CATEGORIES.map((c) => c.name));
 
-interface GhDiscussionApiItem {
-  number: number;
-  title: string;
-  comments?: number;
-  created_at?: string;
-  updated_at?: string;
-  answer_chosen_at?: string | null;
-  locked?: boolean;
-  user?: { login?: string } | null;
-  category?: { name?: string; slug?: string } | null;
-}
 
 export interface DiscussionRow {
   n: number;
@@ -74,22 +63,42 @@ export interface DiscussionRow {
   isCustom?: boolean;
 }
 
-const FIRST_COMMENT_AUTHORS_QUERY = `
-  query($owner: String!, $name: String!) {
+const DISCUSSIONS_QUERY = `
+  query($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {
-      discussions(first: 100) {
+      discussions(first: 100, after: $after, orderBy: { field: CREATED_AT, direction: DESC }) {
+        pageInfo { hasNextPage endCursor }
         nodes {
           number
-          comments(first: 1) {
-            nodes {
-              author { login }
-            }
-          }
+          title
+          createdAt
+          locked
+          answerChosenAt
+          author { login }
+          category { name slug }
+          comments(first: 1) { totalCount nodes { author { login } } }
         }
       }
     }
   }
 `;
+
+interface GqlDiscussion {
+  number: number;
+  title: string;
+  createdAt: string;
+  locked: boolean;
+  answerChosenAt: string | null;
+  author: { login: string } | null;
+  category: { name: string; slug: string } | null;
+  comments: { totalCount: number; nodes: { author: { login: string } | null }[] };
+}
+
+/** Accesso con GitHub tramite Giscus: al ritorno l'URL ha `?giscus=<sessione>`, letta da consumeGiscusSession. */
+export function giscusLoginUrl(): string {
+  return `https://giscus.app/api/oauth/authorize?redirect_uri=${encodeURIComponent(window.location.href)}`;
+}
+
 
 const MONTHS_IT = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
 
@@ -138,8 +147,9 @@ function consumeGiscusSession(): string | null {
 
 export function Feedback() {
   const [initialSession] = useState<string | null>(() => consumeGiscusSession());
-  const [loaded, setLoaded] = useState<boolean>(() => Boolean(initialSession));
+  // l'elenco si carica solo con l'accesso a GitHub: senza accesso nessuna chiamata
   const [logged, setLogged] = useState<boolean>(() => Boolean(initialSession));
+  const loaded = logged;
   const [cat, setCat] = useState<CategoryFilter>('all');
   const [sort, setSort] = useState<'recent' | 'comments'>('recent');
   const [page, setPage] = useState<number>(0);
@@ -149,121 +159,89 @@ export function Feedback() {
   const [mine, setMine] = useState<DiscussionRow[]>([]);
   const [discussions, setDiscussions] = useState<DiscussionRow[]>([]);
   const [discussionsLoaded, setDiscussionsLoaded] = useState<boolean>(false);
-  const [rateLimited, setRateLimited] = useState<{ limited: boolean; resetMinutes: number | null }>({
-    limited: false,
-    resetMinutes: null,
-  });
+  const [loadError, setLoadError] = useState<boolean>(false);
   const [firstAuthors, setFirstAuthors] = useState<Record<number, string | null>>({});
   const hostRef = useRef<HTMLDivElement>(null);
 
-  // Una sola richiesta REST all'apertura dell'elenco (SPEC par. 3.0 Pagina I): fino a 100 discussioni, calcoli nel browser.
+  // Con l'accesso: token dalla sessione Giscus, poi l'elenco con GraphQL (5.000 punti l'ora per utente, nessun limite per IP).
   useEffect(() => {
-    if (!loaded) return;
-    let cancelled = false;
-    fetch(`https://api.github.com/repos/${GISCUS_REPO}/discussions?per_page=100`, {
-      headers: { Accept: 'application/vnd.github+json' },
-    })
-      .then(async (r) => {
-        if (cancelled) return;
-        const remaining = r.headers.get('x-ratelimit-remaining');
-        if (r.status === 429 || (r.status === 403 && (remaining === '0' || remaining === null))) {
-          const resetHeader = r.headers.get('x-ratelimit-reset');
-          const resetSec = resetHeader ? Number(resetHeader) : NaN;
-          const resetMinutes = Number.isFinite(resetSec)
-            ? Math.max(1, Math.ceil((resetSec * 1000 - Date.now()) / 60000))
-            : 60;
-          setRateLimited({ limited: true, resetMinutes });
-          setDiscussionsLoaded(true);
-          return;
-        }
-        if (!r.ok) {
-          setDiscussionsLoaded(true);
-          return;
-        }
-        const data = (await r.json()) as unknown;
-        if (cancelled || !Array.isArray(data)) return;
-        const todayIso = new Date().toISOString().slice(0, 10);
-        const rows: DiscussionRow[] = (data as GhDiscussionApiItem[])
-          .filter(
-            (d) =>
-              ALLOWED_SLUGS.has(d.category?.slug ?? '') || ALLOWED_NAMES.has(d.category?.name ?? ''),
-          )
-          .map((d) => {
-            const catObj =
-              DISCUSSION_CATEGORIES.find(
-                (c) => c.slug === d.category?.slug || c.name === d.category?.name,
-              ) ?? DISCUSSION_CATEGORIES[0]!;
-            const userLogin =
-              d.user?.login && d.user.login !== 'giscus[bot]' ? d.user.login : null;
-            return {
-              n: d.number,
-              title: d.title,
-              author: userLogin,
-              date: (d.created_at || d.updated_at || todayIso).slice(0, 10),
-              cat: catObj.name,
-              comments: d.comments ?? 0,
-              answered: Boolean(d.answer_chosen_at),
-              locked: Boolean(d.locked),
-            };
-          });
-        setRateLimited({ limited: false, resetMinutes: null });
-        setDiscussions(rows);
-        setDiscussionsLoaded(true);
-      })
-      .catch(() => {
-        if (!cancelled) setDiscussionsLoaded(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [loaded]);
-
-  // Con l'accesso, una sola richiesta GraphQL recupera l'autore del primo commento per le discussioni create da giscus[bot].
-  useEffect(() => {
-    if (!loaded || !logged) return;
+    if (!logged) return;
     const session = consumeGiscusSession();
     if (!session) {
       setLogged(false);
       return;
     }
     let cancelled = false;
-    fetch('https://giscus.app/api/oauth/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ session }),
-    })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((tokData: { token?: string } | null) => {
-        if (cancelled || !tokData?.token) return null;
-        return fetch('https://api.github.com/graphql', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${tokData.token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: FIRST_COMMENT_AUTHORS_QUERY,
-            variables: { owner: REPO_OWNER, name: REPO_NAME },
-          }),
-        });
-      })
-      .then((r) => (r && r.ok ? r.json() : null))
-      .then((res) => {
-        if (cancelled || !res?.data?.repository?.discussions?.nodes) return;
-        const map: Record<number, string | null> = {};
-        for (const node of res.data.repository.discussions.nodes as {
-          number: number;
-          comments?: { nodes?: { author?: { login?: string } | null }[] };
-        }[]) {
-          map[node.number] = node.comments?.nodes?.[0]?.author?.login ?? null;
+    const run = async () => {
+      const tr = await fetch('https://giscus.app/api/oauth/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ session }),
+      });
+      const tok = tr.ok ? ((await tr.json()) as { token?: string }) : null;
+      if (!tok?.token) {
+        // sessione scaduta o revocata: si torna al pulsante di accesso
+        try {
+          window.localStorage.removeItem('giscus-session');
+        } catch {
+          // niente da cancellare
         }
-        setFirstAuthors(map);
-      })
-      .catch(() => {});
+        if (!cancelled) setLogged(false);
+        return;
+      }
+      const nodes: GqlDiscussion[] = [];
+      let after: string | null = null;
+      for (let page = 0; page < 10; page++) {
+        const r: Response = await fetch('https://api.github.com/graphql', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${tok.token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: DISCUSSIONS_QUERY, variables: { owner: REPO_OWNER, name: REPO_NAME, after } }),
+        });
+        if (!r.ok) throw new Error(`GraphQL ${r.status}`);
+        const res = (await r.json()) as {
+          data?: { repository?: { discussions?: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: GqlDiscussion[] } } };
+        };
+        const d = res.data?.repository?.discussions;
+        if (!d) throw new Error('GraphQL senza dati');
+        nodes.push(...d.nodes);
+        if (!d.pageInfo.hasNextPage) break;
+        after = d.pageInfo.endCursor;
+      }
+      if (cancelled) return;
+      const rows: DiscussionRow[] = nodes
+        .filter((d) => ALLOWED_SLUGS.has(d.category?.slug ?? '') || ALLOWED_NAMES.has(d.category?.name ?? ''))
+        .map((d) => {
+          const catObj =
+            DISCUSSION_CATEGORIES.find((c) => c.slug === d.category?.slug || c.name === d.category?.name) ?? DISCUSSION_CATEGORIES[0]!;
+          const login = d.author?.login && d.author.login !== 'giscus' && d.author.login !== 'giscus[bot]' ? d.author.login : null;
+          return {
+            n: d.number,
+            title: d.title,
+            author: login,
+            date: d.createdAt.slice(0, 10),
+            cat: catObj.name,
+            comments: d.comments.totalCount,
+            answered: Boolean(d.answerChosenAt),
+            locked: d.locked,
+          };
+        });
+      const authors: Record<number, string | null> = {};
+      for (const d of nodes) authors[d.number] = d.comments.nodes[0]?.author?.login ?? null;
+      setFirstAuthors(authors);
+      setDiscussions(rows);
+      setLoadError(false);
+      setDiscussionsLoaded(true);
+    };
+    run().catch(() => {
+      if (!cancelled) {
+        setLoadError(true);
+        setDiscussionsLoaded(true);
+      }
+    });
     return () => {
       cancelled = true;
     };
-  }, [loaded, logged]);
+  }, [logged]);
 
   const all = useMemo(() => [...mine, ...discussions], [mine, discussions]);
 
@@ -287,7 +265,7 @@ export function Feedback() {
 
   // Monta Giscus quando una discussione è aperta (`data-mapping="number"` per discussioni esistenti, `"specific"` per argomenti appena creati).
   useEffect(() => {
-    if (!loaded || rateLimited.limited || !th) return;
+    if (!loaded || !th) return;
     const host = hostRef.current;
     if (!host) return;
     const catObj =
@@ -340,7 +318,7 @@ export function Feedback() {
     script.setAttribute('data-theme', theme);
     script.setAttribute('data-lang', 'it');
     host.appendChild(script);
-  }, [loaded, rateLimited.limited, th]);
+  }, [loaded, th]);
 
   const who = (d: DiscussionRow): { lead: string; author: string } => {
     if (d.isCustom) return { lead: 'aperta da', author: d.author || 'tu' };
@@ -373,8 +351,8 @@ export function Feedback() {
     setOpenId(n);
   };
 
-  const showList = loaded && !rateLimited.limited && !th;
-  const inThread = loaded && !rateLimited.limited && Boolean(th);
+  const showList = loaded && !loadError && !th;
+  const inThread = loaded && Boolean(th);
   const hasPages = showList && list.length > 0;
   const thWho = th ? who(th) : { lead: 'aperta', author: '' };
 
@@ -450,9 +428,12 @@ export function Feedback() {
             type="button"
             className="btn ghost fb-new-btn"
             onClick={() => {
+              if (!logged) {
+                window.location.assign(giscusLoginUrl());
+                return;
+              }
               setEditing(true);
               setOpenId(null);
-              setLoaded(true);
             }}
           >
             + Nuovo argomento
@@ -481,27 +462,20 @@ export function Feedback() {
               ))}
             </div>
             <div className="fb-gate-overlay">
-              <button type="button" className="fb-load" onClick={() => setLoaded(true)}>
-                Mostra le discussioni
-              </button>
-              <span className="fb-gate-note">
-                Si collega a GitHub solo dopo il clic · se hai già fatto l’accesso si aprono da sole
-              </span>
+              <a className="fb-load fb-login" href={giscusLoginUrl()} data-testid="fb-login">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                Accedi con GitHub
+              </a>
             </div>
           </div>
         )}
 
-        {loaded && rateLimited.limited && (
-          <div role="alert" className="fb-limit" data-testid="fb-limit">
-            <strong className="fb-limit-title">
-              GitHub ha messo in pausa le richieste da questa rete
-            </strong>
-            <span className="fb-limit-text">
-              Senza accesso a GitHub ne permette 60 l’ora. Riprova tra{' '}
-              {rateLimited.resetMinutes ?? 1}{' '}
-              {rateLimited.resetMinutes === 1 ? 'minuto' : 'minuti'}, oppure leggi le discussioni
-              direttamente su GitHub.
-            </span>
+        {loaded && loadError && (
+          <div role="alert" className="fb-limit" data-testid="fb-error">
+            <strong className="fb-limit-title">Non riesco a caricare le discussioni da GitHub</strong>
+            <span className="fb-limit-text">Riprova tra poco, oppure leggile direttamente su GitHub.</span>
             <a
               href={`https://github.com/${GISCUS_REPO}/discussions`}
               target="_blank"

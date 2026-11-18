@@ -232,49 +232,50 @@ test('pill "BETA" nell\'header senza tooltip', async ({ page }) => {
   await expect(page.locator('#beta-tip')).toHaveCount(0);
 });
 
-test('barra reazioni nel footer e pagina Discussioni e feedback con elenco a pagine e discussione aperta (SPEC par. 3.0 Pagina I)', async ({ page }) => {
-  await page.route('https://api.github.com/repos/nine1zero/pac-vs-fp/discussions?per_page=100', (route) =>
+test('barra reazioni nel footer e pagina Discussioni e feedback: elenco solo dopo l\'accesso con GitHub (SPEC par. 3.0 Pagina I)', async ({ page }) => {
+  const githubCalls: string[] = [];
+  page.on('request', (r) => {
+    if (r.url().startsWith('https://api.github.com/')) githubCalls.push(r.url());
+  });
+  await page.route('https://giscus.app/api/oauth/token', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ token: 'token-di-prova' }) }),
+  );
+  const node = (number: number, title: string, comments: number, createdAt: string, category: [string, string], extra: Record<string, unknown> = {}) => ({
+    number,
+    title,
+    createdAt,
+    locked: false,
+    answerChosenAt: null,
+    author: { login: 'giscus' },
+    category: { name: category[0], slug: category[1] },
+    comments: { totalCount: comments, nodes: comments ? [{ author: { login: 'nine1zero' } }] : [] },
+    ...extra,
+  });
+  await page.route('https://api.github.com/graphql', (route) =>
     route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify([
-        {
-          number: 20,
-          title: 'Ideas — Proposte e nuove funzioni',
-          comments: 1,
-          created_at: '2026-11-17T01:11:33Z',
-          answer_chosen_at: null,
-          locked: false,
-          user: { login: 'giscus[bot]' },
-          category: { name: 'Ideas', slug: 'ideas' },
+      body: JSON.stringify({
+        data: {
+          repository: {
+            discussions: {
+              pageInfo: { hasNextPage: false, endCursor: null },
+              nodes: [
+                node(24, 'nuovo argomento prova', 2, '2026-11-17T02:49:39Z', ['General', 'general'], { locked: true }),
+                node(22, 'Q&A — Domande sul modello e sul fondo', 4, '2026-11-17T01:37:22Z', ['Q&A', 'q-a'], { answerChosenAt: '2026-11-17T05:00:00Z' }),
+                node(20, 'Ideas — Proposte e nuove funzioni', 1, '2026-11-17T01:11:33Z', ['Ideas', 'ideas']),
+              ],
+            },
+          },
         },
-        {
-          number: 22,
-          title: 'Q&A — Domande sul modello e sul fondo',
-          comments: 4,
-          created_at: '2026-11-17T01:37:22Z',
-          answer_chosen_at: '2026-11-17T05:00:00Z',
-          locked: false,
-          user: { login: 'giscus[bot]' },
-          category: { name: 'Q&A', slug: 'q-a' },
-        },
-        {
-          number: 24,
-          title: 'nuovo argomento prova',
-          comments: 2,
-          created_at: '2026-11-17T02:49:39Z',
-          answer_chosen_at: null,
-          locked: true,
-          user: { login: 'giscus[bot]' },
-          category: { name: 'General', slug: 'general' },
-        },
-      ]),
+      }),
     }),
   );
 
   const bar = page.getByTestId('foot-giscus-bar');
   await expect(bar).toBeVisible();
   const footReactions = bar.getByTestId('foot-giscus-reactions').locator('script[src="https://giscus.app/client.js"]');
+  // reazioni sempre visibili, anche senza accesso (modificarle richiede l'accesso a GitHub)
   await expect(footReactions).toBeAttached();
   await expect(footReactions).toHaveAttribute('data-reactions-enabled', '1');
   await expect(footReactions).toHaveAttribute('data-theme', /giscus-reactions-only\.css/);
@@ -295,13 +296,16 @@ test('barra reazioni nel footer e pagina Discussioni e feedback con elenco a pag
   const sorts = page.getByRole('radiogroup', { name: 'Ordine' });
   await expect(sorts.getByRole('radio', { name: 'Più recenti' })).toHaveAttribute('aria-checked', 'true');
 
-  // Prima del clic: righe segnaposto e un solo pulsante "Mostra le discussioni" (nessun "Accedi con GitHub" qui)
+  // Senza accesso: solo il pulsante "Accedi con GitHub" e nessuna chiamata a GitHub
   const gate = page.getByTestId('fb-gate');
-  await expect(gate).toContainText('Si collega a GitHub solo dopo il clic · se hai già fatto l’accesso si aprono da sole');
-  await expect(gate.getByRole('button', { name: 'Accedi con GitHub' })).toHaveCount(0);
+  const login = gate.getByRole('link', { name: 'Accedi con GitHub' });
+  await expect(login).toHaveAttribute('href', /^https:\/\/giscus\.app\/api\/oauth\/authorize\?redirect_uri=/);
+  await expect(gate.getByRole('button')).toHaveCount(0);
   await expect(page.getByTestId('giscus-host')).toHaveCount(0);
+  expect(githubCalls).toEqual([]);
 
-  await gate.getByRole('button', { name: 'Mostra le discussioni' }).click();
+  // Ritorno dall'accesso: Giscus aggiunge ?giscus=<sessione> all'URL
+  await page.goto('./?giscus=sessione-di-prova#/feedback');
 
   // Elenco caricato, conteggi categorie e barra delle pagine visibile
   await expect(cats.getByRole('radio', { name: /^Tutte 3$/ })).toBeVisible();
@@ -348,29 +352,3 @@ test('barra reazioni nel footer e pagina Discussioni e feedback con elenco a pag
   await expect(pageGiscus).toHaveAttribute('data-mapping', 'specific');
   await expect(pageGiscus).toHaveAttribute('data-term', 'Nuova proposta test');
 });
-
-test('Discussioni e feedback: messaggio quando GitHub limita le richieste (403 rate limit)', async ({ page }) => {
-  const resetEpoch = Math.floor(Date.now() / 1000) + 12 * 60;
-  await page.route('https://api.github.com/repos/nine1zero/pac-vs-fp/discussions?per_page=100', (route) =>
-    route.fulfill({
-      status: 403,
-      headers: {
-        'access-control-expose-headers': 'x-ratelimit-remaining, x-ratelimit-reset',
-        'x-ratelimit-remaining': '0',
-        'x-ratelimit-reset': String(resetEpoch),
-      },
-      body: JSON.stringify({ message: 'API rate limit exceeded' }),
-    }),
-  );
-  await page.goto('./#/feedback');
-  await page.getByRole('button', { name: 'Mostra le discussioni' }).click();
-  const alert = page.getByTestId('fb-limit');
-  await expect(alert).toBeVisible();
-  await expect(alert).toContainText('GitHub ha messo in pausa le richieste da questa rete');
-  await expect(alert).toContainText('Riprova tra 12 minuti');
-  await expect(alert.getByRole('link', { name: 'Apri le discussioni su GitHub ↗' })).toHaveAttribute(
-    'href',
-    'https://github.com/nine1zero/pac-vs-fp/discussions',
-  );
-});
-

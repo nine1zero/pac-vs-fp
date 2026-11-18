@@ -3158,3 +3158,11 @@ input[type='range'].r:disabled {
   width: 100%;
   border: none;
 }
+
+/* pulsante "Accedi con GitHub" nella pagina Discussioni e feedback (è un link all'accesso di Giscus) */
+.fb-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}

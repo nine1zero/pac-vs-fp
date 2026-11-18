@@ -1,5 +1,18 @@
 # Registro delle modifiche
 
+
+## 2026-11-18 · Discussioni e feedback: elenco solo dopo l'accesso con GitHub
+
+- **Prima dell'accesso** la pagina mostra solo il pulsante `Accedi con GitHub` (accesso di Giscus) e non fa nessuna chiamata a GitHub. `+ Nuovo argomento` senza accesso porta all'accesso. Richiesta dell'autore.
+- **Dopo l'accesso** l'elenco arriva con una richiesta GraphQL fatta con il token dell'utente (5.000 punti l'ora per persona). Sostituisce la chiamata REST senza accesso a `/repos/…/discussions?per_page=100`, che:
+  - aveva il limite di 60 richieste l'ora per IP, condiviso da tutta una rete aziendale;
+  - era senza documentazione ufficiale;
+  - restituiva al massimo 100 discussioni.
+
+  La stessa richiesta dà anche l'autore del primo commento: tolta la seconda chiamata GraphQL. Tolto il messaggio sul limite delle 60 l'ora; restano il ritorno al pulsante con una sessione scaduta e un messaggio se GitHub non risponde.
+- **Reazioni nel footer**: invariate, visibili a tutti anche senza accesso (decisione dell'autore). Si caricano dal widget Giscus e non consumano il limite di GitHub per IP; per aggiungerne serve l'accesso.
+- Test: senza accesso solo il pulsante e nessuna chiamata a `api.github.com`; con una sessione simulata, elenco da GraphQL, pagine, ordine, discussione aperta e nuovo argomento.
+
 ## 2026-11-17 · design: Discussioni e feedback con elenco a pagine (prototipi)
 
 - `spec/design/v2/Feedback.dc.html` rifatto dal canvas: testata come le altre pagine, elenco di tutti gli argomenti a pagine in stile GitHub (senza icone di categoria e senza voti), categorie `Tutte`/General/Ideas/Q&A con conteggi, ordine `Più recenti`/`Più commentate`, `+ Nuovo argomento`, un solo pulsante `Mostra le discussioni` (apertura automatica con sessione Giscus salvata), messaggio per il limite di richieste di GitHub.
