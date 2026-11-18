@@ -87,7 +87,7 @@ input,select{font:inherit}
         <h1 class="h1" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 500; letter-spacing: -1.2px">Discussioni e <span class="mark">feedback</span></h1>
         <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #3A3D42">Domande, errori trovati o idee: ogni argomento è una discussione pubblica su GitHub. Scegli una categoria, apri un argomento o creane uno nuovo.</p>
       </div>
-      <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 6px"><span aria-hidden="true">←</span> Torna al simulatore</a>
+      <a href="Landing.dc.html" class="btn ghost" style="flex: none; margin-top: 24px"><span aria-hidden="true">←</span> Torna al simulatore</a>
     </section>
 
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px">
@@ -107,16 +107,15 @@ input,select{font:inherit}
             <sc-for list="{{ skel }}" as="x" hint-placeholder-count="3"><span style="display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-bottom: 1px solid #ECECEA"><span style="width: 44px; height: 26px; border-radius: 99px; background: #ECECEA"></span><span style="display: flex; flex-direction: column; gap: 7px; flex: 1"><span style="{{ x.a }}"></span><span style="{{ x.b }}"></span></span></span></sc-for>
           </div>
           <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
-            <button type="button" class="fb-load" onClick="{{ load }}" style="font: inherit; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 11px; border: none; background: #0B0B0B; color: #F4F4F2; cursor: pointer">Mostra le discussioni</button>
-            <span style="font-size: 12.5px; color: #5C6168">Si collega a GitHub solo dopo il clic · se hai già fatto l’accesso si aprono da sole</span>
+            <button type="button" class="fb-load" onClick="{{ login }}" style="display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 11px; border: none; background: #0B0B0B; color: #F4F4F2; cursor: pointer"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Accedi con GitHub</button>
           </div>
         </div>
       </sc-if>
 
-      <sc-if value="{{ limited }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ failed }}" hint-placeholder-val="{{ false }}">
         <div role="alert" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px 20px">
-          <strong style="font-size: 15px">GitHub ha messo in pausa le richieste da questa rete</strong>
-          <span style="font-size: 14px; line-height: 1.5; color: #3A3D42">Senza accesso a GitHub ne permette 60 l’ora. Riprova tra [N] minuti, oppure leggi le discussioni direttamente su GitHub.</span>
+          <strong style="font-size: 15px">Non riesco a caricare le discussioni da GitHub</strong>
+          <span style="font-size: 14px; line-height: 1.5; color: #3A3D42">Riprova tra poco, oppure leggile direttamente su GitHub.</span>
           <a href="https://github.com/nine1zero/pac-vs-fp/discussions" target="_blank" rel="noopener noreferrer" class="btn ghost" style="padding: 7px 12px; font-size: 13.5px">Apri le discussioni su GitHub ↗</a>
         </div>
       </sc-if>
@@ -225,8 +224,7 @@ input,select{font:inherit}
       </nav>
     </sc-if>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding-top: 6px">
-      <span style="font-size: 13px; color: #5C6168; line-height: 1.5; max-width: 760px">Una sola richiesta alle API di GitHub all’apertura (fino a 100 discussioni): categorie, conteggi, ordine e pagine si calcolano nel browser. La discussione aperta e i commenti sono Giscus; la data di un commento lo apre su GitHub, dove chi l’ha scritto lo modifica o cancella; «MD» apre la guida alla formattazione. Con l’accesso, chi ha aperto la discussione è l’autore del primo commento (Giscus le crea a nome di giscus[bot]). Nel prototipo: le 5 discussioni reali al 17/11/2026, 4 per pagina.</span>
+    <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 6px">
       <a href="Landing.dc.html" class="btn ghost"><span aria-hidden="true">←</span> Torna al simulatore</a>
     </div>
   </main>
@@ -238,12 +236,12 @@ input,select{font:inherit}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"limiteGitHub":{"editor":"boolean","default":false,"section":"Stati"},"$preview":{"width":1280,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"erroreGitHub":{"editor":"boolean","default":false,"section":"Stati"},"$preview":{"width":1280,"height":900}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { cat: 'all', sort: 0, page: 0, open: null, editing: false, text: '', mine: [], loaded: false, logged: false, csort: 0, tab: 0, draft: '', voted: false, reply: false }; }
   renderVals() {
     var self = this, s = this.state, ink = '#0B0B0B', lime = '#D4EE36', PER = 4;
-    // discussioni reali del repository (GitHub REST GET /repos/nine1zero/pac-vs-fp/discussions, 17/11/2026 18:40):
+    // discussioni reali del repository (lette dalle API di GitHub il 17/11/2026 18:40; nell'app: GraphQL dopo l'accesso):
     // numero, titolo, chi l'ha aperta, data, categoria, commenti, voti (+1). Nell'app arrivano dalle API a pagine (header Link).
     // Giscus crea le discussioni a nome di giscus[bot]: chi l'ha aperta è l'autore del primo commento
     // (GET .../discussions/{n}/comments, 17/11/2026 18:47); senza commenti non c'è una persona da mostrare (null).
@@ -269,9 +267,9 @@ class Component extends DCLogic {
       22: [{ id: 19667454, b: 'test', up: null, rep: [[19668567, 'test']] }, { id: 19686054, b: 'prova', up: null, rep: [[19686715, 'seqese']] }] };
     // modifica e cancellazione su GitHub: link al commento (solo per i propri commenti, visibile al passaggio del mouse)
     var curl = function (n, id) { return 'https://github.com/nine1zero/pac-vs-fp/discussions/' + n + '#discussioncomment-' + id; };
-    var ok = s.logged && (s.draft || '').trim(), known = th && CM[th.n], on = s.loaded || s.logged, lim = !!this.props.limiteGitHub;
-    // senza accesso niente nome: l'autore del primo commento costerebbe una richiesta in più per riga; con l'accesso arriva con una sola richiesta GraphQL
-    var who = function (d) { return !s.logged ? { lead: 'aperta', author: '' } : d.author ? { lead: 'aperta da', author: d.author } : { lead: 'creata da', author: 'giscus' }; };
+    var ok = s.logged && (s.draft || '').trim(), known = th && CM[th.n], on = s.logged, lim = !!this.props.erroreGitHub;
+    // elenco solo dopo l'accesso con GitHub (GraphQL con il token dell'utente): autore del primo commento nella stessa richiesta
+    var who = function (d) { return d.author ? { lead: 'aperta da', author: d.author } : { lead: 'creata da', author: 'giscus' }; };
     var at = null, err = false;
     try { var raw = window.localStorage.getItem('pacfondo.v1'); if (raw) at = JSON.parse(raw).at || null; } catch (e) { err = true; }
     var pgStyle = function (on) { return 'font:inherit;font-size:13.5px;font-weight:600;min-width:32px;height:32px;padding:0 8px;border-radius:9px;cursor:pointer;color:' + ink + ';border:' + (on ? 'none' : '1px solid transparent') + ';background:' + (on ? lime : 'transparent'); };
@@ -283,11 +281,11 @@ class Component extends DCLogic {
       cats: C.map(function (x) { var on = s.cat === x[0], cnt = x[0] === 'all' ? all.length : all.filter(function (d) { return d.cat === x[0]; }).length;
         return { name: x[1], n: String(cnt), on: on ? 'true' : 'false', pick: function () { self.setState({ cat: x[0], page: 0, open: null, editing: false }); }, style: 'padding:6px 13px;font-size:13.5px;' + (on ? 'background:#FFFFFF' : '') }; }),
       sorts: ['Più recenti', 'Più commentate'].map(function (l, k) { return { label: l, on: s.sort === k ? 'true' : 'false', pick: function () { self.setState({ sort: k, page: 0 }); } }; }),
-      startNew: function () { self.setState({ editing: true, open: null, loaded: true }); }, cancelNew: function () { self.setState({ editing: false, text: '' }); },
+      startNew: function () { self.setState({ editing: true, open: null, loaded: true, logged: true }); }, cancelNew: function () { self.setState({ editing: false, text: '' }); },
       text: s.text, setText: function (e) { self.setState({ text: e.target.value }); }, setTopic: add, newCat: label[newCat],
       keyNew: function (e) { if (e.key === 'Enter') add(); if (e.key === 'Escape') self.setState({ editing: false, text: '' }); },
       // con una sessione Giscus già salvata (accesso fatto in precedenza) l'elenco si apre da solo, come nell'app
-      editing: s.editing, notLoaded: !on, limited: on && lim, showList: on && !lim && !th, inThread: on && !lim && !!th, empty: on && !lim && !th && !list.length,
+      editing: s.editing, notLoaded: !on, failed: on && lim, showList: on && !lim && !th, inThread: on && !lim && !!th, empty: on && !lim && !th && !list.length,
       skel: [0, 1, 2].map(function (i) { return { a: 'height:9px;border-radius:99px;background:#ECECEA;width:' + [62, 48, 70][i] + '%', b: 'height:7px;border-radius:99px;background:#F1F1EF;width:' + [34, 28, 40][i] + '%' }; }),
       load: function () { self.setState({ loaded: true }); }, login: function () { self.setState({ logged: true, loaded: true }); }, logout: function () { self.setState({ logged: false }); },
       rows: shown.map(function (d) { var w = who(d); return { title: d.title, lead: w.lead, author: w.author, date: fmtD(d.date), cat: label[d.cat], comments: String(d.comments), answered: d.answered, locked: d.locked,

@@ -1,5 +1,10 @@
 # Registro delle modifiche
 
+## 2026-11-19 · design: "Torna al simulatore" staccato dal fumetto e prototipi di Discussioni e feedback allineati all'app
+
+- Prototipi di Storico, Parametri e fonti, I miei versamenti e Discussioni e feedback: il pulsante `← Torna al simulatore` in cima scende di 24 px (prima 6 px), perché toccava il fumetto "Migliora il repo" sotto il logo GitHub. Il fumetto, già nell'header dell'app in tutte le pagine, ora c'è anche nei prototipi di quelle pagine. Nell'app: `.back-top` in `src/styles/base.css`, `margin-top: 24px`.
+- `Feedback.dc.html` e `FeedbackAperta.dc.html` allineati a `a3a8799` e `0a99bf7`: prima dell'accesso solo `Accedi con GitHub`, elenco e autori dopo l'accesso, `+ Nuovo argomento` senza accesso porta all'accesso, messaggio "Non riesco a caricare le discussioni da GitHub" (interruttore `erroreGitHub`), nessuna nota tecnica in fondo alla pagina.
+
 
 ## 2026-11-18 · Discussioni e feedback: elenco solo dopo l'accesso con GitHub
 
