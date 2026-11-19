@@ -3,7 +3,7 @@ import { AreaRiservata } from '../AreaRiservata';
 import { useMemo, useState } from 'react';
 import { azionario, etfMonthly, etfMonthlySources, type PriceColumn } from '../../data';
 import { etfCatalog } from '../../data/catalog';
-import { monthlySeries } from '../../model/contributions';
+import { monthlySeries, priceCoverage } from '../../model/contributions';
 import { useStore } from '../../state/store';
 import { LegendItem, TimeChart } from '../charts/TimeChart';
 import { Segmented } from '../controls';
@@ -18,7 +18,8 @@ const mm = (iso: string) => `${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
 const sign = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '') + euro(Math.abs(v));
 
 /** Serie mensile dei prezzi di ogni ETF del simulatore in etf_monthly.csv (null = non ancora nei dati). */
-const PRICE_COLUMN: Record<string, PriceColumn | null> = { vanguard: null, spdrimi: null, ishares: 'acwi_eur' };
+const PRICE_COLUMN: Record<string, PriceColumn | null> = { vanguard: 'vanguard_eur', spdrimi: 'spdr_imi_eur', ishares: 'acwi_eur' };
+const COLUMN_SOURCE = etfMonthlySources['etf_monthly.csv'].columns as Record<string, string>;
 
 /** Gli stessi tre ETF del menù del simulatore, nello stesso ordine (SPEC par. 3.0, pagina G). */
 const ETFS = etfCatalog.etfs.map((e) => ({
@@ -29,21 +30,36 @@ const ETFS = etfCatalog.etfs.map((e) => ({
 }));
 type EtfOption = (typeof ETFS)[number];
 const MISSING_SERIES = 'serie mensile dei prezzi non ancora nei dati: da aggiungere con la sua fonte';
-const PRICE_SOURCE = `${etfMonthlySources['etf_monthly.csv'].source}.`;
+const priceSource = (col: PriceColumn) => `${etfMonthlySources['etf_monthly.csv'].source}. ${COLUMN_SOURCE[col] ?? ''}`.trim();
+/** Perché un ETF non si può scegliere con questo file (null = si può). */
+type Avail = Record<string, string | null>;
 
 export function Versamenti() {
   const { state } = useStore();
   const { readFile, useSample, busy } = useImport();
   // preselezionato l'ETF scelto nel simulatore, se ha la serie mensile dei prezzi
-  const [etf, setEtf] = useState(() => (ETFS.find((e) => e.id === state.inputs.etf_id)?.col ? state.inputs.etf_id : 'ishares'));
+  const [etf, setEtf] = useState(() => state.inputs.etf_id);
   const [mode, setMode] = useState<'in' | 'out'>('in');
   const [year, setYear] = useState('all');
   const [tipo, setTipo] = useState('all');
   const file = state.file;
   const res = file?.result;
   const ok = res && res.status !== 'error';
-  const opt = ETFS.find((e) => e.id === etf && e.col) ?? ETFS.find((e) => e.col)!;
-  const series = useMemo(() => (ok ? monthlySeries(res.movements, azionario, etfMonthly, opt.col!) : null), [ok, res, opt]);
+  const avail: Avail = useMemo(() => {
+    const out: Avail = {};
+    for (const e of ETFS) {
+      if (!e.col) out[e.id] = MISSING_SERIES;
+      else if (!ok) out[e.id] = null;
+      else {
+        const c = priceCoverage(res.movements, etfMonthly, e.col);
+        out[e.id] = c.covered ? null : `serie mensile dei prezzi dal ${mm(c.from)}, i tuoi versamenti iniziano a ${mm(c.firstNeeded!)}`;
+      }
+    }
+    return out;
+  }, [ok, res]);
+  const usable = (id: string) => ETFS.some((e) => e.id === id && e.col && avail[id] === null);
+  const opt = ETFS.find((e) => e.id === (usable(etf) ? etf : usable(etfCatalog.default) ? etfCatalog.default : ETFS.find((x) => usable(x.id))?.id ?? 'ishares'))!;
+  const series = useMemo(() => (ok && opt.col ? monthlySeries(res.movements, azionario, etfMonthly, opt.col) : null), [ok, res, opt]);
 
   if (!ok) {
     return (
@@ -121,7 +137,7 @@ export function Versamenti() {
           ))}
         </ul>
       )}
-      {series && !res.reduced ? <Chart series={series} etf={opt} mode={mode} setEtf={setEtf} setMode={setMode} /> : (
+      {series && !res.reduced ? <Chart series={series} etf={opt} avail={avail} mode={mode} setEtf={setEtf} setMode={setMode} /> : (
         <p className="card">Il file non ha le colonne delle quote (fondo solo assicurativo): niente posizione reale né confronto con l'ETF, solo i movimenti.</p>
       )}
       <section className="card col">
@@ -228,12 +244,14 @@ export function Versamenti() {
 function Chart({
   series,
   etf,
+  avail,
   mode,
   setEtf,
   setMode,
 }: {
   series: NonNullable<ReturnType<typeof monthlySeries>>;
   etf: EtfOption;
+  avail: Avail;
   mode: 'in' | 'out';
   setEtf: (v: string) => void;
   setMode: (v: 'in' | 'out') => void;
@@ -266,7 +284,7 @@ function Chart({
           cap="Stessi versamenti nell'ETF"
           val={euro(ser[L]!)}
           sub={`${sign(diff)} rispetto al fondo`}
-          src={`Ogni versamento netto comprato al prezzo di fine mese della sua data valore; "dentro il fondo" con l'imposta annua del fondo (docs/FORMULE.md par. 10). Prezzi: ${PRICE_SOURCE}`}
+          src={`Ogni versamento netto comprato al prezzo di fine mese della sua data valore; "dentro il fondo" con l'imposta annua del fondo (docs/FORMULE.md par. 10). Prezzi: ${priceSource(etf.col!)}`}
         />
       </div>
       <section className="card col">
@@ -284,20 +302,21 @@ function Chart({
           <div className="col tight controls-left">
             <span className="chips" role="radiogroup" aria-label="ETF di confronto">
               {ETFS.map((e) => {
-                const avail = e.col !== null;
+                const why = avail[e.id] ?? null;
+                const ok = why === null;
                 return (
                   <button
                     key={e.id}
                     type="button"
                     role="radio"
                     aria-checked={etf.id === e.id}
-                    aria-disabled={!avail || undefined}
-                    className={`chip${avail ? '' : ' unavailable'}`}
-                    title={avail ? e.title : `${e.title} · ${MISSING_SERIES}`}
-                    onClick={() => avail && setEtf(e.id)}
+                    aria-disabled={!ok || undefined}
+                    className={`chip${ok ? '' : ' unavailable'}`}
+                    title={ok ? e.title : `${e.title} · ${why}`}
+                    onClick={() => ok && setEtf(e.id)}
                   >
                     {e.label}
-                    {!avail && <span className="sr-only"> ({MISSING_SERIES})</span>}
+                    {!ok && <span className="sr-only"> ({why})</span>}
                   </button>
                 );
               })}
@@ -352,7 +371,7 @@ function Chart({
         <span className="text-sm muted">
           Fondo: quote accumulate × valore quota dell'ultimo movimento del mese. ETF: ogni versamento netto comprato al prezzo di fine mese della sua data valore.
           "Dentro il fondo" applica ogni anno la stessa imposta sui rendimenti del fondo; "fuori" mostra il valore prima del 26% sulle plusvalenze. Passa il mouse sul
-          grafico, o usa le frecce, per i valori di ogni mese. <Src kind="Emittente" source={PRICE_SOURCE} what="prezzi degli ETF" />
+          grafico, o usa le frecce, per i valori di ogni mese. <Src kind="Emittente" source={priceSource(etf.col!)} what="prezzi degli ETF" />
         </span>
       </section>
     </>

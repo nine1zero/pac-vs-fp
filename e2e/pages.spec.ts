@@ -106,7 +106,7 @@ test.describe('I miei versamenti', () => {
 });
 
 test.describe('I miei versamenti, dal canvas', () => {
-  test('i tre ETF del simulatore nello stesso ordine; senza serie mensile la voce è disattivata', async ({ page }) => {
+  test('i tre ETF del simulatore nello stesso ordine, tutti con la serie mensile', async ({ page }) => {
     await page.goto('./#/versamenti');
     await page.getByRole('button', { name: "Usa un file d'esempio" }).click();
     const radios = page.getByRole('radiogroup', { name: 'ETF di confronto' }).getByRole('radio');
@@ -114,14 +114,17 @@ test.describe('I miei versamenti, dal canvas', () => {
     await expect(radios.nth(0)).toContainText('Vanguard FTSE All-World');
     await expect(radios.nth(1)).toContainText('SPDR MSCI ACWI IMI');
     await expect(radios.nth(2)).toContainText('iShares MSCI ACWI');
-    // preselezionato l'ETF del simulatore (iShares, l'unico con la serie mensile)
+    // preselezionato l'ETF del simulatore (iShares)
     await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('.tile').nth(4)).toContainText('20.691 €');
+    // il file d'esempio parte dal 2023: tutte e tre le serie lo coprono
     for (const i of [0, 1]) {
-      await expect(radios.nth(i)).toHaveAttribute('aria-disabled', 'true');
-      await expect(radios.nth(i)).toHaveAttribute('title', /serie mensile dei prezzi non ancora nei dati/);
-      await radios.nth(i).click({ force: true });
-      await expect(radios.nth(i)).toHaveAttribute('aria-checked', 'false');
+      await expect(radios.nth(i)).not.toHaveAttribute('aria-disabled', 'true');
+      await radios.nth(i).click();
+      await expect(radios.nth(i)).toHaveAttribute('aria-checked', 'true');
+      await expect(page.locator('.tile').nth(4)).not.toContainText('20.691 €');
     }
+    await radios.nth(2).click();
     await expect(page.locator('.tile').nth(4)).toContainText('20.691 €');
   });
 });
