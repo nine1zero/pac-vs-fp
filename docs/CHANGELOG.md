@@ -1,5 +1,16 @@
 # Registro delle modifiche
 
+## 2026-11-19 · design: Discussioni e feedback con una discussione per categoria
+
+- **`spec/design/v2/Feedback.dc.html` rifatto dal canvas**: al posto dell'elenco a pagine c'è una discussione fissa per categoria, la stessa per tutti: `Annunci` (#29, bloccata, sola lettura, con il lucchetto), `General` (#27), `Ideas` (#20), `Q&A` (#16), con i contatori. Tolti `Tutte`, la paginazione, `+ Nuovo argomento` e `← Tutte le discussioni`. Decisione dell'autore: chi scrive non deve scegliere o creare un argomento.
+- **`FeedbackAperta.dc.html` tolto**: la discussione aperta ora è la pagina stessa.
+- Riga del titolo compatta: "N commenti" e `Apri su GitHub ↗` piccolo e grigio subito dopo il titolo; a destra solo l'ordine, con **`Recente` come default**.
+- Casella del commento e della risposta in una cornice arrotondata che si allunga con il testo, senza barra di scorrimento.
+- Azioni dei commenti (voto a pillola, `Rispondi` con icona, numero di risposte) sotto il testo e a sinistra, più visibili. Annunci senza riquadro bianco, senza casella, voto e risposte.
+- "Collegato a GitHub · Disconnetti" in fondo, sulla riga di `← Torna al simulatore`; tolto `Disconnessione` dalla casella.
+- **Tutte le pagine** (Landing, Storico, Parametri e fonti, I miei versamenti, Discussioni e feedback): animazione discreta della pill BETA (riflesso lime e puntino che pulsa, ferma con `prefers-reduced-motion`) e spaziature uguali (`main` con `padding: 18px 24px 32px` e `gap: 16px`; meno spazio tra `← Torna al simulatore` e il footer).
+- SPEC par. 3.0: header, spaziature e Pagina I riscritti. Solo design: `src/` da allineare.
+
 ## 2026-11-19 · design: "Torna al simulatore" staccato dal fumetto e prototipi di Discussioni e feedback allineati all'app
 
 - Prototipi di Storico, Parametri e fonti, I miei versamenti e Discussioni e feedback: il pulsante `← Torna al simulatore` in cima scende di 24 px (prima 6 px), perché toccava il fumetto "Migliora il repo" sotto il logo GitHub. Il fumetto, già nell'header dell'app in tutte le pagine, ora c'è anche nei prototipi di quelle pagine. Nell'app: `.back-top` in `src/styles/base.css`, `margin-top: 24px`.
