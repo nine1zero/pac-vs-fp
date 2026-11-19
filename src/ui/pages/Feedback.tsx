@@ -127,7 +127,7 @@ export function Feedback() {
     return () => window.removeEventListener('message', onMessage);
   }, [logged, cat]);
 
-  // Monta o aggiorna Giscus per la discussione fissa della categoria selezionata (`data-mapping="number"`).
+  // Monta Giscus per la discussione fissa della categoria selezionata (`data-mapping="number"`).
   useEffect(() => {
     if (!logged) return;
     const host = hostRef.current;
@@ -136,32 +136,6 @@ export function Feedback() {
     const theme = getGiscusThemeUrl(
       th.locked ? 'giscus-announcements.css?v=1' : 'giscus-theme.css?v=8',
     );
-
-    const iframe = host.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(
-        {
-          giscus: {
-            setConfig: {
-              theme,
-              repo: GISCUS_REPO,
-              repoId: GISCUS_REPO_ID,
-              category: th.name,
-              categoryId: th.id,
-              mapping: 'number',
-              term,
-              strict: false,
-              reactionsEnabled: false,
-              emitMetadata: true,
-              inputPosition: 'top',
-              lang: 'it',
-            },
-          },
-        },
-        'https://giscus.app',
-      );
-      return;
-    }
 
     host.innerHTML = '';
     const script = document.createElement('script');
