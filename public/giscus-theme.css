@@ -154,25 +154,31 @@ main {
   border-radius: 0 !important;
 }
 .gsc-comment-box-textarea {
-  border: none !important;
-  border-bottom: 1.5px solid #d6d6d4 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 8px 0 !important;
-  min-height: 44px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #d6d6d4 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  padding: 9px 13px !important;
+  min-height: 42px !important;
   font-size: 14.5px !important;
   line-height: 1.5 !important;
   color: #0b0b0b !important;
   box-shadow: none !important;
   outline: none !important;
+  resize: none !important;
+  overflow: hidden !important;
+  field-sizing: content;
 }
 .gsc-comment-box-textarea::placeholder {
   color: #8a8f96 !important;
   opacity: 1 !important;
 }
+.gsc-comment-box-textarea:hover {
+  border-color: #9a9ea3 !important;
+}
 .gsc-comment-box-textarea:focus {
-  border-bottom-color: #0b0b0b !important;
-  box-shadow: 0 1.5px 0 #d4ee36 !important;
+  border-color: #0b0b0b !important;
+  box-shadow: 0 0 0 3px rgba(212, 238, 54, 0.55) !important;
 }
 /* Icona MD in alto a destra sulla riga di Scrivi / Anteprima */
 .gsc-comment-box-textarea-extras {
@@ -197,12 +203,14 @@ main {
 .gsc-comment-box-markdown-hint svg {
   margin: 0 !important;
 }
-/* "Niente da mostrare in anteprima" con lo stesso grigio del segnaposto (#8A8F96) */
+/* "Niente da mostrare in anteprima" nella stessa cornice su fondo #FAFAF8 */
 .gsc-comment-box-preview {
-  min-height: 44px !important;
-  padding: 8px 0 !important;
-  border: none !important;
-  border-bottom: 1.5px solid #d6d6d4 !important;
+  box-sizing: border-box !important;
+  min-height: 42px !important;
+  padding: 9px 13px !important;
+  border: 1px solid #d6d6d4 !important;
+  border-radius: 12px !important;
+  background: #fafaf8 !important;
   font-size: 14.5px !important;
   line-height: 1.5 !important;
   color: #8a8f96 !important;
@@ -215,17 +223,9 @@ main {
   padding: 0 !important;
   gap: 10px !important;
 }
-/* Disconnessione: testo normale (non in grassetto) */
+/* Nessun "Disconnessione" nella casella (sta in fondo alla pagina) */
 .gsc-comment-box-bottom button.link-secondary {
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  color: #5c6168 !important;
-  background: transparent !important;
-  border: none !important;
-  padding: 2px 0 !important;
-}
-.gsc-comment-box-bottom button.link-secondary:hover {
-  color: #0b0b0b !important;
+  display: none !important;
 }
 /* Accedi con GitHub: pulsante pieno nero senza bordo */
 .gsc-comment-box-bottom a.btn-primary,
@@ -351,17 +351,22 @@ main {
   display: none !important;
 }
 .gsc-social-reaction-summary-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  min-width: 34px !important;
   border-radius: 99px !important;
-  padding: 1px 7px !important;
+  padding: 2px 9px !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
-  border: none !important;
-  background: transparent !important;
+  border: 1px solid #d6d6d4 !important;
+  background: #ffffff !important;
   color: #0b0b0b !important;
 }
 .gsc-social-reaction-summary-item.has-reacted {
   background: #d4ee36 !important;
-  border: none !important;
+  border: 1px solid #d4ee36 !important;
   color: #0b0b0b !important;
 }
 .gsc-replies {

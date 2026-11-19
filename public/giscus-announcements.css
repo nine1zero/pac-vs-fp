@@ -1,0 +1,11 @@
+/*!
+ * Tema Giscus per la categoria Annunci (sola lettura): niente casella commento, ordine, voto né risposte (SPEC par. 3.0 Pagina I).
+ */
+@import url('giscus-theme.css?v=8');
+
+.gsc-header,
+.gsc-comment-box,
+.gsc-comment-footer,
+.gsc-reply-box {
+  display: none !important;
+}

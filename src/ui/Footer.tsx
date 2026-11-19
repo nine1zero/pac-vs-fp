@@ -21,7 +21,8 @@ export function Footer() {
     if (!host) return;
     if (host.querySelector('iframe.giscus-frame, script[src="https://giscus.app/client.js"]')) return;
 
-    const general = DISCUSSION_CATEGORIES[0]!;
+    const general =
+      DISCUSSION_CATEGORIES.find((c) => c.name === 'General') ?? DISCUSSION_CATEGORIES[1]!;
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     script.async = true;
@@ -31,7 +32,7 @@ export function Footer() {
     script.setAttribute('data-category', general.name);
     script.setAttribute('data-category-id', general.id);
     script.setAttribute('data-mapping', 'specific');
-    script.setAttribute('data-term', general.defaultTerm);
+    script.setAttribute('data-term', general.title);
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
