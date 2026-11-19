@@ -1,5 +1,5 @@
 // Pagina I "Discussioni e feedback" — una discussione fissa per categoria con Giscus, senza chiamate API dirette a GitHub (SPEC par. 3.0 Pagina I, Feedback.dc.html).
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BackLink } from '../BackLink';
 
 export const GISCUS_REPO = 'nine1zero/pac-vs-fp';
@@ -94,80 +94,108 @@ function consumeGiscusSession(): string | null {
   }
 }
 
+/** Temi Giscus della pagina: Annunci in sola lettura, le altre categorie con casella, ordine, voto e risposte. */
+export const GISCUS_THEME = 'giscus-theme.css?v=9';
+export const GISCUS_THEME_ANNOUNCEMENTS = 'giscus-announcements.css?v=2';
+
+/**
+ * URL del widget Giscus per la discussione fissa di una categoria (`number`), con gli stessi parametri che
+ * imposterebbe https://giscus.app/client.js. Gli iframe sono gestiti qui per montarne uno per categoria:
+ * client.js ne gestisce uno solo per pagina.
+ */
+export function giscusWidgetUrl(c: DiscussionCategory, session: string): string {
+  const page = new URL(window.location.href);
+  page.searchParams.delete('giscus');
+  const origin = page.toString();
+  const params = new URLSearchParams({
+    origin,
+    session,
+    theme: getGiscusThemeUrl(c.locked ? GISCUS_THEME_ANNOUNCEMENTS : GISCUS_THEME),
+    reactionsEnabled: '0',
+    emitMetadata: '1',
+    inputPosition: 'top',
+    repo: GISCUS_REPO,
+    repoId: GISCUS_REPO_ID,
+    category: c.name,
+    categoryId: c.id,
+    strict: '0',
+    description: '',
+    backLink: origin,
+    number: String(c.number),
+  });
+  return `https://giscus.app/it/widget?${params.toString()}`;
+}
+
+interface GiscusMessage {
+  giscus?: {
+    resizeHeight?: number;
+    signOut?: boolean;
+    error?: string;
+    discussion?: { totalCommentCount?: number; totalReplyCount?: number };
+  };
+}
+
 export function Feedback() {
-  const [initialSession] = useState<string | null>(() => consumeGiscusSession());
-  const [logged, setLogged] = useState<boolean>(() => Boolean(initialSession));
+  const [session, setSession] = useState<string | null>(() => consumeGiscusSession());
+  const logged = Boolean(session);
   const [cat, setCat] = useState<CategoryName>('Announcements');
   const [counts, setCounts] = useState<Partial<Record<CategoryName, number>>>({});
-  const hostRef = useRef<HTMLDivElement>(null);
+  const [heights, setHeights] = useState<Partial<Record<CategoryName, number>>>({});
+  const framesRef = useRef<Partial<Record<CategoryName, HTMLIFrameElement | null>>>({});
 
   const th =
     DISCUSSION_CATEGORIES.find((c) => c.name === cat) ?? DISCUSSION_CATEGORIES[0]!;
 
-  // Riceve da Giscus i metadati della discussione aperta (conteggio commenti) senza fare chiamate API a GitHub.
-  useEffect(() => {
-    if (!logged) return;
-    const onMessage = (event: MessageEvent) => {
-      if (event.origin !== 'https://giscus.app') return;
-      const data = event.data as {
-        giscus?: {
-          discussion?: {
-            totalCommentCount?: number;
-            totalReplyCount?: number;
-          };
-        };
-      } | null;
-      const disc = data?.giscus?.discussion;
-      if (disc && typeof disc.totalCommentCount === 'number') {
-        const total = disc.totalCommentCount + (disc.totalReplyCount ?? 0);
-        setCounts((prev) => (prev[cat] === total ? prev : { ...prev, [cat]: total }));
-      }
-    };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
-  }, [logged, cat]);
+  // URL fissi per sessione: cambiare categoria mostra un altro iframe già caricato, senza ricaricarlo.
+  const urls = useMemo(() => {
+    if (!session) return null;
+    const out = {} as Record<CategoryName, string>;
+    for (const c of DISCUSSION_CATEGORIES) out[c.name] = giscusWidgetUrl(c, session);
+    return out;
+  }, [session]);
 
-  // Monta Giscus per la discussione fissa della categoria selezionata (`data-mapping="number"`).
-  useEffect(() => {
-    if (!logged) return;
-    const host = hostRef.current;
-    if (!host) return;
-    const term = String(th.number);
-    const theme = getGiscusThemeUrl(
-      th.locked ? 'giscus-announcements.css?v=1' : 'giscus-theme.css?v=8',
-    );
-
-    host.innerHTML = '';
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.async = true;
-    script.crossOrigin = 'anonymous';
-    script.setAttribute('data-repo', GISCUS_REPO);
-    script.setAttribute('data-repo-id', GISCUS_REPO_ID);
-    script.setAttribute('data-category', th.name);
-    script.setAttribute('data-category-id', th.id);
-    script.setAttribute('data-mapping', 'number');
-    script.setAttribute('data-term', term);
-    script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '0');
-    script.setAttribute('data-emit-metadata', '1');
-    script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', theme);
-    script.setAttribute('data-lang', 'it');
-    host.appendChild(script);
-  }, [logged, th]);
-
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     try {
       window.localStorage.removeItem('giscus-session');
     } catch {
       // ignore storage errors
     }
-    if (hostRef.current) {
-      hostRef.current.innerHTML = '';
-    }
-    setLogged(false);
-  };
+    setSession(null);
+    setCounts({});
+    setHeights({});
+  }, []);
+
+  // Messaggi dagli iframe Giscus: altezza, conteggio commenti (data-emit-metadata) e uscita. Nessuna chiamata API a GitHub.
+  useEffect(() => {
+    if (!logged) return;
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://giscus.app') return;
+      const g = (event.data as GiscusMessage | null)?.giscus;
+      if (!g || typeof g !== 'object') return;
+      const name = DISCUSSION_CATEGORIES.find(
+        (c) => framesRef.current[c.name]?.contentWindow === event.source,
+      )?.name;
+      if (!name) return;
+      if (typeof g.resizeHeight === 'number') {
+        const h = g.resizeHeight;
+        setHeights((prev) => (prev[name] === h ? prev : { ...prev, [name]: h }));
+      }
+      const disc = g.discussion;
+      if (disc && typeof disc.totalCommentCount === 'number') {
+        const total = disc.totalCommentCount + (disc.totalReplyCount ?? 0);
+        setCounts((prev) => (prev[name] === total ? prev : { ...prev, [name]: total }));
+      }
+      if (
+        g.signOut ||
+        (typeof g.error === 'string' &&
+          /Bad credentials|Invalid state value|State has expired/.test(g.error))
+      ) {
+        handleLogout();
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [logged, handleLogout]);
 
   const count = counts[th.name];
   const metaText = th.locked
@@ -266,9 +294,9 @@ export function Feedback() {
           </div>
         )}
 
-        {logged && (
+        {logged && urls && (
           <div
-            className={`fb-thread${th.locked ? ' fb-thread-plain' : ''}`}
+            className={`fb-thread${th.locked ? ' fb-thread-plain' : ' fb-thread-open'}`}
             data-testid="fb-thread"
           >
             <div className={`fb-thread-head${th.locked ? ' fb-thread-head-plain' : ''}`}>
@@ -291,7 +319,29 @@ export function Feedback() {
               </span>
             </div>
 
-            <div ref={hostRef} className="giscus-host" data-testid="giscus-host" />
+            <div className="giscus-host" data-testid="giscus-host">
+              {DISCUSSION_CATEGORIES.map((c) => {
+                const on = c.name === cat;
+                const h = heights[c.name];
+                return (
+                  <iframe
+                    key={c.name}
+                    ref={(el) => {
+                      framesRef.current[c.name] = el;
+                    }}
+                    className={`giscus-frame${on ? '' : ' giscus-frame-off'}`}
+                    data-category={c.name}
+                    title={`Commenti: ${c.title}`}
+                    src={urls[c.name]}
+                    scrolling="no"
+                    allow="clipboard-write"
+                    aria-hidden={on ? undefined : true}
+                    tabIndex={on ? undefined : -1}
+                    style={h !== undefined ? { height: `${h}px` } : undefined}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

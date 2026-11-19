@@ -274,7 +274,7 @@ test('barra reazioni nel footer e pagina Discussioni e feedback: una discussione
   // Nessuna chiamata diretta a api.github.com neanche dopo l'accesso
   expect(githubCalls).toEqual([]);
 
-  // Annunci (#29, sola lettura) aperta di default
+  // Annunci (#29, sola lettura) aperta di default; tutti e 4 gli iframe sono montati per ricevere i conteggi
   const thread = page.getByTestId('fb-thread');
   await expect(thread.getByRole('heading', { level: 2 })).toHaveText('Annunci — Novità e aggiornamenti');
   await expect(thread).toContainText('solo lettura');
@@ -282,12 +282,16 @@ test('barra reazioni nel footer e pagina Discussioni e feedback: una discussione
     'href',
     'https://github.com/nine1zero/pac-vs-fp/discussions/29',
   );
-  const pageGiscus = page.getByTestId('giscus-host').locator('script[src="https://giscus.app/client.js"]');
-  await expect(pageGiscus).toBeAttached();
-  await expect(pageGiscus).toHaveAttribute('data-mapping', 'number');
-  await expect(pageGiscus).toHaveAttribute('data-term', '29');
-  await expect(pageGiscus).toHaveAttribute('data-reactions-enabled', '0');
-  await expect(pageGiscus).toHaveAttribute('data-theme', /giscus-announcements\.css/);
+  const host = page.getByTestId('giscus-host');
+  await expect(host.locator('iframe.giscus-frame')).toHaveCount(4);
+  const annFrame = host.locator('iframe.giscus-frame[data-category="Announcements"]');
+  const ideasFrame = host.locator('iframe.giscus-frame[data-category="Ideas"]');
+  const qaFrame = host.locator('iframe.giscus-frame[data-category="Q&A"]');
+  await expect(annFrame).not.toHaveClass(/giscus-frame-off/);
+  await expect(annFrame).toHaveAttribute('src', /number=29/);
+  await expect(annFrame).toHaveAttribute('src', /reactionsEnabled=0/);
+  await expect(annFrame).toHaveAttribute('src', /giscus-announcements\.css/);
+  await expect(ideasFrame).toHaveClass(/giscus-frame-off/);
 
   // Passaggio a Ideas (#20) e Q&A (#16)
   await cats.getByRole('radio', { name: /^Ideas/ }).click();
@@ -296,8 +300,10 @@ test('barra reazioni nel footer e pagina Discussioni e feedback: una discussione
     'href',
     'https://github.com/nine1zero/pac-vs-fp/discussions/20',
   );
-  await expect(pageGiscus).toHaveAttribute('data-term', '20');
-  await expect(pageGiscus).toHaveAttribute('data-theme', /giscus-theme\.css/);
+  await expect(ideasFrame).not.toHaveClass(/giscus-frame-off/);
+  await expect(ideasFrame).toHaveAttribute('src', /number=20/);
+  await expect(ideasFrame).toHaveAttribute('src', /giscus-theme\.css/);
+  await expect(annFrame).toHaveClass(/giscus-frame-off/);
 
   await cats.getByRole('radio', { name: /^Q&A/ }).click();
   await expect(thread.getByRole('heading', { level: 2 })).toHaveText('Domande e risposte (Q&A) pac/fondo IBM');
@@ -305,7 +311,8 @@ test('barra reazioni nel footer e pagina Discussioni e feedback: una discussione
     'href',
     'https://github.com/nine1zero/pac-vs-fp/discussions/16',
   );
-  await expect(pageGiscus).toHaveAttribute('data-term', '16');
+  await expect(qaFrame).not.toHaveClass(/giscus-frame-off/);
+  await expect(qaFrame).toHaveAttribute('src', /number=16/);
 
   // In fondo a sinistra: "Collegato a GitHub · Disconnetti"
   const authStatus = page.getByTestId('fb-auth-status');

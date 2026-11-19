@@ -2720,10 +2720,10 @@ input[type='range'].r:disabled {
 .site-footer-wrap {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
 }
 .foot-giscus-bar {
-  margin-top: -38px;
+  margin-top: -16px;
   background: var(--card);
   border: 1px solid var(--line-2);
   border-radius: 16px;
@@ -3021,10 +3021,52 @@ input[type='range'].r:disabled {
   text-underline-offset: 3px;
 }
 .giscus-host {
-  min-height: 160px;
+  position: relative;
   width: 100%;
 }
 .giscus-host iframe.giscus-frame {
+  display: block;
   width: 100%;
   border: none;
+  color-scheme: light;
+}
+.giscus-host iframe.giscus-frame-off {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/*
+ * Discussioni con casella (General, Ideas, Q&A): il titolo sta sopra l'intestazione di Giscus, che porta
+ * l'ordine Vecchio / Recente a destra e la linea sotto, così titolo, conteggio, "Apri su GitHub" e ordine
+ * sono su una sola riga come nel canvas (Feedback.dc.html). L'altezza della riga (29px + 10px + 1px)
+ * coincide con quella di .gsc-header in public/giscus-theme.css.
+ */
+@media (min-width: 601px) {
+  .fb-thread.fb-thread-open {
+    position: relative;
+  }
+  .fb-thread-open .fb-thread-head {
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    left: 20px;
+    right: 170px;
+    padding-bottom: 0;
+    border-bottom: none;
+    pointer-events: none;
+  }
+  .fb-thread-open .fb-thread-row {
+    height: 29px;
+  }
+  .fb-thread-open .fb-thread-row > * {
+    pointer-events: auto;
+  }
+}
+@media (max-width: 600px) {
+  .fb-thread-open .fb-thread-head {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 }
