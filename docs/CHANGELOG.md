@@ -1,5 +1,11 @@
 # Registro delle modifiche
 
+## 2026-11-19 · I miei versamenti: serie mensili di Vanguard e SPDR
+
+- **`public/data/etf_monthly.csv`**: aggiunte le colonne `vanguard_eur` (Vanguard FTSE All-World Acc, IE00BK5BQT80, dal 12/2013) e `spdr_imi_eur` (SPDR MSCI ACWI IMI, IE00B3YLTY66, dal 12/2011), da Yahoo Finance con lo stesso metodo delle altre (fonte in `etf_monthly.sources.json` e `docs/FONTI.md`). Le colonne esistenti sono invariate. Motivo: nella pagina "I miei versamenti" si potevano scegliere solo gli ETF con la serie mensile, cioè solo iShares.
+- Vanguard prima del lancio di VWCE (07/2019) usa la classe a distribuzione dello stesso fondo con i dividendi reinvestiti; prima del 12/2013 resta vuota perché Yahoo non ha i dividendi 2012-2013, quindi non si stima niente.
+- **Pagina G**: le voci Vanguard e SPDR ora si possono scegliere. Una voce è disattivata, con il motivo nel tooltip, se la sua serie parte dopo il primo versamento del file. L'avviso "prezzo non disponibile" indica il primo mese della serie scelta invece di 12/2011. SPEC pagina G aggiornata.
+
 ## 2026-11-19 · design: Discussioni e feedback con una discussione per categoria
 
 - **`spec/design/v2/Feedback.dc.html` rifatto dal canvas**: al posto dell'elenco a pagine c'è una discussione fissa per categoria, la stessa per tutti: `Annunci` (#29, bloccata, sola lettura, con il lucchetto), `General` (#27), `Ideas` (#20), `Q&A` (#16), con i contatori. Tolti `Tutte`, la paginazione, `+ Nuovo argomento` e `← Tutte le discussioni`. Decisione dell'autore: chi scrive non deve scegliere o creare un argomento.

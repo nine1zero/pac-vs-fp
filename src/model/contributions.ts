@@ -109,7 +109,7 @@ export function compareWithEtf(
     issues.push({
       severity: 'warning',
       code: 'price_missing',
-      message: `Prezzo dell’ETF non disponibile per ${missing.length} movimenti (prima del 12/2011 o oltre l’ultimo mese dei dati): esclusi dal confronto.`,
+      message: `Prezzo dell’ETF non disponibile per ${missing.length} movimenti (prima del ${mmYYYY(prices.firstOf[col])} o oltre l’ultimo mese dei dati): esclusi dal confronto.`,
       rows: missing,
     });
   }
@@ -121,6 +121,20 @@ export function compareWithEtf(
     pending,
     issues,
   };
+}
+
+const mmYYYY = (iso: string) => `${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
+
+/** La serie mensile della colonna parte prima del primo movimento confrontato del file
+ * (SPEC pagina G: se parte dopo, l'ETF non si può scegliere; mai prezzi stimati). */
+export function priceCoverage(movements: Movement[], prices: PriceTable, col: PriceColumn): { covered: boolean; from: string; firstNeeded: string | null } {
+  const dates = movements
+    .filter((m) => COMPARED.has(m.kind) && m.dataValore)
+    .map((m) => monthEnd(m.dataValore!))
+    .sort();
+  const firstNeeded = dates[0] ?? null;
+  const from = prices.firstOf[col];
+  return { covered: firstNeeded === null || firstNeeded >= from, from, firstNeeded };
 }
 
 export interface MonthlySeries {
