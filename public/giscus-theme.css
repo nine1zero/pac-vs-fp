@@ -565,6 +565,7 @@ main {
 /* L'upvote nativo (.gsc-upvote-button) è disabilitato in modo fisso da Giscus (disabled={true});
  * al suo posto sono abilitate le reazioni di Giscus sui commenti (.gsc-reactions-menu e .gsc-direct-reaction-buttons). */
 .gsc-upvote-button,
+button.gsc-upvote-button.gsc-social-reaction-summary-item,
 .gsc-reply-reactions,
 .gsc-reply-footer,
 .gsc-tl-line {
@@ -576,7 +577,7 @@ main {
   align-items: center !important;
   gap: 5px !important;
 }
-.gsc-social-reaction-summary-item {
+.gsc-social-reaction-summary-item:not(.gsc-upvote-button) {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
