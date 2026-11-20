@@ -549,61 +549,133 @@ main {
   line-height: 1.5 !important;
   background: transparent !important;
 }
-/* Riga sotto il commento: ↑ N, Rispondi, N risposte */
+/* Riga sotto il commento: reazioni Giscus cliccabili, Rispondi, N risposte */
 .gsc-comment-footer {
   display: contents !important;
 }
 .gsc-comment-reactions {
   order: 3 !important;
   display: inline-flex !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
+  gap: 5px !important;
   margin: 6px 0 0 32px !important;
   padding: 0 !important;
 }
-.gsc-comment-footer .gsc-reactions-menu,
-.gsc-comment-footer .gsc-direct-reaction-buttons,
-.gsc-comment-footer .gsc-emoji-button,
-.gsc-comment-reactions > :not(.gsc-upvote-button),
+/* L'upvote nativo (.gsc-upvote-button) è disabilitato in modo fisso da Giscus (disabled={true});
+ * al suo posto sono abilitate le reazioni di Giscus sui commenti (.gsc-reactions-menu e .gsc-direct-reaction-buttons). */
+.gsc-upvote-button,
 .gsc-reply-reactions,
 .gsc-reply-footer,
 .gsc-tl-line {
   display: none !important;
 }
-.gsc-upvote-button,
+.gsc-direct-reaction-buttons {
+  display: inline-flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
 .gsc-social-reaction-summary-item {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 4px !important;
-  min-width: 34px !important;
-  height: auto !important;
+  height: 26px !important;
   margin: 0 !important;
-  padding: 2px 9px !important;
-  border: 1px solid #d6d6d4 !important;
+  padding: 0 8px !important;
+  border: none !important;
   border-radius: 99px !important;
-  background: #ffffff !important;
-  font-size: 12.5px !important;
+  background: #f4f4f2 !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
-  line-height: 1.5 !important;
+  line-height: 1 !important;
   color: #0b0b0b !important;
-  opacity: 1 !important;
-  cursor: default !important;
+  cursor: pointer !important;
 }
-.gsc-upvote-button svg {
-  width: 12px !important;
-  height: 12px !important;
-  margin: 0 !important;
-  fill: currentColor !important;
+.gsc-social-reaction-summary-item:hover:enabled {
+  background: #ececea !important;
+}
+.gsc-reactions-button {
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  padding: 0 !important;
+  border: none !important;
+  background: #f4f4f2 !important;
+  color: #5c6168 !important;
+}
+.gsc-reactions-button:hover {
+  background: #ececea !important;
+  color: #0b0b0b !important;
 }
 .gsc-social-reaction-summary-item-count {
   margin: 0 !important;
   font-weight: 600 !important;
   color: #0b0b0b !important;
 }
-.gsc-upvote-button.has-reacted,
 .gsc-social-reaction-summary-item.has-reacted {
-  border-color: #d4ee36 !important;
+  border: none !important;
   background: #d4ee36 !important;
+  color: #0b0b0b !important;
+}
+.gsc-social-reaction-summary-item.has-reacted:hover:enabled {
+  background: #c6e21f !important;
+}
+/* Menu emoticon aperto in linea sulla stessa riga, come nella barra reazioni del footer */
+.gsc-reactions-menu {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  position: relative !important;
+}
+.gsc-reactions-popover.open {
+  position: static !important;
+  visibility: visible !important;
+  transform: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 6px !important;
+  height: 26px !important;
+  border-radius: 99px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: #f4f4f2 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.gsc-reactions-popover.open::before,
+.gsc-reactions-popover.open::after,
+.gsc-reactions-popover > .border-t,
+.gsc-reactions-popover > p {
+  display: none !important;
+}
+.gsc-reactions-popover > div:last-child {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+.gsc-emoji-button {
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 99px !important;
+  background: transparent !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+}
+.gsc-emoji-button:hover:enabled {
+  background: #e2e2df !important;
+}
+.gsc-emoji-button.has-reacted {
+  background: #d4ee36 !important;
+  border: none !important;
 }
 .gsc-reply-box {
   order: 4 !important;

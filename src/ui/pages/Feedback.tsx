@@ -94,9 +94,9 @@ function consumeGiscusSession(): string | null {
   }
 }
 
-/** Temi Giscus della pagina: Annunci in sola lettura, le altre categorie con casella, ordine, voto e risposte. */
-export const GISCUS_THEME = 'giscus-theme.css?v=9';
-export const GISCUS_THEME_ANNOUNCEMENTS = 'giscus-announcements.css?v=2';
+/** Temi Giscus della pagina: Annunci in sola lettura, le altre categorie con casella, ordine, reazioni e risposte. */
+export const GISCUS_THEME = 'giscus-theme.css?v=10';
+export const GISCUS_THEME_ANNOUNCEMENTS = 'giscus-announcements.css?v=3';
 
 /**
  * URL del widget Giscus per la discussione fissa di una categoria (`number`), con gli stessi parametri che
