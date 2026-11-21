@@ -561,7 +561,7 @@ Errori bloccanti (rosso):
 Avvisi (giallo):
 - **controllo totali**: la somma delle righe per ogni colonna deve coincidere con `TOTALE` entro 0,01 € (fixture `sample_dettaglio_bad_totals.xls`);
 - **controllo per riga**: `Aderente + Azienda + Tfr + Altro − Quota associativa = Importo netto` entro 0,01 €;
-- **controllo quote**: `|Numero Quote × Valore Quota − Importo Netto| ≤ 0,05 €` per le righe con quote;
+- **controllo quote**: `|Numero Quote × Valore Quota − Importo Netto| ≤ 0,50 €` per le righe con quote;
 - tipi sconosciuti;
 - date fuori dal periodo 1987 → oggi;
 - prezzo ETF non disponibile per una data (prima del 12/2011 o oltre l'ultimo mese).

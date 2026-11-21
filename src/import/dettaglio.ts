@@ -99,7 +99,7 @@ const TOTAL_FIELDS: [keyof Totals, string][] = [
 ];
 
 const EUR_TOL = 0.01 + 1e-9;
-const QUOTE_TOL = 0.05 + 1e-9;
+const QUOTE_TOL = 0.5 + 1e-9;
 
 const fmtEur = (v: number) => new Intl.NumberFormat('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(v) + ' €';
 const mmYYYY = (iso: string) => `${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
@@ -259,7 +259,7 @@ export function parseDettaglio(html: string, opts: ParseOptions = {}): ParseResu
     });
   }
 
-  // Controllo quote: |Numero Quote × Valore Quota − Importo Netto| ≤ 0,05 €.
+  // Controllo quote: |Numero Quote × Valore Quota − Importo Netto| ≤ 0,50 €.
   const quoteMismatch = movements.filter(
     (m) => m.quote !== null && m.valoreQuota !== null && Math.abs(m.quote * m.valoreQuota - m.netto) > QUOTE_TOL,
   );
@@ -267,7 +267,7 @@ export function parseDettaglio(html: string, opts: ParseOptions = {}): ParseResu
     issues.push({
       severity: 'warning',
       code: 'quote_mismatch',
-      message: `${quoteMismatch.length} righe: Numero Quote × Valore Quota differisce dall’Importo netto di oltre 0,05 €.`,
+      message: `${quoteMismatch.length} righe: Numero Quote × Valore Quota differisce dall’Importo netto di oltre 0,50 €.`,
       rows: quoteMismatch.map((m) => m.index),
     });
   }
