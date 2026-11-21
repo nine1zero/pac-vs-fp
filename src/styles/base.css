@@ -379,6 +379,189 @@ button {
 .btn.dark:hover {
   background: #2a2a2a;
 }
+.cta-viz {
+  --mx: 72%;
+  --my: 30%;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  justify-content: center;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(#0b0b0b, #0b0b0b) padding-box,
+    linear-gradient(#0b0b0b, #0b0b0b) border-box;
+  transition:
+    box-shadow 0.25s,
+    transform 0.25s;
+  animation: ctaPop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) backwards;
+}
+.btn.dark.cta-viz:hover,
+.cta-viz:focus-visible {
+  background:
+    linear-gradient(#111111, #111111) padding-box,
+    radial-gradient(140px circle at var(--mx) var(--my), #d4ee36, rgba(212, 238, 54, 0.25) 55%, #2a2a2a 100%) border-box;
+  box-shadow:
+    0 10px 26px rgba(11, 11, 11, 0.22),
+    0 0 24px rgba(212, 238, 54, 0.18);
+  transform: translateY(-1px);
+}
+.cta-viz::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(
+    220px circle at var(--mx) var(--my),
+    rgba(212, 238, 54, 0.3),
+    rgba(212, 238, 54, 0.1) 40%,
+    transparent 70%
+  );
+}
+.cta-viz:hover::after,
+.cta-viz:focus-visible::after {
+  opacity: 1;
+}
+.cta-viz > * {
+  position: relative;
+  z-index: 1;
+}
+.cta-viz:focus-visible {
+  outline: 3px solid #d4ee36;
+  outline-offset: 3px;
+}
+.cta-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  flex: none;
+}
+.cta-bars i {
+  display: block;
+  width: 3px;
+  border-radius: 1px 1px 0 0;
+  background: #d4ee36;
+  transform-origin: 50% 100%;
+  animation: ctaGrow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+.cta-bars i:nth-child(1) {
+  height: 34%;
+  animation-delay: 0s;
+}
+.cta-bars i:nth-child(2) {
+  height: 46%;
+  animation-delay: 0.08s;
+}
+.cta-bars i:nth-child(3) {
+  height: 40%;
+  animation-delay: 0.16s;
+}
+.cta-bars i:nth-child(4) {
+  height: 58%;
+  animation-delay: 0.24s;
+}
+.cta-bars i:nth-child(5) {
+  height: 66%;
+  animation-delay: 0.32s;
+}
+.cta-bars i:nth-child(6) {
+  height: 80%;
+  animation-delay: 0.4s;
+}
+.cta-bars i:nth-child(7) {
+  height: 100%;
+  animation-delay: 0.48s;
+}
+.cta-viz:hover .cta-bars i {
+  animation: ctaLoad 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.cta-viz:hover .cta-bars i:nth-child(1) {
+  animation-delay: 0s;
+}
+.cta-viz:hover .cta-bars i:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.cta-viz:hover .cta-bars i:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.cta-viz:hover .cta-bars i:nth-child(4) {
+  animation-delay: 0.24s;
+}
+.cta-viz:hover .cta-bars i:nth-child(5) {
+  animation-delay: 0.32s;
+}
+.cta-viz:hover .cta-bars i:nth-child(6) {
+  animation-delay: 0.4s;
+}
+.cta-viz:hover .cta-bars i:nth-child(7) {
+  animation-delay: 0.48s;
+}
+.cta-arr {
+  display: inline-block;
+}
+.cta-viz:hover .cta-arr {
+  animation: ctaArr 1.2s ease-in-out infinite;
+}
+@keyframes ctaPop {
+  0% {
+    transform: scale(0.94);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes ctaGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes ctaLoad {
+  0% {
+    transform: scaleY(0.08);
+    opacity: 0.4;
+  }
+  45% {
+    transform: scaleY(1.06);
+    opacity: 1;
+  }
+  60%,
+  85% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.08);
+    opacity: 0.4;
+  }
+}
+@keyframes ctaArr {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-viz,
+  .cta-bars i,
+  .cta-arr {
+    animation: none !important;
+  }
+}
 .btn.lime {
   background: var(--lime);
   color: var(--ink);

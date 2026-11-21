@@ -238,8 +238,26 @@ export function Sec2({ r }: { r: Results }) {
             <input type="file" accept=".xls,.html,.htm" onChange={(e) => readFile(e.target.files?.[0])} aria-label="Scegli il file DettaglioOperazioni" />
           </label>
           {ok && (
-            <a href="#/versamenti" className="btn dark">
-              Vedi i miei versamenti e il grafico <span aria-hidden="true">→</span>
+            <a
+              href="#/versamenti"
+              className="btn dark cta-viz"
+              onMouseMove={(e) => {
+                const el = e.currentTarget;
+                const r = el.getBoundingClientRect();
+                el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                el.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}
+            >
+              <span className="cta-bars" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+              </span>
+              <span>Vedi i miei versamenti e il grafico</span> <span className="cta-arr" aria-hidden="true">→</span>
             </a>
           )}
           <span className="row-gap wrap">
