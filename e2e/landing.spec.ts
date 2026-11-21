@@ -245,6 +245,12 @@ test('barra reazioni nel footer e pagina Discussioni e feedback: una discussione
   await expect(footReactions).toHaveAttribute('data-reactions-enabled', '1');
   await expect(footReactions).toHaveAttribute('data-theme', /giscus-reactions-only\.css/);
 
+  // Presente anche in Storico e Parametri e fonti
+  await page.goto('./#/storico');
+  await expect(bar).toBeVisible();
+  await page.goto('./#/parametri');
+  await expect(bar).toBeVisible();
+
   const cta = bar.getByRole('link', { name: /Tutti i commenti e discussioni/ });
   await expect(cta).toHaveAttribute('href', '#/feedback');
   await cta.click();

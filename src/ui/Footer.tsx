@@ -15,8 +15,11 @@ export function Footer() {
   const route = useRoute();
   const reactionsRef = useRef<HTMLDivElement>(null);
 
+  const showReactions =
+    route.page === 'home' || route.page === 'storico' || route.page === 'parametri';
+
   useEffect(() => {
-    if (route.page !== 'home') return;
+    if (!showReactions) return;
     const host = reactionsRef.current;
     if (!host) return;
     if (host.querySelector('iframe.giscus-frame, script[src="https://giscus.app/client.js"]')) return;
@@ -41,11 +44,11 @@ export function Footer() {
     script.setAttribute('data-lang', 'it');
     script.setAttribute('data-loading', 'lazy');
     host.appendChild(script);
-  }, [route.page]);
+  }, [showReactions]);
 
   return (
     <footer className="wrap site-footer-wrap">
-      {route.page === 'home' && (
+      {showReactions && (
         <div className="foot-giscus-bar" data-testid="foot-giscus-bar">
           <span className="foot-giscus-pill">Feedback</span>
           <div
