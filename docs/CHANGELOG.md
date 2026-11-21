@@ -1,5 +1,10 @@
 # Registro delle modifiche
 
+## 2026-11-21 · design: pulsante "Vedi i miei versamenti e il grafico" animato
+
+- `spec/design/v2/Landing.dc.html`, sezione 2: il pulsante che apre I miei versamenti ha un piccolo istogramma lime (decorativo). Quando compare le barre crescono e il pulsante fa un "pop", una volta sola; al passaggio del mouse un bagliore lime segue il cursore, le barre si ricaricano e la freccia spinge a destra. Fermo con `prefers-reduced-motion`.
+- Scelta dell'autore tra sei varianti di prova (opzione 4): invogliare al clic senza animazioni continue a riposo. SPEC par. 3.0, sezione 2, aggiornata. Solo design: `src/` da allineare.
+
 ## 2026-11-19 · I miei versamenti: serie mensili di Vanguard e SPDR
 
 - **`public/data/etf_monthly.csv`**: aggiunte le colonne `vanguard_eur` (Vanguard FTSE All-World Acc, IE00BK5BQT80, dal 12/2013) e `spdr_imi_eur` (SPDR MSCI ACWI IMI, IE00B3YLTY66, dal 12/2011), da Yahoo Finance con lo stesso metodo delle altre (fonte in `etf_monthly.sources.json` e `docs/FONTI.md`). Le colonne esistenti sono invariate. Motivo: nella pagina "I miei versamenti" si potevano scegliere solo gli ETF con la serie mensile, cioè solo iShares.
