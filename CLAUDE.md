@@ -3,7 +3,7 @@
 Web app statica (Vite + TypeScript + React, pubblicata su GitHub Pages) che confronta il Fondo Pensione FPDDI (comparto Azionario) con un PAC su un ETF azionario globale, a parità di budget annuo. Panoramica, struttura e tabella "Cosa modificare e dove": `README.md`.
 
 ## Documenti di riferimento
-- Specifica: `docs/SPEC.md`. Interfaccia in vigore: par. 3.0 e prototipi `spec/design/v2/*.dc.html` (riferimento visivo e di comportamento, non codice da copiare).
+- Specifica: `docs/SPEC.md`. Interfaccia in vigore: par. 3.0 e prototipi `spec/design/v4/*.dc.html` (v2: stessi prototipi con i colori precedenti, per tornare indietro) (riferimento visivo e di comportamento, non codice da copiare).
 - Formule: `docs/FORMULE.md`. In caso di dubbio fa fede `spec/reference/model.py` (simulazione) e `spec/reference/history.py` (storico e file contribuzioni).
 - Fonti di ogni dato: `docs/FONTI.md`. Verifiche e punti aperti: `docs/VERIFICHE.md`. Modifiche: `docs/CHANGELOG.md`.
 
