@@ -1,5 +1,11 @@
 # Registro delle modifiche
 
+## 2026-11-23 · design: versione 4 dei prototipi (lime #DCFE71, fondo #FAFAFA)
+
+- Nuova cartella `spec/design/v4/` con Landing, I miei versamenti, Storico, Parametri e fonti, Discussioni e feedback: gli stessi prototipi di v2 con il lime `#DCFE71` al posto di `#D4EE36` e il fondo `#FAFAFA` al posto di `#F4F4F2`, ovunque. Colori scelti dall'autore.
+- Solo Landing: bordi più sottili per le tre card delle strategie (1,25 px) e per "La domanda" (1 px); card migliore del Risultato con bordo pieno di 2 px e alone fermo nel colore dello scenario.
+- `spec/design/v2/` resta com'era, per tornare indietro e per i test di parità (calcoli del prototipo v4 identici a v2). SPEC par. 0 e 3.0 e `CLAUDE.md` indicano v4 come riferimento. Solo design: `src/` da allineare.
+
 ## 2026-11-21 · design: pulsante "Vedi i miei versamenti e il grafico" animato
 
 - `spec/design/v2/Landing.dc.html`, sezione 2: il pulsante che apre I miei versamenti ha un piccolo istogramma lime (decorativo). Quando compare le barre crescono e il pulsante fa un "pop", una volta sola; al passaggio del mouse un bagliore lime segue il cursore, le barre si ricaricano e la freccia spinge a destra. Fermo con `prefers-reduced-motion`.

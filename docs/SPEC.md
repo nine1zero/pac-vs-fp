@@ -32,7 +32,8 @@ Lingua dell'interfaccia: **italiano**. Formati numerici: `it-IT` (1.234,56 €; 
 | `public/data/etf_annual_extra.json` | Rendimenti annui di Vanguard FTSE All-World e SPDR MSCI ACWI IMI |
 | `spec/tests/make_golden.py` | Rigenera `golden_model_example.json` dal modello di riferimento (solo per modifiche volute) |
 | `spec/tests/parity_prototype.js` | Confronta il codice del prototipo v2 con `spec/reference/model.py` |
-| `spec/design/v2/*.dc.html` | **Prototipi in vigore** (par. 3.0): Landing (simulatore a sezioni), Versamenti, Storico, Fonti |
+| `spec/design/v4/*.dc.html` | **Prototipi in vigore** (par. 3.0): gli stessi di v2 con i colori della versione 4 (lime `#DCFE71`, fondo `#FAFAFA`) |
+| `spec/design/v2/*.dc.html` | Versione 2 con i colori precedenti (lime `#D4EE36`, fondo `#F4F4F2`): Landing (simulatore a sezioni), Versamenti, Storico, Fonti, Discussioni e feedback. Resta per tornare indietro e per i test di parità |
 | `spec/design/v1/*.dc.html` | Prima versione (percorso guidato e parametri), mantenuta per riferimento storico |
 
 ---
@@ -112,10 +113,12 @@ Stile grafico: pulito e moderno.
 
 ### 3.0 Versione 2 dell'interfaccia (in vigore)
 
-Riferimento: `design/v2/` (prototipi funzionanti, stile e comportamento). **Fa fede su 3.1-3.3**, che descrivono la prima versione e restano validi solo dove non sono in contrasto. I calcoli dei prototipi coincidono con `reference/model.py` (`tests/parity_prototype.js`), ma nell'app fa fede `src/model/`.
+Riferimento: `design/v4/` (prototipi funzionanti, stile e comportamento; struttura e comportamento uguali a `design/v2/`, cambiano solo i colori e i dettagli della **Versione 4** qui sotto). **Fa fede su 3.1-3.3**, che descrivono la prima versione e restano validi solo dove non sono in contrasto. I calcoli dei prototipi coincidono con `reference/model.py` (`tests/parity_prototype.js`), ma nell'app fa fede `src/model/`.
+
+**Versione 4 (colori, decisione dell'autore del 23/11/2026)**: lime `#DCFE71` al posto di `#D4EE36` e fondo `#FAFAFA` al posto di `#F4F4F2`, in tutte le pagine e in tutti gli usi (barra in alto, `.mark`, pulsanti, grafici, bagliori, testo chiaro su nero). Solo nella Landing: bordo delle tre card delle strategie da 2 a 1,25 px, riquadro "La domanda" da 1,5 a 1 px; la card migliore del Risultato ha un bordo pieno di 2 px nel colore dello scenario, senza animazioni, con un alone fermo nello stesso colore (`box-shadow: 0 0 22px 2px` al 28%) e una velatura appena percettibile del colore in alto a sinistra (classe `.best-ring`). Per tornare indietro basta usare di nuovo `design/v2/` e i due colori precedenti: il resto non cambia.
 
 **Stile (design system "lime")**
-- Fondo grigio caldo `#F4F4F2`, testo quasi nero `#0B0B0B`, un solo accento lime `#D4EE36`; font **Onest** (400/500/600/700), da includere nel bundle (CSP).
+- Fondo grigio chiaro `#FAFAFA` (v2: `#F4F4F2`), testo quasi nero `#0B0B0B`, un solo accento lime `#DCFE71` (v2: `#D4EE36`); font **Onest** (400/500/600/700), da includere nel bundle (CSP).
 - Barra lime in alto con il disclaimer breve. Card bianche con raggio 20-24 px, pannelli `#F7F7F5`.
 - Testo evidenziato in lime (classe `.mark`) per le parole chiave. Scenari: 1 blu `#2563EB`, 2 verde `#15803D`, 3 arancio `#C2410C`; fondo grigio `#3A3D42`, benchmark viola `#7C3AED`, ETF blu.
 
