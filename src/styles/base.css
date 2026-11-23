@@ -6,7 +6,7 @@
   --ink-3: #3a3d42;
   --muted: #5c6168;
   --faint: #9a9ea3;
-  --lime: #e4fb8e;
+  --lime: #dcfe71;
   --lime-hover: #c6e21f;
   --card: #ffffff;
   --panel: #f7f7f5;
@@ -277,7 +277,7 @@ button {
   bottom: 0;
   left: -60%;
   width: 40%;
-  background: linear-gradient(100deg, transparent, rgba(228, 251, 142, 0.6), transparent);
+  background: linear-gradient(100deg, transparent, rgba(220, 254, 113, 0.6), transparent);
   transform: skewX(-20deg);
   animation: betaShine 6s ease-in-out 1.5s infinite;
   pointer-events: none;
@@ -303,17 +303,17 @@ button {
   0% {
     box-shadow:
       0 0 0 1px #0b0b0b,
-      0 0 0 0 rgba(228, 251, 142, 0.9);
+      0 0 0 0 rgba(220, 254, 113, 0.9);
   }
   70% {
     box-shadow:
       0 0 0 1px #0b0b0b,
-      0 0 0 6px rgba(228, 251, 142, 0);
+      0 0 0 6px rgba(220, 254, 113, 0);
   }
   100% {
     box-shadow:
       0 0 0 1px #0b0b0b,
-      0 0 0 0 rgba(228, 251, 142, 0);
+      0 0 0 0 rgba(220, 254, 113, 0);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -399,10 +399,10 @@ button {
 .cta-viz:focus-visible {
   background:
     linear-gradient(#111111, #111111) padding-box,
-    radial-gradient(140px circle at var(--mx) var(--my), #e4fb8e, rgba(228, 251, 142, 0.25) 55%, #2a2a2a 100%) border-box;
+    radial-gradient(140px circle at var(--mx) var(--my), #dcfe71, rgba(220, 254, 113, 0.25) 55%, #2a2a2a 100%) border-box;
   box-shadow:
     0 10px 26px rgba(11, 11, 11, 0.22),
-    0 0 24px rgba(228, 251, 142, 0.18);
+    0 0 24px rgba(220, 254, 113, 0.18);
   transform: translateY(-1px);
 }
 .cta-viz::after {
@@ -415,8 +415,8 @@ button {
   transition: opacity 0.3s;
   background: radial-gradient(
     220px circle at var(--mx) var(--my),
-    rgba(228, 251, 142, 0.3),
-    rgba(228, 251, 142, 0.1) 40%,
+    rgba(220, 254, 113, 0.3),
+    rgba(220, 254, 113, 0.1) 40%,
     transparent 70%
   );
 }
@@ -429,7 +429,7 @@ button {
   z-index: 1;
 }
 .cta-viz:focus-visible {
-  outline: 3px solid #e4fb8e;
+  outline: 3px solid #dcfe71;
   outline-offset: 3px;
 }
 .cta-bars {
@@ -443,7 +443,7 @@ button {
   display: block;
   width: 3px;
   border-radius: 1px 1px 0 0;
-  background: #e4fb8e;
+  background: #dcfe71;
   transform-origin: 50% 100%;
   animation: ctaGrow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
@@ -3021,7 +3021,7 @@ input[type='range'].r:disabled {
 .fb-seg:focus-visible,
 .fb-load:focus-visible,
 .fx-txt:focus-visible {
-  outline: 3px solid #e4fb8e;
+  outline: 3px solid #dcfe71;
   outline-offset: 2px;
 }
 .fb-lock-icon {

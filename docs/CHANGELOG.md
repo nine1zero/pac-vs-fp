@@ -1,5 +1,9 @@
 # Registro delle modifiche
 
+## 2026-11-23 · app: lime della versione 4 #DCFE71
+
+- `src/` e temi Giscus in `public/` allineati a `spec/design/v4/`: lime `#DCFE71` (anche nelle varianti `rgba(220, 254, 113, …)`) al posto di `#E4FB8E` in `src/styles/base.css`, nei grafici di Storico e I miei versamenti, nella stella del fumetto GitHub, in `public/giscus-theme.css` e `public/giscus-reactions-only.css`. Fondo `#FAFAFA`, bordi e card migliore invariati.
+
 ## 2026-11-23 · design: lime della versione 4 di nuovo #DCFE71
 
 - `spec/design/v4/` (tutte le pagine): il lime torna `#DCFE71` al posto del "sorbetto" `#E4FB8E`, ovunque (barra in alto, `.mark`, pulsanti, grafici, bagliori, testo chiaro su nero). Fondo `#FAFAFA` e resto invariati. Scelta dell'autore dopo aver rivisto le due versioni affiancate.
