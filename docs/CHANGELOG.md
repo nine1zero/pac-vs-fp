@@ -1,5 +1,9 @@
 # Registro delle modifiche
 
+## 2026-11-23 · favicon con il lime della versione 4
+
+- `public/favicon.svg` e `public/favicon.ico` (16, 32 e 48 px): il fondo lime passa da `#D4EE36` a `#DCFE71`, come nel resto dell'app. Il disegno è lo stesso; nell'`.ico` sono ricolorati i pixel esistenti, sfumature dei bordi comprese.
+
 ## 2026-11-23 · app: lime della versione 4 #DCFE71
 
 - `src/` e temi Giscus in `public/` allineati a `spec/design/v4/`: lime `#DCFE71` (anche nelle varianti `rgba(220, 254, 113, …)`) al posto di `#E4FB8E` in `src/styles/base.css`, nei grafici di Storico e I miei versamenti, nella stella del fumetto GitHub, in `public/giscus-theme.css` e `public/giscus-reactions-only.css`. Fondo `#FAFAFA`, bordi e card migliore invariati.
