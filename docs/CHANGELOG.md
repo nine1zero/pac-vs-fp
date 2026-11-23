@@ -1,5 +1,10 @@
 # Registro delle modifiche
 
+## 2026-11-23 · design: lime della versione 4 di nuovo #DCFE71
+
+- `spec/design/v4/` (tutte le pagine): il lime torna `#DCFE71` al posto del "sorbetto" `#E4FB8E`, ovunque (barra in alto, `.mark`, pulsanti, grafici, bagliori, testo chiaro su nero). Fondo `#FAFAFA` e resto invariati. Scelta dell'autore dopo aver rivisto le due versioni affiancate.
+- SPEC par. 0 e 3.0 aggiornati. Solo design: `src/` (oggi con `#E4FB8E`, PR #34) e i temi Giscus in `public/` da allineare.
+
 ## 2026-11-23 · app: colori della versione 4
 
 - `src/` allineato a `spec/design/v4/`: lime `#E4FB8E` al posto di `#D4EE36` e fondo `#FAFAFA` al posto di `#F4F4F2` in `src/styles/base.css` (variabili `--lime` e `--bg`, bagliori, pill BETA, pulsante dei versamenti, focus), nei grafici di Storico e I miei versamenti, nella stella del fumetto GitHub e nei temi Giscus (`public/giscus-theme.css`, `public/giscus-reactions-only.css`).
