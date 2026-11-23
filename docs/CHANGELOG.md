@@ -1,5 +1,11 @@
 # Registro delle modifiche
 
+## 2026-11-23 · app: colori della versione 4
+
+- `src/` allineato a `spec/design/v4/`: lime `#E4FB8E` al posto di `#D4EE36` e fondo `#FAFAFA` al posto di `#F4F4F2` in `src/styles/base.css` (variabili `--lime` e `--bg`, bagliori, pill BETA, pulsante dei versamenti, focus), nei grafici di Storico e I miei versamenti, nella stella del fumetto GitHub e nei temi Giscus (`public/giscus-theme.css`, `public/giscus-reactions-only.css`).
+- Landing: bordo delle card delle strategie da 2 a 1,25 px, riquadro "La domanda" da 1,5 a 1 px; card migliore del Risultato con bordo pieno di 2 px nel colore dello scenario, alone fermo al 28% e velatura in alto a sinistra (`.rcard.best`, la `.best-ring` del prototipo), senza animazioni.
+- La favicon (`public/favicon.svg` e `.ico`, fornita dall'autore) resta con il lime precedente.
+
 ## 2026-11-23 · design: versione 4 dei prototipi (lime #E4FB8E, fondo #FAFAFA)
 
 - Nuova cartella `spec/design/v4/` con Landing, I miei versamenti, Storico, Parametri e fonti, Discussioni e feedback: gli stessi prototipi di v2 con il lime `#E4FB8E` al posto di `#D4EE36` e il fondo `#FAFAFA` al posto di `#F4F4F2`, ovunque. Colori scelti dall'autore: il lime è il "sorbetto" `#E4FB8E`, preferito a `#DCFE71` (più acido) dopo una prova sulla Landing.

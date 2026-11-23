@@ -339,7 +339,7 @@ function Chart({
           <LegendItem swatch color="#d3d5d7" label="TFR" />
           <LegendItem color="#0b0b0b" label="Posizione reale nel fondo" />
           <LegendItem color="#2563eb" dash label={`Stessi versamenti in ETF ${etf.label}`} />
-          <LegendItem swatch color="rgba(212,238,54,.6)" label="Differenza" />
+          <LegendItem swatch color="rgba(228, 251, 142,.6)" label="Differenza" />
         </span>
         <TimeChart
           labels={s.months}
@@ -348,7 +348,7 @@ function Chart({
             { lo: s.months.map(() => 0), hi: s.aderente, color: '#6b6f75' },
             { lo: s.aderente, hi: c2, color: '#a9acb0' },
             { lo: c2, hi: tot, color: '#d3d5d7' },
-            { lo: s.real, hi: ser, color: '#d4ee36', opacity: 0.6 },
+            { lo: s.real, hi: ser, color: '#e4fb8e', opacity: 0.6 },
           ]}
           lines={[
             { name: 'Fondo', color: '#0b0b0b', values: s.real },
@@ -363,9 +363,9 @@ function Chart({
             { name: 'Azienda', value: euro(s.azienda[i]!) },
             { name: 'TFR', value: euro(s.tfr[i]!) },
             { name: 'Versato', value: euro(tot[i]!) },
-            { name: 'Fondo', value: euro(s.real[i]!), color: '#f4f4f2' },
+            { name: 'Fondo', value: euro(s.real[i]!), color: '#fafafa' },
             { name: 'ETF', value: euro(ser[i]!), color: '#60a5fa' },
-            { name: 'Differenza', value: sign(ser[i]! - s.real[i]!), color: '#d4ee36' },
+            { name: 'Differenza', value: sign(ser[i]! - s.real[i]!), color: '#e4fb8e' },
           ]}
         />
         <span className="text-sm muted">

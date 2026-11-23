@@ -93,7 +93,7 @@ export function Header() {
               <strong className="ghb-title">Migliora il repo</strong>
               <span className="ghb-sep" aria-hidden="true" />
               <a className="ghb-it" href={REPO_URL} target="_blank" rel="noopener noreferrer" title="Apri il repository e premi Star">
-                <svg className="ghb-star" width="13" height="13" viewBox="0 0 24 24" fill="#D4EE36" aria-hidden="true">
+                <svg className="ghb-star" width="13" height="13" viewBox="0 0 24 24" fill="#E4FB8E" aria-hidden="true">
                   <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" />
                 </svg>
                 stella

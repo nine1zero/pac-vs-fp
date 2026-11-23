@@ -21,7 +21,7 @@ main {
   --color-prettylights-syntax-string: #1e40af;
   --color-prettylights-syntax-variable: #c2410c;
   --color-btn-text: #0b0b0b;
-  --color-btn-bg: #f4f4f2;
+  --color-btn-bg: #fafafa;
   --color-btn-border: transparent;
   --color-btn-shadow: 0 0 transparent;
   --color-btn-inset-shadow: 0 0 transparent;
@@ -29,9 +29,9 @@ main {
   --color-btn-hover-border: transparent;
   --color-btn-active-bg: #e2e2df;
   --color-btn-active-border: transparent;
-  --color-btn-selected-bg: #f4f4f2;
+  --color-btn-selected-bg: #fafafa;
   --color-btn-primary-text: #0b0b0b;
-  --color-btn-primary-bg: #d4ee36;
+  --color-btn-primary-bg: #e4fb8e;
   --color-btn-primary-border: transparent;
   --color-btn-primary-shadow: 0 0 transparent;
   --color-btn-primary-inset-shadow: 0 0 transparent;
@@ -42,7 +42,7 @@ main {
   --color-btn-primary-disabled-bg: #ececea;
   --color-btn-primary-disabled-border: transparent;
   --color-action-list-item-default-hover-bg: #f7f7f5;
-  --color-segmented-control-bg: #f4f4f2;
+  --color-segmented-control-bg: #fafafa;
   --color-segmented-control-button-bg: #ffffff;
   --color-segmented-control-button-selected-border: transparent;
   --color-fg-default: #0b0b0b;
@@ -57,8 +57,8 @@ main {
   --color-neutral-muted: rgba(11, 11, 11, 0.05);
   --color-accent-fg: #0b0b0b;
   --color-accent-emphasis: transparent;
-  --color-accent-muted: #d4ee36;
-  --color-accent-subtle: #d4ee36;
+  --color-accent-muted: #e4fb8e;
+  --color-accent-subtle: #e4fb8e;
   --color-success-fg: #15803d;
   --color-attention-fg: #7a4b00;
   --color-attention-muted: #d97706;
@@ -67,8 +67,8 @@ main {
   --color-danger-muted: #ef4444;
   --color-danger-subtle: #fde8e8;
   --color-primer-shadow-inset: 0 0 transparent;
-  --color-scale-gray-1: #f4f4f2;
-  --color-scale-blue-1: #d4ee36;
+  --color-scale-gray-1: #fafafa;
+  --color-scale-blue-1: #e4fb8e;
   --color-social-reaction-bg-hover: #ececea;
   --color-social-reaction-bg-reacted-hover: #c6e21f;
   font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -148,7 +148,7 @@ main {
   font-size: 12px !important;
   font-weight: 600 !important;
   border: none !important;
-  background: #f4f4f2 !important;
+  background: #fafafa !important;
   color: #0b0b0b !important;
 }
 .gsc-social-reaction-summary-item:hover:enabled {
@@ -159,10 +159,10 @@ main {
   height: 26px !important;
   padding: 0 !important;
   border: none !important;
-  background: #f4f4f2 !important;
+  background: #fafafa !important;
 }
 .gsc-social-reaction-summary-item.has-reacted {
-  background: #d4ee36 !important;
+  background: #e4fb8e !important;
   border: none !important;
   color: #0b0b0b !important;
 }
@@ -189,7 +189,7 @@ main {
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
-  background: #f4f4f2 !important;
+  background: #fafafa !important;
   border: none !important;
 }
 .gsc-reactions-popover.open::before,
@@ -215,7 +215,7 @@ main {
   height: 26px !important;
   padding: 0 10px !important;
   border-radius: 99px !important;
-  background: #d4ee36 !important;
+  background: #e4fb8e !important;
   color: #0b0b0b !important;
   border: none !important;
   font-size: 12px !important;
@@ -268,6 +268,6 @@ main {
   justify-content: center !important;
 }
 .gsc-emoji-button.has-reacted {
-  background: #d4ee36 !important;
+  background: #e4fb8e !important;
   border: none !important;
 }
