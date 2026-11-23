@@ -263,7 +263,7 @@ export function Storico() {
             { name: 'Benchmark', color: '#7c3aed', values: l1[1]!, width: 3 },
             { name: meta.short, color: '#2563eb', values: l1[2]! },
           ]}
-          areas={[{ lo: l1[0]!, hi: l1[2]!, color: '#e4fb8e', opacity: 0.55 }]}
+          areas={[{ lo: l1[0]!, hi: l1[2]!, color: '#dcfe71', opacity: 0.55 }]}
           xTicks={ticks(labels1)}
           yFormat={(v) => `${int(v)} €`}
           ariaLabel={`100 € a fine ${YEARS[first]! - 1}: fondo, benchmark e ${meta.short}, anno per anno fino ad agosto 2026`}

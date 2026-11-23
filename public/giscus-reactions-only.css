@@ -31,7 +31,7 @@ main {
   --color-btn-active-border: transparent;
   --color-btn-selected-bg: #fafafa;
   --color-btn-primary-text: #0b0b0b;
-  --color-btn-primary-bg: #e4fb8e;
+  --color-btn-primary-bg: #dcfe71;
   --color-btn-primary-border: transparent;
   --color-btn-primary-shadow: 0 0 transparent;
   --color-btn-primary-inset-shadow: 0 0 transparent;
@@ -57,8 +57,8 @@ main {
   --color-neutral-muted: rgba(11, 11, 11, 0.05);
   --color-accent-fg: #0b0b0b;
   --color-accent-emphasis: transparent;
-  --color-accent-muted: #e4fb8e;
-  --color-accent-subtle: #e4fb8e;
+  --color-accent-muted: #dcfe71;
+  --color-accent-subtle: #dcfe71;
   --color-success-fg: #15803d;
   --color-attention-fg: #7a4b00;
   --color-attention-muted: #d97706;
@@ -68,7 +68,7 @@ main {
   --color-danger-subtle: #fde8e8;
   --color-primer-shadow-inset: 0 0 transparent;
   --color-scale-gray-1: #fafafa;
-  --color-scale-blue-1: #e4fb8e;
+  --color-scale-blue-1: #dcfe71;
   --color-social-reaction-bg-hover: #ececea;
   --color-social-reaction-bg-reacted-hover: #c6e21f;
   font-family: Onest, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -162,7 +162,7 @@ main {
   background: #fafafa !important;
 }
 .gsc-social-reaction-summary-item.has-reacted {
-  background: #e4fb8e !important;
+  background: #dcfe71 !important;
   border: none !important;
   color: #0b0b0b !important;
 }
@@ -215,7 +215,7 @@ main {
   height: 26px !important;
   padding: 0 10px !important;
   border-radius: 99px !important;
-  background: #e4fb8e !important;
+  background: #dcfe71 !important;
   color: #0b0b0b !important;
   border: none !important;
   font-size: 12px !important;
@@ -268,6 +268,6 @@ main {
   justify-content: center !important;
 }
 .gsc-emoji-button.has-reacted {
-  background: #e4fb8e !important;
+  background: #dcfe71 !important;
   border: none !important;
 }
