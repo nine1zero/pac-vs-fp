@@ -1,8 +1,8 @@
 # Registro delle modifiche
 
-## 2026-11-23 · design: versione 4 dei prototipi (lime #DCFE71, fondo #FAFAFA)
+## 2026-11-23 · design: versione 4 dei prototipi (lime #E4FB8E, fondo #FAFAFA)
 
-- Nuova cartella `spec/design/v4/` con Landing, I miei versamenti, Storico, Parametri e fonti, Discussioni e feedback: gli stessi prototipi di v2 con il lime `#DCFE71` al posto di `#D4EE36` e il fondo `#FAFAFA` al posto di `#F4F4F2`, ovunque. Colori scelti dall'autore.
+- Nuova cartella `spec/design/v4/` con Landing, I miei versamenti, Storico, Parametri e fonti, Discussioni e feedback: gli stessi prototipi di v2 con il lime `#E4FB8E` al posto di `#D4EE36` e il fondo `#FAFAFA` al posto di `#F4F4F2`, ovunque. Colori scelti dall'autore: il lime è il "sorbetto" `#E4FB8E`, preferito a `#DCFE71` (più acido) dopo una prova sulla Landing.
 - Solo Landing: bordi più sottili per le tre card delle strategie (1,25 px) e per "La domanda" (1 px); card migliore del Risultato con bordo pieno di 2 px e alone fermo nel colore dello scenario.
 - `spec/design/v2/` resta com'era, per tornare indietro e per i test di parità (calcoli del prototipo v4 identici a v2). SPEC par. 0 e 3.0 e `CLAUDE.md` indicano v4 come riferimento. Solo design: `src/` da allineare.
 
