@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <title>PAC vs Fondo</title>
-  <rect width="64" height="64" rx="14" fill="#D4EE36"/>
+  <rect width="64" height="64" rx="14" fill="#DCFE71"/>
   <g fill="none" stroke="#0B0B0B" stroke-width="8" stroke-linecap="round">
     <path d="M14 48 L50 18"/>
     <path d="M14 20 L50 46"/>
